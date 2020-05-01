@@ -1,0 +1,22 @@
+{
+  "name": "arpa",
+  "version": "0.0.1",
+  "description": "automated request manager",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemailer": "^6.4.6",
+    "pg": "^8.0.3",
+    "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemailer": "^6.4.6"
+  }
+}
