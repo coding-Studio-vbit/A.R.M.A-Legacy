@@ -1,5 +1,5 @@
 {
-  "name": "arpa",
+  "name": "ARMA",
   "version": "0.0.1",
   "description": "automated request manager",
   "main": "server.js",
