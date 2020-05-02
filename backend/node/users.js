@@ -1,6 +1,33 @@
 const {Client} = require('pg');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 
+
+async function generateAccessToken(data, secret, expirationTimeSeconds){
+	if(expirationDate == undefined) return jwt.sign(data,secret);
+	return jwt.sign(data,secret, {expiresIn: expirationTimeSeconds});
+}
+
+
+//This function takes a req and checks the token present in the headers.authorization property,
+//if it is then it assigns the request a 'user' property.
+
+async function authenticateToken(request, res, next){ //use this as the middleware.
+	const header = request.headers['authorization'];
+	const token = header && header.split(' ')[1];
+ 
+	if(token == null) return res.sendStatus(401);
+
+	jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,username)=>{
+		if(err) return res.sendStatus(403);
+
+		//check if the token is still in the validkeys.json file. >>>>>>	
+
+		req.username = username;
+		next();
+	});
+}
 async function checkForumPassword(username,pwdhash,callback){
 
 	var client = new Client();
