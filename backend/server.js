@@ -5,7 +5,6 @@ const express = require("express");
 const path = require("path");
 const body_parser = require("body-parser");
 const users = require("./node/users.js");
-const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
@@ -22,40 +21,35 @@ app.get("/", (req, res) => {
 app.post("/login", (req, res) => {
   
 
-	//check password >>>>>
+	//check password 
 
-  	console.log(req.body);
-
-
-  // //If login OK, Send access token.
-  // //create access token.
-  var access = "";
-
-  const accessToken = users
-    .generateAccessToken(
+  users.checkForumPassword(req.body.user.username,req.body.user.password,(err,status)=>{
+    if(err)=>{
+      return res.sendStatus(401);
+    }
+    const accessToken = users.generateAccessToken(
       req.body.user.username,
       process.env.SECRET_ACCESS_TOKEN
     )
-    .then((ac) => {res.send({ accessToken: ac }); access = ac;})
-    .catch((err) => console.log(err)); //no expiration time;
-  //send the access token.
-  // now store access token in validkeys.json
-  const obj = fs.readFile("validkeys.json", (err, data) => {
-    if (data.toString() === "undefined") {
-      const temp = {};
-      temp[req.body.user.username] = accessToken;
-      return temp;
-    }
-    console.log(data.toString());
-    data = JSON.parse(data.toString());
-    data[req.body.user.username] = accessToken; //save access token with the username
-    return data;
+    
+      res.send({accessToken: accessToken});
+      console.log('token: '+accessToken);
+      
+      var obj = fs.readFileSync("./validkeys.json");
+      obj = obj.toString();
+      obj = JSON.parse(obj);
+      obj[req.body.user.username] = accessToken;
+
+      //save the data.
+      fs.writeFile("validkeys.json", JSON.stringify(obj), (err) => {
+        if(err) console.log("error is "+err);
+      });
   });
-  //save the data.
-  fs.writeFile("validkeys.json", JSON.stringify(obj), (err) => {
-    console.log(err);
-    //redirect to login >>>>>
-  });
+
+  // //If login OK, Send access token.
+  // //create access token.
+
+  
 });
 
 //LOGOUT

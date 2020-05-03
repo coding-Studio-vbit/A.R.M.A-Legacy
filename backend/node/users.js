@@ -1,10 +1,18 @@
 const { Client } = require("pg");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const bcrypt = require("bcryptjs");
 
-async function generateAccessToken(data, secret, expirationTimeSeconds) {
+
+ function generateAccessToken(data, secret, expirationTimeSeconds) {
   if (expirationTimeSeconds == undefined) return jwt.sign(data, secret); //if no expiration date is specified, return token without expiration
   return jwt.sign(data, secret, { expiresIn: expirationTimeSeconds }); //token with expiration.
+}
+function hashPassword(password)
+{
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(password, salt);
+  return hash;
 }
 
 //This function takes a req and checks the token present in the headers.authorization property,
@@ -46,11 +54,13 @@ async function authenticateToken(request, res, next) {
   });
 }
 
-async function checkForumPassword(username, pwdhash, callback) {
+ function checkForumPassword(username, password, callback) {
   var client = new Client();
-  await client.connect(); //connect to DB
+   client.connect(); //connect to DB
 
-  client.query(
+    const pwdhash = hashPassword(password);
+
+    client.query(
     "SELECT pwd_hash FROM FORUMS WHERE forum_name= $1 ;",
     [username],
     (err, res) => {
@@ -70,9 +80,9 @@ async function checkForumPassword(username, pwdhash, callback) {
   );
 }
 
-async function checkRegistrationStatus(forum_name, callback) {
+ function checkRegistrationStatus(forum_name, callback) {
   var client = new Client();
-  await client.connect();
+   client.connect();
 
   client.query(
     "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
@@ -93,10 +103,10 @@ async function checkRegistrationStatus(forum_name, callback) {
     }
   );
 }
-async function registerForum(forum_name, pwd_hash, email, phone, callback) {
+ function registerForum(forum_name, pwd_hash, email, phone, callback) {
   //returns status of registration (true or false)
   var client = new Client();
-  await client.connect();
+   client.connect();
 
   checkRegistrationStatus(forum_name, (err, res) => {
     if (res == true) {
@@ -122,6 +132,7 @@ async function registerForum(forum_name, pwd_hash, email, phone, callback) {
 
 module.exports = {
   checkForumPassword: checkForumPassword,
+  hashPassword:hashPassword,
   checkRegistrationStatus: checkRegistrationStatus,
   registerForum: registerForum,
   generateAccessToken: generateAccessToken,
