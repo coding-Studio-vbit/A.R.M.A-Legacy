@@ -44,7 +44,7 @@ app.post("/login", (req, res) => {
 	  }
 	  else
 	  {
-	  	res.status(401).send({message: "Invalid Password"}); //password wrong, return UNAUTHORIZED.
+	  	return res.status(401).send({message: "Invalid Password"}); //password wrong, return UNAUTHORIZED.
 	  }
   }).catch((error)=>{console.log(error);res.status(500).send("Internal Server Error");})
 });

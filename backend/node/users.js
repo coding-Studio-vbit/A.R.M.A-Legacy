@@ -85,6 +85,7 @@ async function checkForumPassword(username, password, callback) {
           		return callback(undefined, true); //if match, return with true.
 		  })
         }
+		return callback("INVALID USERNAME OR PASSWORD",undefined);
       }
     }
   );
