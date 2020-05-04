@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
 
 function Register() {
   const [contact, setContact] = useState({
@@ -23,7 +25,8 @@ function Register() {
   const isEnabled = contact.email === contact.cemail;
   return (
     <div className="mine" style={{ display: "block" }}>
-      <h1>Register Here</h1>
+      <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
+      <h1>A.R.M.A Registration</h1>
       <br />
       <form>
         <div className="form-group">
@@ -94,6 +97,9 @@ function Register() {
           Register
         </button>
         <br />
+        <Link to={"/login"} style={{ display: "block", marginTop: 20 }}>
+          Login
+        </Link>
       </form>
     </div>
   );

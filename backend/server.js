@@ -16,16 +16,13 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-	//any on load request to be handled here.
+  //any on load request to be handled here.
 });
 
 app.post("/login", (req, res) => {
-  
+  //check password >>>>>
 
-	//check password >>>>>
-
-  	console.log(req.body);
-
+  console.log(req.body);
 
   // //If login OK, Send access token.
   // //create access token.
@@ -36,7 +33,10 @@ app.post("/login", (req, res) => {
       req.body.user.username,
       process.env.SECRET_ACCESS_TOKEN
     )
-    .then((ac) => {res.send({ accessToken: ac }); access = ac;})
+    .then((ac) => {
+      res.send({ accessToken: ac });
+      access = ac;
+    })
     .catch((err) => console.log(err)); //no expiration time;
   //send the access token.
   // now store access token in validkeys.json
@@ -47,6 +47,7 @@ app.post("/login", (req, res) => {
       return temp;
     }
     console.log(data.toString());
+    console.log(obj);
     data = JSON.parse(data.toString());
     data[req.body.user.username] = accessToken; //save access token with the username
     return data;

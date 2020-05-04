@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Form, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import logo from "../images/logo.png";
 
 const Login = () => {
   const [password, setPassword] = useState("");
@@ -14,33 +16,45 @@ const Login = () => {
       .catch((err) => console.log(err));
   };
   const isEnabled = password.length > 0;
+  const Forumlist = [
+    "codingStudio",
+    "stumagz",
+    "IEEE-Vbit",
+    "RoboticsClub",
+    "EcoClub",
+    "StreetCause",
+    "VBIT-MUN",
+    "Stutalk",
+  ];
   return (
     <div className="mine">
-      <h1> Login </h1>
+      <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
+      <br />
+      <h1> A.R.M.A Login </h1>
       <div style={{ marginTop: 20 }}></div>
       <Dropdown>
         <Dropdown.Toggle>{value}</Dropdown.Toggle>
         <Dropdown.Menu>
-          {["codingStudio", "stumagz", "IEEE-Vbit", "RoboticsClub"].map(
-            (club) => (
-              <Dropdown.Item onSelect={() => setValue(club)}>
-                {club}
-              </Dropdown.Item>
-            )
-          )}
+          {Forumlist.map((club) => (
+            <Dropdown.Item onSelect={() => setValue(club)}>
+              {club}
+            </Dropdown.Item>
+          ))}
         </Dropdown.Menu>
       </Dropdown>
       <div style={{ marginTop: 20 }}></div>
-      <Form>
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
+      <form>
+        <div className="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input
             type="password"
-            size="lg"
+            className="form-control"
+            id="exampleInputPassword1"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-        </Form.Group>
+        </div>
+        <br />
         <button
           disabled={!isEnabled}
           className="btn btn-primary"
@@ -48,7 +62,11 @@ const Login = () => {
         >
           Login
         </button>
-      </Form>
+      </form>
+      <br />
+      <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
+        Register
+      </Link>
     </div>
   );
 };
