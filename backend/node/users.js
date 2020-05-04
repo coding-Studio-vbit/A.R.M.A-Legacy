@@ -1,10 +1,20 @@
+require('dotenv').config();
 const { Client } = require("pg");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const bcrypt = require("bcryptjs");
 
-async function generateAccessToken(data, secret, expirationTimeSeconds) {
+
+function generateAccessToken(data, secret, expirationTimeSeconds) {
   if (expirationTimeSeconds == undefined) return jwt.sign(data, secret); //if no expiration date is specified, return token without expiration
   return jwt.sign(data, secret, { expiresIn: expirationTimeSeconds }); //token with expiration.
+}
+ function hashPassword(password)
+{
+	console.log("password is :"  + password);
+	const salt = bcrypt.genSaltSync(10);
+	const hash = bcrypt.hashSync(password,salt);
+	return hash;
 }
 
 //This function takes a req and checks the token present in the headers.authorization property,
@@ -46,11 +56,14 @@ async function authenticateToken(request, res, next) {
   });
 }
 
-async function checkForumPassword(username, pwdhash, callback) {
+async function checkForumPassword(username, password, callback) {
+  
   var client = new Client();
-  await client.connect(); //connect to DB
+  await client.connect().catch((err)=>{console.log(err)}); //connect to DB
 
-  client.query(
+	if(!username || !password) return callback("USERNAME AND PASSWORD UNDEFINED!",undefined);
+
+    client.query(
     "SELECT pwd_hash FROM FORUMS WHERE forum_name= $1 ;",
     [username],
     (err, res) => {
@@ -58,13 +71,20 @@ async function checkForumPassword(username, pwdhash, callback) {
         client.end(); // kill the connection to DB
         return callback(err, undefined); //return with error.
       } else {
-        if (res.rowCount === 1 && res.rows[0].pwd_hash === pwdhash) {
-          //compare password hashes
-          client.end();
-          return callback(undefined, true); //if match, return with true.
+        if (res.rowCount === 1)
+		{
+
+		  bcrypt.compare(password, res.rows[0].pwd_hash,(err, status)=>{ 	
+          	//compare password hashes
+          	client.end();
+			if(err)
+				throw err;
+			else if(!status)
+        		return callback(undefined, false); //if no match, then return false.
+			else
+          		return callback(undefined, true); //if match, return with true.
+		  })
         }
-        client.end();
-        return callback(undefined, false); //if no match, then return false.
       }
     }
   );
@@ -72,7 +92,7 @@ async function checkForumPassword(username, pwdhash, callback) {
 
 async function checkRegistrationStatus(forum_name, callback) {
   var client = new Client();
-  await client.connect();
+   await client.connect();
 
   client.query(
     "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
@@ -96,7 +116,7 @@ async function checkRegistrationStatus(forum_name, callback) {
 async function registerForum(forum_name, pwd_hash, email, phone, callback) {
   //returns status of registration (true or false)
   var client = new Client();
-  await client.connect();
+   await client.connect();
 
   checkRegistrationStatus(forum_name, (err, res) => {
     if (res == true) {
@@ -122,6 +142,7 @@ async function registerForum(forum_name, pwd_hash, email, phone, callback) {
 
 module.exports = {
   checkForumPassword: checkForumPassword,
+  hashPassword:hashPassword,
   checkRegistrationStatus: checkRegistrationStatus,
   registerForum: registerForum,
   generateAccessToken: generateAccessToken,
