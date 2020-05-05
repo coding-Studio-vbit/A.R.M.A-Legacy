@@ -19,26 +19,22 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
-	//check password 
+	//check password.
+  try{
   	users.checkForumPassword(req.body.user.username,req.body.user.password,(err,status)=>{
-    	if(err){
-	 		 console.log(err);
+    if(err){
+	 		   console.log(err);
      		 return res.status(401).send({message: err});
-   		}
-
-	  if(status == true)
+   	}
+	  else if(status == true)
 	  {
       	const accessToken = users.generateAccessToken(req.body.user.username,process.env.SECRET_ACCESS_TOKEN);
-    
       	res.send({message:'Login Successful',accessToken: accessToken});
       	console.log('token: '+accessToken);
-      	
       	var obj = fs.readFileSync("./validkeys.json");
       	obj = obj.toString();
       	obj = JSON.parse(obj);
       	obj[req.body.user.username] = accessToken;
-
       	//save the data.
       	fs.writeFileSync("validkeys.json",JSON.stringify(obj));
 	  }
@@ -47,36 +43,58 @@ app.post("/login", (req, res) => {
 	  	return res.status(401).send({message: "Invalid Password"}); //password wrong, return UNAUTHORIZED.
 	  }
   }).catch((error)=>{console.log(error);res.status(500).send("Internal Server Error");})
+  }
+  catch(err)
+  {
+    res.status(400).json({message:'BAD REQUEST'});
+  }
 });
 
 //LOGOUT
-
 app.post("/logout", (req, res) => {
+  
+  //if check token, remove the token from validkeys.json and redirect to login page.
+  //For logout the request should have both the username and the access token.
+  try
+    {
+      const token = req.body.accessToken; //get the token from the request.
+      const username = req.body.user.username; //get the username
 
-  //if OK, remove the token from validkeys.json and redirect to login page.
-  var obj = fs.readFileSync("validkeys.json");
-    obj = JSON.parse(obj.toString());
-    
-	if (obj.hasOwnProperty(req.body.user.username)) {
-      delete obj[req.body.user.username];
-    } else res.status(401).send({message: "CANNOT LOGOUT WITHOUT LOGIN!"}); //UNAUTHORIZED. Can't logout without login.
-
-   res.send({message: "LOGOUT SUCCESSFUL!"})
-  //save the file.
-  fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+      if(!username || !token){
+        return res.status(400).json({message: 'username or token unspecified!'});
+      }
+      var obj = fs.readFileSync("validkeys.json");
+      obj = JSON.parse(obj.toString());
+    	if (obj.hasOwnProperty(username) && obj[username] == token) { //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
+          delete obj[req.body.user.username];
+        }
+      else 
+        return res.status(401).send({message: "CANNOT LOGOUT WITHOUT LOGIN!"}); //UNAUTHORIZED. Can't logout without login.
+      res.send({message: "LOGOUT SUCCESSFUL!"})
+      //save the file.
+      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+    }
+    catch(err){res.status(400).json({message:'BAD REQUEST'})};
 });
 
 //DASHBOARD
 
-app.get("/dashboard", users.authenticateToken, (req, res) => {
-  //users.authenticateToken is the middleware.
-
-  //token verification done by middleware.
-  console.log(req.body);
-
-  //token OK
-
-  res.json({ message: "LOGIN SUCCESS" });
+app.post("/dashboard",(req, res) => {
+  try
+  {
+      if(!req.body.accessToken) throw "no access token!";
+      else
+      users.authenticateToken(req.body.accessToken,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
+        console.log(username);
+          if(err) return res.status(400).json(err);
+          else
+          {
+            
+            return res.json({ message: "GOOD REQUEST,REDIRECTING TO DASHBOARD" });
+          }
+      });
+  }
+  catch(err){res.status(400).json({message:err});console.log(err);}
 });
 
 //REGISTRATION STATUS CHECK
