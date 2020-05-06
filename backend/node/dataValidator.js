@@ -2,14 +2,13 @@ const validator = require('validator');
 
 function validateRegistrationData(data, callback)
 {
-	// forum_name, email, password hash, phone.
+	// forum_name, email, phone.
 	let errors = {};
 
 
 	//check for emptiness.
 	if(validator.isEmpty(data.username))errors.username = "Forum name is empty!";
 	if(validator.isEmpty(data.email))errors.email = 'E-mail field is empty!';
-	if(validator.isEmpty(data.password))errors.password= 'Password field is empty!';
 	if(validator.isEmpty(data.phone))errors.phone= 'Phone field is empty!';
 
 	if(!validator.isEmail(data.email)) errors.email = ' Invalid email address! ';
@@ -17,7 +16,6 @@ function validateRegistrationData(data, callback)
 	//check for length of the fields.
 	if(!validator.isLength(data.email,{min: undefined, max:128})) errors.email = 'email is too long!';
 	if(!validator.isLength(data.username,{min:1, max:128})) errors.username= 'username is too long!';
-	if(!validator.isLength(data.password,{min: undefined, max:1024})) errors.password= 'password is too long';
 	if(!validator.isMobilePhone(data.phone, 'en-IN')) errors.phone='phone number is invalid!';
 	
 	if((Object.getOwnPropertyNames(errors)).length == 0)return callback(undefined, true); //data is valid

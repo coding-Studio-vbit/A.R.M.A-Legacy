@@ -5,7 +5,8 @@ const express = require("express");
 const path = require("path");
 const body_parser = require("body-parser");
 const users = require("./node/users.js");
-const dataValidator = require('./node/dataValidator.js')
+const dataValidator = require('./node/dataValidator.js');
+const mailSender = require('./node/mail-sender.js');
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
@@ -125,13 +126,19 @@ app.post("/registerForum", (req, res) => {
 			dataValidator.validateRegistrationData(data,(err, ok)=>{
 				if(err) return res.json({message: 'Invalid Data!',errors:err});
 				else
-					users.registerForum(data.username,data.password,data.email,data.phone,(err, state)=>{
-						if(err) return res.status(500).json({message: 'Internal Server Error'});
-						else if(!state) return res.json({message:'User has already registered'});
-						else return res.json({message: 'User successfully registered!'});
+				{
+					res.json({message: 'response recorded'});
+					mailSender.sendMail("Registration Notification","Your Request has been recorded.You will be contacted shortly.",data.email,(err,res)=>{
+					if(err){return console.log({message:'Error sending email to user.'})}});
+
+					mailSender.sendMail("Registration Request",JSON.stringify(data),process.env.USERNAME,(err,res)=>{
+					if(err){
+						return console.log({message:'Error sending email to self.'});
+						}
 					});
-			});
+				}});
 	}
+	
 	catch(err){console.log(err);res.status(400).json({message:'BAD REQUEST!'});}
  
 });
