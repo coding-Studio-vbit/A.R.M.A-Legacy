@@ -5,6 +5,7 @@ const express = require("express");
 const path = require("path");
 const body_parser = require("body-parser");
 const users = require("./node/users.js");
+const dataValidator = require("./node/dataValidator.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
@@ -14,9 +15,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  //any on load request to be handled here.
-});
+//LOGIN
 
 app.post("/login", (req, res) => {
   //check password.
@@ -112,19 +111,54 @@ app.post("/dashboard", (req, res) => {
 //REGISTRATION STATUS CHECK
 
 app.post("/checkRegistrationStatus", (req, res) => {
-  //check user registered or not. >>>>>>>
-
-  console.log(req.body);
-  res.send({ message: "REGISTRATION STATUS IS" }); //TEST MESSAGE.
+  try {
+    const queryUsername = req.body.query.username;
+    if (!queryUsername) {
+      return res.status(400).json({ message: "Username unspecified in query" });
+    } else {
+      users.checkRegistrationStatus(queryUsername, (err, state) => {
+        if (err)
+          return res.status(500).json({ message: "Internal Server Error" });
+        else return res.json({ message: state });
+      });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: "BAed REeKset" });
+  }
 });
 
 //REGISTER FORUM
 
 app.post("/registerForum", (req, res) => {
-  // register a forum. >>>>>>>
-
-  console.log(req.body);
-  res.send({ message: "USER REGISTERED" }); // TEST MESSAGE
+  try {
+    const data = req.body.registrationData;
+    if (!data)
+      return res.status(400).json({ message: "No registration data found!" });
+    else
+      dataValidator.validateRegistrationData(data, (err, ok) => {
+        if (err) return res.json({ message: "Invalid Data!", errors: err });
+        else
+          users.registerForum(
+            data.username,
+            data.password,
+            data.email,
+            data.phone,
+            (err, state) => {
+              if (err)
+                return res
+                  .status(500)
+                  .json({ message: "Internal Server Error" });
+              else if (!state)
+                return res.json({ message: "User has already registered" });
+              else
+                return res.json({ message: "User successfully registered!" });
+            }
+          );
+      });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: "BAD REQUEST!" });
+  }
 });
 
 //start the server.
