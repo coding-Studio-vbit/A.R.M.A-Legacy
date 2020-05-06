@@ -3,9 +3,9 @@ const { Client } = require("pg");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
+const path = require('path');
 
-
-function generateAccessToken(data, secret, expirationTimeSeconds) {
+function generateAccessToken(data,secret , expirationTimeSeconds) {
   if (expirationTimeSeconds == undefined) return jwt.sign(data, secret); //if no expiration date is specified, return token without expiration
   return jwt.sign(data, secret, { expiresIn: expirationTimeSeconds }); //token with expiration.
 }
@@ -20,39 +20,20 @@ function generateAccessToken(data, secret, expirationTimeSeconds) {
 //This function takes a req and checks the token present in the headers.authorization property,
 //if it is then it assigns the request a 'user' property.
 
-async function authenticateToken(request, res, next) {
-  //use this as the middleware.
-
-  //request must contain the "authorization" object in the header.
-  //the token is extracted from the authorization object.
-
-  const header = request.headers["authorization"];
-  const token = header && header.split(" ")[1];
-
-  //if the token isn't present then send status code UNAUTHORIZED.
-  if (token == null) return res.sendStatus(401);
-
+function authenticateToken(token,secret,callback) {
   //verify the extracted token
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, username) => {
+  jwt.verify(token, secret, (err, username) => {
     //if err then send status code FORBIDDEN
-    if (err) return res.sendStatus(403);
+    if (err) return callback({message:'access token incorrect!'},undefined);
 
     //check if the token is still in the validkeys.json file.
-    const obj = fs.readFile("../validkeys.json", (err, data) => {
-      if (err) {
-        return res.sendStatus(500); // INTERNAL SERVER ERROR.
-      } else {
-        obj = JSON.parse(obj.toString());
-
-        //check the validkeys object for the property with the same name as the username.
-        if (!obj.hasOwnProperty(request.body.user.username))
-          return res.sendStatus(401); //if not found then send status code UNAUTHORIZED.
-      }
-    });
-
+    var data = fs.readFileSync('validkeys.json');
+    data = data.toString();
+    data = JSON.parse(data);
+    if(!data.hasOwnProperty(username)) return callback({message:"UNIDENTIFIED USER"}, undefined);
     //here all the checks pass and the token is valid.
-    req.username = username; //set the username property to easily identify the user.
-    next(); //call the callback.
+
+    return callback(undefined, username);
   });
 }
 
@@ -71,23 +52,26 @@ async function checkForumPassword(username, password, callback) {
         client.end(); // kill the connection to DB
         return callback(err, undefined); //return with error.
       } else {
-        if (res.rowCount === 1)
+    if (res.rowCount === 1)
 		{
 
-		  bcrypt.compare(password, res.rows[0].pwd_hash,(err, status)=>{ 	
-          	//compare password hashes
-          	client.end();
-			if(err)
-				throw err;
-			else if(!status)
-        		return callback(undefined, false); //if no match, then return false.
-			else
-          		return callback(undefined, true); //if match, return with true.
-		  })
-        }
+  		  bcrypt.compare(password, res.rows[0].pwd_hash,(err, status)=>{ 	
+            	//compare password hashes
+            	client.end();
+  			if(err)
+  				throw err;
+  			else if(!status)
+          		return callback(undefined, false); //if no match, then return false.
+  			else
+            		return callback(undefined, true); //if match, return with true.
+  		  })
+     }
+     else
+		  {
+        return callback("INVALID USERNAME OR PASSWORD",undefined);
       }
     }
-  );
+  });
 }
 
 async function checkRegistrationStatus(forum_name, callback) {
