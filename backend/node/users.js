@@ -74,22 +74,21 @@ async function checkForumPassword(username, password, callback) {
   });
 }
 
-async function checkRegistrationStatus(forum_name, callback) {
+function checkRegistrationStatus(forum_name, callback) {
   var client = new Client();
-   await client.connect();
+  client.connect();
 
-  client.query(
-    "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
-    [forum_name],
-    (err, res) => {
+  client.query("SELECT forum_name FROM FORUMS WHERE forum_name= $1;",[forum_name],(err, res) => {
       if (err) {
         client.end();
         return callback(err, null);
-      } else {
-        if (res.rowCount === 0) {
+      } 
+	  else {
+		if (res.rowCount === 0) {
           client.end();
           return callback(undefined, false);
-        } else {
+        }
+		else {
           client.end();
           return callback(undefined, true);
         }
@@ -97,20 +96,20 @@ async function checkRegistrationStatus(forum_name, callback) {
     }
   );
 }
-async function registerForum(forum_name, pwd_hash, email, phone, callback) {
+function registerForum(forum_name, password, email, phone, callback) {
+  
   //returns status of registration (true or false)
   var client = new Client();
-   await client.connect();
+  client.connect();
 
+  const password_hash = hashPassword(password);
+  
   checkRegistrationStatus(forum_name, (err, res) => {
     if (res == true) {
       client.end();
       return callback(undefined, false);
     } else {
-      client.query(
-        "INSERT INTO forums(forum_name,pwd_hash,email,phone_no) VALUES ($1,$2,$3,$4);",
-        [forum_name, pwd_hash, email, phone],
-        (err, res) => {
+      client.query("INSERT INTO forums(forum_name,pwd_hash,email,phone_no) VALUES ($1,$2,$3,$4);",[forum_name, password_hash, email, phone],(err, res) => {
           if (err) {
             client.end();
             return callback(err, undefined);
