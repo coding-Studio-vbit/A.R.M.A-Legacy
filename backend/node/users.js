@@ -25,16 +25,13 @@ function authenticateToken(token,secret,callback) {
   jwt.verify(token, secret, (err, username) => {
     //if err then send status code FORBIDDEN
     if (err) return callback({message:'access token incorrect!'},undefined);
-    console.log('ok');
+
     //check if the token is still in the validkeys.json file.
     var data = fs.readFileSync('validkeys.json');
     data = data.toString();
     data = JSON.parse(data);
-
-    console.log(data);
     if(!data.hasOwnProperty(username)) return callback({message:"UNIDENTIFIED USER"}, undefined);
     //here all the checks pass and the token is valid.
-    console.log('ok');
 
     return callback(undefined, username);
   });

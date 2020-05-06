@@ -85,7 +85,6 @@ app.post("/dashboard",(req, res) => {
       if(!req.body.accessToken) throw "no access token!";
       else
       users.authenticateToken(req.body.accessToken,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
-        console.log(username);
           if(err) return res.status(400).json(err);
           else
           {
