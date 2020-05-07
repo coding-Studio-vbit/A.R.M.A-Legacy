@@ -11,7 +11,6 @@ In short, what you need to do to send messages, would be the following:
 */
 
 const nodemailer = require('nodemailer');
-require('dotenv').config();
 
 function generateOTP(){
 	let OTP = ""
@@ -20,29 +19,29 @@ function generateOTP(){
 	}
 	return OTP;
 }
-async function sendMail(subject,content, receiver,callback)
+function sendMail(subject,content, receiver,callback)
 {
-	var transporter = nodemailer.createTransporter({
+	var transporter = nodemailer.createTransport({
 		service: 'gmail',
 		auth: {
-			user: process.env.USER_EMAIL,
+			user: process.env.USERNAME,
 			pass: process.env.PASSWORD
 		}
 	});
 
 	mailOptions = {
-		from: process.env.USER_EMAIL,
+		from: process.env.USERNAME,
 		to: receiver,
 		subject: subject,
 		text: content,
 	};
 
-	transported.sendMail(mailOptions, (err, info)=>{
+	transporter.sendMail(mailOptions, (err, info)=>{
 		if(err) return callback(err, undefined);
 		else return callback(undefined, info);
 	});
 }
-async function sendOTP(OTP,receiver,callback)
+function sendOTP(OTP,receiver,callback)
 {
 	let newOTP = generateOTP();
 	sendMail('ARMA OTP', ('Your A.R.M.A OTP is '+String(newOTP)),receiver, (err,info)=>{
