@@ -6,6 +6,7 @@ const path = require("path");
 const body_parser = require("body-parser");
 const users = require("./node/users.js");
 const dataValidator = require("./node/dataValidator.js");
+const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
@@ -19,7 +20,6 @@ app.use(body_parser.urlencoded({ extended: false }));
 
 app.post("/login", (req, res) => {
   //check password.
-  console.log(req.body.user.username, req.body.user.password);
   try {
     users
       .checkForumPassword(
@@ -136,24 +136,34 @@ app.post("/registerForum", (req, res) => {
       return res.status(400).json({ message: "No registration data found!" });
     else
       dataValidator.validateRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!", errors: err });
-        else
-          users.registerForum(
-            data.username,
-            data.password,
+        if (err) return res.json({ message: "Invalid Data!" });
+        else {
+          res.json({ message: "response recorded" });
+          mailSender.sendMail(
+            "Registration Notification",
+            "Your Request has been recorded.You will be contacted shortly.",
             data.email,
-            data.phone,
-            (err, state) => {
-              if (err)
-                return res
-                  .status(500)
-                  .json({ message: "Internal Server Error" });
-              else if (!state)
-                return res.json({ message: "User has already registered" });
-              else
-                return res.json({ message: "User successfully registered!" });
+            (err, res) => {
+              if (err) {
+                return console.log(
+                  { message: "Error sending email to user." },
+                  err
+                );
+              }
             }
           );
+
+          mailSender.sendMail(
+            "Registration Request",
+            JSON.stringify(data),
+            process.env.USERMAIL,
+            (err, res) => {
+              if (err) {
+                return console.log({ message: "Error sending email to self." });
+              }
+            }
+          );
+        }
       });
   } catch (err) {
     console.log(err);

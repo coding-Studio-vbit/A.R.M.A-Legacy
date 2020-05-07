@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+import axios from "axios";
 
 function Register() {
   const [contact, setContact] = useState({
-    fName: "",
     email: "",
     cemail: "",
     pnum: "",
   });
   const [values, setValue] = useState("Select a forum");
-  const [mute, setMute] = useState(true);
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -22,33 +21,47 @@ function Register() {
       };
     });
   }
-  const isEnabled = contact.email === contact.cemail;
+  const isEnabled =
+    contact.email === contact.cemail && contact.email.length > 0;
+  const isPhone = contact.pnum.length === 10;
+  const handleRegister = () => {
+    console.log({ values }, contact.email, contact.pnum);
+    axios
+      .post("/registerForum", {
+        registrationData: {
+          username: values,
+          email: contact.email,
+          phone: contact.pnum,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+  const Forumlist = [
+    "codingStudio",
+    "stumagz",
+    "IEEE-Vbit",
+    "RoboticsClub",
+    "EcoClub",
+    "StreetCause",
+    "VBIT-MUN",
+    "Stutalk",
+  ];
   return (
     <div className="mine" style={{ display: "block" }}>
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
       <h1>A.R.M.A Registration</h1>
       <br />
       <form>
-        <div className="form-group">
-          <input
-            onChange={handleChange}
-            name="fName"
-            value={contact.fName}
-            className="form-control"
-            placeholder="Your Name"
-          />
-        </div>
         <br />
         <Dropdown>
           <Dropdown.Toggle>{values}</Dropdown.Toggle>
           <Dropdown.Menu>
-            {["codingStudio", "stumagz", "IEEE-Vbit", "RoboticsClub"].map(
-              (club) => (
-                <Dropdown.Item onSelect={() => setValue(club)}>
-                  {club}
-                </Dropdown.Item>
-              )
-            )}
+            {Forumlist.map((club) => (
+              <Dropdown.Item onSelect={() => setValue(club)}>
+                {club}
+              </Dropdown.Item>
+            ))}
           </Dropdown.Menu>
         </Dropdown>
         <br />
@@ -93,7 +106,12 @@ function Register() {
           />
         </div>
         <br />
-        <button disabled={!isEnabled} className="btn btn-primary">
+        <button
+          type="button"
+          disabled={!isEnabled && isPhone}
+          className="btn btn-primary"
+          onClick={handleRegister}
+        >
           Register
         </button>
         <br />

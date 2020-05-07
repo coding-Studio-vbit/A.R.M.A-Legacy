@@ -8,10 +8,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [value, setValue] = useState("Select a forum");
 
-  const stutt = () => {
-    const data = { user: { username: { value }, password: { password } } };
+  const handleLogin = () => {
+    let un = value;
+    let pw = password;
     axios
-      .post("/login", data)
+      .post("/login", {
+        user: {
+          username: un,
+          password: pw,
+        },
+      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -58,7 +64,8 @@ const Login = () => {
         <button
           disabled={!isEnabled}
           className="btn btn-primary"
-          onClick={stutt}
+          onClick={handleLogin}
+          type="button"
         >
           Login
         </button>
