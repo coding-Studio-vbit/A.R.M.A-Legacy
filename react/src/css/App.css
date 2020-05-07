@@ -1,11 +1,11 @@
 .App {
   text-align: center;
-  padding: 50px;
+
   color: white;
 }
 
 .mine {
-  margin: 20px 30% 50px;
+  margin: 10px 30% 50px;
   padding: 20px;
   /*border-style: ridge;
   border-color: lightgreen;*/
