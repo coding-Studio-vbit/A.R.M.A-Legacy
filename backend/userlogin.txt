@@ -1,0 +1,21 @@
+This is a documentation of the user authentication and authorization
+
+LOGIN
+=====
+
+1) User enters the forum name and password and hits submit.
+
+2) request is sent to server with the user details for verification.
+
+3) password hash of the password is compared with the hash in the database.
+
+4) If the password matches, then an access token is sent it the client.
+   This access token is also saved in the validkeys.json file 
+   with the username as the property to mark its validity.
+   So when the user logs out, the access token is deleted from the list.
+
+5) Every request the user makes here on will be checked for the correct
+   token.And also its existence in the validkeys.json file.
+
+6) on logout, the access token is checked for validity and if its valid,
+   the entry of the user in the validkeys.json file is deleted.
