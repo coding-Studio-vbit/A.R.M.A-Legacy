@@ -1,4 +1,3 @@
-// PENDING TASKS ARE MARKED WITH A '>>>>>>' SIGN.
 
 require("dotenv").config();
 const express = require("express");
@@ -56,7 +55,49 @@ app.post("/login", (req, res) => {
   }
 });
 
+//Faculty Login
+
+app.post("/loginFaculty", (req, res) => {
+  //check password.
+  try {
+    users
+      .checkFacultyPassword(
+        req.body.user.username,
+        req.body.user.password,
+        (err, status) => {
+          if (err) {
+            console.log(err);
+            return res.status(401).send({ message: err });
+          } else if (status == true) {
+            const accessToken = users.generateAccessToken(
+              req.body.user.username,
+              process.env.SECRET_ACCESS_TOKEN
+            );
+            res.send({ message: "Login Successful", accessToken: accessToken });
+            console.log("token: " + accessToken);
+            var obj = fs.readFileSync("./validkeys.json");
+            obj = obj.toString();
+            obj = JSON.parse(obj);
+            obj[req.body.user.username] = accessToken;
+            //save the data.
+            fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+          } else {
+            return res.status(401).send({ message: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
+          }
+        }
+      )
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send("Internal Server Error");
+      });
+  } catch (err) {
+    res.status(400).json({ message: "BAD REQUEST" });
+  }
+});
+
 //LOGOUT
+// logout is same for both faculty and forums.
+
 app.post("/logout", (req, res) => {
   //if check token, remove the token from validkeys.json and redirect to login page.
   //For logout the request should have both the username and the access token.
@@ -126,9 +167,26 @@ app.post("/checkRegistrationStatus", (req, res) => {
     return res.status(400).json({ message: "BAed REeKset" });
   }
 });
+//REGISTRATION STATUS CHECK FOR FACULTY
+
+app.post("/checkFacultyRegistrationStatus", (req, res) => {
+  try {
+    const queryUsername = req.body.query.username;
+    if (!queryUsername) {
+      return res.status(400).json({ message: "Username unspecified in query" });
+    } else {
+      users.checkFacultyRegistrationStatus(queryUsername, (err, state) => {
+        if (err)
+          return res.status(500).json({ message: "Internal Server Error" });
+        else return res.json({ message: state });
+      });
+    }
+  } catch (err) {
+    return res.status(400).json({ message: "Bad Request" });
+  }
+});
 
 //REGISTER FORUM
-
 app.post("/registerForum", (req, res) => {
   try {
     const data = req.body.registrationData;
@@ -171,6 +229,51 @@ app.post("/registerForum", (req, res) => {
     res.status(400).json({ message: "BAD REQUEST!" });
   }
 });
+
+//REGISTER FACULTY
+app.post("/registerFaculty", (req, res) => {
+  try {
+    const data = req.body.registrationData;
+    if (!data)
+      return res.status(400).json({ message: "No registration data found!" });
+    else
+      dataValidator.validateRegistrationData(data, (err, ok) => {
+        if (err) return res.json({ message: "Invalid Data!" });
+        else {
+		  //check if user is already registered.
+
+		 		 users.checkFacultyRegistrationStatus(data.username, (err, state)=>{
+		 		 	if(err) return res.status(500).json({message:'Internal Server Database error!'});
+		 		   	else if(state == true) res.json({message: 'User has already registered'});
+		 		   	else
+					{
+         			 res.json({ message: "response recorded" });
+         			 mailSender.sendMail("Registration Notification",
+         		   "Your Request has been recorded.You will be contacted shortly.",data.email,(err, res) => {
+         		     if (err) {
+         		       return console.log({ message: "Error sending email to user." },err);
+         		     }});
+
+         		 mailSender.sendMail(
+         		   "Registration Request",
+         		   JSON.stringify(data),
+         		   process.env.USERMAIL,
+         		   (err, res) => {
+         		     if (err) {
+         		       return console.log({ message: "Error sending email to self." });
+         		     }
+         		   }
+         		 );
+		 		 }});
+        	}});
+ 	 } 
+  catch (err) {
+    console.log(err);
+    res.status(400).json({ message: "BAD REQUEST!" });
+  }
+});
+
+//-----------------------------------------------------------------------------------------------------------------------------------------//
 
 //start the server.
 app.listen(port_number, () => {
