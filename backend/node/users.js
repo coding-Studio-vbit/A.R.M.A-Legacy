@@ -71,28 +71,31 @@ async function checkForumPassword(username, password, callback) {
   );
 }
 
-function checkRegistrationStatus(forum_name, callback) {
+function checkRegistrationStatus(forum_name, callback)
+{
   var client = new Client();
   client.connect();
 
-  client.query(
-    "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
-    [forum_name],
-    (err, res) => {
-      if (err) {
+  client.query("SELECT forum_name FROM FORUMS WHERE forum_name= $1;",[forum_name],(err, res) => {
+      if (err)
+	  {
         client.end();
         return callback(err, null);
-      } else {
-        if (res.rowCount === 0) {
+      } 
+	  else
+	  {
+        if (res.rowCount === 0)
+		{
           client.end();
           return callback(undefined, false);
-        } else {
+        }
+		else
+		{
           client.end();
           return callback(undefined, true);
         }
       }
-    }
-  );
+    });
 }
 function registerForum(forum_name, password, email, phone, callback) {
   //returns status of registration (true or false)
