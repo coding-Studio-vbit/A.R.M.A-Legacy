@@ -4,36 +4,8 @@ import '../css/table.css';
 
 class Table extends React.Component{
     state={
-        data:[
-            {
-                id:1,
-                Name:'Coding Studio',
-                subject:'Permission for codecraft',
-                status:'pending',
-                approved : false
-            },
-            {
-                id:2,
-                Name:'Coding Studio',
-                subject:'Permission for codecraft',
-                status:'pending',
-                approved : false
-            },
-            {
-                id:3,
-                Name:'Coding Studio',
-                subject:'Permission for codecraft',
-                status:'pending',
-                approved : false
-            },
-            {
-                id:4,
-                Name:'Coding Studio',
-                subject:'Permission for codecraft',
-                status:'pending',
-                approved : false
-            }
-        ]
+        data: this.props.data,
+        
     }
     approval = (id) =>{
       this.setState({data: this.state.data.map(temp => {
@@ -70,7 +42,7 @@ class Table extends React.Component{
                    <thead>
                    <tr>
                    <th scope="col">#</th>
-                   <th scope="col">Forum/Student</th>
+                   <th scope="col">{this.props.name}</th>
                    <th scope="col">Subject</th>
                    <th scope="col">Status</th>
                    <th scope="col">Remarks</th>
