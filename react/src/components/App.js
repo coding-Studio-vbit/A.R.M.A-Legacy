@@ -15,11 +15,10 @@ function App() {
             <Route exact path="/" component={UserForm} />
             <Route path="/loginForm" component={Login} />
             <Route path="/register" component={Register} />
-<<<<<<< HEAD
 
-=======
+
+
             <Route path="/Hdashboard" component={Hdashboard} />
->>>>>>> 6aa6aeadcb508bd47a9a1502ce179a66507d0227
             <Login />
           </Switch>
         </div>
