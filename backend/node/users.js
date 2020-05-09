@@ -43,6 +43,8 @@ async function checkForumPassword(username, password, callback) {
     console.log(err);
   }); //connect to DB
 
+  username = username.toUpperCase();
+
   if (!username || !password)
   {
     client.end();
@@ -73,20 +75,24 @@ async function checkForumPassword(username, password, callback) {
   );
 }
 
-async function checkFacultyPassword(username, password, callback) {
+async function checkFacultyPassword(faculty_roll, password, callback) {
   var client = new Client();
   await client.connect().catch((err) => {
     console.log(err);
   }); //connect to DB
 
-  if (!username || !password)
+  if (!faculty_roll || !password)
   {
     client.end();
     return callback("USERNAME AND PASSWORD UNDEFINED!", undefined);
   }
+
+ faculty_roll = faculty_roll.toUpperCase();
+
+
   client.query(
-    "SELECT pwd_hash FROM FACULTY WHERE faculty_name= $1 ;",
-    [username],
+    "SELECT pwd_hash FROM FACULTY WHERE faculty_roll= $1 ;",
+    [faculty_roll],
     (err, res) => {
       if (err) {
         client.end(); // kill the connection to DB
@@ -113,6 +119,8 @@ function checkRegistrationStatus(forum_name, callback)
   var client = new Client();
   client.connect();
 
+  forum_name  = forum_name.toUpperCase();
+
   client.query("SELECT forum_name FROM FORUMS WHERE forum_name= $1;",[forum_name],(err, res) => {
       if (err)
 	  {
@@ -127,19 +135,21 @@ function checkRegistrationStatus(forum_name, callback)
           return callback(undefined, false);
         }
 		else
-		{
+			{
           client.end();
           return callback(undefined, true);
         }
       }
     });
 }
-function checkFacultyRegistrationStatus(faculty_name, callback)
+function checkFacultyRegistrationStatus(faculty_roll, callback)
 {
   var client = new Client();
   client.connect();
 
-  client.query("SELECT faculty_name FROM Faculty WHERE faculty_name= $1;",[faculty_name],(err, res) => {
+ faculty_roll = faculty_roll.toUpperCase();
+
+  client.query("SELECT * FROM Faculty WHERE faculty_roll= $1;",[faculty_roll],(err, res) => {
       if (err)
 	  {
         client.end();
@@ -165,6 +175,10 @@ function registerForum(forum_name, password, email, phone, callback) {
   var client = new Client();
   client.connect();
 
+  
+  forum_name = forum_name.toUpperCase();
+
+
   const password_hash = hashPassword(password);
 
   checkRegistrationStatus(forum_name, (err, res) => {
@@ -189,21 +203,23 @@ function registerForum(forum_name, password, email, phone, callback) {
   });
 }
 
-function registerFaculty(faculty_name, password, email, phone, callback) {
+function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,password, callback) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
 
+  faculty_roll = faculty_roll.toUpperCase();
+
   const password_hash = hashPassword(password);
 
-  checkFacultyRegistrationStatus(faculty_name, (err, res) => {
+  checkFacultyRegistrationStatus(faculty_roll, (err, res) => {
     if (res == true) {
       client.end();
       return callback(undefined, false);
     } else {
       client.query(
-        "INSERT INTO faculty(faculty_name,pwd_hash,email,phone_no) VALUES ($1,$2,$3,$4);",
-        [faculty_name, password_hash, email, phone],
+        "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4);",
+        [faculty_name,faculty_roll,faculty_dept,email,phone,password_hash],
         (err, res) => {
           if (err) {
             client.end();
