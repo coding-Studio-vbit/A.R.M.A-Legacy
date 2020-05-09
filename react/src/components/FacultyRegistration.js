@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import axios from "axios";
+import { Dropdown } from "react-bootstrap";
 
 const FacultyRegister = () => {
+  const [dept, setDept] = useState("CSE");
   const [contact, setContact] = useState({
     rollNo: "",
     name: "",
@@ -27,8 +29,11 @@ const FacultyRegister = () => {
   const handleRegister = () => {
     //console.log({ values }, contact.email, contact.pnum);
     axios
-      .post("/", {
+      .post("/registerFaculty", {
         registrationData: {
+          faculty_name: contact.name,
+          faculty_dept: dept,
+          faculty_roll: contact.rollNo,
           email: contact.email,
           phone: contact.pnum,
         },
@@ -36,6 +41,8 @@ const FacultyRegister = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+  //
+  const deptList = ["CSE", "IT", "EEE", "ECE", "MECH", "CIVIL", "MBA"];
   return (
     <div className="mine" style={{ display: "block" }}>
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
@@ -60,6 +67,17 @@ const FacultyRegister = () => {
             value={contact.name}
             placeholder="Name"
           />
+          <br />
+          <Dropdown>
+            <Dropdown.Toggle>{dept}</Dropdown.Toggle>
+            <Dropdown.Menu>
+              {deptList.map((depts) => (
+                <Dropdown.Item onSelect={() => setDept(depts)}>
+                  {depts}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
           <br />
           <input
             type="email"

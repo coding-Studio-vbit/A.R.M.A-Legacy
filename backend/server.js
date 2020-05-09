@@ -245,8 +245,10 @@ app.post("/registerForum", (req, res) => {
 
 //REGISTER FACULTY
 app.post("/registerFaculty", (req, res) => {
+  console.log(req.body.registrationData);
   try {
     const data = req.body.registrationData;
+    console.log(data);
     if (!data)
       return res.status(400).json({ message: "No registration data found!" });
     else
