@@ -34,8 +34,8 @@ const FacultyRegister = () => {
           faculty_name: contact.name,
           faculty_dept: dept,
           faculty_roll: contact.rollNo,
-          email: contact.email,
-          phone: contact.pnum,
+          faculty_email: contact.email,
+          faculty_phone: contact.pnum,
         },
       })
       .then((res) => console.log(res))
