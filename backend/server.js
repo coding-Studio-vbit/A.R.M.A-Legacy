@@ -193,7 +193,7 @@ app.post("/registerForum", (req, res) => {
       return res.status(400).json({ message: "No registration data found!" });
     else
       dataValidator.validateRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!" });
+        if (err) return res.json({ message: "Invalid Data!",errors:err });
         else {
           //check if user is already registered.
 
@@ -253,7 +253,7 @@ app.post("/registerFaculty", (req, res) => {
       return res.status(400).json({ message: "No registration data found!" });
     else
       dataValidator.validateFacultyRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!" });
+        if (err) return res.json({ message: "Invalid Data!",errors:err});
         else {
           //check if user is already registered.
 

@@ -216,7 +216,11 @@ function registerFaculty(
     } else {
       client.query(
         "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
+<<<<<<< HEAD
         [faculty_name, faculty_roll, faculty_dept, email, phone, password_hash],
+=======
+        [faculty_name,faculty_roll,faculty_dept,email,phone,password_hash],
+>>>>>>> 551ba8ceb5c55100fc164b746d322cd0ada5ba2e
         (err, res) => {
           if (err) {
             client.end();
