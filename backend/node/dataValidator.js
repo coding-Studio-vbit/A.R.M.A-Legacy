@@ -64,7 +64,7 @@ function validateFacultyRegistrationData(data, callback)
 	//Add faculty_roll validation. >>>>>>>>>>>>>>>>>
 	
 	if(!validator.isEmail(data.faculty_email))errors.faculty_email = "Faculty email is invalid!";
-	if(!validator.isPhone(data.faculty_phone))errors.faculty_phone = "Faculty phone number is invalid!";
+	if(!validator.isMobilePhone(data.faculty_phone, 'en-IN')) errors.faculty_phone='phone number is invalid!';
 
 	if(Object.getOwnPropertyNames(errors).length == 0)return callback(undefined, true); //data is valid.
 

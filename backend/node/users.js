@@ -218,7 +218,7 @@ function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,pa
       return callback(undefined, false);
     } else {
       client.query(
-        "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4);",
+        "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
         [faculty_name,faculty_roll,faculty_dept,email,phone,password_hash],
         (err, res) => {
           if (err) {
