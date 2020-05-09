@@ -62,7 +62,7 @@ app.post("/loginFaculty", (req, res) => {
   try {
     users
       .checkFacultyPassword(
-        req.body.user.username,
+        req.body.user.faculty_roll,
         req.body.user.password,
         (err, status) => {
           if (err) {
@@ -70,7 +70,7 @@ app.post("/loginFaculty", (req, res) => {
             return res.status(401).send({ message: err });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
-              req.body.user.username,
+              req.body.user.faculty_roll,
               process.env.SECRET_ACCESS_TOKEN
             );
             res.send({ message: "Login Successful", accessToken: accessToken });
@@ -78,7 +78,7 @@ app.post("/loginFaculty", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-            obj[req.body.user.username] = accessToken;
+            obj[req.body.user.faculty_roll] = accessToken;
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
@@ -125,7 +125,7 @@ app.post("/logout", (req, res) => {
   }
 });
 
-//DASHBOARD
+//DASHBOARD ( TESTING )
 
 app.post("/dashboard", (req, res) => {
   try {
@@ -171,7 +171,7 @@ app.post("/checkRegistrationStatus", (req, res) => {
 
 app.post("/checkFacultyRegistrationStatus", (req, res) => {
   try {
-    const queryUsername = req.body.query.username;
+    const queryUsername = req.body.query.faculty_roll;
     if (!queryUsername) {
       return res.status(400).json({ message: "Username unspecified in query" });
     } else {
@@ -237,23 +237,24 @@ app.post("/registerFaculty", (req, res) => {
     if (!data)
       return res.status(400).json({ message: "No registration data found!" });
     else
-      dataValidator.validateRegistrationData(data, (err, ok) => {
+      dataValidator.validateFacultyRegistrationData(data, (err, ok) => {
         if (err) return res.json({ message: "Invalid Data!" });
         else {
 		  //check if user is already registered.
 
-		 		 users.checkFacultyRegistrationStatus(data.username, (err, state)=>{
+		 		 users.checkFacultyRegistrationStatus(data.faculty_roll, (err, state)=>{
 		 		 	if(err) return res.status(500).json({message:'Internal Server Database error!'});
 		 		   	else if(state == true) res.json({message: 'User has already registered'});
 		 		   	else
 					{
          			 res.json({ message: "response recorded" });
          			 mailSender.sendMail("Registration Notification",
-         		   "Your Request has been recorded.You will be contacted shortly.",data.email,(err, res) => {
+         		   "Your Request has been recorded.You will be contacted shortly.",data.faculty_email,(err, res) => {
          		     if (err) {
          		       return console.log({ message: "Error sending email to user." },err);
          		     }});
 
+				 //sending mail to self.
          		 mailSender.sendMail(
          		   "Registration Request",
          		   JSON.stringify(data),
