@@ -3,14 +3,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 
-const Login = () => {
+const FacultyLogin = () => {
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
 
   const stutt = () => {
     const data = { password };
     axios
-      .post("/hashpassword", data)
+      .post("/", data)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -54,10 +54,10 @@ const Login = () => {
       </form>
       <br />
       <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
-        Register
+        Go To Faculty Registration Page
       </Link>
     </div>
   );
 };
 
-export default Login;
+export default FacultyLogin;

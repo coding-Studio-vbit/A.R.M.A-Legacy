@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import axios from "axios";
-import RegistrationCheck from "./RegistrationCheck";
 
-function Register() {
+const FacultyRegister = () => {
   const [contact, setContact] = useState({
+    rollNo: "",
+    name: "",
     email: "",
     cemail: "",
     pnum: "",
   });
-  const [values, setValue] = useState("Select a forum");
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -22,15 +21,14 @@ function Register() {
       };
     });
   }
-  const isEnabled =
-    contact.email === contact.cemail && contact.email.length > 0;
+  const isEnabled = contact.email === contact.cemail;
   const isPhone = contact.pnum.length === 10;
+  const disable = isEnabled && isPhone;
   const handleRegister = () => {
-    console.log({ values }, contact.email, contact.pnum);
+    //console.log({ values }, contact.email, contact.pnum);
     axios
-      .post("/registerForum", {
+      .post("/", {
         registrationData: {
-          username: values,
           email: contact.email,
           phone: contact.pnum,
         },
@@ -38,35 +36,31 @@ function Register() {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-  ];
   return (
     <div className="mine" style={{ display: "block" }}>
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
-      <h1>A.R.M.A Registration</h1>
+      <h1>A.R.M.A Faculty Registration</h1>
       <br />
       <form>
-        <br />
-        <Dropdown>
-          <Dropdown.Toggle>{values}</Dropdown.Toggle>
-          <Dropdown.Menu>
-            {Forumlist.map((club) => (
-              <Dropdown.Item onSelect={() => setValue(club)}>
-                {club}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-        <br />
         <div class="form-group">
+          <input
+            type="text"
+            onChange={handleChange}
+            name="rollNo"
+            className="form-control"
+            value={contact.rollNo}
+            placeholder="Roll Number"
+          />
+          <br />
+          <input
+            type="text"
+            onChange={handleChange}
+            name="name"
+            className="form-control"
+            value={contact.name}
+            placeholder="Name"
+          />
+          <br />
           <input
             type="email"
             onChange={handleChange}
@@ -109,7 +103,7 @@ function Register() {
         <br />
         <button
           type="button"
-          disabled={!isEnabled && isPhone}
+          disabled={!disable}
           className="btn btn-primary"
           onClick={handleRegister}
         >
@@ -120,10 +114,8 @@ function Register() {
           Go to Login Page
         </Link>
       </form>
-      <br />
-      <RegistrationCheck value={values} />
     </div>
   );
-}
+};
 
-export default Register;
+export default FacultyRegister;
