@@ -5,6 +5,7 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Hdashboard from "./Hdashboard";
+import Fdashboard from "./Fdashboard";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/Hdashboard" component={Hdashboard} />
+            <Route path="/Fdashboard" component={Fdashboard} />
             <Login />
           </Switch>
         </div>

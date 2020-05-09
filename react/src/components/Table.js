@@ -5,7 +5,6 @@ import '../css/table.css';
 class Table extends React.Component{
     state={
         data: this.props.data,
-        
     }
     approval = (id) =>{
       this.setState({data: this.state.data.map(temp => {
