@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
@@ -201,37 +200,51 @@ app.post("/registerForum", (req, res) => {
       return res.status(400).json({ message: "No registration data found!" });
     else
       dataValidator.validateRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!",errors:err });
+        if (err) return res.json({ message: "Invalid Data!", errors: err });
         else {
-		 
-		  //check if user is already registered.
+          //check if user is already registered.
 
-		 		 users.checkRegistrationStatus(data.username, (err, state)=>{
-		 		 	if(err) return res.status(500).json({message:'Internal Server Database error!'});
-		 		   	else if(state == true) res.json({message: 'User has already registered'});
-		 		   	else
-					{
-         			 res.json({ message: "response recorded" });
-         			 mailSender.sendMail("Registration Notification",
-         		   "Your Request has been recorded.You will be contacted shortly.",data.email,(err, res) => {
-         		     if (err) {
-         		       return console.log({ message: "Error sending email to user." },err);
-         		     }});
+          users.checkRegistrationStatus(data.username, (err, state) => {
+            if (err)
+              return res
+                .status(500)
+                .json({ message: "Internal Server Database error!" });
+            else if (state == true)
+              res.json({ message: "User has already registered" });
+            else {
+              res.json({ message: "response recorded" });
+              mailSender.sendMail(
+                "Registration Notification",
+                "Your Request has been recorded.You will be contacted shortly.",
+                data.email,
+                (err, res) => {
+                  if (err) {
+                    return console.log(
+                      { message: "Error sending email to user." },
+                      err
+                    );
+                  }
+                }
+              );
 
-         		 mailSender.sendMail(
-         		   "Registration Request",
-         		   JSON.stringify(data),
-         		   process.env.USERMAIL,
-         		   (err, res) => {
-         		     if (err) {
-         		       return console.log({ message: "Error sending email to self." });
-         		     }
-         		   }
-         		 );
-		 		 }});
-        	}});
- 	 } 
-  catch (err) {
+              mailSender.sendMail(
+                "Registration Request",
+                JSON.stringify(data),
+                process.env.USERMAIL,
+                (err, res) => {
+                  if (err) {
+                    return console.log(
+                      { message: "Error sending email to self." },
+                      err
+                    );
+                  }
+                }
+              );
+            }
+          });
+        }
+      });
+  } catch (err) {
     console.log(err);
     res.status(400).json({ message: "BAD REQUEST!" });
   }
@@ -239,43 +252,62 @@ app.post("/registerForum", (req, res) => {
 
 //REGISTER FACULTY REQUEST 
 app.post("/registerFaculty", (req, res) => {
+  //console.log(req.body.registrationData);
   try {
     const data = req.body.registrationData;
+    console.log(data);
     if (!data)
       return res.status(400).json({ message: "No registration data found!" });
     else
       dataValidator.validateFacultyRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!",errors:err});
+        if (err) return res.json({ message: "Invalid Data!", errors: err });
         else {
-		  //check if user is already registered.
+          //check if user is already registered.
 
-		 		 users.checkFacultyRegistrationStatus(data.faculty_roll, (err, state)=>{
-		 		 	if(err) return res.status(500).json({message:'Internal Server Database error!'});
-		 		   	else if(state == true) res.json({message: 'User has already registered'});
-		 		   	else
-					{
-         			 res.json({ message: "response recorded" });
-         			 mailSender.sendMail("Registration Notification",
-         		   "Your Request has been recorded.You will be contacted shortly.",data.faculty_email,(err, res) => {
-         		     if (err) {
-         		       return console.log({ message: "Error sending email to user." },err);
-         		     }});
+          users.checkFacultyRegistrationStatus(
+            data.faculty_roll,
+            (err, state) => {
+              if (err)
+                return res
+                  .status(500)
+                  .json({ message: "Internal Server Database error!" });
+              else if (state == true)
+                res.json({ message: "User has already registered" });
+              else {
+                res.json({ message: "response recorded" });
+                mailSender.sendMail(
+                  "Registration Notification",
+                  "Your Request has been recorded.You will be contacted shortly.",
+                  data.faculty_email,
+                  (err, res) => {
+                    if (err) {
+                      return console.log(
+                        { message: "Error sending email to user." },
+                        err
+                      );
+                    }
+                  }
+                );
 
-				 //sending mail to self.
-         		 mailSender.sendMail(
-         		   "Registration Request",
-         		   JSON.stringify(data),
-         		   process.env.USERMAIL,
-         		   (err, res) => {
-         		     if (err) {
-         		       return console.log({ message: "Error sending email to self." });
-         		     }
-         		   }
-         		 );
-		 		 }});
-        	}});
- 	 } 
-  catch (err) {
+                //sending mail to self.
+                mailSender.sendMail(
+                  "Registration Request",
+                  JSON.stringify(data),
+                  process.env.USERMAIL,
+                  (err, res) => {
+                    if (err) {
+                      return console.log({
+                        message: "Error sending email to self.",
+                      });
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+      });
+  } catch (err) {
     console.log(err);
     res.status(400).json({ message: "BAD REQUEST!" });
   }

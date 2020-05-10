@@ -59,8 +59,7 @@ async function checkForumPassword(username, password, callback) {
 
   username = username.toUpperCase();
 
-  if (!username || !password)
-  {
+  if (!username || !password) {
     client.end();
     return callback("USERNAME AND PASSWORD UNDEFINED!", undefined);
   }
@@ -95,14 +94,12 @@ async function checkFacultyPassword(faculty_roll, password, callback) {
     console.log(err);
   }); //connect to DB
 
-  if (!faculty_roll || !password)
-  {
+  if (!faculty_roll || !password) {
     client.end();
     return callback("USERNAME AND PASSWORD UNDEFINED!", undefined);
   }
 
- faculty_roll = faculty_roll.toUpperCase();
-
+  faculty_roll = faculty_roll.toUpperCase();
 
   client.query(
     "SELECT pwd_hash FROM FACULTY WHERE faculty_roll= $1 ;",
@@ -128,61 +125,55 @@ async function checkFacultyPassword(faculty_roll, password, callback) {
     }
   );
 }
-function checkRegistrationStatus(forum_name, callback)
-{
+function checkRegistrationStatus(forum_name, callback) {
   var client = new Client();
   client.connect();
 
-  forum_name  = forum_name.toUpperCase();
+  forum_name = forum_name.toUpperCase();
 
-  client.query("SELECT forum_name FROM FORUMS WHERE forum_name= $1;",[forum_name],(err, res) => {
-      if (err)
-	  {
+  client.query(
+    "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
+    [forum_name],
+    (err, res) => {
+      if (err) {
         client.end();
         return callback(err, null);
-      } 
-	  else
-	  {
-        if (res.rowCount === 0)
-		{
+      } else {
+        if (res.rowCount === 0) {
           client.end();
           return callback(undefined, false);
-        }
-		else
-			{
+        } else {
           client.end();
           return callback(undefined, true);
         }
       }
-    });
+    }
+  );
 }
-function checkFacultyRegistrationStatus(faculty_roll, callback)
-{
+function checkFacultyRegistrationStatus(faculty_roll, callback) {
   var client = new Client();
   client.connect();
 
- faculty_roll = faculty_roll.toUpperCase();
+  faculty_roll = faculty_roll.toUpperCase();
 
-  client.query("SELECT * FROM Faculty WHERE faculty_roll= $1;",[faculty_roll],(err, res) => {
-      if (err)
-	  {
+  client.query(
+    "SELECT * FROM Faculty WHERE faculty_roll= $1;",
+    [faculty_roll],
+    (err, res) => {
+      if (err) {
         client.end();
         return callback(err, null);
-      } 
-	  else
-	  {
-        if (res.rowCount === 0)
-		{
+      } else {
+        if (res.rowCount === 0) {
           client.end();
           return callback(undefined, false);
-        }
-		else
-		{
+        } else {
           client.end();
           return callback(undefined, true);
         }
       }
-    });
+    }
+  );
 }
 
 // REGISTER FORUM (PRIVATE USE ONLY)
@@ -192,9 +183,7 @@ function registerForum(forum_name, password, email, phone, callback) {
   var client = new Client();
   client.connect();
 
-  
   forum_name = forum_name.toUpperCase();
-
 
   const password_hash = hashPassword(password);
 
@@ -221,8 +210,15 @@ function registerForum(forum_name, password, email, phone, callback) {
 }
 
 //REGISTER FACULTY (PRIVATE USE ONLY)
-
-function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,password, callback) {
+function registerFaculty(
+  faculty_name,
+  faculty_roll,
+  faculty_dept,
+  email,
+  phone,
+  password,
+  callback
+) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
@@ -238,7 +234,7 @@ function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,pa
     } else {
       client.query(
         "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
-        [faculty_name,faculty_roll,faculty_dept,email,phone,password_hash],
+        [faculty_name, faculty_roll, faculty_dept, email, phone, password_hash],
         (err, res) => {
           if (err) {
             client.end();
@@ -256,12 +252,12 @@ module.exports = {
  
   fetchAccessToken:fetchAccessToken,
   checkForumPassword: checkForumPassword,
-  checkFacultyPassword:checkFacultyPassword,
+  checkFacultyPassword: checkFacultyPassword,
   hashPassword: hashPassword,
   checkRegistrationStatus: checkRegistrationStatus,
-  checkFacultyRegistrationStatus:checkFacultyRegistrationStatus,
+  checkFacultyRegistrationStatus: checkFacultyRegistrationStatus,
   registerForum: registerForum,
-  registerFaculty:registerFaculty,
+  registerFaculty: registerFaculty,
   generateAccessToken: generateAccessToken,
   authenticateToken: authenticateToken,
 };

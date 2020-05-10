@@ -3,11 +3,11 @@ import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+import RegistrationCheck from "./RegistrationCheck";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [value, setValue] = useState("Select a forum");
-
   const handleLogin = () => {
     let un = value;
     let pw = password;
@@ -21,6 +21,7 @@ const Login = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+
   const isEnabled = password.length > 0;
   const Forumlist = [
     "codingStudio",
@@ -72,8 +73,10 @@ const Login = () => {
       </form>
       <br />
       <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
-        Register
+        Go to Regististration Page
       </Link>
+      <br />
+      <RegistrationCheck value={value} />
     </div>
   );
 };
