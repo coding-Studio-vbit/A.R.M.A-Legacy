@@ -184,6 +184,9 @@ function checkFacultyRegistrationStatus(faculty_roll, callback)
       }
     });
 }
+
+// REGISTER FORUM (PRIVATE USE ONLY)
+
 function registerForum(forum_name, password, email, phone, callback) {
   //returns status of registration (true or false)
   var client = new Client();
@@ -216,6 +219,8 @@ function registerForum(forum_name, password, email, phone, callback) {
     }
   });
 }
+
+//REGISTER FACULTY (PRIVATE USE ONLY)
 
 function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,password, callback) {
   //returns status of registration (true or false)
