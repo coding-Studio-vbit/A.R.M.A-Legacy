@@ -192,7 +192,7 @@ app.post("/checkFacultyRegistrationStatus", (req, res) => {
   }
 });
 
-//REGISTER FORUM (PRIVATE USE ONLY)
+//REGISTER FORUM REQUEST
 
 app.post("/registerForum", (req, res) => {
   try {
@@ -237,7 +237,7 @@ app.post("/registerForum", (req, res) => {
   }
 });
 
-//REGISTER FACULTY (PRIVATE USE ONLY)
+//REGISTER FACULTY REQUEST 
 app.post("/registerFaculty", (req, res) => {
   try {
     const data = req.body.registrationData;
