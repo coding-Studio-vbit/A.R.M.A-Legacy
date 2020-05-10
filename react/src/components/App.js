@@ -6,6 +6,7 @@ import Login from "./Login";
 import Register from "./Register";
 import Hdashboard from "./Hdashboard";
 import Fdashboard from "./Fdashboard";
+import frdashboard from "./frdashboard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/register" component={Register} />
             <Route path="/Hdashboard" component={Hdashboard} />
             <Route path="/Fdashboard" component={Fdashboard} />
+            <Route path="/forumdashboard" component={frdashboard}/>
             <Login />
           </Switch>
         </div>
