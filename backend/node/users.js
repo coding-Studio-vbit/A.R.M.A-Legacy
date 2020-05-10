@@ -5,6 +5,20 @@ const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
+function fetchAccessToken(request,callback){
+	
+	if(!request.headers.authorization){
+		return callback('No Authorization field found in the header!',undefined);
+	}
+	
+	var token_parts = request.headers.authorization.split(' ');
+
+	if(token_parts[0]=="Bearer" && token_parts[1]){
+		return callback(undefined, token_parts[1]);
+	}
+	return callback('Malformed Auth token!',undefined);
+}
+
 function generateAccessToken(data, secret, expirationTimeSeconds) {
   if (expirationTimeSeconds == undefined) return jwt.sign(data, secret); //if no expiration date is specified, return token without expiration
   return jwt.sign(data, secret, { expiresIn: expirationTimeSeconds }); //token with expiration.
@@ -234,6 +248,8 @@ function registerFaculty(faculty_name,faculty_roll,faculty_dept, email, phone,pa
   });
 }
 module.exports = {
+ 
+  fetchAccessToken:fetchAccessToken,
   checkForumPassword: checkForumPassword,
   checkFacultyPassword:checkFacultyPassword,
   hashPassword: hashPassword,
