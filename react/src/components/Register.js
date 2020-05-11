@@ -6,12 +6,23 @@ import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
 
 function Register() {
+  const Forumlist = [
+    "codingStudio",
+    "stumagz",
+    "IEEE-Vbit",
+    "RoboticsClub",
+    "EcoClub",
+    "StreetCause",
+    "VBIT-MUN",
+    "Stutalk",
+  ];
   const [contact, setContact] = useState({
     email: "",
     cemail: "",
     pnum: "",
   });
-  const [values, setValue] = useState("Select a forum");
+  const [values, setValue] = useState(Forumlist[0]);
+  const [registered, isRegistered] = useState(true);
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -22,10 +33,11 @@ function Register() {
       };
     });
   }
-  const isEnabled =
-    contact.email === contact.cemail && contact.email.length > 0;
-  const isPhone = contact.pnum.length === 10;
-  const handleRegister = () => {
+  const changeStatus = (res) => {
+    isRegistered(res);
+  };
+  const isEnabled = contact.email === contact.cemail;
+  const handleRegister = (e) => {
     console.log({ values }, contact.email, contact.pnum);
     axios
       .post("/registerForum", {
@@ -38,16 +50,7 @@ function Register() {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-  ];
+
   return (
     <div className="mine" style={{ display: "block" }}>
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
@@ -108,8 +111,8 @@ function Register() {
         </div>
         <br />
         <button
-          type="button"
-          disabled={!isEnabled && isPhone}
+          type="submit"
+          disabled={registered}
           className="btn btn-primary"
           onClick={handleRegister}
         >
@@ -121,7 +124,8 @@ function Register() {
         </Link>
       </form>
       <br />
-      <RegistrationCheck value={values} />
+      <RegistrationCheck value={values} mus={changeStatus} />
+      {registered && <h4 style={{ color: "green" }}>Forum is registered</h4>}
     </div>
   );
 }
