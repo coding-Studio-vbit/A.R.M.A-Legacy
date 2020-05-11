@@ -6,8 +6,19 @@ import logo from "../images/logo.png";
 import RegistrationCheck from "./RegistrationCheck";
 
 const Login = () => {
+  const Forumlist = [
+    "codingStudio",
+    "stumagz",
+    "IEEE-Vbit",
+    "RoboticsClub",
+    "EcoClub",
+    "StreetCause",
+    "VBIT-MUN",
+    "Stutalk",
+  ];
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState("Select a forum");
+  const [value, setValue] = useState(Forumlist[0]);
+  const [registered, isRegistered] = useState(false);
   const handleLogin = () => {
     let un = value;
     let pw = password;
@@ -21,18 +32,11 @@ const Login = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
+  const changeStatus = (res) => {
+    isRegistered(res);
+  };
+  const isEnabled = password.length > 0 && registered;
 
-  const isEnabled = password.length > 0;
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-  ];
   return (
     <div className="mine">
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
@@ -43,7 +47,11 @@ const Login = () => {
         <Dropdown.Toggle>{value}</Dropdown.Toggle>
         <Dropdown.Menu>
           {Forumlist.map((club) => (
-            <Dropdown.Item onSelect={() => setValue(club)}>
+            <Dropdown.Item
+              onSelect={() => {
+                setValue(club);
+              }}
+            >
               {club}
             </Dropdown.Item>
           ))}
@@ -76,7 +84,8 @@ const Login = () => {
         Go to Regististration Page
       </Link>
       <br />
-      <RegistrationCheck value={value} />
+      <RegistrationCheck value={value} mus={changeStatus} />
+      {!registered && <h4 style={{ color: "red" }}>Forum is not registered</h4>}
     </div>
   );
 };
