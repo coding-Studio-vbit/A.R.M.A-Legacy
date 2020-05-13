@@ -37,7 +37,11 @@ app.post("/login", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-            obj[req.body.user.username] = accessToken;
+			
+			//create a new property with the username with the value as an object and the user type
+
+            obj[req.body.user.username] = {accessToken: accessToken,userType: 'FORUM'};
+
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
@@ -59,6 +63,9 @@ app.post("/login", (req, res) => {
 app.post("/loginFaculty", (req, res) => {
   //check password.
   try {
+
+   //for loginFaculty the faculty_roll property is sent instead of the username property
+
     users
       .checkFacultyPassword(
         req.body.user.faculty_roll,
@@ -77,7 +84,9 @@ app.post("/loginFaculty", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-            obj[req.body.user.faculty_roll] = accessToken;
+         
+			obj[req.body.user.faculty_roll] = {accessToken: accessToken, userType: 'FACULTY'};
+
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
@@ -114,7 +123,7 @@ app.post("/logout", (req, res) => {
       }
       var obj = fs.readFileSync("validkeys.json");
       obj = JSON.parse(obj.toString());
-      if (obj.hasOwnProperty(username) && obj[username] == token) {
+      if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
         //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
         delete obj[req.body.user.username];
       } else
@@ -313,6 +322,39 @@ app.post("/registerFaculty", (req, res) => {
     res.status(400).json({ message: "BAD REQUEST!" });
   }
 });
+
+
+//Get user type using Access Token.
+
+app.post('/getUserType',(req,res)=>{
+	try
+	{
+		users.fetchAccessToken(req, (err, token)=>{
+		if(err){
+			return res.status(400).json({message: 'No token found!'});
+		}
+			
+			users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (err, username)=>{
+			if(err){
+				return res.status(400).json(err);
+			};
+					var fileData = fs.readFileSync('validkeys.json');
+					fileData = fileData.toString();
+					fileData = JSON.parse(fileData);
+					if(!fileData.hasOwnProperty(username)){
+						return  res.status(400).json({message:"User isnt Logged in!"});
+					}
+					const {userType} = fileData[username];
+					return res.send({userType:userType});
+			});
+		});
+	}
+	catch(err){
+		res.status(500).json('Internal Server Error!');
+		console.log(err);
+	}
+});
+
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 
