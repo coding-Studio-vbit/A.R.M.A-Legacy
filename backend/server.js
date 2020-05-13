@@ -41,7 +41,7 @@ app.post("/login", (req, res) => {
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
-            return res.status(401).send({ message: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
+            return res.send({ message: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
           }
         }
       )
@@ -101,29 +101,30 @@ app.post("/logout", (req, res) => {
   //if check token, remove the token from validkeys.json and redirect to login page.
   //For logout the request should have both the username and the access token.
 
-  try {	
-	users.fetchAccessToken(req,(err,token)=>{
-		if(err) return res.status(400).json({message:err});
-		
-    		const username = req.body.user.username; //get the username
+  try {
+    users.fetchAccessToken(req, (err, token) => {
+      if (err) return res.status(400).json({ message: err });
 
-    		if (!username || !token) {
-    		  return res
-    		    .status(400)
-    		    .json({ message: "username or token unspecified!" });
-    		}
-    		var obj = fs.readFileSync("validkeys.json");
-    		obj = JSON.parse(obj.toString());
-    		if (obj.hasOwnProperty(username) && obj[username] == token) {
-    		  //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
-    		  delete obj[req.body.user.username];
-    		} else
-    		  return res.status(401).send({ message: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
-    		res.send({ message: "LOGOUT SUCCESSFUL!" });
-    		//save the file.
-    		fs.writeFileSync("validkeys.json", JSON.stringify(obj));
-	});
+      const username = req.body.user.username; //get the username
 
+      if (!username || !token) {
+        return res
+          .status(400)
+          .json({ message: "username or token unspecified!" });
+      }
+      var obj = fs.readFileSync("validkeys.json");
+      obj = JSON.parse(obj.toString());
+      if (obj.hasOwnProperty(username) && obj[username] == token) {
+        //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
+        delete obj[req.body.user.username];
+      } else
+        return res
+          .status(401)
+          .send({ message: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+      res.send({ message: "LOGOUT SUCCESSFUL!" });
+      //save the file.
+      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+    });
   } catch (err) {
     res.status(400).json({ message: "BAD REQUEST" });
   }
@@ -133,21 +134,21 @@ app.post("/logout", (req, res) => {
 
 app.post("/dashboard", (req, res) => {
   try {
-
-	users.fetchAccessToken(req,(err, token)=>{
-		if(err) return res.status(400).json({message:err});
-      	users.authenticateToken(
-      	  token,
-      	  process.env.SECRET_ACCESS_TOKEN,
-      	  (err, username) => {
-      	    if (err) return res.status(400).json(err);
-      	    else {
-      	     	 return res.json({
-      	        	message: "GOOD REQUEST,REDIRECTING TO DASHBOARD",
-      	      	});
-      	    }
-      	  });
-	});
+    users.fetchAccessToken(req, (err, token) => {
+      if (err) return res.status(400).json({ message: err });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (err, username) => {
+          if (err) return res.status(400).json(err);
+          else {
+            return res.json({
+              message: "GOOD REQUEST,REDIRECTING TO DASHBOARD",
+            });
+          }
+        }
+      );
+    });
   } catch (err) {
     res.status(400).json({ message: err });
     console.log(err);
@@ -250,7 +251,7 @@ app.post("/registerForum", (req, res) => {
   }
 });
 
-//REGISTER FACULTY REQUEST 
+//REGISTER FACULTY REQUEST
 app.post("/registerFaculty", (req, res) => {
   //console.log(req.body.registrationData);
   try {
