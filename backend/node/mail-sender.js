@@ -26,6 +26,9 @@ function sendMail(subject, content, receiver, callback) {
       user: process.env.USERMAIL,
       pass: process.env.PASSWORD,
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
   mailOptions = {

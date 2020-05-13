@@ -3,18 +3,22 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 
-const Login = () => {
+const FacultyLogin = () => {
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
 
   const stutt = () => {
-    const data = { password };
     axios
-      .post("/hashpassword", data)
+      .post("/loginFaculty", {
+        user: {
+          faculty_roll: rollNo,
+          password: password,
+        },
+      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const isEnabled = password.length > 0 && rollNo.length > 10;
+  const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
     <div className="mine">
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
@@ -45,6 +49,7 @@ const Login = () => {
         </div>
         <br />
         <button
+          type="button"
           disabled={!isEnabled}
           className="btn btn-primary"
           onClick={stutt}
@@ -54,10 +59,10 @@ const Login = () => {
       </form>
       <br />
       <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
-        Register
+        Go To Faculty Registration Page
       </Link>
     </div>
   );
 };
 
-export default Login;
+export default FacultyLogin;
