@@ -21,11 +21,11 @@ class Table extends React.Component{
             const items=this.state.data.map(item =>{return(
 
                <tr>
-                  <td scope="row">{item.id}</td>
+                  <td>{item.id}</td>
                   <td>{item.Name}</td>
                   <td>{item.subject}</td>
                   <td>{item.status}</td>
-                  <td> <a href="#home">Click here!</a> </td>
+                  <td> <a href="#home" >Click here!</a> </td>
                   <td><center>
                     <input type="checkbox" onChange={this.approval.bind(item,item.id)}/>
             </center></td>

@@ -4,9 +4,8 @@ import UserForm from "./userForm";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Hdashboard from "./Hdashboard";
-import Fdashboard from "./Fdashboard";
-import frdashboard from "./frdashboard";
+import Dashboard from "./Dashboard";
+import TemplateDetails from './TemplateDetails';
 
 function App() {
   return (
@@ -17,9 +16,8 @@ function App() {
             <Route exact path="/" component={UserForm} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/Hdashboard" component={Hdashboard} />
-            <Route path="/Fdashboard" component={Fdashboard} />
-            <Route path="/forumdashboard" component={frdashboard}/>
+            <Route exact path="/Dashboard" component={Dashboard} />
+            <Route path="/Dashboard/TemplateDetails" component={TemplateDetails}/>
             <Login />
           </Switch>
         </div>

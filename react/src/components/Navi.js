@@ -4,16 +4,16 @@ import {Nav,Navbar} from 'react-bootstrap';
 
 export default function Navi() {
     return (
-      <Navbar style={{backgroundColor: '#222222 !important',paddingBottom:0,paddingTop:'5px', borderRadius:'5px'}} className="navigation" collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Navbar.Brand href="#home" style={{color:'grey'}}>ARMA</Navbar.Brand>
+      <Navbar style={{backgroundColor: '#222222 !important', borderRadius:'5px'}} className="navigation" collapseOnSelect expand="lg" bg="dark" variant="dark">
+  <Navbar.Brand href="#home">ARMA</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link style={{backgroundColor: '#1a1a1a', paddingBottom:'-5px',color:'white'}}>Dashboard</Nav.Link>
+      <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
     </Nav>
     <Nav>
-      <Nav.Link style={{paddingBottom:'8.5px'}}>Profile</Nav.Link>
-      <Nav.Link style={{paddingBottom:'3px'}}>
+      <Nav.Link >Profile</Nav.Link>
+      <Nav.Link >
         Log out
       </Nav.Link>
     </Nav>
