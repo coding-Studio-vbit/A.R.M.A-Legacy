@@ -124,7 +124,7 @@ function Register() {
         </Link>
       </form>
       <br />
-      <RegistrationCheck value={values} mus={changeStatus} />
+      <RegistrationCheck value={values} changeRegiValue={changeStatus} />
       {registered && <h4 style={{ color: "green" }}>Forum is registered</h4>}
     </div>
   );
