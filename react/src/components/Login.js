@@ -3,11 +3,22 @@ import { Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+import RegistrationCheck from "./RegistrationCheck";
 
 const Login = () => {
+  const Forumlist = [
+    "codingStudio",
+    "stumagz",
+    "IEEE-Vbit",
+    "RoboticsClub",
+    "EcoClub",
+    "StreetCause",
+    "VBIT-MUN",
+    "Stutalk",
+  ];
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState("Select a forum");
-
+  const [value, setValue] = useState(Forumlist[0]);
+  const [registered, isRegistered] = useState(false);
   const handleLogin = () => {
     let un = value;
     let pw = password;
@@ -21,17 +32,11 @@ const Login = () => {
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const isEnabled = password.length > 0;
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-  ];
+  const changeStatus = (res) => {
+    isRegistered(res);
+  };
+  const isEnabled = password.length > 0 && registered;
+
   return (
     <div className="mine">
       <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
@@ -42,7 +47,11 @@ const Login = () => {
         <Dropdown.Toggle>{value}</Dropdown.Toggle>
         <Dropdown.Menu>
           {Forumlist.map((club) => (
-            <Dropdown.Item onSelect={() => setValue(club)}>
+            <Dropdown.Item
+              onSelect={() => {
+                setValue(club);
+              }}
+            >
               {club}
             </Dropdown.Item>
           ))}
@@ -72,8 +81,11 @@ const Login = () => {
       </form>
       <br />
       <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
-        Register
+        Go to Regististration Page
       </Link>
+      <br />
+      <RegistrationCheck value={value} mus={changeStatus} />
+      {!registered && <h4 style={{ color: "red" }}>Forum is not registered</h4>}
     </div>
   );
 };
