@@ -4,7 +4,8 @@ import "../css/App.css";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Hdashboard from "./Hdashboard";
+import Dashboard from "./Dashboard";
+import TemplateDetails from './TemplateDetails';
 import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 
@@ -16,9 +17,10 @@ function App() {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
+            <Route exact path="/Dashboard" component={Dashboard} />
+            <Route path="/Dashboard/TemplateDetails" component={TemplateDetails}/>
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <Route path="/Hdashboard" component={Hdashboard} />
             <Login />
           </Switch>
         </div>

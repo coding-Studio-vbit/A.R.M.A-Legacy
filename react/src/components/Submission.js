@@ -1,10 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react'
 import '../css/table.css';
 
-
-class Table extends React.Component{
+export default class Submission extends Component {
     state={
-        data: this.props.data,
+        data:[
+            {
+                id:1,
+                Name:'Coding Studio',
+                subject:'Permission for codecraft',
+                status:'pending',
+                approved : false
+            },
+            {
+                id:2,
+                Name:'Coding Studio',
+                subject:'Permission for codecraft',
+                status:'pending',
+                approved : false
+            },
+            {
+                id:3,
+                Name:'Coding Studio',
+                subject:'Permission for codecraft',
+                status:'pending',
+                approved : false
+            },
+            {
+                id:4,
+                Name:'Coding Studio',
+                subject:'Permission for codecraft',
+                status:'pending',
+                approved : false
+            }
+        ]
     }
     approval = (id) =>{
       this.setState({data: this.state.data.map(temp => {
@@ -21,11 +49,11 @@ class Table extends React.Component{
             const items=this.state.data.map(item =>{return(
 
                <tr>
-                  <td>{item.id}</td>
+                  <td scope="row">{item.id}</td>
                   <td>{item.Name}</td>
                   <td>{item.subject}</td>
                   <td>{item.status}</td>
-                  <td> <a href="#home" >Click here!</a> </td>
+                  <td> <a href="#home">Click here!</a> </td>
                   <td><center>
                     <input type="checkbox" onChange={this.approval.bind(item,item.id)}/>
             </center></td>
@@ -41,11 +69,9 @@ class Table extends React.Component{
                    <thead>
                    <tr>
                    <th scope="col">#</th>
-                   <th scope="col">{this.props.name}</th>
+                   <th scope="col">Forum/Student</th>
                    <th scope="col">Subject</th>
                    <th scope="col">Status</th>
-                   <th scope="col">Remarks</th>
-                   <th scope="col"><center>Approve</center></th>
                    </tr>
                    </thead>
                    <tbody>
@@ -60,5 +86,3 @@ class Table extends React.Component{
         }
 
 }
-
-export default  Table;
