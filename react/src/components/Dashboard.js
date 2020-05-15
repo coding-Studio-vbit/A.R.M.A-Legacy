@@ -5,7 +5,7 @@ import TemplateList from './TemplateList';
 import {Tab,Tabs} from 'react-bootstrap';
 class Dashboard extends React.Component{
   render(){
-    const loginValue=1;
+    const loginValue=3;
 
     var stu_data=[
       {
