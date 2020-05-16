@@ -248,6 +248,30 @@ function registerFaculty(
     }
   });
 }
+function newFacultyRegistrationRequest(faculty_roll,faculty_name,faculty_dept,phone,email, callback)
+{
+	var client = new Client();
+	client.connect();
+	client.query('INSERT INTO faculty_registration_request(faculty_name,faculty_dept,faculty_roll,email,phone) VALUES($1,$2,$3,$4,$5)',
+	[faculty_roll,faculty_name,faculty_dept,email,phone],
+	 (err,res)=>{
+	 		client.end();
+			if(err) => return callback(err, undefined);
+			return callback(undefined, true);
+		});
+}
+function newForumRegistrationRequest(forum_name,phone,email, callback)
+{
+	var client = new Client();
+	client.connect();
+	client.query('INSERT INTO forum_registration_request(forum_name,email,phone) VALUES($1,$2,$3)',
+	[forum_name,email,phone],
+	 (err,res)=>{
+	 		client.end();
+			if(err) => return callback(err, undefined);
+			return callback(undefined, true);
+		});
+}
 module.exports = {
  
   fetchAccessToken:fetchAccessToken,
@@ -260,4 +284,6 @@ module.exports = {
   registerFaculty: registerFaculty,
   generateAccessToken: generateAccessToken,
   authenticateToken: authenticateToken,
+  newFacultyRegistrationRequest: newFacultyRegistrationRequest,
+  newForumRegistrationRequest: newForumRegistrationRequest
 };
