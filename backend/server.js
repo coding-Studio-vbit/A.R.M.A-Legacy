@@ -40,7 +40,8 @@ app.post("/login", (req, res) => {
               req.body.user.username,
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "Login Successful", accessToken: accessToken });
+
+            res.send({ message: ("USERNAME: "+req.body.user.username), accessToken: accessToken });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -89,20 +90,16 @@ app.post("/loginFaculty", (req, res) => {
               req.body.user.faculty_roll,
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "Login Successful", accessToken: accessToken });
+            res.send({ message: "USERNAME: "+req.body.user.faculty_roll, accessToken: accessToken });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
 
-<<<<<<< HEAD
-			obj[req.body.user.faculty_roll] = {accessToken: accessToken, userType: 'FACULTY'};
-=======
             obj[req.body.user.faculty_roll] = {
               accessToken: accessToken,
               userType: "FACULTY",
             };
->>>>>>> e689f18db62fa4a6348946b18c546df51133fd20
 
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
@@ -365,44 +362,12 @@ app.post("/registerFaculty", (req, res) => {
 
 //Get user type using Access Token.
 
-<<<<<<< HEAD
-app.post('/getUserType',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req, (err, token)=>{
-		if(err){
-			return res.status(400).json({message: 'No token found!'});
-		}
-
-			users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (err, username)=>{
-			if(err){
-				return res.status(400).json(err);
-			};
-					var fileData = fs.readFileSync('validkeys.json');
-					fileData = fileData.toString();
-					fileData = JSON.parse(fileData);
-					if(!fileData.hasOwnProperty(username)){
-						return  res.status(400).json({message:"User isnt Logged in!"});
-					}
-					const {userType} = fileData[username];
-					return res.send({userType:userType});
-			});
-		});
-	}
-	catch(err){
-		res.status(500).json('Internal Server Error!');
-		console.log(err);
-	}
-});
-=======
 app.post("/getUserType", (req, res) => {
   try {
     users.fetchAccessToken(req, (err, token) => {
       if (err) {
         return res.status(400).json({ message: "No token found!" });
       }
->>>>>>> e689f18db62fa4a6348946b18c546df51133fd20
-
       users.authenticateToken(
         token,
         process.env.SECRET_ACCESS_TOKEN,
