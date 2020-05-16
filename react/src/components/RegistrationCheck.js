@@ -14,9 +14,9 @@ const RegistrationCheck = (props) => {
         })
         .then((res) => {
           if (res.data.message) {
-            props.mus(true);
+            props.changeRegiValue(true);
           } else {
-            props.mus(false);
+            props.changeRegiValue(false);
           }
         })
         .catch((err) => console.log(err));
