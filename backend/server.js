@@ -155,15 +155,24 @@ app.post("/logout", (req, res) => {
 
 //DASHBOARD ( TESTING )
 
-app.get("/dashboard", async(req, res) => {
-  try {
-    console.log(req.body);
-    const data = await pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)");
-    res.json(data.rows);
-  } catch (err) {
-    console.log(err.message);
-  }
-});
+app.post("/dashboard", async(req, res) => {
+
+	users.fetchAccessToken(req, (err, token)=>{
+		if(err) return res.status(400).json(err:'couldnt find any token!');
+		users.authenticateToken(token, (err,state)=>{
+			if(err) return res.status(400).json({err:'Invalid Token!'});
+  				try {
+  			 		 console.log(req.body);
+  			  		const data = await pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)");
+  			  		res.json(data.rows);
+  					}
+				catch (err) {
+			 	 res.status(500).json({err:'Internal Database Error!'});
+  			 	 console.log(err);
+  				}
+			});
+		});
+	});
 
 //REGISTRATION STATUS CHECK
 
