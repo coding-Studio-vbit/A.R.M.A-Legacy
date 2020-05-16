@@ -250,6 +250,13 @@ app.post("/registerForum", (req, res) => {
                   }
                 }
               );
+
+				//now create a new record in the registration request table.
+				users.newForumRegistrationRequest(data.forum_name,data.email,data.phone,
+				(err,st)=>{
+					if(err) return console.log(err, "Error inserting forum registration request into table!");
+					return console.log("new forum registration request received!")
+				});
             }
           });
         }
@@ -312,6 +319,14 @@ app.post("/registerFaculty", (req, res) => {
                     }
                   }
                 );
+
+				//now create a new record in the registration request table.
+				users.newFacultyRegistrationRequest(data.faculty_name,data.faculty_dept,data.faculty_roll,data.email,data.phone,
+				(err,st)=>{
+					if(err) return console.log(err, "Error inserting faculty registration request into table!");
+					return console.log("new faculty registration request received!")
+				});
+
               }
             }
           );
