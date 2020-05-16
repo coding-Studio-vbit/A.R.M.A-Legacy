@@ -1,25 +1,18 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import { Card} from 'react-bootstrap';
 import '../css/template.css';
-
-
+import {Button} from 'react-bootstrap'
 
 export default class Template extends React.Component{
-    render() {
-        const {id,subject,recepient,letter}=this.props.template;
-        
-        return (
-            <div style={{textAlign:"center"}} className="card col-9 mx-auto col-md-6 col-lg-3 my-3 " >
-            <h4 style={{color: "#b007c4"}}>Template-{id}</h4>
-            <h2 >{subject} </h2>
-            <p  >From CodingStudio <br/>To {recepient}<br/> regarding {subject}</p>  
-            <div class="cta-container transition"> <a href="#" class="cta"><Link to="/forumdashboard/TemplateDetails">Use This</Link></a>      
-               
-</div>
+    render(props) {
+        const {id,subject,recepient,linkName}=this.props.template;
 
-            </div> 
+        return (
+            <div style={{textAlign:"center"}} className="card mb-5 mt-5 " >
+            <div class="cS-container"><div class="cS"></div></div>
+            <h2 >{subject} </h2>
+            <p >From CodingStudio <br/> To {recepient}<br/> Regarding {subject}</p>
+            <div class="button"><Button href={linkName}>USE THIS</Button></div>
+            </div   >
         )
      }
 }
-

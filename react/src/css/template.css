@@ -1,11 +1,11 @@
 
 .card {
-    background-color: #fff;
+    background-color: black;
     bottom: 0;
     box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
   -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.3);
-    height: 300px;
+    height: 380px;
     left: 0;
     margin: auto;
     overflow: hidden;
@@ -14,38 +14,7 @@
     top: 0;
     width: 300px;
 }
-.card:hover {
-    height: 450px;
-    width: 300px;
-}
-.card:hover .cta-container {
-    display: inline;
-    margin-top: 380px;
-}
-.card:hover .card_circle {
-    background-size: cover;
-    border-radius: 0;
-    margin-top: -130px;
-}
-.card:hover h2 {
-    background: #3487f7;
-    color: #fff;
-    margin-top: 100px;
-    padding: 5px;
-}
-.card:hover h2 small { color: #fff }
-.card:hover p { margin-top: 300px }
-.card_circle {
-    background: url('http://lorempixel.com/400/200') no-repeat center bottom;
-    background-color: #3487f7;
-    background-size: cover;
-    border-radius: 50%;
-    height: 400px;
-    margin-left: -75px;
-    margin-top: -270px;
-    position: absolute;
-    width: 450px;
-}
+
 h2 {
     color: #3487f7;
     font-family: 'Raleway', sans-serif;
@@ -58,7 +27,8 @@ h2 {
     z-index: 9999;
 }
 p {
-    color: rgba(0,0,0,.6);
+    padding-left: 25px;
+    color:white;
     font-family: 'Raleway', sans-serif;
     font-size: 100%;
     font-weight: normal;
@@ -67,15 +37,21 @@ p {
     text-align: center;
     z-index: 9999;
 }
-.cta-container {
-    display: none;
-    margin-top: 320px;
-    position: absolute;
-    text-align: center;
-    width: 100%;
-    z-index: 9999;
+
+.cS-container{
+    height:140px;
+    width: 300px;
+    margin-top: 0%;
 }
-.cta {
+.cS{
+    background: url('../images/cslogo.png') no-repeat center bottom;
+    background-color:white;
+    background-size: cover;
+    height: 55%;
+    position: relative;
+    width: 100%;
+}
+.button{
     -moz-border-radius: 2px;
     -moz-transition: 0.2s ease-out;
     -ms-transition: 0.2s ease-out;
@@ -83,9 +59,14 @@ p {
     -webkit-border-radius: 2px;
     -webkit-transition: 0.2s ease-out;
     background-clip: padding-box;
-    border: 2px solid #3487f7;
+    margin-top: 320px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    z-index: 9999;
+    background-clip: padding-box;
     border-radius: 2px;
-    color: #3487f7;
+    color: #b007c4;
     display: inline-block;
     font-family: 'Raleway', sans-serif;
     font-size: 17px;
@@ -98,11 +79,4 @@ p {
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.2s ease-out;
-}
-.cta:hover {
-    background-color: #3487f7;
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color: #fff;
-    -moz-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

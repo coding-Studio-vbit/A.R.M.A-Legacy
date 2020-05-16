@@ -6,9 +6,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "app": "^0.1.0",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "bootstrap": "^4.4.1",
+    "create": "0.0.2",
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
@@ -38,10 +40,14 @@
       "last 1 safari version"
     ]
   },
+<<<<<<< HEAD
   "proxy": "http://localhost:3001/",
   "main": "index.js",
   "devDependencies": {},
   "author": "",
   "license": "ISC",
   "description": ""
+=======
+  "proxy": "http://localhost:8080/"
+>>>>>>> 3c5f6a7bca5c0a06ca14366a0e6542907aad9c6d
 }
