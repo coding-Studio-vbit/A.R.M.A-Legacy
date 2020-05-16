@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import '../css/template.css';
 import {Card,Button} from 'react-bootstrap'
 
 
 export default class Template extends React.Component{
     render() {
-        const {id,subject,recepient,letter}=this.props.template;
+        const {id,subject,recepient}=this.props.template;
 
         return (
             <div style={{textAlign:"center"}} className="card mb-5 mt-5 " >
