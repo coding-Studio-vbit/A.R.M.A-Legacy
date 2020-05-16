@@ -37,10 +37,13 @@ app.post("/login", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-			
-			//create a new property with the username with the value as an object and the user type
 
-            obj[req.body.user.username] = {accessToken: accessToken,userType: 'FORUM'};
+            //create a new property with the username with the value as an object and the user type
+
+            obj[req.body.user.username] = {
+              accessToken: accessToken,
+              userType: "FORUM",
+            };
 
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
@@ -63,8 +66,7 @@ app.post("/login", (req, res) => {
 app.post("/loginFaculty", (req, res) => {
   //check password.
   try {
-
-   //for loginFaculty the faculty_roll property is sent instead of the username property
+    //for loginFaculty the faculty_roll property is sent instead of the username property
 
     users
       .checkFacultyPassword(
@@ -84,8 +86,11 @@ app.post("/loginFaculty", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-         
-			obj[req.body.user.faculty_roll] = {accessToken: accessToken, userType: 'FACULTY'};
+
+            obj[req.body.user.faculty_roll] = {
+              accessToken: accessToken,
+              userType: "FACULTY",
+            };
 
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
@@ -251,12 +256,22 @@ app.post("/registerForum", (req, res) => {
                 }
               );
 
-				//now create a new record in the registration request table.
-				users.newForumRegistrationRequest(data.forum_name,data.email,data.phone,
-				(err,st)=>{
-					if(err) return console.log(err, "Error inserting forum registration request into table!");
-					return console.log("new forum registration request received!")
-				});
+              //now create a new record in the registration request table.
+              users.newForumRegistrationRequest(
+                data.username,
+                data.email,
+                data.phone,
+                (err, st) => {
+                  if (err)
+                    return console.log(
+                      err,
+                      "Error inserting forum registration request into table!"
+                    );
+                  return console.log(
+                    "new forum registration request received!"
+                  );
+                }
+              );
             }
           });
         }
@@ -320,13 +335,24 @@ app.post("/registerFaculty", (req, res) => {
                   }
                 );
 
-				//now create a new record in the registration request table.
-				users.newFacultyRegistrationRequest(data.faculty_name,data.faculty_dept,data.faculty_roll,data.email,data.phone,
-				(err,st)=>{
-					if(err) return console.log(err, "Error inserting faculty registration request into table!");
-					return console.log("new faculty registration request received!")
-				});
-
+                //now create a new record in the registration request table.
+                users.newFacultyRegistrationRequest(
+                  data.faculty_name,
+                  data.faculty_dept,
+                  data.faculty_roll,
+                  data.faculty_email,
+                  data.faculty_phone,
+                  (err, st) => {
+                    if (err)
+                      return console.log(
+                        err,
+                        "Error inserting faculty registration request into table!"
+                      );
+                    return console.log(
+                      "new faculty registration request received!"
+                    );
+                  }
+                );
               }
             }
           );
@@ -338,38 +364,38 @@ app.post("/registerFaculty", (req, res) => {
   }
 });
 
-
 //Get user type using Access Token.
 
-app.post('/getUserType',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req, (err, token)=>{
-		if(err){
-			return res.status(400).json({message: 'No token found!'});
-		}
-			
-			users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (err, username)=>{
-			if(err){
-				return res.status(400).json(err);
-			};
-					var fileData = fs.readFileSync('validkeys.json');
-					fileData = fileData.toString();
-					fileData = JSON.parse(fileData);
-					if(!fileData.hasOwnProperty(username)){
-						return  res.status(400).json({message:"User isnt Logged in!"});
-					}
-					const {userType} = fileData[username];
-					return res.send({userType:userType});
-			});
-		});
-	}
-	catch(err){
-		res.status(500).json('Internal Server Error!');
-		console.log(err);
-	}
-});
+app.post("/getUserType", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (err, token) => {
+      if (err) {
+        return res.status(400).json({ message: "No token found!" });
+      }
 
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (err, username) => {
+          if (err) {
+            return res.status(400).json(err);
+          }
+          var fileData = fs.readFileSync("validkeys.json");
+          fileData = fileData.toString();
+          fileData = JSON.parse(fileData);
+          if (!fileData.hasOwnProperty(username)) {
+            return res.status(400).json({ message: "User isnt Logged in!" });
+          }
+          const { userType } = fileData[username];
+          return res.send({ userType: userType });
+        }
+      );
+    });
+  } catch (err) {
+    res.status(500).json("Internal Server Error!");
+    console.log(err);
+  }
+});
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 

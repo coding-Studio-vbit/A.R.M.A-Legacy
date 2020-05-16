@@ -1,1 +1,16 @@
-{"dummy":"dummyval","codingStudio":"eyJhbGciOiJIUzI1NiJ9.Y29kaW5nU3R1ZGlv.GBhRWeGSZGxpkK6j9m3eX4f_WObnR0pYl9rMum45sFE","17P61A0596":"eyJhbGciOiJIUzI1NiJ9.MTdQNjFBMDU5Ng.azCUBLRWn2091kJITCohCYQT3ukol-t2CDBcJkFGTf4","stumagz":"eyJhbGciOiJIUzI1NiJ9.c3R1bWFneg.RjCpnTu611-dPJPSDP1iyOFjvnLRPn49JEn5tQhp2bw","saikiran":{"accessToken":"eyJhbGciOiJIUzI1NiJ9.c2Fpa2lyYW4.dwns7EmnfJ-TZDOMvk1xl53zx75RD-kBlw87OD4cAFs","userType":"FORUM"}}
+{
+  "dummy": "dummyval",
+  "codingStudio": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.Y29kaW5nU3R1ZGlv.GBhRWeGSZGxpkK6j9m3eX4f_WObnR0pYl9rMum45sFE",
+    "userType": "FORUM"
+  },
+  "17P61A0596": "eyJhbGciOiJIUzI1NiJ9.MTdQNjFBMDU5Ng.azCUBLRWn2091kJITCohCYQT3ukol-t2CDBcJkFGTf4",
+  "stumagz": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.c3R1bWFneg.RjCpnTu611-dPJPSDP1iyOFjvnLRPn49JEn5tQhp2bw",
+    "userType": "FORUM"
+  },
+  "saikiran": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.c2Fpa2lyYW4.dwns7EmnfJ-TZDOMvk1xl53zx75RD-kBlw87OD4cAFs",
+    "userType": "FORUM"
+  }
+}
