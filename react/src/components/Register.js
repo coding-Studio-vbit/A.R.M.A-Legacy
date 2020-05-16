@@ -69,7 +69,7 @@ function Register() {
           </Dropdown.Menu>
         </Dropdown>
         <br />
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="email"
             onChange={handleChange}
@@ -79,7 +79,7 @@ function Register() {
             placeholder="Email"
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="email"
             onChange={handleChange}
@@ -93,13 +93,13 @@ function Register() {
               display: !isEnabled ? "inline" : "none",
             }}
             id="emailHelp"
-            class="form-text"
+            className="form-text"
           >
             Enter the same email as above
           </h5>
         </div>
         <br />
-        <div class="form-group">
+        <div className="form-group">
           <input
             type="number"
             onChange={handleChange}
@@ -111,7 +111,7 @@ function Register() {
         </div>
         <br />
         <button
-          type="submit"
+          type="button"
           disabled={registered}
           className="btn btn-primary"
           onClick={handleRegister}

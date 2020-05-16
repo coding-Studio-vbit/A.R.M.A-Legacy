@@ -5,18 +5,17 @@ const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
-function fetchAccessToken(request,callback){
-	
-	if(!request.headers.authorization){
-		return callback('No Authorization field found in the header!',undefined);
-	}
-	
-	var token_parts = request.headers.authorization.split(' ');
+function fetchAccessToken(request, callback) {
+  if (!request.headers.authorization) {
+    return callback("No Authorization field found in the header!", undefined);
+  }
 
-	if(token_parts[0]=="Bearer" && token_parts[1]){
-		return callback(undefined, token_parts[1]);
-	}
-	return callback('Malformed Auth token!',undefined);
+  var token_parts = request.headers.authorization.split(" ");
+
+  if (token_parts[0] == "Bearer" && token_parts[1]) {
+    return callback(undefined, token_parts[1]);
+  }
+  return callback("Malformed Auth token!", undefined);
 }
 
 function generateAccessToken(data, secret, expirationTimeSeconds) {
@@ -248,33 +247,41 @@ function registerFaculty(
     }
   });
 }
-function newFacultyRegistrationRequest(faculty_roll,faculty_name,faculty_dept,phone,email, callback)
-{
-	var client = new Client();
-	client.connect();
-	client.query('INSERT INTO faculty_registration_request(faculty_name,faculty_dept,faculty_roll,email,phone) VALUES($1,$2,$3,$4,$5)',
-	[faculty_roll,faculty_name,faculty_dept,email,phone],
-	 (err,res)=>{
-	 		client.end();
-			if(err) => return callback(err, undefined);
-			return callback(undefined, true);
-		});
+function newFacultyRegistrationRequest(
+  faculty_roll,
+  faculty_name,
+  faculty_dept,
+  phone,
+  email,
+  callback
+) {
+  var client = new Client();
+  client.connect();
+  client.query(
+    "INSERT INTO faculty_registration_request(faculty_name,faculty_dept,faculty_roll,email,phone) VALUES($1,$2,$3,$4,$5)",
+    [faculty_roll, faculty_name, faculty_dept, email, phone],
+    (err, res) => {
+      client.end();
+      if (err) return callback(err, undefined);
+      return callback(undefined, true);
+    }
+  );
 }
-function newForumRegistrationRequest(forum_name,phone,email, callback)
-{
-	var client = new Client();
-	client.connect();
-	client.query('INSERT INTO forum_registration_request(forum_name,email,phone) VALUES($1,$2,$3)',
-	[forum_name,email,phone],
-	 (err,res)=>{
-	 		client.end();
-			if(err) => return callback(err, undefined);
-			return callback(undefined, true);
-		});
+function newForumRegistrationRequest(forum_name, phone, email, callback) {
+  var client = new Client();
+  client.connect();
+  client.query(
+    "INSERT INTO forum_registration_request(forum_name,email,phone) VALUES($1,$2,$3)",
+    [forum_name, email, phone],
+    (err, res) => {
+      client.end();
+      if (err) return callback(err, undefined);
+      return callback(undefined, true);
+    }
+  );
 }
 module.exports = {
- 
-  fetchAccessToken:fetchAccessToken,
+  fetchAccessToken: fetchAccessToken,
   checkForumPassword: checkForumPassword,
   checkFacultyPassword: checkFacultyPassword,
   hashPassword: hashPassword,
@@ -285,5 +292,5 @@ module.exports = {
   generateAccessToken: generateAccessToken,
   authenticateToken: authenticateToken,
   newFacultyRegistrationRequest: newFacultyRegistrationRequest,
-  newForumRegistrationRequest: newForumRegistrationRequest
+  newForumRegistrationRequest: newForumRegistrationRequest,
 };
