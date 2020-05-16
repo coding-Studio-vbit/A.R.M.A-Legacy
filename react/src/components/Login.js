@@ -84,7 +84,7 @@ const Login = () => {
         Go to Regististration Page
       </Link>
       <br />
-      <RegistrationCheck value={value} mus={changeStatus} />
+      <RegistrationCheck value={value} changeRegiValue={changeStatus} />
       {!registered && <h4 style={{ color: "red" }}>Forum is not registered</h4>}
     </div>
   );
