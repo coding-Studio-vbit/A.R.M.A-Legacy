@@ -155,16 +155,34 @@ app.post("/logout", (req, res) => {
 
 //DASHBOARD ( TESTING )
 
-app.post("/dashboard", async(req, res) => {
+app.post("/dashboard", (req, res) => {
 
 	users.fetchAccessToken(req, (err, token)=>{
-		if(err) return res.status(400).json(err:'couldnt find any token!');
-		users.authenticateToken(token, (err,state)=>{
+		if(err) return res.status(400).json({err:'couldnt find any token!'});
+		users.authenticateToken(token, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
   			 		 console.log(req.body);
-  			  		const data = await pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)");
+  			  		const data =  pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",[username]);
   			  		res.json(data.rows);
+  					}
+				catch (err) {
+			 	 res.status(500).json({err:'Internal Database Error!'});
+  			 	 console.log(err);
+  				}
+			});
+		});
+	});
+
+app.post("/forumDashboard", (req, res) => {
+	users.fetchAccessToken(req, (err, token)=>{
+		if(err) return res.status(400).json(err:'couldnt find any token!');
+		users.authenticateToken(token, (err,username)=>{
+			if(err) return res.status(400).json({err:'Invalid Token!'});
+  				try {
+  			 			console.log(req.body);
+  			  			const data =  pool.query("select subject,status from requests where forum_name=$1",[username]);
+  			  			res.json(data.rows);
   					}
 				catch (err) {
 			 	 res.status(500).json({err:'Internal Database Error!'});
