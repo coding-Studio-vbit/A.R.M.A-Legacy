@@ -5,7 +5,7 @@ import TemplateList from './TemplateList';
 import {Tab,Tabs} from 'react-bootstrap';
 class Dashboard extends React.Component{
   render(){
-    const loginValue=3;
+    const loginValue=2;
 
     switch (loginValue) {
 
@@ -13,18 +13,10 @@ class Dashboard extends React.Component{
             <div>
             <Nav />
             <Table/>
-            <Table/>
             </div>
           );
 
           case 2: return(
-            <div >
-            <Nav />
-            <Table/>
-            </div>
-          );
-
-          case 3: return(
             <div>
             <Nav/>
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
