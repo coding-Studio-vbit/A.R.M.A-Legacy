@@ -1,5 +1,6 @@
 import React from 'react';
 import '../css/nav.css';
+import {Link} from 'react-router-dom';
 import {Nav,Navbar} from 'react-bootstrap';
 
 export default function Navi() {
@@ -12,7 +13,7 @@ export default function Navi() {
       <Nav.Link style={{backgroundColor: '#1a1a1a', paddingBottom:'-5px',color:'white'}}>Dashboard</Nav.Link>
     </Nav>
     <Nav>
-      <Nav.Link style={{paddingBottom:'8.5px'}}>Profile</Nav.Link>
+      <Nav.Link style={{paddingBottom:'8.5px'}}><Link to="/Hdashboard/Profile">Profile</Link></Nav.Link>
       <Nav.Link style={{paddingBottom:'3px'}}>
         Log out
       </Nav.Link>
