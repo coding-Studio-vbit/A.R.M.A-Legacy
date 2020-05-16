@@ -8,11 +8,19 @@ const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
+const pool = require("./db");
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
 
 //express configuration
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
+app.use(allowCrossDomain);
 
 //LOGIN
 
@@ -37,7 +45,7 @@ app.post("/login", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-			
+
 			//create a new property with the username with the value as an object and the user type
 
             obj[req.body.user.username] = {accessToken: accessToken,userType: 'FORUM'};
@@ -84,7 +92,7 @@ app.post("/loginFaculty", (req, res) => {
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
-         
+
 			obj[req.body.user.faculty_roll] = {accessToken: accessToken, userType: 'FACULTY'};
 
             //save the data.
@@ -141,26 +149,13 @@ app.post("/logout", (req, res) => {
 
 //DASHBOARD ( TESTING )
 
-app.post("/dashboard", (req, res) => {
+app.get("/dashboard", async(req, res) => {
   try {
-    users.fetchAccessToken(req, (err, token) => {
-      if (err) return res.status(400).json({ message: err });
-      users.authenticateToken(
-        token,
-        process.env.SECRET_ACCESS_TOKEN,
-        (err, username) => {
-          if (err) return res.status(400).json(err);
-          else {
-            return res.json({
-              message: "GOOD REQUEST,REDIRECTING TO DASHBOARD",
-            });
-          }
-        }
-      );
-    });
+    console.log(req.body);
+    const data = await pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)");
+    res.json(data.rows);
   } catch (err) {
-    res.status(400).json({ message: err });
-    console.log(err);
+    console.log(err.message);
   }
 });
 
@@ -333,7 +328,7 @@ app.post('/getUserType',(req,res)=>{
 		if(err){
 			return res.status(400).json({message: 'No token found!'});
 		}
-			
+
 			users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (err, username)=>{
 			if(err){
 				return res.status(400).json(err);

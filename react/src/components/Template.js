@@ -1,12 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import '../css/template.css';
 
 
 
 export default class Template extends React.Component{
     render() {
-        const {id,subject,recepient,letter}=this.props.template;
+        const {id,subject,recepient}=this.props.template;
 
         return (
             <div style={{textAlign:"center"}} className="card col-9 mx-auto col-md-6 col-lg-3 my-3 " >
