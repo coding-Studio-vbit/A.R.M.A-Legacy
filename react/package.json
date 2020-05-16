@@ -12,6 +12,7 @@
     "bootstrap": "^4.4.1",
     "create": "0.0.2",
     "express": "^4.17.1",
+    "js-file-download": "^0.4.12",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
