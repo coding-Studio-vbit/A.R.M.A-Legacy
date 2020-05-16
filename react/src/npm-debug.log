@@ -19,7 +19,7 @@
 13 verbose stack     at maybeClose (internal/child_process.js:925:16)
 13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
 14 verbose pkgid rt@0.1.0
-15 verbose cwd /home/saikiran/Desktop/ARMA/A.R.M.A/react
+15 verbose cwd /home/saikiran/Desktop/ARMA/A.R.M.A/react/src
 16 error Linux 5.3.0-51-generic
 17 error argv "/usr/bin/node" "/usr/bin/npm" "start"
 18 error node v8.10.0
