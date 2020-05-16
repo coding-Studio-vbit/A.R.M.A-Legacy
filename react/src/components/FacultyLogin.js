@@ -16,8 +16,9 @@ const FacultyLogin = () => {
         },
       })
       .then((res) => {
-        let userName = res.message.split(" ")[1];
-        let accessToken = res.accessToken;
+        console.log(res);
+        let userName = res.data.message.split(" ")[1];
+        let accessToken = res.data.accessToken;
         localStorage.setItem(
           "user",
           JSON.stringify({

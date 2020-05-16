@@ -9,12 +9,12 @@ const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const pool = require("./db");
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
+var allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+};
 
 //express configuration
 app.use(express.static(path.join(__dirname, "/public")));
@@ -41,7 +41,10 @@ app.post("/login", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({ message: ("USERNAME: "+req.body.user.username), accessToken: accessToken });
+            res.send({
+              message: "USERNAME: " + req.body.user.username,
+              accessToken: accessToken,
+            });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -90,7 +93,10 @@ app.post("/loginFaculty", (req, res) => {
               req.body.user.faculty_roll,
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "USERNAME: "+req.body.user.faculty_roll, accessToken: accessToken });
+            res.send({
+              message: "USERNAME: " + req.body.user.faculty_roll,
+              accessToken: accessToken,
+            });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -155,24 +161,24 @@ app.post("/logout", (req, res) => {
 
 //DASHBOARD ( TESTING )
 
-app.post("/dashboard", async(req, res) => {
-
-	users.fetchAccessToken(req, (err, token)=>{
-		if(err) return res.status(400).json(err:'couldnt find any token!');
-		users.authenticateToken(token, (err,state)=>{
-			if(err) return res.status(400).json({err:'Invalid Token!'});
-  				try {
-  			 		 console.log(req.body);
-  			  		const data = await pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)");
-  			  		res.json(data.rows);
-  					}
-				catch (err) {
-			 	 res.status(500).json({err:'Internal Database Error!'});
-  			 	 console.log(err);
-  				}
-			});
-		});
-	});
+app.post("/dashboard", (req, res) => {
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(token, (err, state) => {
+      if (err) return res.status(400).json({ err: "Invalid Token!" });
+      try {
+        console.log(req.body);
+        const data = pool.query(
+          "select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=2)"
+        );
+        res.json(data.rows);
+      } catch (err) {
+        res.status(500).json({ err: "Internal Database Error!" });
+        console.log(err);
+      }
+    });
+  });
+});
 
 //REGISTRATION STATUS CHECK
 
