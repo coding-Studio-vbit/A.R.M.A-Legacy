@@ -8,7 +8,7 @@ const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
-const pool = require("./db");
+const pool = require("./db.js");
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -156,9 +156,10 @@ app.post("/logout", (req, res) => {
 //FACULTY DASHBOARD
 
 app.post("/dashboard", (req, res) => {
+
 	users.fetchAccessToken(req, (err, token)=>{
 		if(err) return res.status(400).json({err:'couldnt find any token!'});
-		users.authenticateToken(token, (err,username)=>{
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
   			 		 console.log(req.body);
@@ -186,7 +187,7 @@ app.post("/dashboard", (req, res) => {
 app.post("/forumDashboard", (req, res) => {
 	users.fetchAccessToken(req, (err, token)=>{
 		if(err) return res.status(400).json({err:'couldnt find any token!'});
-		users.authenticateToken(token, (err,username)=>{
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
 
@@ -203,15 +204,15 @@ app.post("/forumDashboard", (req, res) => {
 		});
 	});
 
-app.get("/forumDashboard", async(req, res) => {
-  try {
-    console.log(req.body);
-    const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
-    res.json(data.rows);
-  } catch (err) {
-    console.log(err.message);
-  }
-});
+//app.get("/forumDashboard", async(req, res) => {
+//  try {
+//    console.log(req.body);
+//    const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
+//    res.json(data.rows);
+//  } catch (err) {
+//    console.log(err.message);
+//  }
+//});
 
 //REGISTRATION STATUS CHECK
 
