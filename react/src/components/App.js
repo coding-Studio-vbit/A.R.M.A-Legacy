@@ -12,8 +12,8 @@ import Remarks from "./Remarks";
 
 //LetterTemplates
 import Camp from "./LetterTemplates/Camp";
-import econ from "./LetterTemplates/Eventconduct";
-import evenue from "./LetterTemplates/Eventvenue";
+import Econ from "./LetterTemplates/Eventconduct";
+import Evenue from "./LetterTemplates/Eventvenue";
 import Tatten from "./LetterTemplates/Attendanceteam";
 import Patten from "./LetterTemplates/AttendanceParticipants";
 
@@ -32,8 +32,8 @@ function App() {
             <Route path="/Remarks" component={Remarks} />
 
             <Route path="/campaining" component={Camp} />
-            <Route path="/conduct" component={econ} />
-            <Route path="/venue" component={evenue} />
+            <Route path="/conduct" component={Econ} />
+            <Route path="/venue" component={Evenue} />
             <Route path="/TeamAttendance" component={Tatten} />
             <Route path="/ParticipantsAttendance" component={Patten} />
             <Login />
