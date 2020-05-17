@@ -185,7 +185,7 @@ app.post("/dashboard", (req, res) => {
 
 app.post("/forumDashboard", (req, res) => {
 	users.fetchAccessToken(req, (err, token)=>{
-		if(err) return res.status(400).json(err:'couldnt find any token!');
+		if(err) return res.status(400).json({err:'couldnt find any token!'});
 		users.authenticateToken(token, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
