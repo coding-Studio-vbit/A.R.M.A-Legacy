@@ -27,24 +27,32 @@ class Dashboard extends React.Component{
             </div>
           );
 
-          case 2: return(
-            <div>
-            <Nav/>
+      case 2:
+        return (
+          <div>
+            <Nav />
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
               <Tab eventKey="home" title="Templates">
-                <TemplateList/>
+                <TemplateList />
               </Tab>
               <Tab eventKey="profile" title="Current requests">
                 <Table />
               </Tab>
             </Tabs>
-            </div>
-          )
+          </div>
+        );
 
-          default: return(
-            <div style={{marginTop:'20%'}}><center><h1>Please, <a href="/login">Login.</a></h1> </center></div>
-          );
-        }
+      default:
+        return (
+          <div style={{ marginTop: "20%" }}>
+            <center>
+              <h1>
+                Please, <a href="/login">Login.</a>
+              </h1>{" "}
+            </center>
+          </div>
+        );
+    }
   }
 }
 
