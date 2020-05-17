@@ -1,11 +1,23 @@
 input{
     margin: 5px;
     border-width: 0;
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> 3b53d069da70a7bea1b97815d46e1662ed02f332
 }
 .color{
     color:purple;
     font-weight: bolder;
 }
+<<<<<<< HEAD
 
+=======
+.remarkbox{
+  margin-top: 10%;
+}
+.buttonremark{
+  margin-top: 10%;
+}
+>>>>>>> 3b53d069da70a7bea1b97815d46e1662ed02f332

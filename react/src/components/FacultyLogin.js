@@ -15,7 +15,17 @@ const FacultyLogin = () => {
           password: password,
         },
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        let userName = res.message.split(" ")[1];
+        let accessToken = res.accessToken;
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            userName: userName,
+            accessToken: accessToken,
+          })
+        );
+      })
       .catch((err) => console.log(err));
   };
   const isEnabled = password.length > 0 && rollNo.length >= 10;

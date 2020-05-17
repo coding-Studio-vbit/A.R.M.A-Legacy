@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/table.css';
 import axios from 'axios';
 
-class Table extends React.Component{
+class FacultyTable extends React.Component{
   /*approval = (id) =>{
     this.setState({data: this.state.data.map(temp => {
       if(temp.id===id){
@@ -18,7 +18,7 @@ class Table extends React.Component{
   }
 
   componentWillMount() {
-    axios.get(`http://localhost:8080/forumDashboard`)
+    axios.get(`http://localhost:8080/dashboard`)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
@@ -34,13 +34,9 @@ class Table extends React.Component{
           <td>{item.forum_name}</td>
           <td>{item.subject}</td>
           <td>{item.status}</td>
-          <td> <a>Click here!</a> </td>
-    {
-      //       <td><center>
-    //         <input type="checkbox" />
-    // </center></td>
-  }
-    </tr>
+          <td> <a href="/Remarks" >Click here!</a> </td>
+          <td><center><input type="checkbox" /></center></td>
+      </tr>
 
              )
     })
@@ -52,12 +48,12 @@ class Table extends React.Component{
            <thead>
            <tr>
            <th scope="col">#</th>
-           <th scope="col">forum</th>
+           <th scope="col">forum/faculty</th>
            <th scope="col">Subject</th>
            <th scope="col">Status</th>
            <th scope="col">Remarks</th>
-           {// <th scope="col"><center>Approve</center></th>
-           }</tr>
+           <th scope="col"><center>Approve</center></th>
+           </tr>
            </thead>
            <tbody>
            {items}
@@ -71,4 +67,4 @@ class Table extends React.Component{
 
 }
 
-export default  Table;
+export default  FacultyTable;
