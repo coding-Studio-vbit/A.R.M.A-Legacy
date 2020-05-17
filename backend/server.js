@@ -203,6 +203,16 @@ app.post("/forumDashboard", (req, res) => {
 		});
 	});
 
+app.get("/forumDashboard", async(req, res) => {
+  try {
+    console.log(req.body);
+    const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
+    res.json(data.rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
+
 //REGISTRATION STATUS CHECK
 
 app.post("/checkRegistrationStatus", (req, res) => {
