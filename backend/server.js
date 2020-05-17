@@ -153,17 +153,23 @@ app.post("/logout", (req, res) => {
   }
 });
 
-//DASHBOARD ( TESTING )
+//FACULTY DASHBOARD
 
 app.post("/dashboard", (req, res) => {
-
 	users.fetchAccessToken(req, (err, token)=>{
 		if(err) return res.status(400).json({err:'couldnt find any token!'});
 		users.authenticateToken(token, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
   			 		 console.log(req.body);
-  			  		const data =  pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",[username]);
+
+					 //first get the faculty_id from faculty table.
+
+					var faculty_id = pool.query("select faculty_id from faculty where faculty_roll=$1",[username]);
+					faculty_id = faculty_id.rows[0].faculty_id;
+					//now use this faculty id to get the requests of the faculty.
+
+  			  		const data =  pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",[faculty_id]);
   			  		res.json(data.rows);
   					}
 				catch (err) {
@@ -174,12 +180,17 @@ app.post("/dashboard", (req, res) => {
 		});
 	});
 
+
+//FORUM DASHBOARD
+
 app.post("/forumDashboard", (req, res) => {
 	users.fetchAccessToken(req, (err, token)=>{
 		if(err) return res.status(400).json(err:'couldnt find any token!');
 		users.authenticateToken(token, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
+
+						//here the forum_name is itself obtained as the username after decoding the access token.
   			 			console.log(req.body);
   			  			const data =  pool.query("select subject,status from requests where forum_name=$1",[username]);
   			  			res.json(data.rows);
