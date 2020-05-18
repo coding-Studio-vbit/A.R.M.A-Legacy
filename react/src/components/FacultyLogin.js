@@ -11,7 +11,7 @@ const FacultyLogin = () => {
     axios
       .post("/loginFaculty", {
         user: {
-          faculty_roll: rollNo,
+          username: rollNo,
           password: password,
         },
       })
@@ -39,7 +39,7 @@ const FacultyLogin = () => {
       <div style={{ marginTop: 20 }}></div>
       <form>
         <div className="form-group">
-          <label for="InputRollNo">Roll Number</label>
+          <label htmlFor="InputRollNo">Roll Number</label>
           <input
             type="text"
             className="form-control"
@@ -49,7 +49,7 @@ const FacultyLogin = () => {
           />
         </div>
         <div className="form-group">
-          <label for="InputPassword1">Password</label>
+          <label htmlFor="InputPassword1">Password</label>
           <input
             type="password"
             className="form-control"

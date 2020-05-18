@@ -18,19 +18,11 @@ class Table extends React.Component {
   };
 
   componentWillMount() {
-    let user = JSON.parse(localStorage.getItem("user"));
-    let token = user.accessToken;
-    axios
-      .post(`http://localhost:8080/dashboard`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        const persons = res.data;
-        this.setState({ persons });
-        console.log(persons);
-      });
+    axios.get(`http://localhost:8080/forumDashboard`).then((res) => {
+      const persons = res.data;
+      this.setState({ persons });
+      console.log(persons);
+    });
   }
 
   render() {
@@ -43,13 +35,13 @@ class Table extends React.Component {
           <td>{item.status}</td>
           <td>
             {" "}
-            <a href="#home">Click here!</a>{" "}
+            <a>Click here!</a>{" "}
           </td>
-          <td>
-            <center>
-              <input type="checkbox" />
-            </center>
-          </td>
+          {
+            //       <td><center>
+            //         <input type="checkbox" />
+            // </center></td>
+          }
         </tr>
       );
     });
@@ -61,13 +53,13 @@ class Table extends React.Component {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">forum/faculty</th>
+                  <th scope="col">forum</th>
                   <th scope="col">Subject</th>
                   <th scope="col">Status</th>
                   <th scope="col">Remarks</th>
-                  <th scope="col">
-                    <center>Approve</center>
-                  </th>
+                  {
+                    // <th scope="col"><center>Approve</center></th>
+                  }
                 </tr>
               </thead>
               <tbody>{items}</tbody>

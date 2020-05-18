@@ -1,0 +1,14 @@
+input{
+    margin: 5px;
+    border-width: 0;
+}
+.color{
+    color:purple;
+    font-weight: bolder;
+}
+.remarkbox{
+  margin-top: 10%;
+}
+.buttonremark{
+  margin-top: 10%;
+}
