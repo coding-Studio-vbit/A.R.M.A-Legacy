@@ -4,8 +4,6 @@ const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const path = require("path");
 
-
-
 //--------------------------------------------------------//
 //-----------TOKEN HANDLING-------------------------------//
 //--------------------------------------------------------//
@@ -192,7 +190,6 @@ function checkFacultyRegistrationStatus(faculty_roll, callback) {
   );
 }
 
-
 // REGISTER FORUM (PRIVATE USE ONLY)
 
 function registerForum(forum_name, password, email, phone, callback) {
@@ -266,7 +263,6 @@ function registerFaculty(
   });
 }
 
-
 function newFacultyRegistrationRequest(
   faculty_roll,
   faculty_name,
@@ -301,209 +297,221 @@ function newForumRegistrationRequest(forum_name, phone, email, callback) {
   );
 }
 
-
 //--------------------------------------------------------//
 //---------------USER CREDENTIAL UPDATE-------------------//
 //--------------------------------------------------------//
 
-function changeForumUsername(forum_name, newUsername , callback){
-	//changes the forum name.
+function changeForumUsername(forum_name, newUsername, callback) {
+  //changes the forum name.
 
-	try{
+  try {
+    var client = new Client();
+    client.connect();
 
-		var client = new Client();
-		client.connect();
+    forum_name = forum_name.toUpperCase();
 
-		forum_name = forum_name.toUpperCase();
-
-		client.query("UPDATE forums SET forum_name=$1 WHERE forum_name=$2",[newUsername,forum_name],(err,data)=>{
-
-			if(err){
-				client.end();
-				console.log("Error updating forum_name!", err);
-				return callback(err, undefined); //update failed.
-			}
-			client.end();
-			return callback(undefined, true); //successful update of username.
-		});
-	}
-	catch(err){
-
-		console.log(err);
-		return callback(err, undefined);
-	}
+    client.query(
+      "UPDATE forums SET forum_name=$1 WHERE forum_name=$2",
+      [newUsername, forum_name],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("Error updating forum_name!", err);
+          return callback(err, undefined); //update failed.
+        }
+        client.end();
+        return callback(undefined, true); //successful update of username.
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-function changeFacultyUsername(faculty_roll, newUsername, callback){
-	//changes the faculty name
+function changeFacultyUsername(faculty_roll, newUsername, callback) {
+  //changes the faculty name
 
-	try
-	{
-		var client = new Client();
-		client.connect();
-		
-		faculty_roll = faculty_roll.toUpperCase();
+  try {
+    var client = new Client();
+    client.connect();
 
-		client.query("UPDATE faculty SET faculty_name=$1 WHERE faculty_roll=$2",[newUsername,faculty_roll],(err,data)=>{
-			if(err){
-				client.end();
-				console.log("error updating faculty name",err);
-				return callback(err, undefined);
-			}
-			client.end();
-			return callback(undefined, true);
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		return callback(err, undefined);
-	}
+    faculty_roll = faculty_roll.toUpperCase();
+
+    client.query(
+      "UPDATE faculty SET faculty_name=$1 WHERE faculty_roll=$2",
+      [newUsername, faculty_roll],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("error updating faculty name", err);
+          return callback(err, undefined);
+        }
+        client.end();
+        return callback(undefined, true);
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-function changeForumPassword(forum_name, oldPassword, newPassword, callback){
-	//changes the forum password
-	try
-	{
-		var client = new Client();
-		client.connect();
-		
-		forum_name = forum_name.toUpperCase();
-		//first confirm old password
-		
-		client.query("SELECT pwd_hash from forums where forum_name=$1",[forum_name],(err,data)=>{
+function changeForumPassword(forum_name, oldPassword, newPassword, callback) {
+  //changes the forum password
+  try {
+    var client = new Client();
+    client.connect();
 
-			if(err){
-				client.end();
-				console.log('error SELECT-ing pwd_hash in forums table',err);
-				return callback(err, undefined);
-			}
-			if(data.rows.length == 0)
-				return callback("Unknown forum name",undefined);
+    forum_name = forum_name.toUpperCase();
+    //first confirm old password
 
-			bcrypt.compare(oldPassword,data.rows[0].pwd_hash,(err, stat)=>{
-				if(err)
-				{
-					console.log(err);
-					callback(err, undefined);
-				}
-				if(!stat) return callback(' old password incorrect!', undefined);
+    client.query(
+      "SELECT pwd_hash from forums where forum_name=$1",
+      [forum_name],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("error SELECT-ing pwd_hash in forums table", err);
+          return callback(err, undefined);
+        }
+        if (data.rows.length == 0)
+          return callback("Unknown forum name", undefined);
 
-				//old password is correct.
-				const newPasswordHash = hashPassword(newPassword);
-				client.query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2",[newPasswordHash,forum_name],(err,data)=>{
-					if(err){
-						client.end();
-						console.log("Error updating forum password", err);
-						return callback(err,undefined);
-					}
-					client.end();
-					return callback(undefined, true); //successful password update.
-				});
-			})
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		return callback(err, undefined);
-	}
+        bcrypt.compare(oldPassword, data.rows[0].pwd_hash, (err, stat) => {
+          if (err) {
+            console.log(err);
+            callback(err, undefined);
+          }
+          if (!stat) return callback(" old password incorrect!", undefined);
+
+          //old password is correct.
+          const newPasswordHash = hashPassword(newPassword);
+          client.query(
+            "UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2",
+            [newPasswordHash, forum_name],
+            (err, data) => {
+              if (err) {
+                client.end();
+                console.log("Error updating forum password", err);
+                return callback(err, undefined);
+              }
+              client.end();
+              return callback(undefined, true); //successful password update.
+            }
+          );
+        });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-function changeFacultyPassword(faculty_roll, oldPassword, newPassword ,callback){
-	//changes the faculty password
-	try
-	{
-		var client = new Client();
-		client.connect();
-		
-		faculty_roll = faculty_roll.toUpperCase();
-		//first confirm old password
-		
-		client.query("SELECT pwd_hash from faculty where faculty_roll=$1",[faculty_roll],(err,data)=>{
+function changeFacultyPassword(
+  faculty_roll,
+  oldPassword,
+  newPassword,
+  callback
+) {
+  //changes the faculty password
+  try {
+    var client = new Client();
+    client.connect();
 
-			if(err){
-				client.end();
-				console.log('error SELECT-ing pwd_hash in faculty table',err);
-				return callback(err, undefined);
-			}
-			if(data.rows.length == 0)
-				return callback("Unknown faculty roll",undefined);
+    faculty_roll = faculty_roll.toUpperCase();
+    //first confirm old password
 
-			bcrypt.compare(oldPassword,data.rows[0].pwd_hash,(err, stat)=>{
-				if(err)
-				{
-					console.log(err);
-					callback(err, undefined);
-				}
-				if(!stat) return callback(' old password incorrect!', undefined);
+    client.query(
+      "SELECT pwd_hash from faculty where faculty_roll=$1",
+      [faculty_roll],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("error SELECT-ing pwd_hash in faculty table", err);
+          return callback(err, undefined);
+        }
+        if (data.rows.length == 0)
+          return callback("Unknown faculty roll", undefined);
 
-				//old password is correct.
-				const newPasswordHash = hashPassword(newPassword);
-				client.query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2",[newPasswordHash,faculty_roll],(err,data)=>{
-					if(err){
-						client.end();
-						console.log("Error updating forum password", err);
-						return callback(err,undefined);
-					}
-					client.end();
-					return callback(undefined, true); //successful password update.
-				});
-			})
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		return callback(err, undefined);
-	}
+        bcrypt.compare(oldPassword, data.rows[0].pwd_hash, (err, stat) => {
+          if (err) {
+            console.log(err);
+            callback(err, undefined);
+          }
+          if (!stat) return callback(" old password incorrect!", undefined);
+
+          //old password is correct.
+          const newPasswordHash = hashPassword(newPassword);
+          client.query(
+            "UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2",
+            [newPasswordHash, faculty_roll],
+            (err, data) => {
+              if (err) {
+                client.end();
+                console.log("Error updating forum password", err);
+                return callback(err, undefined);
+              }
+              client.end();
+              return callback(undefined, true); //successful password update.
+            }
+          );
+        });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-function changeForumEmail(forum_name, newEmail, callback){
-	//changes the forum's registered email
-	try
-	{
-		var client = new Client();
-		client.connect();
+function changeForumEmail(forum_name, newEmail, callback) {
+  //changes the forum's registered email
+  try {
+    var client = new Client();
+    client.connect();
 
-		forum_name = forum_name.toUpperCase();
-		client.query("UPDATE forums SET email=$1 WHERE forum_name=$2;", [newEmail,forum_name],(err,data)=>{
-			if(err){
-				client.end();
-				console.log('Error updating forum email', err);
-				return callback(err, undefined);
-			}
-			client.end();
-			return callback(undefined, true); //successful update.
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		return callback(err, undefined);
-	}
+    forum_name = forum_name.toUpperCase();
+    client.query(
+      "UPDATE forums SET email=$1 WHERE forum_name=$2;",
+      [newEmail, forum_name],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("Error updating forum email", err);
+          return callback(err, undefined);
+        }
+        client.end();
+        return callback(undefined, true); //successful update.
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-function changeFacultyEmail(faculty_roll, newEmail, callback){
-	//changes the faculty's registered email
-	try
-	{
-		var client = new Client();
-		client.connect();
+function changeFacultyEmail(faculty_roll, newEmail, callback) {
+  //changes the faculty's registered email
+  try {
+    var client = new Client();
+    client.connect();
 
-		faculty_roll = faculty_roll.toUpperCase();
-		client.query("UPDATE faculty SET email=$1 WHERE faculty_roll=$2;", [newEmail,faculty_roll],(err,data)=>{
-			if(err){
-				client.end();
-				console.log('Error updating faculty email', err);
-				return callback(err, undefined);
-			}
-			client.end();
-			return callback(undefined, true); //successful update.
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		return callback(err, undefined);
-	}
+    faculty_roll = faculty_roll.toUpperCase();
+    client.query(
+      "UPDATE faculty SET email=$1 WHERE faculty_roll=$2;",
+      [newEmail, faculty_roll],
+      (err, data) => {
+        if (err) {
+          client.end();
+          console.log("Error updating faculty email", err);
+          return callback(err, undefined);
+        }
+        client.end();
+        return callback(undefined, true); //successful update.
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    return callback(err, undefined);
+  }
 }
-
 
 //_____END__OF__MODULE_____//
 
@@ -520,10 +528,10 @@ module.exports = {
   authenticateToken: authenticateToken,
   newFacultyRegistrationRequest: newFacultyRegistrationRequest,
   newForumRegistrationRequest: newForumRegistrationRequest,
-  changeForumUsername:changeForumUsername,
-  changeForumPassword:changeForumPassword,
+  changeForumUsername: changeForumUsername,
+  changeForumPassword: changeForumPassword,
   changeForumEmail: changeForumEmail,
-  changeFacultyUsername:changeFacultyUsername,
-  changeFacultyPassword:changeFacultyPassword,
-  changeFacultyEmail: changeFacultyEmail
+  changeFacultyUsername: changeFacultyUsername,
+  changeFacultyPassword: changeFacultyPassword,
+  changeFacultyEmail: changeFacultyEmail,
 };
