@@ -17,8 +17,7 @@
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.1",
-    "typescript": "^3.8.3"
+    "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,14 +40,5 @@
       "last 1 safari version"
     ]
   },
-<<<<<<< HEAD
-  "proxy": "http://localhost:3001/",
-  "main": "index.js",
-  "devDependencies": {},
-  "author": "",
-  "license": "ISC",
-  "description": ""
-=======
   "proxy": "http://localhost:8080/"
->>>>>>> 3c5f6a7bca5c0a06ca14366a0e6542907aad9c6d
 }

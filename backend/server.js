@@ -231,6 +231,15 @@ app.post("/forumDashboard", (req, res) => {
 
 //REGISTRATION STATUS CHECK
 
+//Remarks
+app.post("/Remarks", (req, res) => {
+const remark=req.body;
+console.log(remark);
+
+
+
+})
+
 app.post("/checkRegistrationStatus", (req, res) => {
   try {
     const queryUsername = req.body.query.username;

@@ -9,7 +9,7 @@ class Dashboard extends React.Component{
 
 
   render(){
-    const loginValue=1;
+    const loginValue=2;
 
     switch (loginValue) {
 
