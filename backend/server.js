@@ -168,7 +168,7 @@ app.post("/logout", (req, res) => {
   }
 });
 
-//FACULTY DASHBOARD
+//FACULTY DASHBOARD (THIS USES  FACULTY ID WHICH WILL BE SOON DEPRECATED)
 
 app.post("/dashboard", (req, res) => {
 
@@ -741,7 +741,7 @@ app.post('/changeForumUsername',(req,res)=>{
 	try{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 	
 				if(!req.body.newUsername) return res.status(400).json({err:'No newUsername specified!'});
@@ -754,6 +754,7 @@ app.post('/changeForumUsername',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		res.status(500).json({err:'Internal Server Error: changeForumUsername'});
 	}
 });
@@ -761,7 +762,7 @@ app.post('/changeFacultyUsername',(req,res)=>{
 	try{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 	
 				if(!req.body.newUsername) return res.status(400).json({err:'No newUsername specified!'});
@@ -774,6 +775,7 @@ app.post('/changeFacultyUsername',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		res.status(500).json({err:'Internal Server Error: changeFacultyUsername'});
 	}
 });
@@ -782,7 +784,7 @@ app.post('/changeForumPassword',(req,res)=>{
 	{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 					
 				if(!req.body.oldPassword || !req.body.newPassword) return res.status(400).json({err:'not found oldPassword or newPassword'});
@@ -795,6 +797,7 @@ app.post('/changeForumPassword',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		return res.status(500).json({err:'Internal Server Error: changeForumPassword'});
 	}
 });
@@ -803,7 +806,7 @@ app.post('/changeFacultyPassword',(req,res)=>{
 	{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 					
 				if(!req.body.oldPassword || !req.body.newPassword) return res.status(400).json({err:'not found oldPassword or newPassword'});
@@ -816,6 +819,7 @@ app.post('/changeFacultyPassword',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		return res.status(500).json({err:'Internal Server Error: changeFacultyPassword'});
 	}
 });
@@ -824,7 +828,7 @@ app.post('/changeForumEmail',(req,res)=>{
 	{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 					
 				if(!req.body.newEmail) return res.status(400).json({err:'not found newEmail'});
@@ -837,6 +841,7 @@ app.post('/changeForumEmail',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		return res.status(500).json({err:'Internal Server Error: changeForumEmail'});
 	}
 });
@@ -845,7 +850,7 @@ app.post('/changeFacultyEmail',(req,res)=>{
 	{
 		users.fetchAccessToken(req,(error,token)=>{
 			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,SECRET_ACCESS_TOKEN, (error, username)=>{
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
 				if(error) return res.status(400).json({err: error.message});
 					
 				if(!req.body.newEmail) return res.status(400).json({err:'not found newEmail'});
@@ -858,6 +863,7 @@ app.post('/changeFacultyEmail',(req,res)=>{
 		})	
 	}
 	catch(err){
+		console.log(err);
 		return res.status(500).json({err:'Internal Server Error: changeFacultyEmail'});
 	}
 });
