@@ -52,11 +52,11 @@ app.post("/login", (req, res) => {
             return res.status(401).send({ message: err });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
-              req.body.user.username,
+              req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({ message: ("USERNAME: "+req.body.user.username), accessToken: accessToken });
+            res.send({ message: ("USERNAME: "+req.body.user.username.toUpperCase()), accessToken: accessToken });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -64,7 +64,7 @@ app.post("/login", (req, res) => {
 
             //create a new property with the username with the value as an object and the user type
 
-            obj[req.body.user.username] = {
+            obj[req.body.user.username.toUpperCase()] = {
               accessToken: accessToken,
               userType: "FORUM",
             };
@@ -101,16 +101,16 @@ app.post("/loginFaculty", (req, res) => {
             return res.status(401).send({ message: err });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
-              req.body.user.username,
+              req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "USERNAME: "+req.body.user.username, accessToken: accessToken });
+            res.send({ message: "USERNAME: "+req.body.user.username.toUpperCase(), accessToken: accessToken });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
 
-            obj[req.body.user.username] = {
+            obj[req.body.user.username.toUpperCase()] = {
               accessToken: accessToken,
               userType: "FACULTY",
             };
@@ -142,7 +142,7 @@ app.post("/logout", (req, res) => {
     users.fetchAccessToken(req, (err, token) => {
       if (err) return res.status(400).json({ message: err });
 
-      const username = req.body.user.username; //get the username
+      const username = req.body.user.username.toUpperCase(); //get the username
 
       if (!username || !token) {
         return res
@@ -153,7 +153,7 @@ app.post("/logout", (req, res) => {
       obj = JSON.parse(obj.toString());
       if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
         //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
-        delete obj[req.body.user.username];
+        delete obj[req.body.user.username.toUpperCase()];
       } else
         return res
           .status(401)
@@ -176,11 +176,9 @@ app.post("/dashboard", (req, res) => {
 		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
 			if(err) return res.status(400).json({err:'Invalid Token!'});
   				try {
-  			 		 console.log(req.body);
-
 					 //first get the faculty_id from faculty table.
 
-					var faculty_id = pool.query("select faculty_id from faculty where faculty_roll=$1",[username]);
+					var faculty_id = pool.query("select faculty_id from faculty where faculty_roll=$1",[username.toUpperCase()]);
 					faculty_id = faculty_id.rows[0].faculty_id;
 					//now use this faculty id to get the requests of the faculty.
 
@@ -207,7 +205,7 @@ app.post("/forumDashboard", (req, res) => {
 
 						//here the forum_name is itself obtained as the username after decoding the access token.
   			 			console.log(req.body);
-  			  			const data =  pool.query("select subject,status from requests where forum_name=$1",[username]);
+  			  			const data =  pool.query("select subject,status from requests where forum_name=$1",[username.toUpperCase()]);
   			  			res.json(data.rows);
   					}
 				catch (err) {
@@ -232,7 +230,7 @@ app.post("/forumDashboard", (req, res) => {
 
 app.post("/checkRegistrationStatus", (req, res) => {
   try {
-    const queryUsername = req.body.query.username;
+    const queryUsername = req.body.query.username.toUpperCase();
     if (!queryUsername) {
       return res.status(400).json({ message: "Username unspecified in query" });
     } else {
@@ -250,7 +248,7 @@ app.post("/checkRegistrationStatus", (req, res) => {
 
 app.post("/checkFacultyRegistrationStatus", (req, res) => {
   try {
-    const queryUsername = req.body.query.faculty_roll;
+    const queryUsername = req.body.query.faculty_roll.toUpperCase();
     if (!queryUsername) {
       return res.status(400).json({ message: "Username unspecified in query" });
     } else {
@@ -398,7 +396,7 @@ app.post("/registerFaculty", (req, res) => {
                 users.newFacultyRegistrationRequest(
                   data.faculty_name,
                   data.faculty_dept,
-                  data.faculty_roll,
+                  data.faculty_roll.toUpperCase(),
                   data.faculty_email,
                   data.faculty_phone,
                   (err, st) => {
@@ -720,10 +718,10 @@ app.post("/getUserType", (req, res) => {
           var fileData = fs.readFileSync("validkeys.json");
           fileData = fileData.toString();
           fileData = JSON.parse(fileData);
-          if (!fileData.hasOwnProperty(username)) {
+          if (!fileData.hasOwnProperty(username.toUpperCase())) {
             return res.status(400).json({ message: "User isnt Logged in!" });
           }
-          const { userType } = fileData[username];
+          const { userType } = fileData[username.toUpperCase()];
           return res.send({ userType: userType });
         }
       );
