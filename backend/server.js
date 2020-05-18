@@ -90,11 +90,10 @@ app.post("/login", (req, res) => {
 app.post("/loginFaculty", (req, res) => {
   //check password.
   try {
-    //for loginFaculty the faculty_roll property is sent instead of the username property
 
     users
       .checkFacultyPassword(
-        req.body.user.faculty_roll,
+        req.body.user.username,
         req.body.user.password,
         (err, status) => {
           if (err) {
@@ -102,16 +101,16 @@ app.post("/loginFaculty", (req, res) => {
             return res.status(401).send({ message: err });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
-              req.body.user.faculty_roll,
+              req.body.user.username,
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "USERNAME: "+req.body.user.faculty_roll, accessToken: accessToken });
+            res.send({ message: "USERNAME: "+req.body.user.username, accessToken: accessToken });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
             obj = JSON.parse(obj);
 
-            obj[req.body.user.faculty_roll] = {
+            obj[req.body.user.username] = {
               accessToken: accessToken,
               userType: "FACULTY",
             };
