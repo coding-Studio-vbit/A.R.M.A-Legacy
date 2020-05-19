@@ -18,11 +18,17 @@ class Table extends React.Component{
   }
 
   componentWillMount() {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    console.log(accessToken)
     axios.get(`http://localhost:8080/forumDashboard`)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
         console.log(persons);
+      }).catch((err) => {
+        console.log(err);
       })
   }
 
