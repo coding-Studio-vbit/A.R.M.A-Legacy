@@ -1,57 +1,73 @@
-insert into forums(forum_name,pwd_hash,email,phone_no) values ('yash', 'bdrhsdg','yasaswirajmadari@gmail.com','7416136474');
-insert into forums(forum_name,pwd_hash,email,phone_no) values ('Sai', 'ghrdhynj32kw','Sk_king@gmail.com','7412544581');
-insert into forums(forum_name,pwd_hash,email,phone_no) values ('Axai', 'ghrdhyn34trmnklfs','akshayyy@gmail.com','6533444581');
-insert into forums(forum_name,pwd_hash,email,phone_no) values ('Aaris', 'gh4y5htki','aarisshNibba@gmail.com','4585244581');
 
- forum_id | forum_name |     pwd_hash      |           email            |  phone_no
-----------+------------+-------------------+----------------------------+------------
-        1 | yash       | grhe44            | yasaswirajmadari@gmail.com | 7416136474
-        2 | Sai        | ghrdhynj32kw      | Sk_king@gmail.com          | 7412544581
-        3 | Axai       | ghrdhyn34trmnklfs | akshayyy@gmail.com         | 6533444581
-        4 | Aaris      | gh4y5htki         | aarisshNibba@gmail.com     | 4585244581
+Creating the Database:
+======================
 
-insert into faculty(faculty_name,faculty_roll,faculty_dept,email,phone,pwd_hash) values ('Sai', '18P44tenj3','CSE','Sk_kigvrdfhng@gmail.com','7412544581','ergjnwkrw');
-insert into faculty(faculty_name,faculty_roll,faculty_dept,email,phone,pwd_hash) values ('Praveen', '18P35wenj3','CSE','pappu_sir@gmail.com','6432244581','errthgjnwkrw');
-insert into faculty(faculty_name,faculty_roll,faculty_dept,email,phone,pwd_hash) values ('kiran', '18P44t56y3','CSE','kiran_kigvrdfhng@gmail.com','7454544581','erg467wkrw');
-insert into faculty(faculty_name,faculty_roll,faculty_dept,email,phone,pwd_hash) values ('X AE a-12', '18P26tenj3','CSE','Sk_kdgshddfhng@gmail.com','7456544581','erg4e5yhjnwkrw');
+CREATE DATABASE armadb;
 
- faculty_id | faculty_name | faculty_roll | faculty_dept |           email            |   phone    |    pwd_hash
-------------+--------------+--------------+--------------+----------------------------+------------+----------------
-          1 | Sai          | 18P44tenj3   | CSE          | Sk_kigvrdfhng@gmail.com    | 7412544581 | ergjnwkrw
-          2 | Praveen      | 18P35wenj3   | CSE          | pappu_sir@gmail.com        | 6432244581 | errthgjnwkrw
-          3 | kiran        | 18P44t56y3   | CSE          | kiran_kigvrdfhng@gmail.com | 7454544581 | erg467wkrw
-          4 | X AE a-12    | 18P26tenj3   | CSE          | Sk_kdgshddfhng@gmail.com   | 7456544581 | erg4e5yhjnwkrw
+Creating the Forums table:
+==========================
 
-insert into requests(forum_id,forum_name,filename,status,subject) values ('1','yash','letter1.json','pending','Permission for attendance');
-insert into requests(forum_id,forum_name,filename,status,subject) values ('2','Sai','letter2.json','pending','Permission for reduction of attendance');
-insert into requests(forum_id,forum_name,filename,status,subject) values ('3','Axai','letter3.json','pending','Permission for going out to a movie');
-insert into requests(forum_id,forum_name,filename,status,subject) values ('4','Aaris','letter4.json','pending','Permission for attendance');
+CREATE TABLE forums(
+	forum_name varchar(128) PRIMARY KEY,
+	pwd_hash varchar(128),
+	email varchar(128) UNIQUE,
+	phone_no varchar(11)
+);
 
- request_id | forum_id | forum_name |   filename   | status  |                subject
-------------+----------+------------+--------------+---------+----------------------------------------
-          1 |        1 | yash       | letter1.json | pending | Permission for attendance
-          2 |        2 | Sai        | letter2.json | pending | Permission for reduction of attendance
-          3 |        3 | Axai       | letter3.json | pending | Permission for going out to a movie
-          4 |        4 | Aaris      | letter4.json | pending | Permission for attendance
+Creating the Faculty table:
+===========================
 
-insert into recipients(request_id,faculty_id) values (1,2);
-insert into recipients(request_id,faculty_id) values (1,3);
-insert into recipients(request_id,faculty_id) values (2,4);
-insert into recipients(request_id,faculty_id) values (3,1);
-insert into recipients(request_id,faculty_id) values (4,2);
-insert into recipients(request_id,faculty_id) values (4,3);
+CREATE TABLE faculty(
+	faculty_roll varchar(11) PRIMARY KEY,
+	faculty_name varchar(128) UNIQUE,
+	faculty_dept varchar(8),
+	email varchar(128),
+	phone_no varchar(11),
+	pwd_hash varchar(128)
+);
 
- request_id | faculty_id
-------------+------------
-          1 |          2
-          1 |          3
-          2 |          4
-          3 |          1
-          4 |          2
-          4 |          3
+Creating the requests table:
+============================
 
-select forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=4);
+CREATE TABLE requests(
+	request_id SERIAL PRIMARY KEY,
+	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
+	unique_id varchar(10) UNIQUE,
+	request_data jsonb,
+	status varchar(10),
+  remarks varchar(1024)
+);
+
+Creating the recipients table:
+==============================
+
+CREATE TABLE recipients(
+	request_id int REFERENCES requests(request_id) ON DELETE CASCADE,
+	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE
+);
+
+Creating the personal templates table:
+======================================
+
+CREATE TABLE personal_templates(
+	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
+	template_name varchar(64) UNIQUE
+);
 
 Create table faculty_registration_request(faculty_name varchar(128),faculty_dept varchar(8),faculty_roll varchar(11),email varchar(128),phone varchar(11));
 
 Create table forum_registration_request(forum_name varchar(128),email varchar(128),phone varchar(11));
+
+forum_name  |                           pwd_hash                           |     email     |  phone_no
+--------------+--------------------------------------------------------------+---------------+------------
+STREETCAUSE  | $2a$10$z5Gjm0JT32h/BSIbZ9.zruHQJW6qknt2L6bcin6Ef.ZPBntq5xeAm | c2@csmail.com | 9999999999
+STUTALK      | $2a$10$XfkbtU87zINaOX06m4LCGu2njF1.EdVpNDO/ZcnxfgNDyLXhUzqim | c3@csmail.com | 9999999999
+IEEE-VBIT    | $2a$10$vVJUXxR4hCRDjQEQPrv1Nepvhk07u/lECP5duKBnuthX/2UnIKmtm | c5@csmail.com | 9999999999
+CODINGSTUDIO | $2a$10$HHu3S4Y5VgXnwMCpXWvjnOgmEge0Q6mL.40YtR9SI0twMYfaGjMFy | c1@csmail.com | 9999999999
+
+faculty_roll | faculty_name | faculty_dept |     email      |  phone_no  |                           pwd_hash
+--------------+--------------+--------------+----------------+------------+--------------------------------------------------------------
+16P61A05M0   | Yashwanth    | CSE          | s1th@gmail.com | 9999999999 | $2a$10$Izz84lty9CqsoO4lzttIIesdqKhLSFJuqUyFymj7AQk1UOe1Ppuva
+18P61A05C2   | Yasaswi Raj  | CSE          | s1th@gmail.com | 9999999999 | $2a$10$yX5PGu3c2XDv/j2889UUAu6CiGQi8bqEGdch3.HQWbY9XwwigYGiS
+18P61A05J1   | Sai Kiran    | CSE          | s1th@gmail.com | 9999999999 | $2a$10$8RLTqk4NxTAsew/yPBmSEuomSos0fKHtGPO2J5VHU1lVmFHX/t.e6
+18P61A05D7   | Aaris        | CSE          | s1th@gmail.com | 9999999999 | $2a$10$i3gR3buHbw9fHdlp4jTEOus.yL4Xx1jg8HGjuKSzwU40ePE4v9eg2

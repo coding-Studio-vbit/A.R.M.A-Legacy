@@ -37,7 +37,7 @@ app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(allowCrossDomain);
 var cors = require('cors');
-app.use(cors());
+app.use(cors());  
 //LOGIN
 
 app.post("/login", (req, res) => {
