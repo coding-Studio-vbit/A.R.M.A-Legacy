@@ -11,11 +11,12 @@ const path = require("path");
 //--------------------------------------------------------//
 
 function fetchAccessToken(request, callback) {
-  if (!request.headers.authorization) {
+  console.log(request.header);
+  if (!request.headers['authorization']) {
     return callback("No Authorization field found in the header!", undefined);
   }
 
-  var token_parts = request.headers.authorization.split(" ");
+  var token_parts = request.headers['authorization'].split(" ");
 
   if (token_parts[0] == "Bearer" && token_parts[1]) {
     return callback(undefined, token_parts[1]);

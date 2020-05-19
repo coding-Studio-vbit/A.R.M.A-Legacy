@@ -35,6 +35,7 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
               console.log(req_id);
               for(let i=0;i<rec_arr.length;i++)
               {
+                let temp=req_id;
                 client.query(
                   "insert into recipients(request_id,faculty_roll) values($1,$2);",
                   [req_id,rec_arr[i]],
@@ -42,14 +43,17 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
                     if (err) {
                       client.end();
                       return callback(err, undefined);
-                    } else {
-                      req_id=res.rows[0].request_id;
                     }
+                    else{
+                      if(i==rec_arr.length-1){
+                        client.end();
+                        return callback(undefined,true);
+                      }
+                    }
+
                   }
                 );
-                return callback(undefined,true);
               }
-
             }
           }
         );
@@ -57,14 +61,18 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
     }
   );
 }
-let details = {
-            designation: "HOD",
-            department: "CSE",
-            subject: "PErmit ",
-            date: "today",
-            respects: "MX",
+// let details = {
+//             designation: "HOD",
+//             department: "CSE",
+//             subject: "PErmit ",
+//             date: "today",
+//             respects: "MX",
+// }
+// let data = JSON.stringify(details);
+// addRequest('CODINGSTUDIO','1346789',data,['16P61A05M0','18P61A05J1','18P61A05C2'],(err,state) => {
+//   console.log(err||state);
+// });
+
+module.exports={
+  addRequest:addRequest
 }
-let data = JSON.stringify(details);
-addRequest('CODINGSTUDIO','1346789',data,['16P61A05M0','18P61A05J1'],(err,state) => {
-  console.log(err||state);
-});
