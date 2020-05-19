@@ -1,0 +1,28 @@
+{
+  "designation": "",
+  "department": "",
+  "subject": "Permission for Event team attendance.",
+  "date": "2020-05-17",
+  "respects": "",
+  "team_name": "CodeCraft",
+  "event_name": "CodeCraft 2.0",
+  "fromdate": "2020-05-20",
+  "todate": "2020-05-20",
+  "start_hour": "9",
+  "start_min": "50",
+  "start_meridian": "",
+  "end_hour": "4",
+  "end_min": "20",
+  "end_meridian": "PM",
+  "letter_body": "Code craft is a competitive programming competition.",
+  "studentdetails": [
+    {
+      "Name": "Yash",
+      "Roll": "18P61A05C2"
+    },
+    {
+      "Name": "Aaris",
+      "Roll": "18P61A05D7"
+    }
+  ]
+}
