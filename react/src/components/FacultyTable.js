@@ -18,11 +18,20 @@ class FacultyTable extends React.Component{
   }
 
   componentWillMount() {
-    axios.get(`http://localhost:8080/dashboard`)
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    axios.post(`http://localhost:8080/dashboard`,{
+      headers:{
+        "authorization":`Bearer ${accessToken}`
+      }
+    })
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
         console.log(persons);
+      }).catch((err) => {
+        console.log(err);
       })
   }
 
