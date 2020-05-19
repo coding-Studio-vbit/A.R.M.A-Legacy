@@ -10,26 +10,25 @@ const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const pool = require("./db");
 //Letter Template
-var PizZip = require('pizzip');
-var Docxtemplater = require('docxtemplater');
-var urlencodedParser = body_parser.urlencoded({ extended: true});
-var jsonfile = require('jsonfile');
-var file = './details.json'
+var PizZip = require("pizzip");
+var Docxtemplater = require("docxtemplater");
+var urlencodedParser = body_parser.urlencoded({ extended: true });
+var jsonfile = require("jsonfile");
+var file = "./details.json";
 //Letter Path
-var oc_attendance = require('./oc_attendance');
-var campaigning = require('./campaigning');
-var participantsattendance = require('./participantsattendance');
-var conductevent=require('./conductevent');
-var usehall = require('./usehall');
+var oc_attendance = require("./oc_attendance");
+var campaigning = require("./campaigning");
+var participantsattendance = require("./participantsattendance");
+var conductevent = require("./conductevent");
+var usehall = require("./usehall");
 //var conductmeet = require('./Letter/conductmeet');
 
-
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-}
+var allowCrossDomain = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  next();
+};
 
 //express configuration
 app.use(express.static(path.join(__dirname, "/public")));
@@ -57,7 +56,10 @@ app.post("/login", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({ message: ("USERNAME: "+req.body.user.username.toUpperCase()), accessToken: accessToken });
+            res.send({
+              message: "USERNAME: " + req.body.user.username.toUpperCase(),
+              accessToken: accessToken,
+            });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -91,7 +93,6 @@ app.post("/login", (req, res) => {
 app.post("/loginFaculty", (req, res) => {
   //check password.
   try {
-
     users
       .checkFacultyPassword(
         req.body.user.username,
@@ -105,7 +106,10 @@ app.post("/loginFaculty", (req, res) => {
               req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
             );
-            res.send({ message: "USERNAME: "+req.body.user.username.toUpperCase(), accessToken: accessToken });
+            res.send({
+              message: "USERNAME: " + req.body.user.username.toUpperCase(),
+              accessToken: accessToken,
+            });
             console.log("token: " + accessToken);
             var obj = fs.readFileSync("./validkeys.json");
             obj = obj.toString();
@@ -171,61 +175,73 @@ app.post("/logout", (req, res) => {
 //FACULTY DASHBOARD (THIS USES  FACULTY ID WHICH WILL BE SOON DEPRECATED)
 
 app.post("/dashboard", (req, res) => {
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (err, username) => {
+        if (err) return res.status(400).json({ err: "Invalid Token!" });
+        try {
+          //first get the faculty_id from faculty table.
 
-	users.fetchAccessToken(req, (err, token)=>{
-		if(err) return res.status(400).json({err:'couldnt find any token!'});
-		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
-			if(err) return res.status(400).json({err:'Invalid Token!'});
-  				try {
-					 //first get the faculty_id from faculty table.
+          var faculty_id = pool.query(
+            "select faculty_id from faculty where faculty_roll=$1",
+            [username.toUpperCase()]
+          );
+          faculty_id = faculty_id.rows[0].faculty_id;
+          //now use this faculty id to get the requests of the faculty.
 
-					var faculty_id = pool.query("select faculty_id from faculty where faculty_roll=$1",[username.toUpperCase()]);
-					faculty_id = faculty_id.rows[0].faculty_id;
-					//now use this faculty id to get the requests of the faculty.
-
-  			  		const data =  pool.query("select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",[faculty_id]);
-  			  		res.json(data.rows);
-  					}
-				catch (err) {
-			 	 res.status(500).json({err:'Internal Database Error!'});
-  			 	 console.log(err);
-  				}
-			});
-		});
-	});
-
+          const data = pool.query(
+            "select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",
+            [faculty_id]
+          );
+          res.json(data.rows);
+        } catch (err) {
+          res.status(500).json({ err: "Internal Database Error!" });
+          console.log(err);
+        }
+      }
+    );
+  });
+});
 
 //FORUM DASHBOARD
 
-// app.post("/forumDashboard", (req, res) => {
-// 	users.fetchAccessToken(req, (err, token)=>{
-// 		if(err) return res.status(400).json({err:'couldnt find any token!'});
-// 		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
-// 			if(err) return res.status(400).json({err:'Invalid Token!'});
-//   				try {
-//
-// 						//here the forum_name is itself obtained as the username after decoding the access token.
-//   			 			console.log(req.body);
-//   			  			const data =  pool.query("select subject,status from requests where forum_name=2");
-//   			  			res.json(data.rows);
-//   					}
-// 				catch (err) {
-// 			 	 res.status(500).json({err:'Internal Database Error!'});
-//   			 	 console.log(err);
-//   				}
-// 			});
-// 		});
-// 	});
-
-app.get("/forumDashboard", async(req, res) => {
- try {
-   console.log(req.body);
-   const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
-   res.json(data.rows);
- } catch (err) {
-   console.log(err.message);
- }
+app.post("/forumDashboard", (req, res) => {
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (err, username) => {
+        if (err) return res.status(400).json({ err: "Invalid Token!" });
+        try {
+          //here the forum_name is itself obtained as the username after decoding the access token.
+          console.log(req.body);
+          const data = pool.query(
+            "select subject,status from requests where forum_name=$1",
+            [username.toUpperCase()]
+          );
+          res.json(data.rows);
+        } catch (err) {
+          res.status(500).json({ err: "Internal Database Error!" });
+          console.log(err);
+        }
+      }
+    );
+  });
 });
+
+//app.get("/forumDashboard", async(req, res) => {
+//  try {
+//    console.log(req.body);
+//    const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
+//    res.json(data.rows);
+//  } catch (err) {
+//    console.log(err.message);
+//  }
+//});
 
 //REGISTRATION STATUS CHECK
 
@@ -430,7 +446,7 @@ app.post("/registerFaculty", (req, res) => {
 
 //Letter
 
-app.post('/TeamAttendance' ,  urlencodedParser,function(req,res){
+app.post("/TeamAttendance", urlencodedParser, function (req, res) {
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -451,32 +467,31 @@ app.post('/TeamAttendance' ,  urlencodedParser,function(req,res){
 
   console.log(req.body);
   let details = {
-              designation: designation,
-              department: department,
-              subject: subject,
-              date: date,
-              respects: respects,
-              team_name: team_name,
-              event_name: event_name,
-              fromdate: fromdate,
-              todate: todate,
-              start_hour: start_hour,
-              start_min: start_min,
-              start_meridian: start_meridian,
-              end_hour: end_hour,
-              end_min: end_min,
-              end_meridian: end_meridian,
-              letter_body: letter_body,
-              studentdetails: studentdetails
-
-            }
-            let data = JSON.stringify(details, null ,2);
-            fs.writeFileSync('./details.json', data);
-            oc_attendance.generateLetterIndividual();
-            res.download('./LetterGenerated/Final_attendance_OC.docx'); //callback I*
+    designation: designation,
+    department: department,
+    subject: subject,
+    date: date,
+    respects: respects,
+    team_name: team_name,
+    event_name: event_name,
+    fromdate: fromdate,
+    todate: todate,
+    start_hour: start_hour,
+    start_min: start_min,
+    start_meridian: start_meridian,
+    end_hour: end_hour,
+    end_min: end_min,
+    end_meridian: end_meridian,
+    letter_body: letter_body,
+    studentdetails: studentdetails,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  oc_attendance.generateLetterIndividual();
+  res.download("./LetterGenerated/Final_attendance_OC.docx"); //callback I*
 });
 
-app.post('/participantsattendance' ,  urlencodedParser,function(req,res){
+app.post("/participantsattendance", urlencodedParser, function (req, res) {
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -497,34 +512,31 @@ app.post('/participantsattendance' ,  urlencodedParser,function(req,res){
 
   console.log(req.body);
   let details = {
-              designation: designation,
-              department: department,
-              subject: subject,
-              date: date,
-              respects: respects,
-              team_name: team_name,
-              event_name: event_name,
-              fromdate: fromdate,
-              todate: todate,
-              start_hour: start_hour,
-              start_min: start_min,
-              start_meridian: start_meridian,
-              end_hour: end_hour,
-              end_min: end_min,
-              end_meridian: end_meridian,
-              letter_body: letter_body,
-              studentdetails: studentdetails
-
-            }
-            let data = JSON.stringify(details, null ,2);
-            fs.writeFileSync('./details.json', data);
-            participantsattendance.generateLetterIndividual();
-            res.download('./LetterGenerated/FINAL_ATTENDANCE_PARTICIPANTS.docx'); //callback I*
+    designation: designation,
+    department: department,
+    subject: subject,
+    date: date,
+    respects: respects,
+    team_name: team_name,
+    event_name: event_name,
+    fromdate: fromdate,
+    todate: todate,
+    start_hour: start_hour,
+    start_min: start_min,
+    start_meridian: start_meridian,
+    end_hour: end_hour,
+    end_min: end_min,
+    end_meridian: end_meridian,
+    letter_body: letter_body,
+    studentdetails: studentdetails,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  participantsattendance.generateLetterIndividual();
+  res.download("./LetterGenerated/FINAL_ATTENDANCE_PARTICIPANTS.docx"); //callback I*
 });
 
-app.post('/conductevent' ,  urlencodedParser,function(req,res){
-
-
+app.post("/conductevent", urlencodedParser, function (req, res) {
   let subject = req.body.subject;
   let date = req.body.date;
   let respects = req.body.respects;
@@ -543,39 +555,36 @@ app.post('/conductevent' ,  urlencodedParser,function(req,res){
 
   console.log(req.body);
   let details = {
-              subject: subject,
-              date: date,
-              respects: respects,
-              team_name: team_name,
-              event_name: event_name,
-              hall_name: hall_name,
-              fromdate: fromdate,
-              todate: todate,
-              start_hour: start_hour,
-              start_min: start_min,
-              start_meridian: start_meridian,
-              end_hour: end_hour,
-              end_min: end_min,
-              end_meridian: end_meridian,
-              letter_body: letter_body
-
-            }
-            let data = JSON.stringify(details, null ,2);
-            fs.writeFileSync('./details.json', data);
-            conductevent.generateLetterIndividual();
-            res.download('./LetterGenerated/FINAL_CONDUCT_EVENT.docx'); //callback I*
+    subject: subject,
+    date: date,
+    respects: respects,
+    team_name: team_name,
+    event_name: event_name,
+    hall_name: hall_name,
+    fromdate: fromdate,
+    todate: todate,
+    start_hour: start_hour,
+    start_min: start_min,
+    start_meridian: start_meridian,
+    end_hour: end_hour,
+    end_min: end_min,
+    end_meridian: end_meridian,
+    letter_body: letter_body,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  conductevent.generateLetterIndividual();
+  res.download("./LetterGenerated/FINAL_CONDUCT_EVENT.docx"); //callback I*
 });
 
-app.post('/usehall' ,  urlencodedParser,function(req,res){
-
-
+app.post("/usehall", urlencodedParser, function (req, res) {
   let subject = req.body.subject;
   let date = req.body.date;
   let respects = req.body.respects;
   let team_name = req.body.team_name;
   let event_name = req.body.event_name;
   let reason = req.body.reason;
-  let hall_name=req.body.hall_name;
+  let hall_name = req.body.hall_name;
   let fromdate = req.body.fromdate;
   let todate = req.body.todate;
   let start_hour = req.body.start_hour;
@@ -588,31 +597,30 @@ app.post('/usehall' ,  urlencodedParser,function(req,res){
 
   console.log(req.body);
   let details = {
-              subject: subject,
-              date: date,
-              respects: respects,
-              team_name: team_name,
-              event_name: event_name,
-              reason:reason,
-              hall_name:hall_name,
-              fromdate: fromdate,
-              todate: todate,
-              start_hour: start_hour,
-              start_min: start_min,
-              start_meridian: start_meridian,
-              end_hour: end_hour,
-              end_min: end_min,
-              end_meridian: end_meridian,
-              letter_body: letter_body
-
-            }
-            let data = JSON.stringify(details, null ,2);
-            fs.writeFileSync('./details.json', data);
-            usehall.generateLetterIndividual();
-            res.download('./LetterGenerated/FINAL_HALL_UTILIZATION_PERMISSION.docx'); //callback I*
+    subject: subject,
+    date: date,
+    respects: respects,
+    team_name: team_name,
+    event_name: event_name,
+    reason: reason,
+    hall_name: hall_name,
+    fromdate: fromdate,
+    todate: todate,
+    start_hour: start_hour,
+    start_min: start_min,
+    start_meridian: start_meridian,
+    end_hour: end_hour,
+    end_min: end_min,
+    end_meridian: end_meridian,
+    letter_body: letter_body,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  usehall.generateLetterIndividual();
+  res.download("./LetterGenerated/FINAL_HALL_UTILIZATION_PERMISSION.docx"); //callback I*
 });
 
-app.post('/campaigning' ,  urlencodedParser,function(req,res){
+app.post("/campaigning", urlencodedParser, function (req, res) {
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -634,30 +642,29 @@ app.post('/campaigning' ,  urlencodedParser,function(req,res){
 
   console.log(req.body);
   let details = {
-              designation:designation,
-              department: department,
-              subject: subject,
-              date: date,
-              respects: respects,
-              team_name: team_name,
-              event_name: event_name,
-              fromdate: fromdate,
-              todate: todate,
-              start_hour:start_hour,
-              start_min:start_min,
-              start_meridian:start_meridian,
-              end_hour:end_hour,
-              end_min:end_min,
-              end_meridian:end_meridian,
-              letter_body: letter_body,
-              where:where,
-              studentdetails : studentdetails
-
-            }
-            let data = JSON.stringify(details, null ,2);
-            fs.writeFileSync('./details.json', data);
-            campaigning.generateLetterIndividual();
-            res.download('./LetterGenerated/FINAL_CAMPAIGNING.docx');  //callback I*
+    designation: designation,
+    department: department,
+    subject: subject,
+    date: date,
+    respects: respects,
+    team_name: team_name,
+    event_name: event_name,
+    fromdate: fromdate,
+    todate: todate,
+    start_hour: start_hour,
+    start_min: start_min,
+    start_meridian: start_meridian,
+    end_hour: end_hour,
+    end_min: end_min,
+    end_meridian: end_meridian,
+    letter_body: letter_body,
+    where: where,
+    studentdetails: studentdetails,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  campaigning.generateLetterIndividual();
+  res.download("./LetterGenerated/FINAL_CAMPAIGNING.docx"); //callback I*
 });
 
 //NEXT LETTER
@@ -680,7 +687,6 @@ app.post('/campaigning' ,  urlencodedParser,function(req,res){
   let time_start = req.body.time_start;
   let time_end = req.body.time_end;
   let letter_body = req.body.letter_body;
-
   console.log(req.body);
   let details = {
               designation:designation,
@@ -699,7 +705,6 @@ app.post('/campaigning' ,  urlencodedParser,function(req,res){
               end_min:end_min,
               end_meridian:end_meridian,
               letter_body: letter_body
-
             }
             let data = JSON.stringify(details, null ,2);
            fs.writeFileSync('./details.json', data);
@@ -744,135 +749,195 @@ app.post("/getUserType", (req, res) => {
 
 //---------ROUTES FOR USER CREDENTIALS UPDATE---------//
 
-app.post('/changeForumUsername',(req,res)=>{
-	try{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-	
-				if(!req.body.newUsername) return res.status(400).json({err:'No newUsername specified!'});
-				
-				users.changeForumUsername(username, req.body.newUsername, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				})
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		res.status(500).json({err:'Internal Server Error: changeForumUsername'});
-	}
-});
-app.post('/changeFacultyUsername',(req,res)=>{
-	try{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-	
-				if(!req.body.newUsername) return res.status(400).json({err:'No newUsername specified!'});
-				
-				users.changeFacultyUsername(username, req.body.newUsername, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				});
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		res.status(500).json({err:'Internal Server Error: changeFacultyUsername'});
-	}
-});
-app.post('/changeForumPassword',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-					
-				if(!req.body.oldPassword || !req.body.newPassword) return res.status(400).json({err:'not found oldPassword or newPassword'});
+app.post("/changeForumUsername", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
 
-				users.changeForumPassword(username, req.body.oldPassword, req.body.newPassword, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				});
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		return res.status(500).json({err:'Internal Server Error: changeForumPassword'});
-	}
-});
-app.post('/changeFacultyPassword',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-					
-				if(!req.body.oldPassword || !req.body.newPassword) return res.status(400).json({err:'not found oldPassword or newPassword'});
+          if (!req.body.newUsername)
+            return res.status(400).json({ err: "No newUsername specified!" });
 
-				users.changeFacultyPassword(username, req.body.oldPassword, req.body.newPassword, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				});
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		return res.status(500).json({err:'Internal Server Error: changeFacultyPassword'});
-	}
+          users.changeForumUsername(
+            username,
+            req.body.newUsername,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Internal Server Error: changeForumUsername" });
+  }
 });
-app.post('/changeForumEmail',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-					
-				if(!req.body.newEmail) return res.status(400).json({err:'not found newEmail'});
+app.post("/changeFacultyUsername", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
 
-				users.changeForumEmail(username, req.body.newEmail, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				});
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		return res.status(500).json({err:'Internal Server Error: changeForumEmail'});
-	}
+          if (!req.body.newUsername)
+            return res.status(400).json({ err: "No newUsername specified!" });
+
+          users.changeFacultyUsername(
+            username,
+            req.body.newUsername,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ err: "Internal Server Error: changeFacultyUsername" });
+  }
 });
-app.post('/changeFacultyEmail',(req,res)=>{
-	try
-	{
-		users.fetchAccessToken(req,(error,token)=>{
-			if(error) return res.status(400).json({err:error});
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>{
-				if(error) return res.status(400).json({err: error.message});
-					
-				if(!req.body.newEmail) return res.status(400).json({err:'not found newEmail'});
+app.post("/changeForumPassword", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
 
-				users.changeFacultyEmail(username, req.body.newEmail, (error, state)=>{
-					if(error) return res.status(500).json({err:error});
-					else return res.json({message:'UPDATE SUCCESSFUL'});
-				});
-			});
-		})	
-	}
-	catch(err){
-		console.log(err);
-		return res.status(500).json({err:'Internal Server Error: changeFacultyEmail'});
-	}
+          if (!req.body.oldPassword || !req.body.newPassword)
+            return res
+              .status(400)
+              .json({ err: "not found oldPassword or newPassword" });
+
+          users.changeForumPassword(
+            username,
+            req.body.oldPassword,
+            req.body.newPassword,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Internal Server Error: changeForumPassword" });
+  }
+});
+app.post("/changeFacultyPassword", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
+
+          if (!req.body.oldPassword || !req.body.newPassword)
+            return res
+              .status(400)
+              .json({ err: "not found oldPassword or newPassword" });
+
+          users.changeFacultyPassword(
+            username,
+            req.body.oldPassword,
+            req.body.newPassword,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Internal Server Error: changeFacultyPassword" });
+  }
+});
+app.post("/changeForumEmail", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
+
+          if (!req.body.newEmail)
+            return res.status(400).json({ err: "not found newEmail" });
+
+          users.changeForumEmail(
+            username,
+            req.body.newEmail,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Internal Server Error: changeForumEmail" });
+  }
+});
+app.post("/changeFacultyEmail", (req, res) => {
+  try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(400).json({ err: error.message });
+
+          if (!req.body.newEmail)
+            return res.status(400).json({ err: "not found newEmail" });
+
+          users.changeFacultyEmail(
+            username,
+            req.body.newEmail,
+            (error, state) => {
+              if (error) return res.status(500).json({ err: error });
+              else return res.json({ message: "UPDATE SUCCESSFUL" });
+            }
+          );
+        }
+      );
+    });
+  } catch (err) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ err: "Internal Server Error: changeFacultyEmail" });
+  }
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 
