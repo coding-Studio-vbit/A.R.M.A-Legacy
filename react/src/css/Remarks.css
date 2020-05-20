@@ -28,7 +28,7 @@ label{
   font-weight: bolder;
 }
 span{color: darkorchid;
-font-style: oblique;
+
 font-weight: bold;}
 h1{color:darkorchid}
 textarea{
@@ -56,6 +56,9 @@ h4{
   width: 100%;
   height: 340px;
   
+}
+th{
+  font-size: 16px;
 }
 
 ::-webkit-scrollbar {
