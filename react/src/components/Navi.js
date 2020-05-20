@@ -12,6 +12,9 @@ export default function Navi() {
       <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
     </Nav>
     <Nav>
+    <Nav >
+      <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
+    </Nav>
       <Nav.Link >Profile</Nav.Link>
       <Nav.Link >
         Log out
