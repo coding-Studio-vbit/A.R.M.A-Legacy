@@ -113,7 +113,6 @@ function Register() {
         <br />
         <button
           type="button"
-          disabled={registered}
           className="btn btn-primary"
           onClick={handleRegister}
         >

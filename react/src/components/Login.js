@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,Redirect,useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 import RegistrationCheck from "./RegistrationCheck";
 
@@ -17,14 +17,14 @@ const Login = () => {
     "Stutalk",
     "ISE",
   ];
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const [value, setValue] = useState(Forumlist[0]);
   const [registered, isRegistered] = useState(false);
   const handleLogin = () => {
     let un = value;
     let pw = password;
-    axios
-      .post("/login", {
+    axios.post("/login", {
         user: {
           username: un,
           password: pw,
@@ -41,6 +41,7 @@ const Login = () => {
             accessToken: accessToken,
           })
         );
+        history.push("/dashboard");
       })
       .catch((err) => console.log(err));
   };

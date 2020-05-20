@@ -36,7 +36,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(allowCrossDomain);
-
+var cors = require('cors');
+app.use(cors());  
 //LOGIN
 
 app.post("/login", (req, res) => {
@@ -199,37 +200,46 @@ app.post("/dashboard", (req, res) => {
 
 //FORUM DASHBOARD
 
-app.post("/forumDashboard", (req, res) => {
-	users.fetchAccessToken(req, (err, token)=>{
-		if(err) return res.status(400).json({err:'couldnt find any token!'});
-		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
-			if(err) return res.status(400).json({err:'Invalid Token!'});
-  				try {
+// app.post("/forumDashboard", (req, res) => {
+// 	users.fetchAccessToken(req, (err, token)=>{
+// 		if(err) return res.status(400).json({err:'couldnt find any token!'});
+// 		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (err,username)=>{
+// 			if(err) return res.status(400).json({err:'Invalid Token!'});
+//   				try {
+//
+// 						//here the forum_name is itself obtained as the username after decoding the access token.
+//   			 			console.log(req.body);
+//   			  			const data =  pool.query("select subject,status from requests where forum_name=2");
+//   			  			res.json(data.rows);
+//   					}
+// 				catch (err) {
+// 			 	 res.status(500).json({err:'Internal Database Error!'});
+//   			 	 console.log(err);
+//   				}
+// 			});
+// 		});
+// 	});
 
-						//here the forum_name is itself obtained as the username after decoding the access token.
-  			 			console.log(req.body);
-  			  			const data =  pool.query("select subject,status from requests where forum_name=$1",[username]);
-  			  			res.json(data.rows);
-  					}
-				catch (err) {
-			 	 res.status(500).json({err:'Internal Database Error!'});
-  			 	 console.log(err);
-  				}
-			});
-		});
-	});
-
-//app.get("/forumDashboard", async(req, res) => {
-//  try {
-//    console.log(req.body);
-//    const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
-//    res.json(data.rows);
-//  } catch (err) {
-//    console.log(err.message);
-//  }
-//});
+app.get("/forumDashboard", async(req, res) => {
+ try {
+   console.log(req.body);
+   const data = await pool.query("select forum_id,forum_name,subject,status from requests where forum_id=2");
+   res.json(data.rows);
+ } catch (err) {
+   console.log(err.message);
+ }
+});
 
 //REGISTRATION STATUS CHECK
+
+//Remarks
+app.post("/Remarks", (req, res) => {
+const remark=req.body;
+console.log(remark);
+
+
+
+})
 
 app.post("/checkRegistrationStatus", (req, res) => {
   try {
@@ -463,7 +473,7 @@ app.post('/TeamAttendance' ,  urlencodedParser,function(req,res){
               end_min: end_min,
               end_meridian: end_meridian,
               letter_body: letter_body,
-              studentdetails: studentdetails 
+              studentdetails: studentdetails
 
             }
             let data = JSON.stringify(details, null ,2);
@@ -509,7 +519,7 @@ app.post('/participantsattendance' ,  urlencodedParser,function(req,res){
               end_min: end_min,
               end_meridian: end_meridian,
               letter_body: letter_body,
-              studentdetails: studentdetails 
+              studentdetails: studentdetails
 
             }
             let data = JSON.stringify(details, null ,2);
@@ -647,7 +657,7 @@ app.post('/campaigning' ,  urlencodedParser,function(req,res){
               end_meridian:end_meridian,
               letter_body: letter_body,
               where:where,
-              studentdetails : studentdetails 
+              studentdetails : studentdetails
 
             }
             let data = JSON.stringify(details, null ,2);
@@ -708,7 +718,9 @@ res.download('./LetterGenerated/FINAL_CONDUCT_MEET_PERMISSION.docx'); //callback
 app.post("/getUserType", (req, res) => {
   try {
     users.fetchAccessToken(req, (err, token) => {
+      console.log(req.headers);
       if (err) {
+        console.log(err);
         return res.status(400).json({ message: "No token found!" });
       }
       users.authenticateToken(
@@ -716,6 +728,7 @@ app.post("/getUserType", (req, res) => {
         process.env.SECRET_ACCESS_TOKEN,
         (err, username) => {
           if (err) {
+            console.log(err);
             return res.status(400).json(err);
           }
           var fileData = fs.readFileSync("validkeys.json");
