@@ -1,0 +1,52 @@
+  @media only screen and (max-width: 800px) {
+    .container{
+      text-align: center;
+      margin: 30px;
+    }
+    .containerz{
+      padding: 10px;
+    
+    }
+    .table-responsive{
+      text-align: center;
+      border: 0;
+    }
+  }
+  tr{
+    color:white;
+    padding-bottom: 0px;
+  }
+  th{
+    color: #b007c4;
+    border: 0 !important;
+    font-size: 30px;
+  }
+  thead{
+    border: 0 ;
+  }
+  body{
+    background-color: #1a1a1a !important;
+  }
+  .table-responsive{
+    padding: 5px;
+    border: 0;
+  }
+  .table{
+    border: 0;
+  }
+  .container{
+    text-align: center;
+    border-radius: 30px;
+    margin-top: 30px;
+    background-color: #222222;
+    opacity: 90%;
+    color: white;
+    margin-top: 50px;
+  }
+  
+  .profile-pic {
+    margin-top: 20px;
+    height: 25vmin;
+    border-radius: 50px;
+   
+  }
