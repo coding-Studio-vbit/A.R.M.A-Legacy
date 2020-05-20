@@ -15,6 +15,7 @@ function Register() {
     "StreetCause",
     "VBIT-MUN",
     "Stutalk",
+    "ISE",
   ];
   const [contact, setContact] = useState({
     email: "",

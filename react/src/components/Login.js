@@ -15,6 +15,7 @@ const Login = () => {
     "StreetCause",
     "VBIT-MUN",
     "Stutalk",
+    "ISE",
   ];
   const [password, setPassword] = useState("");
   const [value, setValue] = useState(Forumlist[0]);
