@@ -112,7 +112,7 @@ async function checkFacultyPassword(faculty_roll, password, callback) {
   faculty_roll = faculty_roll.toUpperCase();
 
   client.query(
-    "SELECT pwd_hash FROM faculty WHERE faculty_roll= $1 ;",
+    "SELECT pwd_hash FROM faculty WHERE faculty_roll=$1;",
     [faculty_roll],
     (err, res) => {
       if (err) {
