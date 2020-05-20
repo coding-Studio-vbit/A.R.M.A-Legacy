@@ -84,7 +84,7 @@ const Patten = () => {
                                     <br/><br/>
                                     <div className="form-group">
                                     <span className="form-label" for="designation">Designation: </span>
-                                    <select className="form-control" name="designation" onChange={e => setDesignation(e.target.value)}>
+                                    <select className="form-control" name="designation" onChange={e =>{e.persist(); setDesignation(e.target.value)}}>
                                         <option>Head of Department</option>
                                         <option>Director</option>
                                     </select>
@@ -93,7 +93,7 @@ const Patten = () => {
                                 <br />
                                 <div className="form-group">
                                     <span className="form-label" for="department">Department: </span>
-                                    <select className="form-control" name="department" onChange={e => setDepartment(e.target.value)}>
+                                    <select className="form-control" name="department" onChange={e =>{e.persist(); setDepartment(e.target.value)}}>
                                         <option>Department of Computer Science and Engineering</option>
                                         <option>Department of Information Technology</option>
                                         <option>Department of Electrical and Electronics Engineering</option>

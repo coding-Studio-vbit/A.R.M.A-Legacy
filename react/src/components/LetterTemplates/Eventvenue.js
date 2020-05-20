@@ -66,7 +66,7 @@ const Evenue = () => {
                         <br />
                         <div className="form-group">
                             <span className="form-label" for="respects">Respects : </span>
-                                <select className="form-control" name="respects" onChange={e => setRespects(e.target.value)}>
+                                <select className="form-control" name="respects" onChange={e =>{e.persist(); setRespects(e.target.value)}}>
                                     <option>Sir</option>
                                     <option>Ma'am</option>
                                 </select>
@@ -107,7 +107,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="start_hour">Hour</span>
-                                            <select className="form-control" name="start_hour" onChange={e => setStarthour(e.target.value)}>
+                                            <select className="form-control" name="start_hour" onChange={e =>{e.persist(); setStarthour(e.target.value)}}>
                                                 <option>1</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -127,7 +127,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="start_min">Min</span>
-                                            <select className="form-control" name="start_min" onChange={e => setStartmin(e.target.value)}>
+                                            <select className="form-control" name="start_min" onChange={e =>{e.persist(); setStartmin(e.target.value)}}>
                                                 <option>05</option>
                                                 <option>10</option>
                                                 <option>15</option>
@@ -146,7 +146,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="start_meridian">AM/PM</span>
-                                            <select className="form-control" name="start_meridian" onChange={e => setStartmeridian(e.target.value)}>
+                                            <select className="form-control" name="start_meridian" onChange={e =>{e.persist(); setStartmeridian(e.target.value)}}>
                                                 <option>AM</option>
                                                 <option>PM</option>
                                             </select>
@@ -168,7 +168,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="end_hour">Hour</span>
-                                            <select className="form-control" name="end_hour" onChange={e => setEndhour(e.target.value)}>
+                                            <select className="form-control" name="end_hour" onChange={e =>{e.persist(); setEndhour(e.target.value)}}>
                                                 <option>1</option>
                                                 <option>2</option>
                                                 <option>3</option>
@@ -188,7 +188,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="end_min">Min</span>
-                                            <select className="form-control" name="end_min" onChange={e => setEndmin(e.target.value)}>
+                                            <select className="form-control" name="end_min" onChange={e =>{e.persist(); setEndmin(e.target.value)}}>
                                                 <option>05</option>
                                                 <option>10</option>
                                                 <option>15</option>
@@ -207,7 +207,7 @@ const Evenue = () => {
                                     <div className="col-sm-4">
                                         <div className="form-group">
                                             <span className="form-label" for="end_meridian">AM/PM</span>
-                                            <select className="form-control" name="end_meridian" onChange={e => setEndmeridian(e.target.value)}>
+                                            <select className="form-control" name="end_meridian" onChange={e =>{e.persist(); setEndmeridian(e.target.value)}}>
                                                 <option>AM</option>
                                                 <option>PM</option>
                                             </select>
