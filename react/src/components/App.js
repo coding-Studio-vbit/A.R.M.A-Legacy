@@ -9,6 +9,7 @@ import TemplateDetails from './TemplateDetails';
 import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 import Remarks from "./Remarks";
+import TemplateList from "./TemplateList";
 
 //LetterTemplates
 import Camp from "./LetterTemplates/Camp";
@@ -32,6 +33,7 @@ function App() {
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
             <Route path="/Remarks" component={Remarks} />
+            <Route path="/Dashboard/TemplateList" component={TemplateList} />
 
             <Route path="/campaining" component={Camp} />
             <Route path="/conduct" component={Econ} />
