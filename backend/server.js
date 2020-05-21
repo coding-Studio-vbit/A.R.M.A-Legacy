@@ -101,7 +101,7 @@ app.post("/loginFaculty", (req, res) => {
           if (error) {
             console.log(error);
             return res.status(401).send({ err: error });
-          } 
+          }
 		  else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
@@ -197,7 +197,7 @@ app.get("/facultydashboard", (req, res) => {
           client.connect();
           client
             .query(
-              "select forum_name,remarks,status from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
+              "select forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
               [faculty_roll]
             )
             .then((data) => {
@@ -231,12 +231,12 @@ app.post("/createrequest", (req, res) => {
         for (let a = 0; a < 10; a++) {
           unique_id += String(Math.round(Math.random() * 10)%10);
         }
-        
+
         console.log("Unique ID: ", unique_id); //DEBUG
 
         var forum_name = username.toUpperCase()
         var recipients = []
-        
+
        try{
             for(let i=0;i<req.body.recipients.length;i++)
             {
@@ -252,14 +252,14 @@ app.post("/createrequest", (req, res) => {
                     recipients.push(data.rows[0].faculty_roll);
                 })
             }
-            
+
             requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
             return res.send({message: "request sent succesfully!"})
         }
         catch(error){
            console.log(error)
            return res.status(400).json({err: error})
-        }           
+        }
       })
     })
 });

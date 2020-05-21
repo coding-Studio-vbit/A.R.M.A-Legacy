@@ -21,11 +21,13 @@ class FacultyTable extends React.Component{
     let user = JSON.parse(localStorage.getItem("user"));
     let userName = user.userName;
     let accessToken = user.accessToken;
-    axios.post(`http://localhost:8080/dashboard`,{
-      headers:{
-        "authorization":`Bearer ${accessToken}`
+    console.log(accessToken)
+    let config = {
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
       }
-    })
+    }
+    axios.get("http://localhost:8080/facultydashboard",config)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
@@ -36,10 +38,11 @@ class FacultyTable extends React.Component{
   }
 
   render() {
+    var i=1;
     const items=this.state.persons.map(item =>{return(
 
        <tr>
-          <td>{item.forum_id}</td>
+          <td style={{color: "#b007c4"}}>{i++}</td>
           <td>{item.forum_name}</td>
           <td>{item.subject}</td>
           <td>{item.status}</td>
