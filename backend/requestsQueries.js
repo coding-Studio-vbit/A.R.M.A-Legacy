@@ -12,9 +12,9 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
-  console.log(request_data)
-  // request_data = JSON.stringify(request_data)
+  request_data = JSON.stringify(request_data)
   forum_name = forum_name.toUpperCase();
+
   client.query(
     "insert into requests(forum_name,unique_id,request_data,status,remarks) values ($1,$2,$3,'PENDING','No remarks have been given yet.');",
     [forum_name,unique_id,request_data],
@@ -22,7 +22,9 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
       if (err) {
         client.end();
         return callback(err, undefined);
-      } else {
+      } 
+
+      else{
         var req_id=0;
         client.query(
           "SELECT request_id from requests where unique_id=$1;",
