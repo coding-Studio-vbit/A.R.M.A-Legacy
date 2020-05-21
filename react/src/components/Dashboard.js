@@ -42,29 +42,17 @@ class Dashboard extends React.Component{
           case "FACULTY": return(
             <div>
             <Nav/>
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Templates">
-                <TemplateList/>
-              </Tab>
-              <Tab eventKey="profile" title="Current requests">
-                <FacultyTable />
-              </Tab>
-            </Tabs>
+            <h1>Current Requests</h1>
+            <Table />
             </div>
           );
 
       case "FORUM":
         return (
           <div>
-            <Nav />
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Templates">
-                <TemplateList />
-              </Tab>
-              <Tab eventKey="profile" title="Current requests">
-                <Table />
-              </Tab>
-            </Tabs>
+            <Nav/>
+            <h1>Current Requests</h1>
+            <Table />
           </div>
         );
 
