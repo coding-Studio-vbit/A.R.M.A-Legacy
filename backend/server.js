@@ -35,21 +35,22 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extended: false }));
 app.use(allowCrossDomain);
-var cors = require('cors');
-app.use(cors());  
+var cors = require("cors");
+app.use(cors());
 //LOGIN
 
 app.post("/login", (req, res) => {
   //check password.
   try {
+    console.log("hello");
     users
       .checkForumPassword(
         req.body.user.username,
         req.body.user.password,
-        (err, status) => {
-          if (err) {
-            console.log(err);
-            return res.status(401).send({ message: err });
+        (error, status) => {
+          if (error) {
+            console.log(error);
+            return res.status(401).send({ err: error });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
@@ -75,16 +76,16 @@ app.post("/login", (req, res) => {
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
-            return res.send({ message: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
+            return res.send({ err: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
           }
         }
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({ err: "Internal Server Error" });
       });
-  } catch (err) {
-    res.status(400).json({ message: "BAD REQUEST" });
+  } catch (error) {
+    res.status(400).json({ err: "BAD REQUEST" });
   }
 });
 
@@ -97,10 +98,10 @@ app.post("/loginFaculty", (req, res) => {
       .checkFacultyPassword(
         req.body.user.username,
         req.body.user.password,
-        (err, status) => {
-          if (err) {
-            console.log(err);
-            return res.status(401).send({ message: err });
+        (error, status) => {
+          if (error) {
+            console.log(error);
+            return res.status(401).send({ err: error });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
@@ -123,16 +124,16 @@ app.post("/loginFaculty", (req, res) => {
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
-            return res.status(401).send({ message: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
+            return res.status(401).send({ err: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
           }
         }
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({ err: "Internal Server Error" });
       });
   } catch (err) {
-    res.status(400).json({ message: "BAD REQUEST" });
+    res.status(400).json({ err: "BAD REQUEST" });
   }
 });
 
@@ -144,15 +145,13 @@ app.post("/logout", (req, res) => {
   //For logout the request should have both the username and the access token.
 
   try {
-    users.fetchAccessToken(req, (err, token) => {
-      if (err) return res.status(400).json({ message: err });
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
 
       const username = req.body.user.username.toUpperCase(); //get the username
 
       if (!username || !token) {
-        return res
-          .status(400)
-          .json({ message: "username or token unspecified!" });
+        return res.status(400).json({ err: "username or token unspecified!" });
       }
       var obj = fs.readFileSync("validkeys.json");
       obj = JSON.parse(obj.toString());
@@ -160,28 +159,26 @@ app.post("/logout", (req, res) => {
         //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
         delete obj[req.body.user.username.toUpperCase()];
       } else
-        return res
-          .status(401)
-          .send({ message: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+        return res.status(401).send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
       res.send({ message: "LOGOUT SUCCESSFUL!" });
       //save the file.
       fs.writeFileSync("validkeys.json", JSON.stringify(obj));
     });
   } catch (err) {
-    res.status(400).json({ message: "BAD REQUEST" });
+    res.status(400).json({ err: "BAD REQUEST" });
   }
 });
 
 //FACULTY DASHBOARD (THIS USES  FACULTY ID WHICH WILL BE SOON DEPRECATED)
 
 app.post("/dashboard", (req, res) => {
-  users.fetchAccessToken(req, (err, token) => {
-    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
-      (err, username) => {
-        if (err) return res.status(400).json({ err: "Invalid Token!" });
+      (error, username) => {
+        if (error) return res.status(400).json({ err: "Invalid Token!" });
         try {
           //first get the faculty_id from faculty table.
 
@@ -197,9 +194,9 @@ app.post("/dashboard", (req, res) => {
             [faculty_id]
           );
           res.json(data.rows);
-        } catch (err) {
+        } catch (error) {
           res.status(500).json({ err: "Internal Database Error!" });
-          console.log(err);
+          console.log(error);
         }
       }
     );
@@ -209,13 +206,13 @@ app.post("/dashboard", (req, res) => {
 //FORUM DASHBOARD
 
 app.post("/forumDashboard", (req, res) => {
-  users.fetchAccessToken(req, (err, token) => {
-    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
-      (err, username) => {
-        if (err) return res.status(400).json({ err: "Invalid Token!" });
+      (error, username) => {
+        if (error) return res.status(400).json({ err: "Invalid Token!" });
         try {
           //here the forum_name is itself obtained as the username after decoding the access token.
           console.log(req.body);
@@ -224,9 +221,9 @@ app.post("/forumDashboard", (req, res) => {
             [username.toUpperCase()]
           );
           res.json(data.rows);
-        } catch (err) {
+        } catch (error) {
           res.status(500).json({ err: "Internal Database Error!" });
-          console.log(err);
+          console.log(error);
         }
       }
     );
@@ -247,42 +244,42 @@ app.post("/forumDashboard", (req, res) => {
 
 //Remarks
 app.post("/Remarks", (req, res) => {
-const remark=req.body;
-console.log(remark);
-})
+  const remark = req.body;
+  console.log(remark);
+});
 
 app.post("/checkRegistrationStatus", (req, res) => {
   try {
     const queryUsername = req.body.query.username.toUpperCase();
     if (!queryUsername) {
-      return res.status(400).json({ message: "Username unspecified in query" });
+      return res.status(400).json({ err: "Username unspecified in query" });
     } else {
-      users.checkRegistrationStatus(queryUsername, (err, state) => {
-        if (err)
-          return res.status(500).json({ message: "Internal Server Error" });
+      users.checkRegistrationStatus(queryUsername, (error, state) => {
+        if (error)
+          return res.status(500).json({ err: "Internal Server Error" });
         else return res.json({ message: state });
       });
     }
-  } catch (err) {
-    return res.status(400).json({ message: "BAed REeKset" });
+  } catch (error) {
+    return res.status(400).json({ err: "BAed REeKset" });
   }
 });
 //REGISTRATION STATUS CHECK FOR FACULTY
 
 app.post("/checkFacultyRegistrationStatus", (req, res) => {
   try {
-    const queryUsername = req.body.query.faculty_roll.toUpperCase();
+    const queryUsername = req.body.query.username.toUpperCase();
     if (!queryUsername) {
-      return res.status(400).json({ message: "Username unspecified in query" });
+      return res.status(400).json({ err: "Username unspecified in query" });
     } else {
-      users.checkFacultyRegistrationStatus(queryUsername, (err, state) => {
-        if (err)
-          return res.status(500).json({ message: "Internal Server Error" });
+      users.checkFacultyRegistrationStatus(queryUsername, (error, state) => {
+        if (error)
+          return res.status(500).json({ err: "Internal Server Error" });
         else return res.json({ message: state });
       });
     }
-  } catch (err) {
-    return res.status(400).json({ message: "Bad Request" });
+  } catch (error) {
+    return res.status(400).json({ err: "Bad Request" });
   }
 });
 
@@ -292,31 +289,31 @@ app.post("/registerForum", (req, res) => {
   try {
     const data = req.body.registrationData;
     if (!data)
-      return res.status(400).json({ message: "No registration data found!" });
+      return res.status(400).json({ err: "No registration data found!" });
     else
-      dataValidator.validateRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!", errors: err });
+      dataValidator.validateRegistrationData(data, (error, ok) => {
+        if (error) return res.json({ err: "Invalid Data!", errors: error });
         else {
           //check if user is already registered.
 
-          users.checkRegistrationStatus(data.username, (err, state) => {
-            if (err)
+          users.checkRegistrationStatus(data.username, (error, state) => {
+            if (error)
               return res
                 .status(500)
-                .json({ message: "Internal Server Database error!" });
+                .json({ err: "Internal Server Database error!" });
             else if (state == true)
-              res.json({ message: "User has already registered" });
+              res.json({ err: "User has already registered" });
             else {
               res.json({ message: "response recorded" });
               mailSender.sendMail(
                 "Registration Notification",
                 "Your Request has been recorded.You will be contacted shortly.",
                 data.email,
-                (err, res) => {
-                  if (err) {
+                (error, res) => {
+                  if (error) {
                     return console.log(
-                      { message: "Error sending email to user." },
-                      err
+                      { err: "Error sending email to user." },
+                      error
                     );
                   }
                 }
@@ -326,11 +323,11 @@ app.post("/registerForum", (req, res) => {
                 "Registration Request",
                 JSON.stringify(data),
                 process.env.USERMAIL,
-                (err, res) => {
-                  if (err) {
+                (error, res) => {
+                  if (error) {
                     return console.log(
-                      { message: "Error sending email to self." },
-                      err
+                      { err: "Error sending email to self." },
+                      error
                     );
                   }
                 }
@@ -341,10 +338,10 @@ app.post("/registerForum", (req, res) => {
                 data.username,
                 data.email,
                 data.phone,
-                (err, st) => {
-                  if (err)
+                (error, st) => {
+                  if (error)
                     return console.log(
-                      err,
+                      error,
                       "Error inserting forum registration request into table!"
                     );
                   return console.log(
@@ -356,9 +353,9 @@ app.post("/registerForum", (req, res) => {
           });
         }
       });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: "BAD REQUEST!" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ err: "BAD REQUEST!" });
   }
 });
 
@@ -371,31 +368,31 @@ app.post("/registerFaculty", (req, res) => {
     if (!data)
       return res.status(400).json({ message: "No registration data found!" });
     else
-      dataValidator.validateFacultyRegistrationData(data, (err, ok) => {
-        if (err) return res.json({ message: "Invalid Data!", errors: err });
+      dataValidator.validateFacultyRegistrationData(data, (error, ok) => {
+        if (error) return res.json({ err: "Invalid Data!", errors: error });
         else {
           //check if user is already registered.
 
           users.checkFacultyRegistrationStatus(
             data.faculty_roll,
-            (err, state) => {
-              if (err)
+            (error, state) => {
+              if (error)
                 return res
                   .status(500)
-                  .json({ message: "Internal Server Database error!" });
+                  .json({ err: "Internal Server Database error!" });
               else if (state == true)
-                res.json({ message: "User has already registered" });
+                res.json({ err: "User has already registered" });
               else {
                 res.json({ message: "response recorded" });
                 mailSender.sendMail(
                   "Registration Notification",
                   "Your Request has been recorded.You will be contacted shortly.",
                   data.faculty_email,
-                  (err, res) => {
-                    if (err) {
+                  (error, res) => {
+                    if (error) {
                       return console.log(
-                        { message: "Error sending email to user." },
-                        err
+                        { err: "Error sending email to user." },
+                        error
                       );
                     }
                   }
@@ -406,10 +403,10 @@ app.post("/registerFaculty", (req, res) => {
                   "Registration Request",
                   JSON.stringify(data),
                   process.env.USERMAIL,
-                  (err, res) => {
-                    if (err) {
+                  (error, res) => {
+                    if (error) {
                       return console.log({
-                        message: "Error sending email to self.",
+                        err: "Error sending email to self.",
                       });
                     }
                   }
@@ -422,10 +419,10 @@ app.post("/registerFaculty", (req, res) => {
                   data.faculty_roll.toUpperCase(),
                   data.faculty_email,
                   data.faculty_phone,
-                  (err, st) => {
-                    if (err)
+                  (error, st) => {
+                    if (error)
                       return console.log(
-                        err,
+                        error,
                         "Error inserting faculty registration request into table!"
                       );
                     return console.log(
@@ -438,9 +435,9 @@ app.post("/registerFaculty", (req, res) => {
           );
         }
       });
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({ message: "BAD REQUEST!" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ err: "BAD REQUEST!" });
   }
 });
 
@@ -716,34 +713,34 @@ res.download('./LetterGenerated/FINAL_CONDUCT_MEET_PERMISSION.docx'); //callback
 
 app.post("/getUserType", (req, res) => {
   try {
-    users.fetchAccessToken(req, (err, token) => {
+    users.fetchAccessToken(req, (error, token) => {
       console.log(req.headers);
-      if (err) {
-        console.log(err);
-        return res.status(400).json({ message: "No token found!" });
+      if (error) {
+        console.log(error);
+        return res.status(400).json({ err: "No token found!" });
       }
       users.authenticateToken(
         token,
         process.env.SECRET_ACCESS_TOKEN,
-        (err, username) => {
-          if (err) {
-            console.log(err);
-            return res.status(400).json(err);
+        (error, username) => {
+          if (error) {
+            console.log(error);
+            return res.status(400).json({ err: error });
           }
           var fileData = fs.readFileSync("validkeys.json");
           fileData = fileData.toString();
           fileData = JSON.parse(fileData);
           if (!fileData.hasOwnProperty(username.toUpperCase())) {
-            return res.status(400).json({ message: "User isnt Logged in!" });
+            return res.status(400).json({ err: "User isnt Logged in!" });
           }
           const { userType } = fileData[username.toUpperCase()];
           return res.send({ userType: userType });
         }
       );
     });
-  } catch (err) {
-    res.status(500).json("Internal Server Error!");
-    console.log(err);
+  } catch (error) {
+    res.status(500).json({ err: "Internal Server Error" });
+    console.log(error);
   }
 });
 

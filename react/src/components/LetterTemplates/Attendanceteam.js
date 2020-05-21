@@ -84,7 +84,7 @@ const Tatten = () => {
                                     <br/><br/>
                                     <div className="form-group">
                                         <span className="form-label" for="designation">Designation: </span>
-                                        <select className="form-control" name="designation" onChange={e =>{e.persist(); setDesignation(e.target.value)}}>
+                                        <select className="form-control" name="designation" onChange={e =>{e.persist(); setDesignation(e.target.value); console.log(e.target.value)}}>
                                             <option>Head of Department</option>
                                             <option>Director</option>
                                         </select>

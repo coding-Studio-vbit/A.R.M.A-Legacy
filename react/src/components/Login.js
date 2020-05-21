@@ -19,6 +19,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [value, setValue] = useState(Forumlist[0]);
   const [registered, isRegistered] = useState(false);
+  const [error, setError] = useState("");
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
@@ -32,17 +33,21 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res);
-        let userName = res.data.message.split(" ")[1];
-        let accessToken = res.data.accessToken;
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            userName: userName,
-            accessToken: accessToken,
-          })
-        );
-
-        // history.push("/Dashboard");
+        if (!res.data.hasOwnProperty("err")) {
+          let userName = res.data.message.split(" ")[1];
+          let accessToken = res.data.accessToken;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              userName: userName,
+              accessToken: accessToken,
+            })
+          );
+          history.push("/Dashboard");
+        } else {
+          let errors = res.data.err;
+          setError(errors);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -52,8 +57,8 @@ const Login = () => {
   const isEnabled = password.length > 0 && registered;
 
   return (
-    <div className="continer">
-      <div className="booking-form">
+    <div className="all-items">
+      <div className="forms">
         <form>
           <div style={{ height: "140px", width: "585px", marginTop: "0%" }}>
             <img
@@ -63,7 +68,7 @@ const Login = () => {
             />
           </div>
           <br />
-          <h1> A.R.M.A LOGIN </h1>
+          <h1 style={{ color: "white" }}> A.R.M.A LOGIN </h1>
 
           <div style={{ marginTop: 20 }}></div>
           <br />
@@ -89,6 +94,7 @@ const Login = () => {
               Password:{" "}
             </span>
             <input
+              disabled={!registered ? "disabled" : ""}
               type="password"
               className="form-control"
               id="exampleInputPassword1"
@@ -118,6 +124,8 @@ const Login = () => {
           {!registered && (
             <h4 style={{ color: "#ff1744" }}>Forum is not registered</h4>
           )}
+          <br />
+          <h4 style={{ color: "#ff1744" }}>{error} </h4>
         </form>
       </div>
     </div>
