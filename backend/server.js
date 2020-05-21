@@ -238,6 +238,10 @@ app.post("/createrequest", (req, res) => {
         var recipients = []
         
        try{
+
+			if(!req.body.recipients || !req.body.recipients.length)
+				throw "Invalid recipients!";
+
             for(let i=0;i<req.body.recipients.length;i++)
             {
               var client = new Client();
@@ -249,12 +253,17 @@ app.post("/createrequest", (req, res) => {
                     //client.end();
                     throw err;
                   }
-                    recipients.push(data.rows[0].faculty_roll);
-                })
+				  	if(data.rows.length != 0)
+	                    recipients.push(data.rows[0].faculty_roll);
+				})
             }
-            
-            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
-            return res.send({message: "request sent succesfully!"})
+            	requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((error,status)=>{
+					if(error){
+						console.log(error);
+						return res.status(500).json({err:'Internal Server Error(database)'});
+					}
+				}));
+           		 return res.send({message: "request sent succesfully!"})
         }
         catch(error){
            console.log(error)
