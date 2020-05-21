@@ -58,12 +58,7 @@ app.post("/login", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({
-<<<<<<< HEAD
-              message: "USERNAME: " + req.body.user.username.toUpperCase(),
-=======
-              message: "USERNAME: " + req.body.user.username,
->>>>>>> cb853a8cc4dc1660b0d10ffd8de620bc24cabf7b
+            res.send({message: "USERNAME: " + req.body.user.username.toUpperCase(),
               accessToken: accessToken,
             });
             console.log("token: " + accessToken);
@@ -113,11 +108,9 @@ app.post("/loginFaculty", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
             res.send({
-<<<<<<< HEAD
+
               message: "USERNAME: " + req.body.user.username.toUpperCase(),
-=======
-              message: "USERNAME: " + req.body.user.faculty_roll,
->>>>>>> cb853a8cc4dc1660b0d10ffd8de620bc24cabf7b
+
               accessToken: accessToken,
             });
             console.log("token: " + accessToken);
@@ -182,63 +175,6 @@ app.post("/logout", (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-//FACULTY DASHBOARD (THIS USES  FACULTY ID WHICH WILL BE SOON DEPRECATED)
-
-app.post("/dashboard", (req, res) => {
-  users.fetchAccessToken(req, (error, token) => {
-    if (error) return res.status(400).json({ err: "couldnt find any token!" });
-    users.authenticateToken(
-      token,
-      process.env.SECRET_ACCESS_TOKEN,
-      (error, username) => {
-        if (error) return res.status(400).json({ err: "Invalid Token!" });
-        try {
-          //first get the faculty_id from faculty table.
-
-          var faculty_id = pool.query(
-            "select faculty_id from faculty where faculty_roll=$1",
-            [username.toUpperCase()]
-          );
-          faculty_id = faculty_id.rows[0].faculty_id;
-          //now use this faculty id to get the requests of the faculty.
-
-          const data = pool.query(
-            "select forum_id,forum_name,subject,status from requests where request_id in (select request_id from recipients where faculty_id=$1)",
-            [faculty_id]
-          );
-          res.json(data.rows);
-        } catch (error) {
-          res.status(500).json({ err: "Internal Database Error!" });
-          console.log(error);
-        }
-      }
-    );
-  });
-});
-
-//FORUM DASHBOARD
-
-app.post("/forumDashboard", (req, res) => {
-  users.fetchAccessToken(req, (error, token) => {
-    if (error) return res.status(400).json({ err: "couldnt find any token!" });
-    users.authenticateToken(
-      token,
-      process.env.SECRET_ACCESS_TOKEN,
-      (error, username) => {
-        if (error) return res.status(400).json({ err: "Invalid Token!" });
-        try {
-          //here the forum_name is itself obtained as the username after decoding the access token.
-          console.log(req.body);
-          const data = pool.query(
-            "select subject,status from requests where forum_name=$1",
-            [username.toUpperCase()]
-          );
-          res.json(data.rows);
-        } catch (error) {
-          res.status(500).json({ err: "Internal Database Error!" });
-          console.log(error);
-=======
 //FACULTY DASHBOARD
 //change to get
 app.get("/facultydashboard", (req, res) => {
@@ -289,38 +225,41 @@ app.post("/createrequest", (req, res) => {
       }
       users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
         if (error){
-          console.log("say sike")
           return res.status(400).json({err: error})
         }
-        let unique_id = "";
+        var unique_id = "";
         for (let a = 0; a < 10; a++) {
-          unique_id += String(Math.round(Math.random() * 10));
+          unique_id += String(Math.round(Math.random() * 10)%10);
         }
-        console.log(unique_id)
+        
+        console.log("Unique ID: ", unique_id); //DEBUG
+
         var forum_name = username.toUpperCase()
-        var recipients = ['17P61A0584','17P61A0184']
+        var recipients = []
+        
        try{
-        req.body.recipients.forEach(element => {
-          var client = new Client()
-        client.query('select faculty_roll from faculty where faculty_name=$1',[element],(err, data) => {console.log('err,data', err,data)})
-        // .then((data) => {console.log('data retrieved', data)})
-        // // recipients.push(data.rows[0].faculty_roll)
-        // .catch((error)=> {
-        //   console.log('hellolololo')
-        //   console.log(error)
-        //   throw error
-        // })
-        client.end()
-      })
-        // var req_data = JSON.stringify(req.body.request_)
-        requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
-        // client.end()
-        return res.send({message: "request sent succesfully!"})
-      }
-      catch(error){
-        console.log(error)
-        return res.status(400).json({err: error})
-      }           
+            for(let i=0;i<req.body.recipients.length;i++)
+            {
+              var client = new Client();
+              client.connect();
+              client.query('select faculty_roll from faculty where faculty_name=$1',[req.body.recipients[i]],
+              (err,data)=>{
+                  if(err){
+                    console.log(err);
+                    //client.end();
+                    throw err;
+                  }
+                    recipients.push(data.rows[0].faculty_roll);
+                })
+            }
+            
+            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
+            return res.send({message: "request sent succesfully!"})
+        }
+        catch(error){
+           console.log(error)
+           return res.status(400).json({err: error})
+        }           
       })
     })
 });
@@ -356,7 +295,7 @@ app.get("/forumdashboard", async (req, res) => {
         } catch (err) {
           res.status(500).json({ err: "Internal Database Error!" });
           console.log(err);
->>>>>>> cb853a8cc4dc1660b0d10ffd8de620bc24cabf7b
+
         }
       }
     );
@@ -377,15 +316,9 @@ app.get("/forumdashboard", async (req, res) => {
 
 //Remarks
 app.post("/Remarks", (req, res) => {
-<<<<<<< HEAD
-const remark=req.body;
-console.log(remark);
-})
-=======
   const remark = req.body;
   console.log(remark);
 });
->>>>>>> cb853a8cc4dc1660b0d10ffd8de620bc24cabf7b
 
 app.post("/checkRegistrationStatus", (req, res) => {
   try {
@@ -883,7 +816,6 @@ app.post("/getUserType", (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 //---------ROUTES FOR USER CREDENTIALS UPDATE---------//
 
 app.post("/changeForumUsername", (req, res) => {
@@ -1076,8 +1008,6 @@ app.post("/changeFacultyEmail", (req, res) => {
       .json({ err: "Internal Server Error: changeFacultyEmail" });
   }
 });
-=======
->>>>>>> cb853a8cc4dc1660b0d10ffd8de620bc24cabf7b
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 
 //start the server.
