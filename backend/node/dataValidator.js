@@ -42,7 +42,7 @@ function validateFacultyLoginData(data, callback)
 	let errors = {};
 
 	//check for emptiness.
-	if(validator.isEmpty(data.faculty_roll))errors.faculty_roll = "Faculty roll number is empty!";
+	if(validator.isEmpty(data.username))errors.faculty_roll = "Faculty roll number is empty!";
 	if(validator.isEmpty(data.password))errors.password = 'Password is empty!';
 	
 	//Add faculty roll number validation. >>>>>>>>>>>>>>>
