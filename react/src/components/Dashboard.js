@@ -15,22 +15,24 @@ class Dashboard extends React.Component{
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
-    let userName = user.userName;
-    let accessToken = user.accessToken;
-    console.log(accessToken);
-    let config = {
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
+    if(user!==null){
+      let userName = user.userName;
+      let accessToken = user.accessToken;
+      console.log(accessToken);
+      let config = {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
     }
-  }
-    console.log(config);
-    axios.post("http://localhost:8080/getUserType",user,config).then((response) => {
-      var res=response.data;
-      this.setState({loginValue:response.data.userType});
-      console.log(res.userType);
-    }).catch((err) => {
-      console.log(err);
-    })
+      console.log(config);
+      axios.post("http://localhost:8080/getUserType",user,config).then((response) => {
+        var res=response.data;
+        this.setState({loginValue:response.data.userType});
+        console.log(res.userType);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
   }
 
   render(){
@@ -42,8 +44,7 @@ class Dashboard extends React.Component{
           case "FACULTY": return(
             <div>
             <Nav/>
-            <h1>Current Requests</h1>
-            <Table />
+            <FacultyTable />
             </div>
           );
 
@@ -51,7 +52,6 @@ class Dashboard extends React.Component{
         return (
           <div>
             <Nav/>
-            <h1>Current Requests</h1>
             <Table />
           </div>
         );
@@ -62,11 +62,11 @@ class Dashboard extends React.Component{
             <center>
               <h1>
                 Please, <a href="/">Login.</a>
-              </h1>{" "}
+              </h1>
             </center>
           </div>
         );
-        
+
     }
   }
 }
