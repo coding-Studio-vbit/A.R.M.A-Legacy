@@ -18,7 +18,6 @@ class Table extends React.Component {
   };
 
   componentWillMount() {
-<<<<<<< HEAD
     let user = JSON.parse(localStorage.getItem("user"));
     let userName = user.userName;
     let accessToken = user.accessToken;
@@ -56,40 +55,10 @@ class Table extends React.Component {
 
              )
     })
-=======
-    axios.get(`http://localhost:8080/forumDashboard`).then((res) => {
-      const persons = res.data;
-      this.setState({ persons });
-      console.log(persons);
-    });
-  }
-
-  render() {
-    const items = this.state.persons.map((item) => {
-      return (
-        <tr>
-          <td>{item.forum_id}</td>
-          <td>{item.forum_name}</td>
-          <td>{item.subject}</td>
-          <td>{item.status}</td>
-          <td>
-            {" "}
-            <a>Click here!</a>{" "}
-          </td>
-          {
-            //       <td><center>
-            //         <input type="checkbox" />
-            // </center></td>
-          }
-        </tr>
-      );
-    });
->>>>>>> 84d9327838f3a44dfab129eef0fcd1f0b2856128
     return (
       <div class="containerz">
         <div class="container">
           <div class="table-responsive">
-<<<<<<< HEAD
            <table class="table">
            <thead>
            <tr>
@@ -104,23 +73,6 @@ class Table extends React.Component {
            {items}
            </tbody>
            </table>
-=======
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">forum</th>
-                  <th scope="col">Subject</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Remarks</th>
-                  {
-                    // <th scope="col"><center>Approve</center></th>
-                  }
-                </tr>
-              </thead>
-              <tbody>{items}</tbody>
-            </table>
->>>>>>> 84d9327838f3a44dfab129eef0fcd1f0b2856128
           </div>
         </div>
       </div>
