@@ -13,7 +13,7 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
   var client = new Client();
   client.connect();
   console.log(request_data)
-  request_data = JSON.stringify(request_data)
+  // request_data = JSON.stringify(request_data)
   forum_name = forum_name.toUpperCase();
   client.query(
     "insert into requests(forum_name,unique_id,request_data,status,remarks) values ($1,$2,$3,'PENDING','No remarks have been given yet.');",

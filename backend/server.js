@@ -239,7 +239,14 @@ app.post("/createrequest", (req, res) => {
        try{
         req.body.recipients.forEach(element => {
           var client = new Client()
-        client.query('select faculty_roll from faculty where faculty_name=$1',[element],(err, data) => {console.log('err,data', err,data)})
+          client.connect()
+        client.query('select faculty_roll from faculty where faculty_name=$1',[`${element}`],(err, data) => 
+        {
+       if(err){
+        console.log(err)
+        return res.status(400).json({err: error})
+        }
+        recipients.push(data.rows[0].faculty_roll); client.end()})
         // .then((data) => {console.log('data retrieved', data)})
         // // recipients.push(data.rows[0].faculty_roll)
         // .catch((error)=> {
@@ -247,7 +254,6 @@ app.post("/createrequest", (req, res) => {
         //   console.log(error)
         //   throw error
         // })
-        client.end()
       })
         // var req_data = JSON.stringify(req.body.request_)
         requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
