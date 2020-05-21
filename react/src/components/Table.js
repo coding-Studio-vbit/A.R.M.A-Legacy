@@ -22,7 +22,12 @@ class Table extends React.Component{
     let userName = user.userName;
     let accessToken = user.accessToken;
     console.log(accessToken)
-    axios.get(`http://localhost:8080/forumDashboard`)
+    let config = {
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+      }
+    }
+    axios.get("http://localhost:8080/forumdashboard",config)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
@@ -33,14 +38,14 @@ class Table extends React.Component{
   }
 
   render() {
+    var i=1;
     const items=this.state.persons.map(item =>{return(
 
        <tr>
-          <td>{item.forum_id}</td>
-          <td>{item.forum_name}</td>
+          <td style={{color: "#b007c4"}}>{i++}</td>
           <td>{item.subject}</td>
-          <td>{item.status}</td>
-          <td> <a>Click here!</a> </td>
+          <td>PENDING</td>
+          <td> <a href="/Remarks">Click here!</a> </td>
     {
       //       <td><center>
     //         <input type="checkbox" />
@@ -58,7 +63,6 @@ class Table extends React.Component{
            <thead>
            <tr>
            <th scope="col">#</th>
-           <th scope="col">forum</th>
            <th scope="col">Subject</th>
            <th scope="col">Status</th>
            <th scope="col">Remarks</th>

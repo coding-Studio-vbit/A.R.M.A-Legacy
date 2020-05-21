@@ -52,9 +52,6 @@ class TemplateList extends React.Component{
       return(
           <React.Fragment>
             <Nav/>
-              <div className="availabletemps">
-                  <h1 >Available templates</h1>
-              </div>
               <div >
                 <Container>
                 <Row>
