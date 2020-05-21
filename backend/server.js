@@ -244,10 +244,16 @@ app.post("/createrequest", (req, res) => {
         {
        if(err){
         console.log(err)
-        return res.status(400).json({err: err})
+        return res.status(400).json({err: error})
         }
-        recipients.push(data.rows[0].faculty_roll);
-         client.end()})
+        recipients.push(data.rows[0].faculty_roll); client.end()})
+        // .then((data) => {console.log('data retrieved', data)})
+        // // recipients.push(data.rows[0].faculty_roll)
+        // .catch((error)=> {
+        //   console.log('hellolololo')
+        //   console.log(error)
+        //   throw error
+        // })
       })
         // var req_data = JSON.stringify(req.body.request_)
         requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
