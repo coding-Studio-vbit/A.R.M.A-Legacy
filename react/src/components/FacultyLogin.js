@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 
 const FacultyLogin = () => {
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
 
@@ -11,13 +12,14 @@ const FacultyLogin = () => {
     axios
       .post("/loginFaculty", {
         user: {
-          faculty_roll: rollNo,
+          username: rollNo,
           password: password,
         },
       })
       .then((res) => {
-        let userName = res.message.split(" ")[1];
-        let accessToken = res.accessToken;
+        console.log(res);
+        let userName = res.data.message.split(" ")[1];
+        let accessToken = res.data.accessToken;
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -25,6 +27,7 @@ const FacultyLogin = () => {
             accessToken: accessToken,
           })
         );
+        history.push("/dashboard");
       })
       .catch((err) => console.log(err));
   };
@@ -38,7 +41,7 @@ const FacultyLogin = () => {
       <div style={{ marginTop: 20 }}></div>
       <form>
         <div className="form-group">
-          <label for="InputRollNo">Roll Number</label>
+          <label htmlFor="InputRollNo">Roll Number</label>
           <input
             type="text"
             className="form-control"
@@ -48,7 +51,7 @@ const FacultyLogin = () => {
           />
         </div>
         <div className="form-group">
-          <label for="InputPassword1">Password</label>
+          <label htmlFor="InputPassword1">Password</label>
           <input
             type="password"
             className="form-control"
