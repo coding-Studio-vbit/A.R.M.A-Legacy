@@ -247,8 +247,7 @@ app.post("/createrequest", (req, res) => {
         return res.status(400).json({err: err})
         }
         recipients.push(data.rows[0].faculty_roll);
-         client.end()
-        })
+         client.end()})
       })
         // var req_data = JSON.stringify(req.body.request_)
         requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
