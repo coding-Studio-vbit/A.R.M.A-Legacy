@@ -18,6 +18,7 @@ import Evenue from "./LetterTemplates/Eventvenue";
 import Tatten from "./LetterTemplates/Attendanceteam";
 import Patten from "./LetterTemplates/AttendanceParticipants";
 import Profile from "./Profile";
+import CreateRequest from "./CreateRequest";
 
 function App() {
   return (
@@ -33,11 +34,12 @@ function App() {
               path="/Dashboard/TemplateDetails"
               component={TemplateDetails}
             />
+            <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
             <Route path="/Remarks" component={Remarks} />
             <Route path="/Dashboard/TemplateList" component={TemplateList} />
-
+            
             <Route path="/campaining" component={Camp} />
             <Route path="/conduct" component={Econ} />
             <Route path="/venue" component={Evenue} />
