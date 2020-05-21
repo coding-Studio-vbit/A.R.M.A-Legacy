@@ -47,7 +47,6 @@ class FacultyTable extends React.Component{
           <td>{item.subject}</td>
           <td>{item.status}</td>
           <td> <a href="/Remarks" >Click here!</a> </td>
-          <td><center><input type="checkbox" /></center></td>
       </tr>
 
              )
@@ -63,8 +62,7 @@ class FacultyTable extends React.Component{
            <th scope="col">forum/faculty</th>
            <th scope="col">Subject</th>
            <th scope="col">Status</th>
-           <th scope="col">Remarks</th>
-           <th scope="col"><center>Approve</center></th>
+           <th scope="col">Approve</th>
            </tr>
            </thead>
            <tbody>
