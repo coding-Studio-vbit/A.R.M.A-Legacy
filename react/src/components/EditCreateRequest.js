@@ -109,7 +109,7 @@ const EditCreateRequest = () => {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col self-align-start">
-                        <h3> Create New Request </h3>  
+                        <h3> Edit Request </h3>  
                       </div>
                     </div>
                     <hr className="line" />
