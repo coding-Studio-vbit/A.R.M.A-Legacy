@@ -1,24 +1,29 @@
 {
   "designation": "Head of Department",
-  "department": "Department of Information Technology",
-  "subject": "swd",
-  "date": "2020-05-22",
+  "department": "Department of Electronics and Communication Engineering",
+  "subject": "Corona Lol",
+  "date": "2020-05-23",
   "respects": "Sir",
-  "team_name": "dsd",
-  "event_name": "sdsd",
-  "fromdate": "2020-05-21",
-  "hall_name": "dsd",
-  "start_hour": "9",
+  "team_name": "Ebola",
+  "event_name": "asdasd",
+  "fromdate": "2020-05-22",
+  "todate": "2020-05-23",
+  "start_hour": "4",
   "start_min": "15",
   "start_meridian": "PM",
-  "end_hour": "9",
-  "end_min": "40",
+  "end_hour": "6",
+  "end_min": "10",
   "end_meridian": "PM",
-  "letter_body": "ss",
+  "letter_body": "Fighting!!!!!",
+  "where": "inside",
   "studentdetails": [
     {
-      "Name": "dsd",
-      "Roll": "1233"
+      "Name": "Poojitha",
+      "Roll": "12345"
+    },
+    {
+      "Name": "cat",
+      "Roll": "12345"
     }
   ]
 }

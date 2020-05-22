@@ -3,7 +3,7 @@ import Nav from './Navi';
 import "../css/Request.css";
 import 'react-bootstrap';
 
-const CreateRequest = () => {
+const EditCreateRequest = () => {
     const [inputFields, setInputFields] = useState([
         { Name: "", Roll: "" }
       ]);
@@ -50,14 +50,14 @@ const CreateRequest = () => {
                     <div className="container-fluid">
                       <div className="row">
                         <div className="col self-align-start">
-                          <h3> Create New Request </h3>  
+                          <h3> Edit Request </h3>  
                         </div>
                       </div>
                       <hr className="line" />
                       <br />
                       <div className="row">
                         <div className="col self-align-start">
-                          <h5>Select Request Type :</h5>  
+                          <h5>Change Request Type :</h5>  
                         </div>
                         <div className="col self-align-end">
                           <select required className="form-control" name="department" onChange={e =>{e.persist(); setDepartment(e.target.value)}}>
@@ -76,7 +76,7 @@ const CreateRequest = () => {
                       <br />
                       <div className="row">
                         <div className="col">
-                          <h5>Select Faculty :</h5>  
+                          <h5>Change Faculty :</h5>  
                         </div>
                         <div className="col">
                           <select required className="form-control" name="department" onChange={e =>{e.persist(); setDepartment(e.target.value)}}>
@@ -98,7 +98,7 @@ const CreateRequest = () => {
                       <br />
                       <div className="row">
                         <div className="col">
-                          <h5>Description :</h5>  
+                          <h5>Edit Description :</h5>  
                         </div>
                         <div className="col">
                           <div className="form-group">
@@ -187,7 +187,7 @@ const CreateRequest = () => {
                       <br />
                       <div className="row">
                         <div className="col">
-                          <h5>Facilities Required :</h5>  
+                          <h5>Edit Facilities Required :</h5>  
                         </div>
                         <div className="col">
                           <div class="form-check form-check-inline">
@@ -211,9 +211,16 @@ const CreateRequest = () => {
                       <hr className="linew" />
                       <br />
                       <div className="row">
+                         
                         <div className="col align-self-center">
-                          <button type="button" class="btn btn-success">Create Request</button>
-                        </div>      
+                          <button type="button" class="btn btn-primary">Update Request</button>
+                        </div>     
+                        <div className="col align-self-center">
+                          <button type="button" class="btn btn-success">Create New Request</button>
+                        </div>    
+                        <div className="col align-self-center">
+                          <button type="button" class="btn btn-danger">Delete Request</button>
+                        </div>   
                       </div>     
                     </div>
                   </div>
@@ -222,4 +229,4 @@ const CreateRequest = () => {
   );
 }
 
-export default CreateRequest;
+export default EditCreateRequest;

@@ -20,6 +20,7 @@ import Patten from "./LetterTemplates/AttendanceParticipants";
 import Emeet from "./LetterTemplates/conductmeet";
 import Profile from "./Profile";
 import CreateRequest from "./CreateRequest";
+import EditCreateRequest from "./EditCreateRequest";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               component={TemplateDetails}
             />
             <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
+            <Route path="/Dashboard/EditCreateRequest" component={EditCreateRequest} />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
             <Route path="/Remarks" component={Remarks} />
