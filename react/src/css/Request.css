@@ -1,0 +1,21 @@
+.boxbg {
+    border-radius: 25px;
+    border: 1px solid rgb(180, 180, 180);
+    background: rgb(33, 33, 33);
+    padding: 20px; 
+    width: inherit;
+    height: inherit;  
+    display: flex;
+    margin-top: 50px;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 50px;
+  }
+
+  .line {
+    background-color: rgb(109, 0, 143);    
+  }
+
+  .linew {
+    background-color: gray;
+  }
