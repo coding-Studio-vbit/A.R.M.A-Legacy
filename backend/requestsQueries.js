@@ -74,7 +74,26 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 // addRequest('CODINGSTUDIO','1346789',data,['16P61A05M0','18P61A05J1','18P61A05C2'],(err,state) => {
 //   console.log(err||state);
 // });
-
+function changeRequest(forum_name,request_data,status,remarks,request_id, callback) {
+  //returns status of registration (true or false)
+  var client = new Client();
+  client.connect();
+  forum_name = forum_name.toUpperCase();
+  client.query(
+    "update requests set forum_name = $1,request_data = $2,status = $3,remarks = $4 where request_id=$5;",
+    [forum_name,request_data,status,remarks,request_id],
+    (err, res) => {
+      if (err) {
+        client.end();
+        return callback(err, undefined);
+      } else{
+        client.end();
+        return callback(undefined,true);
+      }
+    }
+  );
+}
 module.exports={
-  addRequest:addRequest
+  addRequest:addRequest,
+  changeRequest:changeRequest
 }
