@@ -1,6 +1,8 @@
 import React from 'react';
 import Template from './Template';
-import {Button,Col,Row,Container} from 'react-bootstrap'
+import {Button,Col,Row,Container} from 'react-bootstrap';
+import Nav from './Navi';
+
 
 class TemplateList extends React.Component{
   state={
@@ -49,9 +51,7 @@ class TemplateList extends React.Component{
     render(){
       return(
           <React.Fragment>
-              <div className="availabletemps">
-                  <h1 >Available templates</h1>
-              </div>
+            <Nav/>
               <div >
                 <Container>
                 <Row>

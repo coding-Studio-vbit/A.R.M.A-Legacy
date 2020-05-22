@@ -15,6 +15,7 @@ const Login = () => {
     "StreetCause",
     "VBIT-MUN",
     "Stutalk",
+    "ISE",
   ];
   const history = useHistory();
   const [password, setPassword] = useState("");
