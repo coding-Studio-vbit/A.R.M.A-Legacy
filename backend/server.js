@@ -151,7 +151,7 @@ app.post("/logout", (req, res) => {
     users.fetchAccessToken(req, (error, token) => {
       if (error) return res.status(400).json({ err:error });
 
-      const username = req.body.user.username.toUpperCase(); //get the username
+      const username = req.body.user.userName.toUpperCase(); //get the username
 
       if (!username || !token) {
         return res
@@ -265,6 +265,48 @@ app.post("/createrequest", (req, res) => {
     })
 });
 
+app.delete("/createrequest", (req, res) => {
+  users.fetchAccessToken(req, (error, token)=>{
+    if (error){
+      return res.status(400).json({err: error})
+    }
+    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
+      if (error){
+        return res.status(400).json({err: error})
+      }
+     try{
+          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+          return res.send({message: "Deleted!!"})
+      }
+      catch(error){
+         console.log(error)
+         return res.status(400).json({err: error})
+      }
+    })
+  })
+});
+
+app.put("/createrequest", (req, res) => {
+  users.fetchAccessToken(req, (error, token)=>{
+    if (error){
+      return res.status(400).json({err: error})
+    }
+    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
+      if (error){
+        return res.status(400).json({err: error})
+      }
+      var forum_name = username.toUpperCase()
+     try{
+          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
+          return res.send({message: "Updated succesfully!"})
+      }
+      catch(error){
+         console.log(error)
+         return res.status(400).json({err: error})
+      }
+    })
+  })
+});
 
 app.get("/forumdashboard", async (req, res) => {
   users.fetchAccessToken(req, (err, token) => {
