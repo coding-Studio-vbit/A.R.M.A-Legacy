@@ -41,6 +41,33 @@ textarea{
 ::placeholder{
   color: antiquewhite;
 }
+.prevbtn{
+  background: #555777;
+  border-radius: 50%;
+  float: left;
+}
+.nxtbtn{ 
+  background: #555777;
+  border-radius: 50%;
+  float: right;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
 .Buttons{
   margin:15px;
   margin-bottom: 5px;
