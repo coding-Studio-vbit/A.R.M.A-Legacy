@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+import { Alert } from "react-bootstrap";
 import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
+import Links from "./Links";
 
 function Register() {
   const Forumlist = [
@@ -23,9 +24,10 @@ function Register() {
   const [values, setValue] = useState(Forumlist[0]);
   const [registered, isRegistered] = useState(true);
   const [error, setError] = useState("");
+  const [isMessage, setMessage] = useState(false);
   useEffect(() => {
     if (error !== "") {
-      setTimeout(() => setError(""), 5000);
+      setTimeout(() => setError(""), 7000);
     }
   });
   const handleChange = (event) => {
@@ -60,11 +62,16 @@ function Register() {
         } else if (res.data.hasOwnProperty("message")) {
           setError(res.data.message);
           setMessage(true);
+          setContact((prevState) => ({
+            ...prevState,
+            email: "",
+            cemail: "",
+            pnum: "",
+          }));
         }
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <div className="all-items">
       <div className="forms">
@@ -145,7 +152,7 @@ function Register() {
           </div>
           <br />
           <button
-            disabled={registered}
+            disabled={registered && isEnabled}
             type="submit"
             className="submit-btn"
             onClick={handleRegister}
@@ -153,19 +160,12 @@ function Register() {
             Register
           </button>
           <br />
-          <Link
-            to={"/login"}
-            style={{ display: "block", marginTop: 20, color: "#00e676" }}
-          >
-            Go to Login Page
-          </Link>
-          <br />
           <RegistrationCheck value={values} changeRegiValue={changeStatus} />
           {registered && (
             <h4 style={{ color: "green" }}>Forum is registered</h4>
           )}
-          <br />
-          <h4 style={{ color: "#ff1744" }}>{error} </h4>
+          <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+          <Links value={2} />
         </form>
       </div>
     </div>

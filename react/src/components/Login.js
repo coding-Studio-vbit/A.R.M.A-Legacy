@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 import RegistrationCheck from "./RegistrationCheck";
+import Links from "./Links";
 
 const Login = () => {
   const Forumlist = [
@@ -22,7 +23,7 @@ const Login = () => {
   const [error, setError] = useState("");
   useEffect(() => {
     if (error !== "") {
-      setTimeout(() => setError(""), 5000);
+      setTimeout(() => setError(""), 7000);
     }
   });
   const handleLogin = (e) => {
@@ -118,19 +119,12 @@ const Login = () => {
           </button>
 
           <br />
-          <Link
-            to={"/register"}
-            style={{ display: "block", marginTop: 20, color: "#00e676" }}
-          >
-            Go to Registration Page
-          </Link>
-          <br />
           <RegistrationCheck value={value} changeRegiValue={changeStatus} />
           {!registered && (
             <h4 style={{ color: "#ff1744" }}>Forum is not registered</h4>
           )}
-          <br />
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
+          <Links value={1} />
         </form>
       </div>
     </div>

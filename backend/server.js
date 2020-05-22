@@ -110,6 +110,7 @@ app.post("/loginFaculty", (req, res) => {
             );
             res.send({
               message: "USERNAME: " + req.body.user.username.toUpperCase(),
+
               accessToken: accessToken,
             });
             console.log("token: " + accessToken);
@@ -223,46 +224,53 @@ app.post("/createrequest", (req, res) => {
       process.env.SECRET_ACCESS_TOKEN,
       (error, username) => {
         if (error) {
-          console.log("say sike");
           return res.status(400).json({ err: error });
         }
-        let unique_id = "";
+        var unique_id = "";
         for (let a = 0; a < 10; a++) {
-          unique_id += String(Math.round(Math.random() * 10));
+          unique_id += String(Math.round(Math.random() * 10) % 10);
         }
-        console.log(unique_id);
+
+        console.log("Unique ID: ", unique_id); //DEBUG
+
         var forum_name = username.toUpperCase();
-        var recipients = ["17P61A0584", "17P61A0184"];
+        var recipients = [];
+
         try {
-          req.body.recipients.forEach((element) => {
+          if (!req.body.recipients || !req.body.recipients.length)
+            throw "Invalid recipients!";
+
+          for (let i = 0; i < req.body.recipients.length; i++) {
             var client = new Client();
+            client.connect();
             client.query(
               "select faculty_roll from faculty where faculty_name=$1",
-              [element],
+              [req.body.recipients[i]],
               (err, data) => {
-                console.log("err,data", err, data);
+                if (err) {
+                  console.log(err);
+                  //client.end();
+                  throw err;
+                }
+                if (data.rows.length != 0)
+                  recipients.push(data.rows[0].faculty_roll);
               }
             );
-            // .then((data) => {console.log('data retrieved', data)})
-            // // recipients.push(data.rows[0].faculty_roll)
-            // .catch((error)=> {
-            //   console.log('hellolololo')
-            //   console.log(error)
-            //   throw error
-            // })
-            client.end();
-          });
-          // var req_data = JSON.stringify(req.body.request_)
+          }
           requestQueries.addRequest(
             forum_name,
             unique_id,
             req.body.request_data,
             recipients,
-            (err, status) => {
-              console.log(err, status);
+            (error, status) => {
+              if (error) {
+                console.log(error);
+                return res
+                  .status(500)
+                  .json({ err: "Internal Server Error(database)" });
+              }
             }
           );
-          // client.end()
           return res.send({ message: "request sent succesfully!" });
         } catch (error) {
           console.log(error);

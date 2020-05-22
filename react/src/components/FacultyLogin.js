@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
+import Links from "./Links";
 
 const FacultyLogin = () => {
   const history = useHistory();
@@ -10,7 +11,7 @@ const FacultyLogin = () => {
   const [error, setError] = useState("");
   useEffect(() => {
     if (error !== "") {
-      setTimeout(() => setError(""), 5000);
+      setTimeout(() => setError(""), 7000);
     }
   });
   const handleLogin = (e) => {
@@ -95,14 +96,8 @@ const FacultyLogin = () => {
             Login
           </button>
           <br />
-          <Link
-            to={"/facultyregister"}
-            style={{ display: "block", marginTop: 20, color: "#00e676" }}
-          >
-            Go To Faculty Registration Page
-          </Link>
-          <br />
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
+          <Links value={3} />
         </form>
       </div>
     </div>

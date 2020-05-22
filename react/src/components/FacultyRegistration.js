@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import axios from "axios";
-import { Dropdown } from "react-bootstrap";
+import Links from "./Links";
 
 const FacultyRegister = () => {
   const [dept, setDept] = useState("CSE");
@@ -17,7 +16,7 @@ const FacultyRegister = () => {
   const [error, setError] = useState("");
   useEffect(() => {
     if (error !== "") {
-      setTimeout(() => setError(""), 5000);
+      setTimeout(() => setError(""), 7000);
     }
   });
   const handleChange = (event) => {
@@ -35,7 +34,6 @@ const FacultyRegister = () => {
   const disable = isEnabled && isPhone;
   const handleRegister = (e) => {
     e.preventDefault();
-    //console.log({ values }, contact.email, contact.pnum);
     axios
       .post("/registerFaculty", {
         registrationData: {
@@ -47,11 +45,20 @@ const FacultyRegister = () => {
         },
       })
       .then((res) => {
+        console.log(res);
         if (res.data.hasOwnProperty("err")) {
           setError(res.data.err);
         } else if (res.data.hasOwnProperty("message")) {
           setError(res.data.message);
           setMessage(true);
+          setContact((prevState) => ({
+            ...prevState,
+            rollNo: "",
+            name: "",
+            email: "",
+            cemail: "",
+            pnum: "",
+          }));
         }
       })
       .catch((err) => console.log(err));
@@ -69,7 +76,7 @@ const FacultyRegister = () => {
           />
           <h1 style={{ color: "white" }}>A.R.M.A Faculty Registration</h1>
           <br />
-          <div class="form-group">
+          <div className="form-group">
             <span className="form-label" htmlFor="rollNo">
               RollNo:{" "}
             </span>
@@ -122,7 +129,7 @@ const FacultyRegister = () => {
               placeholder="Email"
             />
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <span className="form-label" htmlFor="rollNo">
               confirm Email:{" "}
             </span>
@@ -140,12 +147,12 @@ const FacultyRegister = () => {
                 color: "#ff1744",
               }}
               id="emailHelp"
-              class="form-text"
+              className="form-text"
             >
               Enter the same email as above
             </h5>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <span className="form-label" htmlFor="rollNo">
               PhoneNo:{" "}
             </span>
@@ -162,15 +169,10 @@ const FacultyRegister = () => {
           <button type="submit" className="submit-btn" onClick={handleRegister}>
             Register
           </button>
-          <br />
-          <Link
-            to={"/facultylogin"}
-            style={{ display: "block", marginTop: 20, color: "#00e676" }}
-          >
-            Go to Login Page
-          </Link>
+
           <br />
           <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+          <Links value={4} />
         </form>
       </div>
     </div>
