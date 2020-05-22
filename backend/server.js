@@ -150,7 +150,7 @@ app.post("/logout", (req, res) => {
     users.fetchAccessToken(req, (error, token) => {
       if (error) return res.status(400).json({ err:error });
 
-      const username = req.body.user.username.toUpperCase(); //get the username
+      const username = req.body.user.userName.toUpperCase(); //get the username
 
       if (!username || !token) {
         return res
