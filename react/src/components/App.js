@@ -37,7 +37,7 @@ function App() {
             />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <Route path="/Remarks" component={Remarks} />
+            <ProtectedRoute path="/Remarks" component={Remarks} />
             <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
 
             <ProtectedRoute path="/campaining" component={Camp} />
