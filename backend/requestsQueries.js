@@ -93,7 +93,26 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
     }
   );
 }
+function deleteRequest(request_id, callback) {
+  //returns status of registration (true or false)
+  var client = new Client();
+  client.connect();
+  client.query(
+    "DELETE FROM requests WHERE request_id = $1;",
+    [request_id],
+    (err, res) => {
+      if (err) {
+        client.end();
+        return callback(err, undefined);
+      } else{
+        client.end();
+        return callback(undefined,true);
+      }
+    }
+  );
+}
 module.exports={
   addRequest:addRequest,
-  changeRequest:changeRequest
+  changeRequest:changeRequest,
+  deleteRequest:deleteRequest
 }
