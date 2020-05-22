@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 
 const FacultyLogin = () => {
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
 
@@ -26,6 +27,7 @@ const FacultyLogin = () => {
             accessToken: accessToken,
           })
         );
+        history.push("/dashboard");
       })
       .catch((err) => console.log(err));
   };
