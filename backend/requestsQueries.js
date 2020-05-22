@@ -75,6 +75,6 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 //   console.log(err||state);
 // });
 //
-// module.exports={
-//   addRequest:addRequest
-// }
+ module.exports={
+   addRequest:addRequest
+ }

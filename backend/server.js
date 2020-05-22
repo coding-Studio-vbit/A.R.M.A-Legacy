@@ -253,7 +253,7 @@ app.post("/createrequest", (req, res) => {
                     recipients.push(data.rows[0].faculty_roll);
                 })
             }
-
+            
             requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
             return res.send({message: "request sent succesfully!"})
         }
