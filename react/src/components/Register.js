@@ -41,7 +41,7 @@ function Register() {
   const handleRegister = (e) => {
     console.log({ values }, contact.email, contact.pnum);
     axios
-      .post(/registerForum", {
+      .post("/registerForum", {
         registrationData: {
           username: values,
           email: contact.email,
