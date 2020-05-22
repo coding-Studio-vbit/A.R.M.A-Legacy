@@ -147,26 +147,26 @@ app.post("/logout", (req, res) => {
   //For logout the request should have both the username and the access token.
 
   try {
-    users.fetchAccessToken(req, (error, token) => {
-      if (error) return res.status(400).json({ err: error });
 
-      const username = req.body.user.username.toUpperCase(); //get the username
+    	users.fetchAccessToken(req, (error, token) => {
+     	  if (error) return res.status(400).json({ err:error });
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
+			{
+			  if(error) return res.status(401).json({err:error.message});
 
-      if (!username || !token) {
-        return res.status(400).json({ err: "username or token unspecified!" });
-      }
-      var obj = fs.readFileSync("validkeys.json");
-      obj = JSON.parse(obj.toString());
-      if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
-        //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
-        delete obj[req.body.user.username.toUpperCase()];
-      } else
-        return res.status(401).send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
-      res.send({ message: "LOGOUT SUCCESSFUL!" });
-      //save the file.
-      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
-    });
-  } catch (err) {
+    		  var obj = fs.readFileSync("validkeys.json");
+    		  obj = JSON.parse(obj.toString());
+    		  if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
+    		    delete obj[username.toUpperCase()];
+    		  }
+			  else
+    		    return res.status(401).send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+    		  res.send({ message: "LOGOUT SUCCESSFUL!" });
+    		  fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+			});
+    	});
+  }catch (err) {
+    console.log(err);
     res.status(400).json({ err: "BAD REQUEST" });
   }
 });
