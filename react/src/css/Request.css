@@ -1,3 +1,8 @@
+label {
+  color: white;
+  font-size: medium;
+}
+
 .boxbg {
     border-radius: 25px;
     border: 1px solid rgb(180, 180, 180);
@@ -18,4 +23,9 @@
 
   .linew {
     background-color: gray;
+  }
+
+  .Multiselect {
+    text-align: start;
+    color: white;
   }

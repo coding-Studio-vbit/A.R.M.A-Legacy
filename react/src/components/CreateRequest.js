@@ -1,18 +1,25 @@
 import React, { useState, Fragment } from "react";
 import Nav from './Navi';
+import axios from "axios";
 import "../css/Request.css";
 import 'react-bootstrap';
+import MultiSelect from "react-multi-select-component";
 
 const CreateRequest = () => {
     const [inputFields, setInputFields] = useState([
-        { Name: "", Roll: "" }
+        { Name: "", Roll: "", Dept: "", Year: "" }
       ]);
 
-      const [department, setDepartment] = useState("")
+      const [request, setRequest] = useState("")
+      const [Faculty, setFaculty] = useState([]);
+      const [Facelities, setFacilities] = useState([]);
+      const [description, setDescription] = useState("")
+      const [addfacelities, setCustreq] = useState("")
+
     
       const handleAddFields = () => {
         const values = [...inputFields];
-        values.push({ Name: "", Roll: "" });
+        values.push({ Name: "", Roll: "", Dept: "", Year: "" });
         setInputFields(values);
       };
     
@@ -29,16 +36,49 @@ const CreateRequest = () => {
           values[index].Name = event.target.value;
         } else if(event.target.name === "Roll"){
           values[index].Roll = event.target.value;
+        } else if(event.target.name === "Dept"){
+          values[index].Dept = event.target.value;
+        }else if(event.target.name === "Year"){
+          values[index].Year = event.target.value;
         }
-    
+
         setInputFields(values);
       };
     
       const handleSubmit = e => {
         e.preventDefault();
-        console.log(department);
+        console.log(request, Faculty, description, Facelities, addfacelities);
         
       };
+
+      var requestdetails =  inputFields;
+
+      const submit = (e) => {
+        
+        axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
+       .then((result) => {
+        console.log(result)
+       });
+      }
+
+      const Facultyoptions = [
+        { label: "Principal", value: "Principal" },
+        { label: "Vice Principal", value: "Vice Principal" },
+        { label: "CSE - HOD", value: "CSE - HOD" },
+        { label: "IT - HOD", value: "IT - HOD" },
+        { label: "ECE - HOD", value: "ECE - HOD" },
+        { label: "EEE - HOD", value: "EEE - HOD" },
+        { label: "CIVIL - HOD", value: "CIVIL - HOD" },
+        { label: "MECH - HOD", value: "MECH - HOD" }
+
+      ];
+
+      const Facilitiesoptions = [
+        { label: "SAC Room", value: "SAC Room" },
+        { label: "Chethana", value: "Chethana" },
+        { label: "Internet", value: "Internet" },
+
+      ];
 
       
   
@@ -60,7 +100,7 @@ const CreateRequest = () => {
                           <h5>Select Request Type :</h5>  
                         </div>
                         <div className="col self-align-end">
-                          <select required className="form-control" name="department" onChange={e =>{e.persist(); setDepartment(e.target.value)}}>
+                          <select required className="form-control" name="department" onChange={e =>{e.persist(); setRequest(e.target.value)}}>
                             <option value="" disabled selected hidden>Select your option</option>
                             <option value="Attendance for Participants">Attendance for Participants</option>
                             <option value="Attendance for Team">Attendance for Team</option>
@@ -79,18 +119,10 @@ const CreateRequest = () => {
                           <h5>Select Faculty :</h5>  
                         </div>
                         <div className="col">
-                          <select required className="form-control" name="department" onChange={e =>{e.persist(); setDepartment(e.target.value)}}>
-                            <option value="" disabled selected hidden>Select your option</option>
-                            <option value="Principal">Principal</option>
-                            <option value="Vice Principal">Vice Principal</option>
-                            <option value="CSE - HOD">CSE - HOD</option>
-                            <option value="IT - HOD">IT - HOD</option>
-                            <option value="ECE - HOD">ECE - HOD</option>
-                            <option value="EEE - HOD">EEE - HOD</option>
-                            <option value="CIVIL - HOD">CIVIL - HOD</option>
-                            <option value="MECH - HOD">MECH - HOD</option>
-                          </select>
-                          <span className="select-arrow"></span>
+                          <MultiSelect options={Facultyoptions} value={Faculty} onChange={setFaculty} 
+                          labelledBy={"Select Your Option"}
+                          className="Multiselect"
+                          />
                         </div>
                       </div>
                       <br />
@@ -102,7 +134,8 @@ const CreateRequest = () => {
                         </div>
                         <div className="col">
                           <div className="form-group">
-                            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Enter Details about your event" rows="3"></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Enter Details about your event" 
+                            rows="3" onChange={e =>{e.persist(); setDescription(e.target.value)}} />
                           </div>
                         </div>
                       </div>
@@ -150,26 +183,32 @@ const CreateRequest = () => {
                                                 />
                                             </div>
                                             <div class="col-sm-2">
-                                                <input 
-                                                    className="form-control"
-                                                    type="text"
-                                                    id="Roll"
-                                                    name="Roll"
-                                                    value={inputField.firstName}
-                                                    onChange={event => handleInputChange(index, event)}
-                                                    placeholder={`Dept`}
-                                                />
+                                              <select required className="form-control" name="department" value={inputField.firstName}
+                                                      onChange={event => handleInputChange(index, event)}
+                                                      placeholder={`Dept`}
+                                              >
+                                                <option value="" disabled selected hidden>Dept</option>
+                                                <option value="CSE">CSE</option>
+                                                <option value="IT">IT</option>
+                                                <option value="ECE">ECE</option>
+                                                <option value="EEE">EEE</option>
+                                                <option value="CIVIL">CIVIL</option>
+                                                <option value="MECH">MECH</option>
+                                              </select>
+                                              
                                             </div>
                                             <div class="col-sm-2">
-                                                <input 
-                                                    className="form-control"
-                                                    type="text"
-                                                    id="Roll"
-                                                    name="Roll"
-                                                    value={inputField.firstName}
+                                            <select required className="form-control" name="department" value={inputField.firstName}
                                                     onChange={event => handleInputChange(index, event)}
                                                     placeholder={`Year`}
-                                                />
+                                            >
+                                                <option value="" disabled selected hidden>Year</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                            
                                             </div>
                                             <div class="col align-self-center">
                                                 <button type="button" class="btn btn-danger" onClick={() => handleRemoveFields(index)}>X</button>
@@ -190,20 +229,12 @@ const CreateRequest = () => {
                           <h5>Facilities Required :</h5>  
                         </div>
                         <div className="col">
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
-                            <h6 class="form-check-label" for="inlineCheckbox1">SAC</h6>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" />
-                            <h6 class="form-check-label" for="inlineCheckbox2">Internet Connection</h6>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" />
-                            <h6 class="form-check-label" for="inlineCheckbox3">Chethana</h6>
-                          </div>
+                          <MultiSelect options={Facilitiesoptions} value={Facelities} onChange={setFacilities}
+                              labelledBy={"Select Your Option"}
+                              className="Multiselect"
+                           />
                           <div className="form-group">
-                            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Facelities not mentioned? Type in here!" rows="3"></textarea>
+                            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Facelities not mentioned? Type in here!" rows="3" onChange={e =>{e.persist(); setCustreq(e.target.value)}}/>
                           </div>
                         </div>
                       </div>
@@ -212,7 +243,7 @@ const CreateRequest = () => {
                       <br />
                       <div className="row">
                         <div className="col align-self-center">
-                          <button type="button" class="btn btn-success">Create Request</button>
+                          <button type="submit" class="btn btn-success" onClick={() =>submit()}>Create Request</button>
                         </div>      
                       </div>     
                     </div>
