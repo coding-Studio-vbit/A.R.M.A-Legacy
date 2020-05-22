@@ -6,6 +6,7 @@ import econ from "./LetterTemplates/Eventconduct";
 import evenue from "./LetterTemplates/Eventvenue";
 import Tatten from "./LetterTemplates/Attendanceteam";
 import Patten from "./LetterTemplates/AttendanceParticipants";
+import emeet from "./LetterTemplates/conductmeet";
 
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route path="/evenue" component={evenue} />
           <Route path="/tatten" component={Tatten} />
           <Route path="/patten" component={Patten} />
+          <Route path="/emeet" component={emeet}/>
         </Switch>
     </div>
     </Router>

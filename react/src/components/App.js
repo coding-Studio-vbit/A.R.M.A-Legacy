@@ -17,6 +17,7 @@ import Econ from "./LetterTemplates/Eventconduct";
 import Evenue from "./LetterTemplates/Eventvenue";
 import Tatten from "./LetterTemplates/Attendanceteam";
 import Patten from "./LetterTemplates/AttendanceParticipants";
+import Emeet from "./LetterTemplates/conductmeet";
 import Profile from "./Profile";
 import CreateRequest from "./CreateRequest";
 
@@ -39,10 +40,11 @@ function App() {
             <Route path="/facultyregister" component={FacultyRegister} />
             <Route path="/Remarks" component={Remarks} />
             <Route path="/Dashboard/TemplateList" component={TemplateList} />
-            
+
             <Route path="/campaining" component={Camp} />
             <Route path="/conduct" component={Econ} />
             <Route path="/venue" component={Evenue} />
+            <Route path="/conductmeet" component={Emeet}/>
             <Route path="/TeamAttendance" component={Tatten} />
             <Route path="/ParticipantsAttendance" component={Patten} />
             <Login />
