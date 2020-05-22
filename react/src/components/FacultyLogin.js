@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 
 const FacultyLogin = () => {
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
-
-  const stutt = () => {
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => setError(""), 5000);
+    }
+  });
+  const handleLogin = (e) => {
+    e.preventDefault();
     axios
       .post("/loginFaculty", {
         user: {
@@ -17,61 +24,87 @@ const FacultyLogin = () => {
       })
       .then((res) => {
         console.log(res);
-        let userName = res.data.message.split(" ")[1];
-        let accessToken = res.data.accessToken;
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            userName: userName,
-            accessToken: accessToken,
-          })
-        );
+        if (!res.data.hasOwnProperty("err")) {
+          let userName = res.data.message.split(" ")[1];
+          let accessToken = res.data.accessToken;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              userName: userName,
+              accessToken: accessToken,
+            })
+          );
+          history.push("/Dashboard");
+        } else {
+          let errors = res.data.err;
+          setError(errors);
+        }
       })
       .catch((err) => console.log(err));
   };
   const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
-    <div className="mine">
-      <img src={logo} alt="logo" style={{ width: "150px", height: "150px" }} />
-      <br />
-      <h1> A.R.M.A Faculty Login </h1>
-      <div style={{ marginTop: 20 }}></div>
-      <div style={{ marginTop: 20 }}></div>
-      <form>
-        <div className="form-group">
-          <label htmlFor="InputRollNo">Roll Number</label>
-          <input
-            type="text"
-            className="form-control"
-            id="InputRollNo"
-            placeholder="Roll Number"
-            onChange={(e) => setRollNo(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="InputPassword1">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            id="InputPassword1"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <br />
-        <button
-          type="button"
-          disabled={!isEnabled}
-          className="btn btn-primary"
-          onClick={stutt}
-        >
-          Login
-        </button>
-      </form>
-      <br />
-      <Link to={"/register"} style={{ display: "block", marginTop: 20 }}>
-        Go To Faculty Registration Page
-      </Link>
+    <div className="all-items">
+      <div className="forms">
+        <form>
+          <div>
+            <img
+              src={logo}
+              alt="logo"
+              style={{ width: "150px", height: "150px" }}
+            />
+          </div>
+          <br />
+          <h1 style={{ color: "white" }}> A.R.M.A LOGIN </h1>
+
+          <div style={{ marginTop: 20 }}></div>
+          <br />
+          <div className="form-group">
+            <span className="form-label" htmlFor="Password">
+              RollNo:{" "}
+            </span>
+            <input
+              type="text"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="RollNo"
+              onChange={(e) => setRollNo(e.target.value)}
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <span className="form-label" htmlFor="Password">
+              Password:{" "}
+            </span>
+            <input
+              type="password"
+              className="form-control"
+              id="exampleInputPassword1"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <br />
+          <button
+            type="submit"
+            disabled={!isEnabled}
+            className="submit-btn"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <br />
+          <Link
+            to={"/facultyregister"}
+            style={{ display: "block", marginTop: 20, color: "#00e676" }}
+          >
+            Go To Faculty Registration Page
+          </Link>
+          <br />
+          <h4 style={{ color: "#ff1744" }}>{error} </h4>
+        </form>
+      </div>
     </div>
   );
 };

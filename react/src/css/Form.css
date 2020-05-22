@@ -5,18 +5,16 @@
 .forms {
   max-width: 647px;
   width: 100%;
+  max-height: 100%;
+  height: 100%;
   margin: auto;
 }
 
 .forms > form {
   background-color: #101113;
   padding: 10% 20px;
-  height: 100%;
   border-radius: 20px;
   margin: auto;
-  -webkit-box-shadow: 1px 1px 15px rgb(133, 122, 122);
-  -moz-box-shadow: 1px 1px 15px rgb(133, 122, 122);
-  box-shadow: 1px 1px 15px rgb(133, 122, 122);
 }
 
 .forms .form-group {
@@ -97,37 +95,4 @@
   display: block;
   border-radius: 3px;
   text-transform: uppercase;
-}
-
-.effect5 {
-  position: relative;
-}
-.effect5:before,
-.effect5:after {
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 25px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width: 300px;
-  background: #777;
-  -webkit-box-shadow: 0 35px 20px #777;
-  -moz-box-shadow: 0 35px 20px #777;
-  box-shadow: 0 35px 20px #777;
-  -webkit-transform: rotate(-8deg);
-  -moz-transform: rotate(-8deg);
-  -o-transform: rotate(-8deg);
-  -ms-transform: rotate(-8deg);
-  transform: rotate(-8deg);
-}
-.effect5:after {
-  -webkit-transform: rotate(8deg);
-  -moz-transform: rotate(8deg);
-  -o-transform: rotate(8deg);
-  -ms-transform: rotate(8deg);
-  transform: rotate(8deg);
-  right: 10px;
-  left: auto;
 }

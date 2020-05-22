@@ -15,6 +15,7 @@ class Dashboard extends React.Component{
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
+    if(user!== null){
     let userName = user.userName;
     let accessToken = user.accessToken;
     console.log(accessToken);
@@ -31,6 +32,7 @@ class Dashboard extends React.Component{
     }).catch((err) => {
       console.log(err);
     })
+  }
   }
 
   render(){

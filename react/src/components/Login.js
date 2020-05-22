@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
@@ -20,6 +20,11 @@ const Login = () => {
   const [value, setValue] = useState(Forumlist[0]);
   const [registered, isRegistered] = useState(false);
   const [error, setError] = useState("");
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => setError(""), 5000);
+    }
+  });
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
@@ -60,7 +65,7 @@ const Login = () => {
     <div className="all-items">
       <div className="forms">
         <form>
-          <div style={{ height: "140px", width: "585px", marginTop: "0%" }}>
+          <div>
             <img
               src={logo}
               alt="logo"
@@ -73,8 +78,8 @@ const Login = () => {
           <div style={{ marginTop: 20 }}></div>
           <br />
           <div className="form-group">
-            <span className="form-label" htmlFor="department">
-              Department:{" "}
+            <span className="form-label" htmlFor="Forumlist">
+              Forumlist:{" "}
             </span>
             <select
               className="form-control"
