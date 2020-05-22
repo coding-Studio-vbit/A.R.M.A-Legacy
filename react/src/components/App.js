@@ -5,11 +5,13 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
-import TemplateDetails from './TemplateDetails';
+import TemplateDetails from "./TemplateDetails";
 import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
+
+import {ProtectedRoute} from "./protected.route"
 
 //LetterTemplates
 import Camp from "./LetterTemplates/Camp";
@@ -27,19 +29,22 @@ function App() {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/Profile" component={Profile} />
-            <Route exact path="/Dashboard" component={Dashboard} />
-            <Route path="/Dashboard/TemplateDetails" component={TemplateDetails}/>
+            <ProtectedRoute path="/Profile" component={Profile} />
+            <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+            <ProtectedRoute
+              path="/Dashboard/TemplateDetails"
+              component={TemplateDetails}
+            />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <Route path="/Remarks" component={Remarks} />
-            <Route path="/Dashboard/TemplateList" component={TemplateList} />
+            <ProtectedRoute path="/Remarks" component={Remarks} />
+            <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
 
-            <Route path="/campaining" component={Camp} />
-            <Route path="/conduct" component={Econ} />
-            <Route path="/venue" component={Evenue} />
-            <Route path="/TeamAttendance" component={Tatten} />
-            <Route path="/ParticipantsAttendance" component={Patten} />
+            <ProtectedRoute path="/campaining" component={Camp} />
+            <ProtectedRoute path="/conduct" component={Econ} />
+            <ProtectedRoute path="/venue" component={Evenue} />
+            <ProtectedRoute path="/TeamAttendance" component={Tatten} />
+            <ProtectedRoute path="/ParticipantsAttendance" component={Patten} />
             <Login />
           </Switch>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import '../css/Profile.css';
+
 import profilePic from '../images/profilePic.png';
 
 class Profile extends React.Component{
