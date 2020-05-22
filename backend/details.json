@@ -1,24 +1,24 @@
 {
-  "designation": "",
-  "department": "",
-  "subject": "",
-  "date": "",
-  "respects": "",
-  "team_name": "",
-  "event_name": "",
-  "fromdate": "",
-  "todate": "",
-  "start_hour": "",
-  "start_min": "",
-  "start_meridian": "",
-  "end_hour": "",
-  "end_min": "",
-  "end_meridian": "",
-  "letter_body": "",
+  "designation": "Head of Department",
+  "department": "Department of Information Technology",
+  "subject": "swd",
+  "date": "2020-05-22",
+  "respects": "Sir",
+  "team_name": "dsd",
+  "event_name": "sdsd",
+  "fromdate": "2020-05-21",
+  "hall_name": "dsd",
+  "start_hour": "9",
+  "start_min": "15",
+  "start_meridian": "PM",
+  "end_hour": "9",
+  "end_min": "40",
+  "end_meridian": "PM",
+  "letter_body": "ss",
   "studentdetails": [
     {
-      "Name": "",
-      "Roll": ""
+      "Name": "dsd",
+      "Roll": "1233"
     }
   ]
 }
