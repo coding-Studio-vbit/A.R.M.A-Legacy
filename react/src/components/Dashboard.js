@@ -15,23 +15,24 @@ class Dashboard extends React.Component{
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
-    if(user!== null){
-    let userName = user.userName;
-    let accessToken = user.accessToken;
-    console.log(accessToken);
-    let config = {
-    headers: {
-      'Authorization': 'Bearer ' + accessToken
+    if(user!==null){
+      let userName = user.userName;
+      let accessToken = user.accessToken;
+      console.log(accessToken);
+      let config = {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      }
     }
-  }
-    console.log(config);
-    axios.post("http://localhost:8080/getUserType",user,config).then((response) => {
-      var res=response.data;
-      this.setState({loginValue:response.data.userType});
-      console.log(res.userType);
-    }).catch((err) => {
-      console.log(err);
-    })
+      console.log(config);
+      axios.post("http://localhost:8080/getUserType",user,config).then((response) => {
+        var res=response.data;
+        this.setState({loginValue:response.data.userType});
+        console.log(res.userType);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
   }
   }
 
@@ -44,29 +45,15 @@ class Dashboard extends React.Component{
           case "FACULTY": return(
             <div>
             <Nav/>
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Templates">
-                <TemplateList/>
-              </Tab>
-              <Tab eventKey="profile" title="Current requests">
-                <FacultyTable />
-              </Tab>
-            </Tabs>
+            <FacultyTable />
             </div>
           );
 
       case "FORUM":
         return (
           <div>
-            <Nav />
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Templates">
-                <TemplateList />
-              </Tab>
-              <Tab eventKey="profile" title="Current requests">
-                <Table />
-              </Tab>
-            </Tabs>
+            <Nav/>
+            <Table />
           </div>
         );
 
@@ -76,10 +63,11 @@ class Dashboard extends React.Component{
             <center>
               <h1>
                 Please, <a href="/">Login.</a>
-              </h1>{" "}
+              </h1>
             </center>
           </div>
         );
+
     }
   }
 }

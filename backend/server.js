@@ -103,7 +103,8 @@ app.post("/loginFaculty", (req, res) => {
           if (error) {
             console.log(error);
             return res.status(401).send({ err: error });
-          } else if (status == true) {
+          }
+		  else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
@@ -148,6 +149,7 @@ app.post("/logout", (req, res) => {
 
   try {
 
+<<<<<<< HEAD
     	users.fetchAccessToken(req, (error, token) => {
      	  if (error) return res.status(400).json({ err:error });
 			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
@@ -167,6 +169,29 @@ app.post("/logout", (req, res) => {
     	});
   }catch (err) {
     console.log(err);
+=======
+      const username = req.body.user.userName.toUpperCase(); //get the username
+
+      if (!username || !token) {
+        return res
+          .status(400)
+          .json({ err: "username or token unspecified!" });
+      }
+      var obj = fs.readFileSync("validkeys.json");
+      obj = JSON.parse(obj.toString());
+      if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
+        //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
+        delete obj[req.body.user.username.toUpperCase()];
+      } else
+        return res
+          .status(401)
+          .send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+      res.send({ message: "LOGOUT SUCCESSFUL!" });
+      //save the file.
+      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+    });
+  } catch (err) {
+>>>>>>> 7721a3ed158aa9811dba55fceaf558e5eb7b0ef5
     res.status(400).json({ err: "BAD REQUEST" });
   }
 });
@@ -193,7 +218,7 @@ app.get("/facultydashboard", (req, res) => {
           client.connect();
           client
             .query(
-              "select forum_name,remarks,status from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
+              "select forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
               [faculty_roll]
             )
             .then((data) => {
@@ -233,6 +258,7 @@ app.post("/createrequest", (req, res) => {
 
         console.log("Unique ID: ", unique_id); //DEBUG
 
+<<<<<<< HEAD
         var forum_name = username.toUpperCase();
         var recipients = [];
 
@@ -281,6 +307,81 @@ app.post("/createrequest", (req, res) => {
   });
 });
 
+=======
+        var forum_name = username.toUpperCase()
+        var recipients = []
+
+       try{
+            for(let i=0;i<req.body.recipients.length;i++)
+            {
+              var client = new Client();
+              client.connect();
+              client.query('select faculty_roll from faculty where faculty_name=$1',[req.body.recipients[i]],
+              (err,data)=>{
+                  if(err){
+                    console.log(err);
+                    //client.end();
+                    throw err;
+                  }
+                    recipients.push(data.rows[0].faculty_roll);
+                })
+            }
+
+            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
+            return res.send({message: "request sent succesfully!"})
+        }
+        catch(error){
+           console.log(error)
+           return res.status(400).json({err: error})
+        }
+      })
+    })
+});
+
+app.delete("/createrequest", (req, res) => {
+  users.fetchAccessToken(req, (error, token)=>{
+    if (error){
+      return res.status(400).json({err: error})
+    }
+    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
+      if (error){
+        return res.status(400).json({err: error})
+      }
+     try{
+          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+          return res.send({message: "Deleted!!"})
+      }
+      catch(error){
+         console.log(error)
+         return res.status(400).json({err: error})
+      }
+    })
+  })
+});
+
+app.put("/createrequest", (req, res) => {
+  users.fetchAccessToken(req, (error, token)=>{
+    if (error){
+      return res.status(400).json({err: error})
+    }
+    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
+      if (error){
+        return res.status(400).json({err: error})
+      }
+      var forum_name = username.toUpperCase()
+     try{
+          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
+          return res.send({message: "Updated succesfully!"})
+      }
+      catch(error){
+         console.log(error)
+         return res.status(400).json({err: error})
+      }
+    })
+  })
+});
+
+>>>>>>> 7721a3ed158aa9811dba55fceaf558e5eb7b0ef5
 app.get("/forumdashboard", async (req, res) => {
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });

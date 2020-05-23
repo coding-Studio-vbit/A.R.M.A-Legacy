@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import logo from "../images/logo.png";
 import Links from "./Links";
 
