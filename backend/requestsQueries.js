@@ -80,8 +80,8 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
   client.connect();
   forum_name = forum_name.toUpperCase();
   client.query(
-    "update requests set forum_name = $1,request_data = $2,remarks = $3 where request_id=$4;",
-    [forum_name,request_data,remarks,request_id],
+    "update requests set forum_name=$1,request_data=$2,remarks=$3 where request_id=$4 AND forum_name=$5;",
+    [forum_name,request_data,remarks,request_id,forum_name],
     (err, res) => {
       if (err) {
         client.end();
@@ -93,13 +93,13 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
     }
   );
 }
-function deleteRequest(request_id, callback) {
+function deleteRequest(request_id, forum_name, callback) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
   client.query(
-    "DELETE FROM requests WHERE request_id = $1;",
-    [request_id],
+    "DELETE FROM requests WHERE request_id = $1 AND forum_name=$2;",
+    [request_id,forum_name],
     (err, res) => {
       if (err) {
         client.end();
