@@ -80,8 +80,8 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
   client.connect();
   forum_name = forum_name.toUpperCase();
   client.query(
-    "update requests set forum_name = $1,request_data = $2,status = $3,remarks = $4 where request_id=$5;",
-    [forum_name,request_data,status,remarks,request_id],
+    "update requests set forum_name = $1,request_data = $2,remarks = $3 where request_id=$4;",
+    [forum_name,request_data,remarks,request_id],
     (err, res) => {
       if (err) {
         client.end();
