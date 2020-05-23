@@ -46,6 +46,7 @@ class Table extends React.Component {
           <td>{item.subject}</td>
           <td>PENDING</td>
           <td> <a href="/Remarks">Click here!</a> </td>
+          <td style={{color: "grey"}}><i class="far fa-edit"></i></td>
     {
       //       <td><center>
     //         <input type="checkbox" />
@@ -66,6 +67,7 @@ class Table extends React.Component {
            <th scope="col">Subject</th>
            <th scope="col">Status</th>
            <th scope="col">Remarks</th>
+           <th scope="col">Edit</th>
            {// <th scope="col"><center>Approve</center></th>
            }</tr>
            </thead>

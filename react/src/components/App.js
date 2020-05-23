@@ -12,6 +12,8 @@ import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
 import ViewStatus from "./ViewStatus";
 
+import {ProtectedRoute} from "./protected.route"
+
 //LetterTemplates
 import Camp from "./LetterTemplates/Camp";
 import Econ from "./LetterTemplates/Eventconduct";
@@ -28,9 +30,9 @@ function App() {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/Profile" component={Profile} />
-            <Route exact path="/Dashboard" component={Dashboard} />
-            <Route
+            <ProtectedRoute path="/Profile" component={Profile} />
+            <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+            <ProtectedRoute
               path="/Dashboard/TemplateDetails"
               component={TemplateDetails}
             />
@@ -42,11 +44,11 @@ function App() {
             
 
 
-            <Route path="/campaining" component={Camp} />
-            <Route path="/conduct" component={Econ} />
-            <Route path="/venue" component={Evenue} />
-            <Route path="/TeamAttendance" component={Tatten} />
-            <Route path="/ParticipantsAttendance" component={Patten} />
+            <ProtectedRoute path="/campaining" component={Camp} />
+            <ProtectedRoute path="/conduct" component={Econ} />
+            <ProtectedRoute path="/venue" component={Evenue} />
+            <ProtectedRoute path="/TeamAttendance" component={Tatten} />
+            <ProtectedRoute path="/ParticipantsAttendance" component={Patten} />
             <Login />
           </Switch>
         </div>

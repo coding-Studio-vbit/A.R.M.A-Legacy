@@ -74,7 +74,7 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 // addRequest('CODINGSTUDIO','1346789',data,['16P61A05M0','18P61A05J1','18P61A05C2'],(err,state) => {
 //   console.log(err||state);
 // });
-//
-// module.exports={
-//   addRequest:addRequest
-// }
+
+module.exports={
+  addRequest:addRequest
+}
