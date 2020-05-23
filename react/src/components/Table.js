@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/table.css";
 import axios from "axios";
+import {Link} from "react-router-dom"
 
 class Table extends React.Component {
   /*approval = (id) =>{
@@ -74,6 +75,7 @@ class Table extends React.Component {
            </tbody>
            </table>
           </div>
+         
         </div>
       </div>
     );
