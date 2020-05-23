@@ -36,6 +36,7 @@ const Navi = () => {
     <Nav className="mr-auto">
       <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
       <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
+      <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
     </Nav>
     <Nav>
     <Nav>

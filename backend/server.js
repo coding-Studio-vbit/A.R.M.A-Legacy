@@ -21,6 +21,7 @@ var campaigning = require("./campaigning");
 var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var usehall = require("./usehall");
+var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
@@ -40,6 +41,42 @@ app.use(allowCrossDomain);
 var cors = require("cors");
 app.use(cors());
 //LOGIN
+
+app.get("/getForumDetails",(req,res)=>{
+	try
+	{
+		users.fetchAccessToken(req,(error,token)=>{
+			if(error){
+				console.log(error);
+				return res.status(400).json({err:error});
+			}
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
+				if(error){
+					console.log(error);
+					return res.status(400).json({err:error});
+				}
+				var client = new Client()
+				client.connect();
+				client.query('SELECT actual_name,email,phone_no FROM forums WHERE forum_name=$1',[username],(error,data)=>{
+					if(error){
+						console.log(error);
+						return res.status(500).json({err:error});
+					}
+					res.json({
+						actual_name: data.rows[0].actual_name,
+						email: data.rows[0].email,
+						phone_no: data.rows[0].phone_no
+					}); // successful data retrieval.
+
+				})//end query
+			})//end auth
+		})//end fetch
+	}
+	catch(error){
+		console.log(error);
+		res.status(500).json({err:error});
+	}
+});
 
 app.post("/login", (req, res) => {
   //check password.
@@ -575,6 +612,7 @@ app.post("/registerForum", (req, res) => {
                 data.username,
                 data.email,
                 data.phone,
+				data.actual_name,
                 (error, st) => {
                   if (error)
                     return console.log(
@@ -902,7 +940,7 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
 });
 
 //NEXT LETTER
-/*app.post('/conductmeet' ,  urlencodedParser,function(req,res){
+app.post('/conductmeet' ,  urlencodedParser,function(req,res){
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -921,7 +959,8 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
   let time_start = req.body.time_start;
   let time_end = req.body.time_end;
   let letter_body = req.body.letter_body;
-  console.log(req.body);
+  let studentdetails = req.body.studentdetails;
+
   let details = {
               designation:designation,
               department: department,
@@ -938,13 +977,14 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
              end_hour:end_hour,
               end_min:end_min,
               end_meridian:end_meridian,
-              letter_body: letter_body
+              letter_body: letter_body,
+              studentdetails: studentdetails,
             }
             let data = JSON.stringify(details, null ,2);
            fs.writeFileSync('./details.json', data);
 conductmeet.generateLetterIndividual();
-res.download('./LetterGenerated/FINAL_CONDUCT_MEET_PERMISSION.docx'); //callback I*
-});*/
+res.download('./LetterGenerated/conductmeet.docx'); //callback I*
+});
 
 //Get user type using Access Token.
 
