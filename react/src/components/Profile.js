@@ -1,22 +1,46 @@
-import React from 'react';
+import React,{useState} from 'react';
 import axios from 'axios';
-
 import profilePic from '../images/profilePic.png';
+import ProfileModal from './ProfileModal';
+import PassModal from './PassModal';
 
 class Profile extends React.Component{
   state = {
-    persons: []
+    profilename:"",
+    profileemail:"",
+    profilephone:"",
+
+    persons: [
+    ],
+    Editingon: undefined,
+    Passwordon:undefined,
+  };
+  newElement=()=>{
+    this.setState(()=>({
+      Editingon:true
+    }))
+  }
+  newElement1=()=>{
+    this.setState(()=>({
+      Passwordon:true
+    }))
   }
 
-  componentWillMount() {
+
+componentWillMount() {
     axios.get(`http://localhost:8080/Dashboard`)
       .then(res => {
         const persons = res.data;
         this.setState({ persons });
         console.log(persons);
       })
+      axios.get(`http://localhost:8080/getForumDetails`)
+      .then(res => {
+        const persons = res.data;
+        this.setState({ profilename:res.actual_name,profileemail:res.email,profilephone:res.phone_no });
+        console.log(persons);
+      })
   }
-
   render() {
     const items=this.state.persons.map(item =>{return(
 
@@ -29,8 +53,10 @@ class Profile extends React.Component{
 
              )
     })
+    
     return (
-      <div class="containerz">
+
+      <div class="containerz" style={{textAlign: "center" }}>
         <div className="profile-pic">
             <img src={profilePic} alt="Logo" style={{ width: "150px", height: "150px" }}/>
             </div>
@@ -40,35 +66,62 @@ class Profile extends React.Component{
            <table class="table" bordered hover variant="dark">
            <thead>
            <tr>
-           <th colspan="1">Profile</th>
+           <th colspan="1" style={{fontSize:"40px"}}>Profile</th>
            </tr>
            </thead>
+           
            <tr>
           <td>Name</td>
-          <td colSpan="2">coding.Studio();</td>
+    <td colSpan="2">{this.state.profilename}</td>
+          <td></td>
           </tr>
           <tr>
           <td>Email</td>
-          <td colSpan="2">executives@codingstudio.club</td>
+    <td colSpan="2">{this.state.profileemail}</td>
+          <td>
+          <button onClick={this.newElement}>Edit</button>
+          </td>
            </tr>
            <tr>
           <td>Password</td>
-          <td colSpan="2">xxxxxxxx</td>
+          <td colSpan="2"></td>
+          <td>
+          <button onClick={this.newElement1}>Edit</button>
+          </td>
            </tr>
            <tr>
           <td>Phone</td>
-          <td colSpan="2">1234567890</td>
+    <td colSpan="2">{this.state.profilephone}</td>
+          <td>
+          </td>
            </tr>
            <tbody>
            {items}
            </tbody>
            </table>
           </div>
-        </div>
-      </div>
+               {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+          <ProfileModal
+          Editingon={this.state.Editingon} />
+          <PassModal
+          Editingon={this.state.Passwordon} />
+
+          </div>
+
+          </div>
     )
   }
-
 }
+const Action = (props) => {
+  return (
+    <div>
+      <button
+        onClick={props.newElement}
+      >
+      Edit
+      </button>
+    </div>
+  );
+};
 
 export default  Profile;
