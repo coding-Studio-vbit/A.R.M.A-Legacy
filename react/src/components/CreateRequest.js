@@ -12,9 +12,9 @@ const CreateRequest = () => {
 
       const [request, setRequest] = useState("")
       const [Faculty, setFaculty] = useState([]);
-      const [Facelities, setFacilities] = useState([]);
+      const [Facilities, setFacilities] = useState([]);
       const [description, setDescription] = useState("")
-      const [addfacelities, setCustreq] = useState("")
+      const [addfacilities, setCustreq] = useState("")
 
     
       const handleAddFields = () => {
@@ -47,7 +47,7 @@ const CreateRequest = () => {
     
       const handleSubmit = e => {
         e.preventDefault();
-        console.log(request, Faculty, description, Facelities, addfacelities);
+        console.log(request, Faculty, description, Facilities, addfacilities);
         
       };
 
@@ -55,15 +55,40 @@ const CreateRequest = () => {
 
       const submit = (e) => {
         
+        var arr = []
+        Faculty.forEach(item =>{
+        arr.push(item.value)
+        })
+        console.log(arr)
+        var arr1 = []
+        Facilities.forEach(item =>{
+        arr1.push(item.value)
+        })
+        console.log(arr1)
 
-
-        axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
-       .then((result) => {
+        let obj = {
+          recipients: arr, 
+          request_data: {
+              description: description, 
+                Facilities: arr1, 
+                studentdetails: requestdetails,
+                  type: request 
+                }
+      }
+        //axios.post('/createrequest', {request, Faculty, description, Facilities, addfacilities, requestdetails },{responseType: 'arraybuffer'})
+        //.then((result) => {
+        //console.log(result)
+       //});
+        
+       axios.post('/createrequest', {obj},{responseType: 'arraybuffer'})
+        .then((result) => {
         console.log(result)
-       });
+        })
+        .catch(err => {console.log(err)})
       }
 
       const Facultyoptions = [
+        { label: "saravanan", value: "saravanan" },
         { label: "Principal", value: "Principal" },
         { label: "Vice Principal", value: "Vice Principal" },
         { label: "CSE - HOD", value: "CSE - HOD" },
@@ -74,6 +99,7 @@ const CreateRequest = () => {
         { label: "MECH - HOD", value: "MECH - HOD" }
 
       ];
+      
 
       const Facilitiesoptions = [
         { label: "SAC Room", value: "SAC Room" },
@@ -231,7 +257,7 @@ const CreateRequest = () => {
                           <h5>Facilities Required :</h5>  
                         </div>
                         <div className="col">
-                          <MultiSelect options={Facilitiesoptions} value={Facelities} onChange={setFacilities}
+                          <MultiSelect options={Facilitiesoptions} value={Facilities} onChange={setFacilities}
                               labelledBy={"Select Your Option"}
                               className="Multiselect"
                            />
