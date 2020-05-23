@@ -95,6 +95,7 @@ app.post("/login", (req, res) => {
 app.post("/loginFaculty", (req, res) => {
   //check password.
   try {
+    console.log(req.body);
     users
       .checkFacultyPassword(
         req.body.user.username,
@@ -102,9 +103,8 @@ app.post("/loginFaculty", (req, res) => {
         (error, status) => {
           if (error) {
             console.log(error);
-            return res.status(401).send({ err: error });
-          }
-		  else if (status == true) {
+            return res.send({ err: error });
+          } else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
@@ -127,7 +127,7 @@ app.post("/loginFaculty", (req, res) => {
             //save the data.
             fs.writeFileSync("validkeys.json", JSON.stringify(obj));
           } else {
-            return res.status(401).send({ err: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
+            return res.send({ err: "Invalid Password" }); //password wrong, return UNAUTHORIZED.
           }
         }
       )
@@ -148,25 +148,31 @@ app.post("/logout", (req, res) => {
   //For logout the request should have both the username and the access token.
 
   try {
+    users.fetchAccessToken(req, (error, token) => {
+      if (error) return res.status(400).json({ err: error });
+      users.authenticateToken(
+        token,
+        process.env.SECRET_ACCESS_TOKEN,
+        (error, username) => {
+          if (error) return res.status(401).json({ err: error.message });
 
-    	users.fetchAccessToken(req, (error, token) => {
-     	  if (error) return res.status(400).json({ err:error });
-			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
-			{
-			  if(error) return res.status(401).json({err:error.message});
-
-    		  var obj = fs.readFileSync("validkeys.json");
-    		  obj = JSON.parse(obj.toString());
-    		  if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
-    		    delete obj[username.toUpperCase()];
-    		  }
-			  else
-    		    return res.status(401).send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
-    		  res.send({ message: "LOGOUT SUCCESSFUL!" });
-    		  fs.writeFileSync("validkeys.json", JSON.stringify(obj));
-			});
-    	});
-  }catch (err) {
+          var obj = fs.readFileSync("validkeys.json");
+          obj = JSON.parse(obj.toString());
+          if (
+            obj.hasOwnProperty(username) &&
+            obj[username].accessToken == token
+          ) {
+            delete obj[username.toUpperCase()];
+          } else
+            return res
+              .status(401)
+              .send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+          res.send({ message: "LOGOUT SUCCESSFUL!" });
+          fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+        }
+      );
+    });
+  } catch (err) {
     console.log(err);
     res.status(400).json({ err: "BAD REQUEST" });
   }
@@ -283,46 +289,69 @@ app.post("/createrequest", (req, res) => {
 });
 
 app.delete("/createrequest", (req, res) => {
-  users.fetchAccessToken(req, (error, token)=>{
-    if (error){
-      return res.status(400).json({err: error})
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) {
+      return res.status(400).json({ err: error });
     }
-    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
-      if (error){
-        return res.status(400).json({err: error})
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (error, username) => {
+        if (error) {
+          return res.status(400).json({ err: error });
+        }
+        try {
+          requestQueries.deleteRequest(req.body.request_id, (error, status) => {
+            console.log(error, status);
+            if (error) {
+              throw error;
+            }
+          });
+          return res.send({ message: "Deleted!!" });
+        } catch (error) {
+          console.log(error);
+          return res.status(400).json({ err: error });
+        }
       }
-     try{
-          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
-          return res.send({message: "Deleted!!"})
-      }
-      catch(error){
-         console.log(error)
-         return res.status(400).json({err: error})
-      }
-    })
-  })
+    );
+  });
 });
 
 app.put("/createrequest", (req, res) => {
-  users.fetchAccessToken(req, (error, token)=>{
-    if (error){
-      return res.status(400).json({err: error})
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) {
+      return res.status(400).json({ err: error });
     }
-    users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
-      if (error){
-        return res.status(400).json({err: error})
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (error, username) => {
+        if (error) {
+          return res.status(400).json({ err: error });
+        }
+        var forum_name = username.toUpperCase();
+        try {
+          requestQueries.changeRequest(
+            forum_name,
+            req.body.request_data,
+            req.body.status,
+            req.body.remarks,
+            req.body.request_id,
+            (error, status) => {
+              console.log(error, status);
+              if (error) {
+                throw error;
+              }
+            }
+          );
+          return res.send({ message: "Updated succesfully!" });
+        } catch (error) {
+          console.log(error);
+          return res.status(400).json({ err: error });
+        }
       }
-      var forum_name = username.toUpperCase()
-     try{
-          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
-          return res.send({message: "Updated succesfully!"})
-      }
-      catch(error){
-         console.log(error)
-         return res.status(400).json({err: error})
-      }
-    })
-  })
+    );
+  });
 });
 
 app.get("/forumdashboard", async (req, res) => {
