@@ -4,6 +4,7 @@ import axios from "axios";
 import "../css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
+const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
 const CreateRequest = () => {
     const [inputFields, setInputFields] = useState([
@@ -54,7 +55,7 @@ const CreateRequest = () => {
       var requestdetails =  inputFields;
 
       const submit = (e) => {
-        var accessToken = JSON.parse(localStorage.getItem('user')).accesToken
+        console.log(accessToken)
         var arr = []
         Faculty.forEach(item =>{
         arr.push(item.value)
@@ -78,7 +79,7 @@ const CreateRequest = () => {
         },
         {
           headers: {
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.Q09ESU5HU1RVRElP.xPXSKV8gyEmY1X4pcqorKxmDcGAkCPrSCRLS6JlqeTc',
+            Authorization: `Bearer ${accessToken}`,
             'content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
           },
