@@ -5,13 +5,43 @@ import {Container,Row,Col} from 'react-bootstrap';
 import Nav from './Navi';
 import axios from 'axios';
 import '../css/Remarks.css';
-const Remarks =() => {
+const Remarks =(props) => {
+
+  const getdata = () => {
+
+  }
+
+
   const [From, setFrom] = useState( 'Coding Studio')
   const [Participants, setPeople] = useState([])
   const [Facility, setFacility] = useState([{facility:'Faci1',check:true},{facility:'Faci2',check:true},{facility:'Faci3',check:true},{facility:'Faci4',check:true},{facility:'Faci5',check:true}])
   const [Text, setText] = useState({text:''})
   const [PartTable,setTable] =useState(true)
   useEffect(()=>{
+
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    let id=41;
+    console.log(accessToken)
+    // console.log(props.location.Rprops.id)
+    let config = {
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+    },
+      data:{
+        "request_id" : id
+      }
+    }
+    console.log(config);
+    axios.get("http://localhost:8080/getrequest",config)
+      .then(res => {
+        const data = res.data;
+        console.log(data);
+      }).catch((err) => {
+        console.log(err);
+      })
+
     let Participants=[{ name:'Name', roll:'123444', check:true }, { name:'Name1', roll:'123321', check:true }, { name:'Name2', roll:'123244', check:true }, { name:'Name3', roll:'123443', check:true }, { name:'Name4', roll:'129443', check:true }, { name:'Name5', roll:'122444', check:true }, {  name:'Name6', roll:'123476', check:true }, { name:'Name7', roll:'134244', check:true }, { name:'Name8', roll:'126244', check:true } ];
     setPeople(
       Participants.map(d =>{

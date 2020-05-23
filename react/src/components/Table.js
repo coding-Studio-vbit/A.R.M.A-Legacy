@@ -1,6 +1,7 @@
 import React from "react";
 import "../css/table.css";
 import axios from "axios";
+import {Link} from 'react-router-dom';
 
 class Table extends React.Component {
   /*approval = (id) =>{
@@ -16,6 +17,7 @@ class Table extends React.Component {
   state = {
     persons: [],
   };
+
 
   delete=(id)=>{
     console.log(id);
@@ -68,7 +70,12 @@ class Table extends React.Component {
           <td style={{color: "#b007c4"}}>{i++}</td>
           <td>{item.subject}</td>
           <td>PENDING</td>
-          <td> <a href="/Remarks">Click here!</a> </td>
+          <td> <Link to= {{
+            pathname:"/remarks",
+            Rprops:{
+              id:item.request_id
+            }
+          }}>Click me!</Link> </td>
           <td style={{"cursor":"pointer","color":"grey"}}><i class="far fa-edit"></i></td>
           <td style={{"cursor":"pointer","color":"grey"}}><i class="far fa-trash-alt" onClick={() => this.delete(item.request_id)} ></i></td>
        </tr>
