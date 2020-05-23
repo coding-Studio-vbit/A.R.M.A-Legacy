@@ -234,7 +234,6 @@ app.post("/createrequest", (req, res) => {
 
         console.log("Unique ID: ", unique_id); //DEBUG
 
-<<<<<<< HEAD
         var forum_name = username.toUpperCase();
         var recipients = [];
 
@@ -283,37 +282,6 @@ app.post("/createrequest", (req, res) => {
   });
 });
 
-=======
-        var forum_name = username.toUpperCase()
-        var recipients = []
-
-       try{
-            for(let i=0;i<req.body.recipients.length;i++)
-            {
-              var client = new Client();
-              client.connect();
-              client.query('select faculty_roll from faculty where faculty_name=$1',[req.body.recipients[i]],
-              (err,data)=>{
-                  if(err){
-                    console.log(err);
-                    //client.end();
-                    throw err;
-                  }
-                    recipients.push(data.rows[0].faculty_roll);
-                })
-            }
-
-            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
-            return res.send({message: "request sent succesfully!"})
-        }
-        catch(error){
-           console.log(error)
-           return res.status(400).json({err: error})
-        }
-      })
-    })
-});
-
 app.delete("/createrequest", (req, res) => {
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
@@ -357,7 +325,6 @@ app.put("/createrequest", (req, res) => {
   })
 });
 
->>>>>>> 7721a3ed158aa9811dba55fceaf558e5eb7b0ef5
 app.get("/forumdashboard", async (req, res) => {
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
