@@ -149,7 +149,6 @@ app.post("/logout", (req, res) => {
 
   try {
 
-<<<<<<< HEAD
     	users.fetchAccessToken(req, (error, token) => {
      	  if (error) return res.status(400).json({ err:error });
 			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
@@ -169,29 +168,6 @@ app.post("/logout", (req, res) => {
     	});
   }catch (err) {
     console.log(err);
-=======
-      const username = req.body.user.userName.toUpperCase(); //get the username
-
-      if (!username || !token) {
-        return res
-          .status(400)
-          .json({ err: "username or token unspecified!" });
-      }
-      var obj = fs.readFileSync("validkeys.json");
-      obj = JSON.parse(obj.toString());
-      if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
-        //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
-        delete obj[req.body.user.username.toUpperCase()];
-      } else
-        return res
-          .status(401)
-          .send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
-      res.send({ message: "LOGOUT SUCCESSFUL!" });
-      //save the file.
-      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
-    });
-  } catch (err) {
->>>>>>> 7721a3ed158aa9811dba55fceaf558e5eb7b0ef5
     res.status(400).json({ err: "BAD REQUEST" });
   }
 });
