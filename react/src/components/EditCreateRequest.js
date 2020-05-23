@@ -260,7 +260,7 @@ const EditCreateRequest = () => {
                     <br />
                     <hr className="linew" />
                     <br />
-                      <div className="row">
+                      <div className="row" style={{textAlign:"center"}}>
                         <div className="col align-self-center">
                           <button type="submit" class="btn btn-primary" onClick={() =>update()}>Update Request</button>
                         </div>     

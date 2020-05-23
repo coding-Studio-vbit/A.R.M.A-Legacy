@@ -23,7 +23,7 @@ var conductevent = require("./conductevent");
 var usehall = require("./usehall");
 var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
-var requestQueries = require('./requestsQueries')
+var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
 
 var allowCrossDomain = function (req, res, next) {
@@ -52,14 +52,15 @@ app.post("/login", (req, res) => {
         (error, status) => {
           if (error) {
             console.log(error);
-            return res.status(401).send({ err : error });
+            return res.status(401).send({ err: error });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({message: "USERNAME: " + req.body.user.username.toUpperCase(),
+            res.send({
+              message: "USERNAME: " + req.body.user.username.toUpperCase(),
               accessToken: accessToken,
             });
             console.log("token: " + accessToken);
@@ -83,11 +84,12 @@ app.post("/login", (req, res) => {
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send({err:"Internal Server Error"});
+        res.status(500).send({ err: "Internal Server Error" });
       });
   } catch (error) {
-    res.status(400).json({err: "BAD REQUEST" });
-}});
+    res.status(400).json({ err: "BAD REQUEST" });
+  }
+});
 
 //Faculty Login
 
@@ -109,7 +111,6 @@ app.post("/loginFaculty", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
             res.send({
-
               message: "USERNAME: " + req.body.user.username.toUpperCase(),
 
               accessToken: accessToken,
@@ -133,7 +134,7 @@ app.post("/loginFaculty", (req, res) => {
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send({err: "Internal Server Error"});
+        res.status(500).send({ err: "Internal Server Error" });
       });
   } catch (err) {
     res.status(400).json({ err: "BAD REQUEST" });
@@ -148,30 +149,26 @@ app.post("/logout", (req, res) => {
   //For logout the request should have both the username and the access token.
 
   try {
-    users.fetchAccessToken(req, (error, token) => {
-      if (error) return res.status(400).json({ err:error });
 
-      const username = req.body.user.userName.toUpperCase(); //get the username
+    	users.fetchAccessToken(req, (error, token) => {
+     	  if (error) return res.status(400).json({ err:error });
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
+			{
+			  if(error) return res.status(401).json({err:error.message});
 
-      if (!username || !token) {
-        return res
-          .status(400)
-          .json({ err: "username or token unspecified!" });
-      }
-      var obj = fs.readFileSync("validkeys.json");
-      obj = JSON.parse(obj.toString());
-      if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
-        //if the username has an entry in the validkeys.json and the token is also a match then allow logout.
-        delete obj[req.body.user.username.toUpperCase()];
-      } else
-        return res
-          .status(401)
-          .send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
-      res.send({ message: "LOGOUT SUCCESSFUL!" });
-      //save the file.
-      fs.writeFileSync("validkeys.json", JSON.stringify(obj));
-    });
-  } catch (err) {
+    		  var obj = fs.readFileSync("validkeys.json");
+    		  obj = JSON.parse(obj.toString());
+    		  if (obj.hasOwnProperty(username) && obj[username].accessToken == token) {
+    		    delete obj[username.toUpperCase()];
+    		  }
+			  else
+    		    return res.status(401).send({ err: "CANNOT LOGOUT WITHOUT LOGIN!" }); //UNAUTHORIZED. Can't logout without login.
+    		  res.send({ message: "LOGOUT SUCCESSFUL!" });
+    		  fs.writeFileSync("validkeys.json", JSON.stringify(obj));
+			});
+    	});
+  }catch (err) {
+    console.log(err);
     res.status(400).json({ err: "BAD REQUEST" });
   }
 });
@@ -220,49 +217,70 @@ app.get("/facultydashboard", (req, res) => {
 });
 
 app.post("/createrequest", (req, res) => {
-    users.fetchAccessToken(req, (error, token)=>{
-      if (error){
-        return res.status(400).json({err: error})
-      }
-      users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
-        if (error){
-          return res.status(400).json({err: error})
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) {
+      return res.status(400).json({ err: error });
+    }
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (error, username) => {
+        if (error) {
+          return res.status(400).json({ err: error });
         }
         var unique_id = "";
         for (let a = 0; a < 10; a++) {
-          unique_id += String(Math.round(Math.random() * 10)%10);
+          unique_id += String(Math.round(Math.random() * 10) % 10);
         }
 
         console.log("Unique ID: ", unique_id); //DEBUG
 
-        var forum_name = username.toUpperCase()
-        var recipients = []
+        var forum_name = username.toUpperCase();
+        var recipients = [];
 
-       try{
-            for(let i=0;i<req.body.recipients.length;i++)
-            {
-              var client = new Client();
-              client.connect();
-              client.query('select faculty_roll from faculty where faculty_name=$1',[req.body.recipients[i]],
-              (err,data)=>{
-                  if(err){
-                    console.log(err);
-                    //client.end();
-                    throw err;
-                  }
-                    recipients.push(data.rows[0].faculty_roll);
-                })
+        try {
+          if (!req.body.recipients || !req.body.recipients.length)
+            throw "Invalid recipients!";
+
+          for (let i = 0; i < req.body.recipients.length; i++) {
+            var client = new Client();
+            client.connect();
+            client.query(
+              "select faculty_roll from faculty where faculty_name=$1",
+              [req.body.recipients[i]],
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                  //client.end();
+                  throw err;
+                }
+                if (data.rows.length != 0)
+                  recipients.push(data.rows[0].faculty_roll);
+              }
+            );
+          }
+          requestQueries.addRequest(
+            forum_name,
+            unique_id,
+            req.body.request_data,
+            recipients,
+            (error, status) => {
+              if (error) {
+                console.log(error);
+                return res
+                  .status(500)
+                  .json({ err: "Internal Server Error(database)" });
+              }
             }
-            
-            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
-            return res.send({message: "request sent succesfully!"})
+          );
+          return res.send({ message: "request sent succesfully!" });
+        } catch (error) {
+          console.log(error);
+          return res.status(400).json({ err: error });
         }
-        catch(error){
-           console.log(error)
-           return res.status(400).json({err: error})
-        }
-      })
-    })
+      }
+    );
+  });
 });
 
 app.delete("/createrequest", (req, res) => {
@@ -274,9 +292,22 @@ app.delete("/createrequest", (req, res) => {
       if (error){
         return res.status(400).json({err: error})
       }
+	  if(!req.body.request_id) return res.status(400).json({err:'Invalid Request! :('});
      try{
-          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
-          return res.send({message: "Deleted!!"})
+	 	  
+    	  var data = fs.readFileSync("validkeys.json");
+    	  data = data.toString();
+    	  data = JSON.parse(data);
+		 
+		  if(data.hasOwnProperty(username) && data[username].userType == 'FORUM') //only forums can delete their requests.
+		  {
+          	requestQueries.deleteRequest(req.body.request_id, username, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+         	return res.send({message: "Deleted!!"})
+		  }
+		  else
+		  {
+		  	return res.status(400).json({err:'Idi memu nishedinchali , meeru request delete cheyaleru'});
+		  }
       }
       catch(error){
          console.log(error)
@@ -296,8 +327,10 @@ app.put("/createrequest", (req, res) => {
         return res.status(400).json({err: error})
       }
       var forum_name = username.toUpperCase()
+	  if(!req.body.request_data || !req.body.status || !req.body.remarks || !req.body.request_id)
+	  		return res.status(400).json({err: 'Invalid request. :('});
      try{
-          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
+          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw {err:error}}})
           return res.send({message: "Updated succesfully!"})
       }
       catch(error){
@@ -306,6 +339,51 @@ app.put("/createrequest", (req, res) => {
       }
     })
   })
+});
+
+app.post("/approverequest", (req,res) => {
+	users.fetchAccessToken(req,(error,token)=>{
+	if(error){
+		return res.status(400).json({err:error});
+	}
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(error,username)=>{
+			if(error){
+				return res.status(400).json({err: error});
+			}
+			if(!req.body.status || !req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+
+    	    var data = fs.readFileSync("validkeys.json");
+    	    data = data.toString();
+    	    data = JSON.parse(data);
+
+		    if(data.hasOwnProperty(username) && data[username].userType == 'FACULTY') //only faculty can approve or reject.
+		    {
+		    	
+  		      var client = new Client();
+  		      client.connect();
+
+
+  		      client.query('update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)',[req.body.status, req.body.request_id,username],
+  		      (error,data)=>{
+  		          if(error){
+  		            console.log(error);
+  		            client.end();
+  		            return res.status(400).json({ err: error });      
+  		              // throw err;
+  		          }
+  		          if(data.rowCount === 0){
+  		            return res.status(400).json({ err: "No such rows found" });      
+  		          }
+  		          client.end();
+  		          return res.send({message: "approved", msg: data})
+  		      })
+		    }
+		    else{
+		    	return res.status(400).json({err:'Bad request, nice try.'});
+		    }
+
+		})
+	})
 });
 
 app.get("/forumdashboard", async (req, res) => {
@@ -327,6 +405,49 @@ app.get("/forumdashboard", async (req, res) => {
               [forum_name]
             )
             .then((data) => {
+              res.json(data.rows);
+              console.log(data);
+              client.end();
+            })
+            .catch((err) => {
+              console.log(err);
+              client.end();
+            });
+        } catch (err) {
+          res.status(500).json({ err: "Internal Database Error!" });
+          console.log(err);
+        }
+      }
+    );
+  });
+});
+
+app.get("/getrequest", async (req, res) => {
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (err, forum_name) => {
+        
+		if (err) return res.status(400).json({ err: "Invalid Token!" });
+		
+		if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+
+        try {
+          console.log(req.body);
+          var client = new Client();
+          client.connect();
+          client
+            .query(
+              "select * from requests where request_id=$1",
+              [req.body.request_id]
+            )
+            .then((data) => {
+              if(data.rowCount === 0){
+                client.end();
+                return res.status(400).json({ err: "No such rows found" });      
+              }
               res.json(data.rows);
               console.log(data);
               client.end();
@@ -842,7 +963,7 @@ app.post("/getUserType", (req, res) => {
         (error, username) => {
           if (error) {
             console.log(error);
-            return res.status(400).json({err:error});
+            return res.status(400).json({ err: error });
           }
           var fileData = fs.readFileSync("validkeys.json");
           fileData = fileData.toString();
@@ -856,7 +977,7 @@ app.post("/getUserType", (req, res) => {
       );
     });
   } catch (error) {
-    res.status(500).json({err:"Internal Server Error"});
+    res.status(500).json({ err: "Internal Server Error" });
     console.log(error);
   }
 });

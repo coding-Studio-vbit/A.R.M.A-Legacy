@@ -55,6 +55,8 @@ const CreateRequest = () => {
 
       const submit = (e) => {
         
+
+
         axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
        .then((result) => {
         console.log(result)
@@ -242,7 +244,7 @@ const CreateRequest = () => {
                       <hr className="linew" />
                       <br />
                       <div className="row">
-                        <div className="col align-self-center">
+                        <div className="col" style={{textAlign:"center"}}>
                           <button type="submit" class="btn btn-success" onClick={() =>submit()}>Create Request</button>
                         </div>      
                       </div>     
