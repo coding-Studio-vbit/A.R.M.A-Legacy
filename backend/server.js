@@ -291,15 +291,16 @@ app.delete("/createrequest", (req, res) => {
       if (error){
         return res.status(400).json({err: error})
       }
+	  if(!req.body.request_id) return res.status(400).json({err:'Invalid Request! :('});
      try{
 	 	  
     	  var data = fs.readFileSync("validkeys.json");
     	  data = data.toString();
     	  data = JSON.parse(data);
 		 
-		  if(data.hasOwnProperty(username) && data.username.userType == 'FORUM')
+		  if(data.hasOwnProperty(username) && data[username].userType == 'FORUM') //only forums can delete their requests.
 		  {
-          	requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+          	requestQueries.deleteRequest(req.body.request_id, username, ((error,status)=>{console.log(error,status); if(error){throw error}}))
          	return res.send({message: "Deleted!!"})
 		  }
 		  else
@@ -325,8 +326,10 @@ app.put("/createrequest", (req, res) => {
         return res.status(400).json({err: error})
       }
       var forum_name = username.toUpperCase()
+	  if(!req.body.request_data || !req.body.status || !req.body.remarks || !req.body.request_id)
+	  		return res.status(400).json({err: 'Invalid request. :('});
      try{
-          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
+          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw {err:error}}})
           return res.send({message: "Updated succesfully!"})
       }
       catch(error){
@@ -338,22 +341,46 @@ app.put("/createrequest", (req, res) => {
 });
 
 app.post("/approverequest", (req,res) => {
-  var client = new Client();
-  client.connect();
-  client.query('update requests set status = $1 where request_id=$2',[req.body.status, req.body.request_id],
-  (err,data)=>{
-      if(err){
-        console.log(err);
-        client.end();
-        return res.status(400).json({ err: err });      
-          // throw err;
-      }
-      if(data.rowCount === 0){
-        return res.status(400).json({ err: "No such rows found" });      
-      }
-      client.end();
-      return res.send({message: "approved", msg: data})
-    })
+	users.fetchAccessToken(req,(error,token)=>{
+	if(error){
+		return res.status(400).json({err:error});
+	}
+		users.authenticateToken(token,(error,username)=>{
+			if(error){
+				return res.status(400).json({err: error});
+			}
+			if(!req.body.status || !req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+
+    	    var data = fs.readFileSync("validkeys.json");
+    	    data = data.toString();
+    	    data = JSON.parse(data);
+
+		    if(data.hasOwnProperty(username) && data[username].userType == 'FACULTY') //only faculty can approve or reject.
+		    {
+		    	
+  		      var client = new Client();
+  		      client.connect();
+  		      client.query('update requests set status = $1 where request_id=$2 AND faculty_roll=$3',[req.body.status, req.body.request_id,username],
+  		      (error,data)=>{
+  		          if(error){
+  		            console.log(error);
+  		            client.end();
+  		            return res.status(400).json({ err: error });      
+  		              // throw err;
+  		          }
+  		          if(data.rowCount === 0){
+  		            return res.status(400).json({ err: "No such rows found" });      
+  		          }
+  		          client.end();
+  		          return res.send({message: "approved", msg: data})
+  		      })
+		    }
+		    else{
+		    	return res.status(400).json({err:'Bad request, nice try.'});
+		    }
+
+		})
+	})
 });
 
 app.get("/forumdashboard", async (req, res) => {
@@ -399,7 +426,11 @@ app.get("/getrequest", async (req, res) => {
       token,
       process.env.SECRET_ACCESS_TOKEN,
       (err, forum_name) => {
-        if (err) return res.status(400).json({ err: "Invalid Token!" });
+        
+		if (err) return res.status(400).json({ err: "Invalid Token!" });
+		
+		if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+
         try {
           console.log(req.body);
           var client = new Client();
