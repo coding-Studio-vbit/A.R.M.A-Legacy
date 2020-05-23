@@ -51,6 +51,7 @@ function Register() {
     axios
       .post("/registerForum", {
         registrationData: {
+          actual_name: values,
           username: values,
           email: contact.email,
           phone: contact.pnum,

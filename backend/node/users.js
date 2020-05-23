@@ -10,11 +10,11 @@ const path = require("path");
 
 function fetchAccessToken(request, callback) {
   console.log(request.header);
-  if (!request.headers['authorization']) {
+  if (!request.headers["authorization"]) {
     return callback("No Authorization field found in the header!", undefined);
   }
 
-  var token_parts = request.headers['authorization'].split(" ");
+  var token_parts = request.headers["authorization"].split(" ");
 
   if (token_parts[0] == "Bearer" && token_parts[1]) {
     return callback(undefined, token_parts[1]);
@@ -147,7 +147,7 @@ function checkRegistrationStatus(forum_name, callback) {
   forum_name = forum_name.toUpperCase();
 
   client.query(
-    "SELECT forum_name FROM FORUMS WHERE forum_name= $1;",
+    "SELECT forum_name FROM forums WHERE forum_name= $1;",
     [forum_name],
     (err, res) => {
       if (err) {
@@ -172,7 +172,7 @@ function checkFacultyRegistrationStatus(faculty_roll, callback) {
   faculty_roll = faculty_roll.toUpperCase();
 
   client.query(
-    "SELECT * FROM Faculty WHERE faculty_roll= $1;",
+    "SELECT * FROM faculty WHERE faculty_roll= $1;",
     [faculty_roll],
     (err, res) => {
       if (err) {
@@ -193,14 +193,22 @@ function checkFacultyRegistrationStatus(faculty_roll, callback) {
 
 // REGISTER FORUM (PRIVATE USE ONLY)
 
-function registerForum(forum_name, password, email, phone, callback) {
+function registerForum(
+  forum_name,
+  password,
+  email,
+  phone,
+  actual_name,
+  callback
+) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
 
   forum_name = forum_name.toUpperCase();
-
+  console.log("----------\n" + password + "\n----------");
   const password_hash = hashPassword(password);
+  console.log(password_hash);
 
   checkRegistrationStatus(forum_name, (err, res) => {
     if (res == true) {
@@ -208,8 +216,8 @@ function registerForum(forum_name, password, email, phone, callback) {
       return callback(undefined, false);
     } else {
       client.query(
-        "INSERT INTO forums(forum_name,pwd_hash,email,phone_no) VALUES ($1,$2,$3,$4);",
-        [forum_name, password_hash, email, phone],
+        "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
+        [forum_name, password_hash, email, phone, actual_name],
         (err, res) => {
           if (err) {
             client.end();

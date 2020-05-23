@@ -34,6 +34,7 @@ const Navi = () => {
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
       <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
+      <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
     </Nav>
     <Nav>
     <Nav >

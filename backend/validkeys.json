@@ -4,10 +4,7 @@
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.Y29kaW5nU3R1ZGlv.GBhRWeGSZGxpkK6j9m3eX4f_WObnR0pYl9rMum45sFE",
     "userType": "FORUM"
   },
-  "17P61A0596": {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.MTdQNjFBMDU5Ng.azCUBLRWn2091kJITCohCYQT3ukol-t2CDBcJkFGTf4",
-    "userType": "FACULTY"
-  },
+  "17P61A0596": "eyJhbGciOiJIUzI1NiJ9.MTdQNjFBMDU5Ng.azCUBLRWn2091kJITCohCYQT3ukol-t2CDBcJkFGTf4",
   "stumagz": {
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.c3R1bWFneg.RjCpnTu611-dPJPSDP1iyOFjvnLRPn49JEn5tQhp2bw",
     "userType": "FORUM"
@@ -24,10 +21,6 @@
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.MTdwNjFhMDU4NA.xtokuKplZMtmJ_GKjK61QR5UZV9fLqNLtTA6LSQKDbs",
     "userType": "FACULTY"
   },
-  "CODINGSTUDIO": {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.Q09ESU5HU1RVRElP.xPXSKV8gyEmY1X4pcqorKxmDcGAkCPrSCRLS6JlqeTc",
-    "userType": "FORUM"
-  },
   "18P61A05C2": {
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.MThQNjFBMDVDMg.9Q-1l2JGARLSM1hkclwDEegEVAjj_CAHVX8C3x_m1RE",
     "userType": "FACULTY"
@@ -36,8 +29,8 @@
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.MThQNjFBMDVENw.FbChotTTB6Uw-aBCOHRgW9-6gegprE6Z-7FP9mhKXJs",
     "userType": "FACULTY"
   },
-  "17P61A0584": {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.MTdQNjFBMDU4NA.d_q7u-7p7dlbsDK37Pfao6tYnVMKbO9SupE_r1DS204",
-    "userType": "FACULTY"
+  "CODINGSTUDIO": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.Q09ESU5HU1RVRElP.xPXSKV8gyEmY1X4pcqorKxmDcGAkCPrSCRLS6JlqeTc",
+    "userType": "FORUM"
   }
 }
