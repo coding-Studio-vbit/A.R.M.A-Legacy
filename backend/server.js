@@ -460,7 +460,7 @@ app.get("/forumdashboard", async (req, res) => {
 });
 
 app.get("/getrequest", async (req, res) => {
-  console.log(req.body.data.request_id)
+  console.log(req.body.request_id)
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
@@ -470,7 +470,7 @@ app.get("/getrequest", async (req, res) => {
 
 		if (err) return res.json({ err: "Invalid Token!" });
 
-		if(!req.body.data.request_id) return res.json({err:'Invalid request! :('});
+		if(!req.body.request_id) return res.json({err:'Invalid request! :('});
 
         try {
           console.log(req.body);

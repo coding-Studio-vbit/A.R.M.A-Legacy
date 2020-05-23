@@ -28,16 +28,13 @@ const Remarks =(props) => {
     let config = {
     headers: {
       'Authorization': 'Bearer ' + accessToken
-    },
-      data:{
-        "request_id" : id
-      }
     }
-    console.log(config);
-    axios.get("http://localhost:8080/getrequest",config)
+    }
+    axios.get("http://localhost:8080/getrequest",{
+          request_id: id,
+        },config)
       .then(res => {
-        const data = res.data;
-        console.log(data);
+        console.log("hello");
       }).catch((err) => {
         console.log(err);
       })
