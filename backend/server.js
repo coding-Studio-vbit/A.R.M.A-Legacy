@@ -337,6 +337,25 @@ app.put("/createrequest", (req, res) => {
   })
 });
 
+app.post("/approverequest", (req,res) => {
+  var client = new Client();
+  client.connect();
+  client.query('update requests set status = $1 where request_id=$2',[req.body.status, req.body.request_id],
+  (err,data)=>{
+      if(err){
+        console.log(err);
+        client.end();
+        return res.status(400).json({ err: err });      
+          // throw err;
+      }
+      if(data.rowCount === 0){
+        return res.status(400).json({ err: "No such rows found" });      
+      }
+      client.end();
+      return res.send({message: "approved", msg: data})
+    })
+});
+
 app.get("/forumdashboard", async (req, res) => {
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
@@ -367,6 +386,46 @@ app.get("/forumdashboard", async (req, res) => {
         } catch (err) {
           res.status(500).json({ err: "Internal Database Error!" });
           console.log(err);
+        }
+      }
+    );
+  });
+});
+
+app.get("/getrequest", async (req, res) => {
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (err, forum_name) => {
+        if (err) return res.status(400).json({ err: "Invalid Token!" });
+        try {
+          console.log(req.body);
+          var client = new Client();
+          client.connect();
+          client
+            .query(
+              "select * from requests where request_id=$1",
+              [req.body.request_id]
+            )
+            .then((data) => {
+              if(data.rowCount === 0){
+                client.end();
+                return res.status(400).json({ err: "No such rows found" });      
+              }
+              res.json(data.rows);
+              console.log(data);
+              client.end();
+            })
+            .catch((err) => {
+              console.log(err);
+              client.end();
+            });
+        } catch (err) {
+          res.status(500).json({ err: "Internal Database Error!" });
+          console.log(err);
+
         }
       }
     );
