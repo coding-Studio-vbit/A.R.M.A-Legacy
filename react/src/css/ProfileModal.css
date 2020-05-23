@@ -12,5 +12,6 @@ input[type='text']{
     font-size: 18px;
     text-align: center;
     padding: 5px;
+    height: fit-content;
   }
   

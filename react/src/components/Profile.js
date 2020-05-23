@@ -26,18 +26,19 @@ class Profile extends React.Component{
     }))
   }
 
-
 componentWillMount() {
-    axios.get(`http://localhost:8080/Dashboard`)
+  let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+  let config = {
+    headers: {
+      'Authorization': 'Bearer ' + accessToken
+      }
+    }
+      axios.get(`http://localhost:8080/getForumDetails`,config)
       .then(res => {
         const persons = res.data;
-        this.setState({ persons });
-        console.log(persons);
-      })
-      axios.get(`http://localhost:8080/getForumDetails`)
-      .then(res => {
-        const persons = res.data;
-        this.setState({ profilename:res.actual_name,profileemail:res.email,profilephone:res.phone_no });
+        this.setState({ profilename:res.data.actual_name,profileemail:res.data.email,profilephone:res.data.phone_no });
         console.log(persons);
       })
   }

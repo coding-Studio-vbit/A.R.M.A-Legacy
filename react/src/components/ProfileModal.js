@@ -7,12 +7,12 @@ const ProfileModal =(props)=>{
         Email,setEmail
     ]=useState("");
     return (
-        <div>
-    <Modal 
+        <div> 
+    <Modal
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
-                    <h3 style={{textDecorationColor:"black"}}>Edit Email</h3>
+                    <h3 style={{textDecorationColor:"black",color:"grey"}}>Edit Email</h3>
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-body">

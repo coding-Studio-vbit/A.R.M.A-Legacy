@@ -20,9 +20,9 @@ const PassModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-body">
-                <input type="text" id="myInput"  onChange ={(e) =>setOldPassword(e.target.value)}placeholder="Enter old Password"></input><br/>
-                <input type="text" id="myInput"  onChange ={(e) =>setNewPassword(e.target.value)}placeholder="Enter new Password"></input><br/>
-                <input type="text" id="myInput" placeholder="Confirm new Password"></input><br/>
+                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}}  onChange ={(e) =>setOldPassword(e.target.value)}placeholder="Enter old Password"></input><br/>
+                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}} onChange ={(e) =>setNewPassword(e.target.value)}placeholder="Enter new Password"></input><br/>
+                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}} placeholder="Confirm new Password"></input><br/>
                 </div>
                 <div className="modal-footer">
                 <button  type="submit" onClick={() =>{
