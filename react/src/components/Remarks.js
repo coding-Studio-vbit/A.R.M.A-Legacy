@@ -36,7 +36,7 @@ const chTable=()=>{
 }
 const addRemark=(sel,rej,f_sel,f_rej)=>{
   console.log(sel);
-  
+
     const  payload= { remark:Text.text,
       selected: sel,
       rejected:rej,
@@ -72,16 +72,16 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
   var count=1;
   var f_count=1;
   const list= Participants.map(item=> {
-  
+
   return(
   <tr>
     <td>{count++}</td>
     <td>{item.name}</td>
     <td>{item.roll}</td>
     <td><input  onChange={event =>{
-      
+
         let checked=event.target.checked;
-        
+
         setPeople(
           Participants.map(data=>{
             if(item.roll===data.roll){
@@ -90,23 +90,23 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
             return data;
           })
         )
-      
-        
+
+
       }}type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
     {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
     </tr>
     )});
     const list1= Facility.map(item=> {
-  
+
       return(
       <tr>
         <td>{f_count++}</td>
         <td>{item.facility}</td>
-        
+
         <td><input  onChange={event =>{
-          
+
             let checked=event.target.checked;
-            
+
             setFacility(
               Facility.map(data=>{
                 if(item.facility===data.facility){
@@ -115,8 +115,8 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
                 return data;
               })
             )
-          
-            
+
+
           }}type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
         {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
         </tr>
@@ -134,15 +134,16 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
     <Row><h5><span>Description : </span>"Lorem ipsum dolor sit amet, cosed do eiusmod tempor incididunt ut labore eti ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</h5></Row>
     <label>Remarks : </label>
     <Row><textarea value={Text.text} onChange={handleInput} cols={80} rows={6} placeholder="Enter your Remarks here..."/></Row>
-    <Button className='Rebtn' variant="primary" onClick={Selected}>Send Remarks</Button>
-   
+    <Button className='Rebtn' variant="primary" onClick={Selected} style={{"marginBottom":"50px"}}>Send Remarks</Button>
+
    </Col>
-    
+
     <Col>
-    <Row><Col><Button variant='dark' className='prevbtn' onClick={chTable}><i class="arrow left"></i></Button></Col>
-    <Col><center>{PartTable?<h4>Participants</h4>:<h4>Facilities</h4>}</center></Col><Col>
-    <Button variant='dark' className='nxtbtn' onClick={chgTable}><i class="arrow right"></i></Button></Col></Row><div className="Table">
-    
+    <Row><Col><i class="fas fa-chevron-circle-left" style={{"cursor":"pointer","color":"grey"}} onClick={chTable}></i></Col>
+    <Col style={{"padding":"0px"}}><center>{PartTable?<h4>Participants</h4>:<h4>Facilities</h4>}</center></Col>
+    <Col>
+    <i class="fas fa-chevron-circle-right" style={{"cursor":"pointer","color":"grey"}} onClick={chgTable}></i></Col></Row><div className="Table">
+
     <Row >{ PartTable ?(
     <Table striped bordered hover variant="dark">
   <thead>
@@ -151,20 +152,20 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
       <th>Name</th>
       <th>Roll No</th>
       <th>Approve<input onChange={event =>{
-      
+
       let checked=event.target.checked;
       setPeople(
         Participants.map(data=>{
-         
+
             data.check=checked;
-          
+
           return data;
         })
       )
-      
+
     }} type="checkbox"  id='Approve' name='App'  ></input></th>
       {/* <th>Reject<input type="checkbox" id='Reject' name='rej'  ></input></th> */}
-      
+
     </tr>
   </thead>  <tbody>
     {list}</tbody></Table>) :(<Table striped bordered hover variant="dark">
@@ -173,20 +174,20 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
       <th>#</th>
       <th>Facilities</th>
       <th>Approve<input onChange={event =>{
-      
+
       let checked=event.target.checked;
       setFacility(
         Facility.map(data=>{
-         
+
             data.check=checked;
-          
+
           return data;
         })
       )
-      
+
     }} type="checkbox" id='Approve' name='App'  ></input></th>
       {/* <th>Reject<input type="checkbox" id='Reject' name='rej'  ></input></th> */}
-      
+
     </tr>
   </thead>  <tbody>
     {list1}</tbody></Table>) }
@@ -203,9 +204,9 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
     </Row>
     </div>
     </Col>
-    
-    
-    
+
+
+
   </Row>
 </Container></div>
      {/*  <div className="remarkbox">

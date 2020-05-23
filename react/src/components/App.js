@@ -30,7 +30,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
-            <ProtectedRoute path="/Profile" component={Profile} />
+            <Route path="/profile" component={Profile} />
             <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
             <ProtectedRoute
               path="/Dashboard/TemplateDetails"
