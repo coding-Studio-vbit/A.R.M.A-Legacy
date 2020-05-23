@@ -4,10 +4,11 @@ import axios from "axios";
 import "../css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
+const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
 const CreateRequest = () => {
     const [inputFields, setInputFields] = useState([
-        { Name: "", Roll: "", Dept: "", Year: "" }
+        { name: "", roll: "", Dept: "", Year: "" }
       ]);
 
       const [request, setRequest] = useState("")
@@ -19,7 +20,7 @@ const CreateRequest = () => {
     
       const handleAddFields = () => {
         const values = [...inputFields];
-        values.push({ Name: "", Roll: "", Dept: "", Year: "" });
+        values.push({ name: "", roll: "", Dept: "", Year: "" });
         setInputFields(values);
       };
     
@@ -32,10 +33,10 @@ const CreateRequest = () => {
     
       const handleInputChange = (index, event) => {
         const values = [...inputFields];
-        if (event.target.name === "Name") {
-          values[index].Name = event.target.value;
-        } else if(event.target.name === "Roll"){
-          values[index].Roll = event.target.value;
+        if (event.target.name === "name") {
+          values[index].name = event.target.value;
+        } else if(event.target.name === "roll"){
+          values[index].roll = event.target.value;
         } else if(event.target.name === "Dept"){
           values[index].Dept = event.target.value;
         }else if(event.target.name === "Year"){
@@ -45,7 +46,7 @@ const CreateRequest = () => {
         setInputFields(values);
       };
     
-      const handleSubmit = e => {
+      const handleSubmit = (e,request, Faculty, description, Facilities, addfacilities) => {
         e.preventDefault();
         console.log(request, Faculty, description, Facilities, addfacilities);
         
@@ -54,7 +55,7 @@ const CreateRequest = () => {
       var requestdetails =  inputFields;
 
       const submit = (e) => {
-        
+        console.log(accessToken)
         var arr = []
         Faculty.forEach(item =>{
         arr.push(item.value)
@@ -65,30 +66,35 @@ const CreateRequest = () => {
         arr1.push(item.value)
         })
         console.log(arr1)
+        console.log(requestdetails)
 
-        let obj = {
-          recipients: arr, 
+        axios.post('/createrequest', {
           request_data: {
-              description: description, 
-                Facilities: arr1, 
-                studentdetails: requestdetails,
-                  type: request 
-                }
-      }
-        //axios.post('/createrequest', {request, Faculty, description, Facilities, addfacilities, requestdetails },{responseType: 'arraybuffer'})
-        //.then((result) => {
-        //console.log(result)
-       //});
-        
-       axios.post('/createrequest', {obj},{responseType: 'arraybuffer'})
-        .then((result) => {
-        console.log(result)
-        })
+            subject: request,
+            description: description,
+            Facilities: arr1,
+            students: requestdetails
+          },
+          recipients: arr,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+        },
+        )
+          .then(function (response) {
+            console.log('helloo')
+            alert('class added successfully')
+          })
         .catch(err => {console.log(err)})
       }
 
       const Facultyoptions = [
-        { label: "saravanan", value: "saravanan" },
+        { label: "Saravanan", value: 'Saravanan' },
+        { label: "nanavaras", value: 'nanavaras' },
         { label: "Principal", value: "Principal" },
         { label: "Vice Principal", value: "Vice Principal" },
         { label: "CSE - HOD", value: "CSE - HOD" },
@@ -192,19 +198,19 @@ const CreateRequest = () => {
                                                 <input 
                                                     className="form-control" 
                                                     type="text" 
-                                                    id="Name" 
-                                                    name="Name" 
+                                                    id="name" 
+                                                    name="name" 
                                                     value={inputField.firstName}
                                                     onChange={event => handleInputChange(index, event)}
-                                                    placeholder={`Name`}
+                                                    placeholder={`name`}
                                                 />
                                             </div>  
                                             <div class="col-sm-2">
                                                 <input 
                                                     className="form-control"
                                                     type="text"
-                                                    id="Roll"
-                                                    name="Roll"
+                                                    id="roll"
+                                                    name="roll"
                                                     value={inputField.firstName}
                                                     onChange={event => handleInputChange(index, event)}
                                                     placeholder={`Roll No`}
