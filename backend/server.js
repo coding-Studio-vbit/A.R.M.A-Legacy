@@ -211,7 +211,7 @@ app.get("/facultydashboard", (req, res) => {
       }
     );
 
-    
+
   });
 });
 
@@ -312,11 +312,11 @@ app.post("/approverequest", (req,res) => {
       if(err){
         console.log(err);
         client.end();
-        return res.status(400).json({ err: err });      
+        return res.status(400).json({ err: err });
           // throw err;
       }
       if(data.rowCount === 0){
-        return res.status(400).json({ err: "No such rows found" });      
+        return res.status(400).json({ err: "No such rows found" });
       }
       client.end();
       return res.send({message: "approved", msg: data})
@@ -338,7 +338,7 @@ app.get("/forumdashboard", async (req, res) => {
           client.connect();
           client
             .query(
-              "select remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
+              "select request_id,remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
               [forum_name]
             )
             .then((data) => {
@@ -380,7 +380,7 @@ app.get("/getrequest", async (req, res) => {
             .then((data) => {
               if(data.rowCount === 0){
                 client.end();
-                return res.status(400).json({ err: "No such rows found" });      
+                return res.status(400).json({ err: "No such rows found" });
               }
               res.json(data.rows);
               console.log(data);
