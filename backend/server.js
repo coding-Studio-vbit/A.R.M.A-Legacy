@@ -292,8 +292,20 @@ app.delete("/createrequest", (req, res) => {
         return res.status(400).json({err: error})
       }
      try{
-          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
-          return res.send({message: "Deleted!!"})
+	 	  
+    	  var data = fs.readFileSync("validkeys.json");
+    	  data = data.toString();
+    	  data = JSON.parse(data);
+		 
+		  if(data.hasOwnProperty(username) && data.username.userType == 'FORUM')
+		  {
+          	requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+         	return res.send({message: "Deleted!!"})
+		  }
+		  else
+		  {
+		  	return res.status(400).json({err:'Idi memu nishedinchali , meeru request delete cheyaleru'});
+		  }
       }
       catch(error){
          console.log(error)
