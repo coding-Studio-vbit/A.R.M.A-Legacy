@@ -193,7 +193,7 @@ function checkFacultyRegistrationStatus(faculty_roll, callback) {
 
 // REGISTER FORUM (PRIVATE USE ONLY)
 
-function registerForum(forum_name, password, email, phone, callback) {
+function registerForum(forum_name, password, email, phone,actual_name, callback) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
@@ -208,8 +208,8 @@ function registerForum(forum_name, password, email, phone, callback) {
       return callback(undefined, false);
     } else {
       client.query(
-        "INSERT INTO forums(forum_name,pwd_hash,email,phone_no) VALUES ($1,$2,$3,$4);",
-        [forum_name, password_hash, email, phone],
+        "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
+        [forum_name, password_hash, email, phone,actual_name],
         (err, res) => {
           if (err) {
             client.end();
