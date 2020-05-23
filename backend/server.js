@@ -21,6 +21,7 @@ var campaigning = require("./campaigning");
 var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var usehall = require("./usehall");
+var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
@@ -937,7 +938,7 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
 });
 
 //NEXT LETTER
-/*app.post('/conductmeet' ,  urlencodedParser,function(req,res){
+app.post('/conductmeet' ,  urlencodedParser,function(req,res){
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -956,7 +957,8 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
   let time_start = req.body.time_start;
   let time_end = req.body.time_end;
   let letter_body = req.body.letter_body;
-  console.log(req.body);
+  let studentdetails = req.body.studentdetails;
+
   let details = {
               designation:designation,
               department: department,
@@ -973,13 +975,14 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
              end_hour:end_hour,
               end_min:end_min,
               end_meridian:end_meridian,
-              letter_body: letter_body
+              letter_body: letter_body,
+              studentdetails: studentdetails,
             }
             let data = JSON.stringify(details, null ,2);
            fs.writeFileSync('./details.json', data);
 conductmeet.generateLetterIndividual();
-res.download('./LetterGenerated/FINAL_CONDUCT_MEET_PERMISSION.docx'); //callback I*
-});*/
+res.download('./LetterGenerated/conductmeet.docx'); //callback I*
+});
 
 //Get user type using Access Token.
 
