@@ -41,6 +41,42 @@ var cors = require("cors");
 app.use(cors());
 //LOGIN
 
+app.get("/getForumDetails",(req,res)=>{
+	try
+	{
+		users.fetchAccessToken(req,(error,token)=>{
+			if(error){
+				console.log(error);
+				return res.status(400).json({err:error});
+			}
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
+				if(error){
+					console.log(error);
+					return res.status(400).json({err:error});
+				}
+				var client = new Client()
+				client.connect();
+				client.query('SELECT actual_name,email,phone_no FROM forums WHERE forum_name=$1',[username],(error,data)=>{
+					if(error){
+						console.log(error);
+						return res.status(500).json({err:error});
+					}
+					res.json({
+						actual_name: data.rows[0].actual_name,
+						email: data.rows[0].email,
+						phone_no: data.rows[0].phone_no
+					}); // successful data retrieval.
+
+				})//end query
+			})//end auth
+		})//end fetch
+	}
+	catch(error){
+		console.log(error);
+		res.status(500).json({err:error});
+	}
+});
+
 app.post("/login", (req, res) => {
   //check password.
   try {
@@ -573,6 +609,7 @@ app.post("/registerForum", (req, res) => {
                 data.username,
                 data.email,
                 data.phone,
+				data.actual_name,
                 (error, st) => {
                   if (error)
                     return console.log(
