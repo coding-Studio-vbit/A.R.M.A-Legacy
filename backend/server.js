@@ -345,7 +345,7 @@ app.post("/approverequest", (req,res) => {
 	if(error){
 		return res.status(400).json({err:error});
 	}
-		users.authenticateToken(token,(error,username)=>{
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(error,username)=>{
 			if(error){
 				return res.status(400).json({err: error});
 			}
@@ -360,7 +360,9 @@ app.post("/approverequest", (req,res) => {
 		    	
   		      var client = new Client();
   		      client.connect();
-  		      client.query('update requests set status = $1 where request_id=$2 AND faculty_roll=$3',[req.body.status, req.body.request_id,username],
+
+
+  		      client.query('update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)',[req.body.status, req.body.request_id,username],
   		      (error,data)=>{
   		          if(error){
   		            console.log(error);
