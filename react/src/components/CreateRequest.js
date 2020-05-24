@@ -62,7 +62,7 @@ const CreateRequest = () => {
         console.log(arr)
         var arr1 = []
         Facilities.forEach(item =>{
-        arr1.push(item.value)
+        arr1.push(item)
         })
         console.log(arr1)
         console.log(requestdetails)
@@ -72,8 +72,8 @@ const CreateRequest = () => {
           request_data: {
             subject: request,
             description: description,
-            Facilities: arr1,
-            students: requestdetails
+            facilities: arr1,
+            participants: requestdetails
           },
           recipients: arr,
         },
@@ -93,7 +93,7 @@ const CreateRequest = () => {
       }
 
       const Facultyoptions = [
-        { label: "Saravanan", value: 'Saravanan' },
+        { label: "Yasaswi Raj", value: "Yasaswi Raj"},
         { label: "nanavaras", value: 'nanavaras' },
         { label: "Principal", value: "Principal" },
         { label: "Vice Principal", value: "Vice Principal" },
@@ -108,9 +108,9 @@ const CreateRequest = () => {
 
 
       const Facilitiesoptions = [
-        { label: "SAC Room", value: "SAC Room" },
-        { label: "Chethana", value: "Chethana" },
-        { label: "Internet", value: "Internet" },
+        { label: "SAC Room", value: "SAC Room",name:"SAC Room",check:true },
+        { label: "Chethana", value: "Chethana",name:"Chethana",check:true },
+        { label: "Internet", value: "Internet",name:"Internet",check:true },
 
       ];
 
