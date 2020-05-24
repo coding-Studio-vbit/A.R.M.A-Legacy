@@ -355,7 +355,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
-  console.log(req)
+  console.log(req.body.status)
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
       return res.status(400).json({err: error})
@@ -459,7 +459,6 @@ app.get("/forumdashboard", async (req, res) => {
     );
   });
 });
-
 app.get("/getrequest", async (req, res) => {
   console.log(req.query.request_id)
   users.fetchAccessToken(req, (err, token) => {
@@ -611,9 +610,8 @@ app.post("/registerForum", (req, res) => {
               //now create a new record in the registration request table.
               users.newForumRegistrationRequest(
                 data.username,
-                data.email,
                 data.phone,
-				data.actual_name,
+                data.email,
                 (error, st) => {
                   if (error)
                     return console.log(

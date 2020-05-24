@@ -78,7 +78,7 @@ const addRemark=(selected_participants,selected_facilities)=>{
       request_id:JSON.parse(localStorage.getItem("req_id")),
       request_data:Req_data,
       remarks:Text,
-      status:"Approved"},config)
+      status:'Requested Changes'},config)
       .then(res => {
         console.log(res);
       }).catch((err) => {
