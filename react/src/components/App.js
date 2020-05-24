@@ -10,6 +10,8 @@ import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
+import ViewStatus from "./ViewStatus";
+
 import { ProtectedRoute } from "./protected.route";
 
 //LetterTemplates
@@ -44,11 +46,9 @@ function App() {
             />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <ProtectedRoute path="/Remarks" component={Remarks} />
-            <ProtectedRoute
-              path="/Dashboard/TemplateList"
-              component={TemplateList}
-            />
+            <Route path="/Remarks" component={Remarks} />
+            <Route path="/Dashboard/TemplateList" component={TemplateList} />
+            <Route path="/ViewStatus" component={ViewStatus} />
 
             <Route path="/campaining" component={Camp} />
             <Route path="/conduct" component={Econ} />

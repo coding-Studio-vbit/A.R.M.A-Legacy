@@ -242,7 +242,7 @@ app.get("/facultydashboard", (req, res) => {
           client.connect();
           client
             .query(
-              "select forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
+              "select request_id,forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
               [faculty_roll]
             )
             .then((data) => {
@@ -380,6 +380,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
+  console.log(req);
   users.fetchAccessToken(req, (error, token) => {
     if (error) {
       return res.status(400).json({ err: error });
@@ -401,7 +402,7 @@ app.put("/createrequest", (req, res) => {
           return res.status(400).json({ err: "Invalid request. :(" });
         try {
           requestQueries.changeRequest(
-            forum_name,
+            req.body.forum_name,
             req.body.request_data,
             req.body.status,
             req.body.remarks,
@@ -490,7 +491,7 @@ app.get("/forumdashboard", async (req, res) => {
           client.connect();
           client
             .query(
-              "select remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
+              "select request_id,remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
               [forum_name]
             )
             .then((data) => {
@@ -512,29 +513,39 @@ app.get("/forumdashboard", async (req, res) => {
 });
 
 app.get("/getrequest", async (req, res) => {
+  console.log(req.query.request_id);
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
       (err, forum_name) => {
-        if (err) return res.status(400).json({ err: "Invalid Token!" });
+        if (err) return res.json({ err: "Invalid Token!" });
 
-        if (!req.body.request_id)
-          return res.status(400).json({ err: "Invalid request! :(" });
+        if (!req.query.request_id)
+          return res.json({ err: "Invalid request! :(" });
 
         try {
-          console.log(req.body);
+          console.log(req);
           var client = new Client();
           client.connect();
           client
+
             .query("select * from requests where request_id=$1", [
               req.body.request_id,
             ])
+
+            .query(
+              "select * from requests where request_id=$1",
+
+              [req.query.request_id]
+            )
+
             .then((data) => {
               if (data.rowCount === 0) {
                 client.end();
-                return res.status(400).json({ err: "No such rows found" });
+
+                return res.json({ err: "No such rows found" });
               }
               res.json(data.rows);
               console.log(data);
@@ -567,7 +578,7 @@ app.get("/getrequest", async (req, res) => {
 
 //Remarks
 app.post("/Remarks", (req, res) => {
-  const remark = req.body;
+  const remark = req;
   console.log(remark);
 });
 

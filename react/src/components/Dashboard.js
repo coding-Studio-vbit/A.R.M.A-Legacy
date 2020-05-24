@@ -3,6 +3,7 @@ import Table from "./Table";
 import FacultyTable from "./FacultyTable";
 import Nav from "./Navi";
 import TemplateList from "./TemplateList";
+import LoadingScreen from "./LoadingScreen";
 import { Tab, Tabs } from "react-bootstrap";
 import axios from "axios";
 class Dashboard extends React.Component {
@@ -59,15 +60,7 @@ class Dashboard extends React.Component {
         );
 
       default:
-        return (
-          <div style={{ marginTop: "20%" }}>
-            <center>
-              <h1>
-                Please, <a href="/">Login.</a>
-              </h1>
-            </center>
-          </div>
-        );
+        return <LoadingScreen />;
     }
   }
 }
