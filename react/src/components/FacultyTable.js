@@ -46,7 +46,9 @@ class FacultyTable extends React.Component{
           <td>{item.forum_name}</td>
           <td>{item.subject}</td>
           <td>{item.status}</td>
-          <td> <a href="/Remarks" >Click here!</a> </td>
+          <td><a href="/remarks" onClick={() => {
+            localStorage.setItem('req_id',item.request_id);
+          }}>Click me!</a></td>
       </tr>
 
              )

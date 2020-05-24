@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Anishahaha/A.R.M.A/issues"
   },
-  "homepage": "https://github.com/Anishahaha/A.R.M.A#readme"
+  "homepage": "https://github.com/Anishahaha/A.R.M.A#readme",
+  "dependencies": {
+    "react-multi-select-component": "^2.0.7"
+  }
 }
