@@ -10,7 +10,6 @@ import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
-import MessageModals from "./MessageModals";
 import { ProtectedRoute } from "./protected.route";
 
 //LetterTemplates
@@ -45,7 +44,6 @@ function App() {
             />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <Route path="/modal" component={MessageModals} />
             <ProtectedRoute path="/Remarks" component={Remarks} />
             <ProtectedRoute
               path="/Dashboard/TemplateList"
