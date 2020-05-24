@@ -264,11 +264,11 @@ function registerFaculty(
 }
 
 function newFacultyRegistrationRequest(
-  faculty_roll,
   faculty_name,
   faculty_dept,
-  phone,
+  faculty_roll,
   email,
+  phone,
   callback
 ) {
   var client = new Client();
