@@ -108,9 +108,9 @@ const CreateRequest = () => {
 
 
       const Facilitiesoptions = [
-        { label: "SAC Room", value: "SAC Room",name:"SAC Room",check:true },
-        { label: "Chethana", value: "Chethana",name:"Chethana",check:true },
-        { label: "Internet", value: "Internet",name:"Internet",check:true },
+        { label: "SAC Room", value: "SAC Room",facility:"SAC Room",check:true },
+        { label: "Chethana", value: "Chethana",facility:"Chethana",check:true },
+        { label: "Internet", value: "Internet",facility:"Internet",check:true },
 
       ];
 

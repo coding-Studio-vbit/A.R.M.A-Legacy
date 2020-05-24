@@ -355,7 +355,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
-  console.log(req)
+  console.log(req.body.status)
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
       return res.status(400).json({err: error})
