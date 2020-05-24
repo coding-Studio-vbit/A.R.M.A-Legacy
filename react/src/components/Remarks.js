@@ -1,17 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
+import { useHistory } from "react-router-dom";
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from './Navi';
 import axios from 'axios';
 import '../css/Remarks.css';
 const Remarks =(props) => {
 
-  const getdata = () => {
-
-  }
-
-
+  const history = useHistory();
   const [From, setFrom] = useState( 'Coding Studio')
   const [Req_data, setReq_data] = useState({})
   const [Participants, setPeople] = useState([])
@@ -21,6 +18,8 @@ const Remarks =(props) => {
   const [Facility, setFacility] = useState([{facility:'Faci1',check:true},{facility:'Faci2',check:true},{facility:'Faci3',check:true},{facility:'Faci4',check:true},{facility:'Faci5',check:true}])
   const [Text, setText] = useState("Hrlrgdghisku")
   const [PartTable,setTable] =useState(true)
+
+  //getting data from database
   useEffect(()=>{
 
     let user = JSON.parse(localStorage.getItem("user"));
@@ -35,6 +34,8 @@ const Remarks =(props) => {
     }
     }
     console.log(config)
+
+    //fetch data from server
     axios.get("http://localhost:8080/getrequest",config)
       .then(res => {
         var data = res.data[0];
@@ -60,6 +61,8 @@ const chgTable=()=>{
 const chTable=()=>{
   setTable(true);
 }
+
+//add remarks
 const addRemark=(selected_participants,selected_facilities)=>{
     console.log(selected_participants);
     Req_data.selected_participants=selected_participants;
@@ -73,14 +76,16 @@ const addRemark=(selected_participants,selected_facilities)=>{
     }
     }
     console.log(config)
+
+    //send data to server
     axios.put("http://localhost:8080/createrequest",{
       forum_name:From,
       request_id:JSON.parse(localStorage.getItem("req_id")),
       request_data:Req_data,
       remarks:Text,
-      status:'Requested Changes'},config)
+      status:'REQUESTED CHANGES'},config)
       .then(res => {
-        console.log(res);
+        history.push("/dashboard");
       }).catch((err) => {
         console.log(err);
       })
@@ -90,9 +95,27 @@ const addRemark=(selected_participants,selected_facilities)=>{
   const selected_facilities=Facility.filter(data => data.check===true);
   console.log(selected_participants)
   addRemark(selected_participants,selected_facilities);
-
  }
 
+ const Approve=(temp)=>{
+   let user = JSON.parse(localStorage.getItem("user"));
+   let accessToken = user.accessToken;
+   let config = {
+   headers: {
+     'Authorization': 'Bearer ' + accessToken
+   }
+   }
+
+   //send data to server
+   axios.post("http://localhost:8080/approverequest",{
+     request_id:JSON.parse(localStorage.getItem("req_id")),
+     status:temp},config)
+     .then(res => {
+       history.push("/dashboard");
+     }).catch((err) => {
+       console.log(err);
+     })
+ }
 
   var count=1;
   var f_count=1;
@@ -159,7 +182,7 @@ return(
     <Row><h5><span>Description : </span>{Description}</h5></Row>
     <label>Remarks : </label>
     <Row><textarea value={Text.text} onChange={handleInput} cols={80} rows={6} placeholder="Enter your Remarks here..."/></Row>
-    <Button className='Rebtn' variant="primary" onClick={Selected} style={{"marginBottom":"50px"}}>Send Remarks</Button>
+    <Button className='Rebtn' variant="primary" onClick={Selected} style={{"marginBottom":"50px"}}>Request changes</Button>
 
    </Col>
 
@@ -215,8 +238,12 @@ return(
     </Row></div>
     <div className="Buttons">
     <Row>
-      <Col><Button variant="success" siz="lg" onClick={Selected}>Approve</Button></Col>
-      <Col><Button variant="danger">Reject</Button></Col>
+      <Col><Button variant="success" siz="lg" onClick={() => {
+        Approve("APPROVED")
+      }}>Approve</Button></Col>
+      <Col><Button variant="danger" onClick={() => {
+        Approve("REJECTED")
+      }}>Reject</Button></Col>
     </Row>
     </div>
     </Col>
