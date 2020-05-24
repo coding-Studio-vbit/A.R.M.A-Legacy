@@ -185,8 +185,7 @@ app.post("/logout", (req, res) => {
   //For logout the request should have both the username and the access token.
 
   try {
-
-    	users.fetchAccessToken(req, (error, token) => {
+    users.fetchAccessToken(req, (error, token) => {
      	  if (error) return res.status(400).json({ err:error });
 			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN, (error, username)=>
 			{
@@ -231,7 +230,7 @@ app.get("/facultydashboard", (req, res) => {
           client.connect();
           client
             .query(
-              "select forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
+              "select request_id,forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
               [faculty_roll]
             )
             .then((data) => {
@@ -249,6 +248,8 @@ app.get("/facultydashboard", (req, res) => {
         }
       }
     );
+
+
   });
 });
 
@@ -330,11 +331,11 @@ app.delete("/createrequest", (req, res) => {
       }
 	  if(!req.body.request_id) return res.status(400).json({err:'Invalid Request! :('});
      try{
-	 	  
+
     	  var data = fs.readFileSync("validkeys.json");
     	  data = data.toString();
     	  data = JSON.parse(data);
-		 
+
 		  if(data.hasOwnProperty(username) && data[username].userType == 'FORUM') //only forums can delete their requests.
 		  {
           	requestQueries.deleteRequest(req.body.request_id, username, ((error,status)=>{console.log(error,status); if(error){throw error}}))
@@ -354,6 +355,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
+  console.log(req)
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
       return res.status(400).json({err: error})
@@ -366,7 +368,7 @@ app.put("/createrequest", (req, res) => {
 	  if(!req.body.request_data || !req.body.status || !req.body.remarks || !req.body.request_id)
 	  		return res.status(400).json({err: 'Invalid request. :('});
      try{
-          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw {err:error}}})
+          requestQueries.changeRequest(req.body.forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw {err:error}}})
           return res.send({message: "Updated succesfully!"})
       }
       catch(error){
@@ -394,7 +396,7 @@ app.post("/approverequest", (req,res) => {
 
 		    if(data.hasOwnProperty(username) && data[username].userType == 'FACULTY') //only faculty can approve or reject.
 		    {
-		    	
+
   		      var client = new Client();
   		      client.connect();
 
@@ -404,11 +406,11 @@ app.post("/approverequest", (req,res) => {
   		          if(error){
   		            console.log(error);
   		            client.end();
-  		            return res.status(400).json({ err: error });      
+  		            return res.status(400).json({ err: error });
   		              // throw err;
   		          }
   		          if(data.rowCount === 0){
-  		            return res.status(400).json({ err: "No such rows found" });      
+  		            return res.status(400).json({ err: "No such rows found" });
   		          }
   		          client.end();
   		          return res.send({message: "approved", msg: data})
@@ -437,7 +439,7 @@ app.get("/forumdashboard", async (req, res) => {
           client.connect();
           client
             .query(
-              "select remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
+              "select request_id,remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
               [forum_name]
             )
             .then((data) => {
@@ -458,32 +460,48 @@ app.get("/forumdashboard", async (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 app.get(`/getrequest/`, async (req, res) => {
   // console.log(req.params.id)
+=======
+app.get("/getrequest", async (req, res) => {
+  console.log(req.query.request_id)
+>>>>>>> yasaswiraj-master
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
       (err, forum_name) => {
+<<<<<<< HEAD
         
 		if (err) return res.status(400).json({ err: "Invalid Token!" });
 		
 		// if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+=======
+
+		if (err) return res.json({ err: "Invalid Token!" });
+
+		if(!req.query.request_id) return res.json({err:'Invalid request! :('});
+>>>>>>> yasaswiraj-master
 
         try {
-          console.log(req.body);
+          console.log(req);
           var client = new Client();
           client.connect();
           client
             .query(
               "select * from requests where request_id=$1",
+<<<<<<< HEAD
               [req.params.id]
+=======
+              [req.query.request_id]
+>>>>>>> yasaswiraj-master
             )
             .then((data) => {
               if(data.rowCount === 0){
                 client.end();
-                return res.status(400).json({ err: "No such rows found" });      
+                return res.json({ err: "No such rows found" });
               }
               res.json(data.rows);
               console.log(data);
@@ -517,7 +535,7 @@ app.get(`/getrequest/`, async (req, res) => {
 
 //Remarks
 app.post("/Remarks", (req, res) => {
-  const remark = req.body;
+  const remark = req;
   console.log(remark);
 });
 

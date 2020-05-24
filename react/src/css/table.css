@@ -1,18 +1,24 @@
 @media only screen and (max-width: 800px) {
-  .container {
-    text-align: center;
-    margin: auto;
-  }
-  .containerz {
-    padding: 10px;
-  }
-  .table-responsive {
-    text-align: center;
-    border: 0;
-  }
+	.container{
+		text-align: center;
+		margin: auto;
+	}
+	.containerz{
+		padding: 10px;
+	}
+	.table-responsive{
+		text-align: center;
+		border: 0;
+	}
+	td{
+		font-size: 10px;
+	}
+	th{
+		font-size: 12px;
+	}
 }
-tr {
-  color: white;
+tr{
+	color:white;
   padding-bottom: 0px;
 }
 th {
