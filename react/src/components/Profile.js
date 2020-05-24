@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import axios from 'axios';
 import profilePic from '../images/profilePic.png';
 import ProfileModal from './ProfileModal';
