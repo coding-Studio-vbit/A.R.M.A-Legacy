@@ -9,9 +9,12 @@ input[type='text']{
   .modal-header {
     width: 100%;
     border-bottom: 1px solid gray;
-    font-size: 18px;
+    font-size: 12px;
     text-align: center;
     padding: 5px;
-    height: fit-content;
+  }
+  .modal-content {
+    background-color:#222222;
+    color:black;
   }
   

@@ -11,8 +11,21 @@ const PassModal =(props)=>{
     ]=useState("");
 
     return (
-        <div className="container1">
+        <div>
     <Modal 
+        style={
+          {
+            overlay:{
+              padding:"60px",
+            },
+            content:{
+              backgroundColor:"#222222",
+              height:"400px",
+              width:"600px",
+              position:"absolute",
+            }
+          }
+        }
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
