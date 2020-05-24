@@ -10,8 +10,8 @@ import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
 import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
-
-import {ProtectedRoute} from "./protected.route"
+import MessageModals from "./MessageModals";
+import { ProtectedRoute } from "./protected.route";
 
 //LetterTemplates
 import Camp from "./LetterTemplates/Camp";
@@ -39,19 +39,26 @@ function App() {
               component={TemplateDetails}
             />
             <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
-            <Route path="/Dashboard/EditCreateRequest" component={EditCreateRequest} />
+            <Route
+              path="/Dashboard/EditCreateRequest"
+              component={EditCreateRequest}
+            />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
+            <Route path="/modal" component={MessageModals} />
             <ProtectedRoute path="/Remarks" component={Remarks} />
-            <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
+            <ProtectedRoute
+              path="/Dashboard/TemplateList"
+              component={TemplateList}
+            />
 
             <Route path="/campaining" component={Camp} />
             <Route path="/conduct" component={Econ} />
             <Route path="/venue" component={Evenue} />
-            <Route path="/conductmeet" component={Emeet}/>
+            <Route path="/conductmeet" component={Emeet} />
             <Route path="/TeamAttendance" component={Tatten} />
             <Route path="/ParticipantsAttendance" component={Patten} />
-            
+
             <ProtectedRoute path="/campaining" component={Camp} />
             <ProtectedRoute path="/conduct" component={Econ} />
             <ProtectedRoute path="/venue" component={Evenue} />

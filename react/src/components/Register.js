@@ -4,6 +4,7 @@ import { Alert } from "react-bootstrap";
 import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
+import MessageModals from "./MessageModals";
 
 function Register() {
   const Forumlist = [
@@ -45,6 +46,9 @@ function Register() {
     isRegistered(res);
   };
   const isEnabled = contact.email === contact.cemail;
+  const [modal, setModal] = useState(false);
+  const [heading, setHeading] = useState("");
+  let arr1 = [];
   const handleRegister = (e) => {
     e.preventDefault();
     console.log({ values }, contact.email, contact.pnum);
@@ -59,9 +63,14 @@ function Register() {
       })
       .then((res) => {
         console.log(res);
+        setModal(true);
         if (res.data.hasOwnProperty("err")) {
-          setError(res.data.err);
+          setHeading(res.data.err);
+          arr1 = Object.keys(res.data.errors);
+          // setError();
         } else if (res.data.hasOwnProperty("message")) {
+          setHeading("Success");
+          arr1.push(res.data.message);
           setError(res.data.message);
           setMessage(true);
           setContact((prevState) => ({
@@ -169,6 +178,7 @@ function Register() {
           <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
           <Links value={2} />
         </form>
+        <MessageModals show={modal} heading={heading} arr={arr1} />
       </div>
     </div>
   );
