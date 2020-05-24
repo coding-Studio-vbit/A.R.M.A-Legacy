@@ -459,31 +459,18 @@ app.get("/forumdashboard", async (req, res) => {
     );
   });
 });
-
-<<<<<<< HEAD
-app.get(`/getrequest/`, async (req, res) => {
-  // console.log(req.params.id)
-=======
 app.get("/getrequest", async (req, res) => {
   console.log(req.query.request_id)
->>>>>>> yasaswiraj-master
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
       (err, forum_name) => {
-<<<<<<< HEAD
-        
-		if (err) return res.status(400).json({ err: "Invalid Token!" });
-		
-		// if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
-=======
 
 		if (err) return res.json({ err: "Invalid Token!" });
 
 		if(!req.query.request_id) return res.json({err:'Invalid request! :('});
->>>>>>> yasaswiraj-master
 
         try {
           console.log(req);
@@ -492,11 +479,7 @@ app.get("/getrequest", async (req, res) => {
           client
             .query(
               "select * from requests where request_id=$1",
-<<<<<<< HEAD
-              [req.params.id]
-=======
               [req.query.request_id]
->>>>>>> yasaswiraj-master
             )
             .then((data) => {
               if(data.rowCount === 0){
