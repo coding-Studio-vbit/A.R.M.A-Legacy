@@ -6,17 +6,31 @@ const ProfileModal =(props)=>{
     const [
         Email,setEmail
     ]=useState("");
+    
     return (
         <div> 
     <Modal
+    style={
+      {
+        overlay:{
+          padding:"60px",
+        },
+        content:{
+          backgroundColor:"#222222",
+          height:"400px",
+          width:"600px",
+          position:"absolute",
+        }
+      }
+    }
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
-                    <h3 style={{textDecorationColor:"black",color:"grey"}}>Edit Email</h3>
+                    <h3 style={{color:"grey"}}>Edit Email</h3>
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
-                <div className="modal-body">
-                <input type="text" id="myInput"  style={{WebkitTextFillColor:"grey"}} onChange ={(e) =>setEmail(e.target.value)}placeholder="Enter new email"></input><br/>
+                <div className="modal-content">
+                <input type="text" id="myInput"  style={{WebkitTextFillColor:"grey",borderBlockColor:"black"}} onChange ={(e) =>setEmail(e.target.value)}placeholder="Enter new email"></input><br/>
                 <input type="text" id="myInput" style={{WebkitTextFillColor:"grey" }} placeholder="Confirm new email"></input><br/>
                 </div>
                 <div className="modal-footer">
