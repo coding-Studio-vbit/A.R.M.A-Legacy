@@ -511,7 +511,6 @@ app.get("/forumdashboard", async (req, res) => {
     );
   });
 });
-
 app.get("/getrequest", async (req, res) => {
   console.log(req.query.request_id);
   users.fetchAccessToken(req, (err, token) => {
@@ -535,11 +534,9 @@ app.get("/getrequest", async (req, res) => {
               req.body.request_id,
             ])
 
-            .query(
-              "select * from requests where request_id=$1",
-
-              [req.query.request_id]
-            )
+            .query("select * from requests where request_id=$1", [
+              req.query.request_id,
+            ])
 
             .then((data) => {
               if (data.rowCount === 0) {
