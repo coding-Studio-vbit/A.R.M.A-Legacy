@@ -9,12 +9,12 @@ class Profile extends React.Component{
   }
 
   componentWillMount() {
-    axios.get(`http://localhost:8080/Dashboard`)
-      .then(res => {
-        const persons = res.data;
-        this.setState({ persons });
-        console.log(persons);
-      })
+    // axios.get(`http://localhost:8080/Dashboard`)
+    //   .then(res => {
+    //     const persons = res.data;
+    //     this.setState({ persons });
+    //     console.log(persons);
+    //   })
   }
 
   render() {
