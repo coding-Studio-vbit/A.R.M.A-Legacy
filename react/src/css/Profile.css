@@ -1,7 +1,7 @@
-  @media only screen and (max-width: 800px) {
+  /* @media only screen and (max-width: 600px) {
     .container{
       text-align: center;
-      margin: 30px;
+      margin: 0px;
     }
     .containerz{
       padding: 10px;
@@ -11,7 +11,7 @@
       text-align: center;
       border: 0;
     }
-  }
+  } */
   tr{
     color:white;
     padding-bottom: 0px;
