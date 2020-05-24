@@ -458,7 +458,8 @@ app.get("/forumdashboard", async (req, res) => {
   });
 });
 
-app.get("/getrequest", async (req, res) => {
+app.get(`/getrequest/`, async (req, res) => {
+  // console.log(req.params.id)
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
@@ -468,7 +469,7 @@ app.get("/getrequest", async (req, res) => {
         
 		if (err) return res.status(400).json({ err: "Invalid Token!" });
 		
-		if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+		// if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
 
         try {
           console.log(req.body);
@@ -477,7 +478,7 @@ app.get("/getrequest", async (req, res) => {
           client
             .query(
               "select * from requests where request_id=$1",
-              [req.body.request_id]
+              [req.params.id]
             )
             .then((data) => {
               if(data.rowCount === 0){
