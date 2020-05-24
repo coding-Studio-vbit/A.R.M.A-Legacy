@@ -57,8 +57,6 @@ componentWillMount() {
     })
 
     return (
-      <div>
-      <Nav/>
       <div class="containerz" style={{textAlign: "center" }}>
         <div className="profile-pic">
             <img src={profilePic} alt="Logo" style={{ width: "150px", height: "150px" }}/>
@@ -108,8 +106,6 @@ componentWillMount() {
           Editingon={this.state.Editingon} />
           <PassModal
           Editingon={this.state.Passwordon} />
-
-          </div>
 
           </div>
           </div>
