@@ -7,22 +7,50 @@ import axios from 'axios';
 import '../css/Remarks.css';
 const ViewStatus =(props) => {
     const status='Accepted'
-  const [From, setFrom] = useState( 'Coding Studio')
-  const [Participants, setPeople] = useState([])
-  const [Facility, setFacility] = useState([{facility:'Faci1',check:false},{facility:'Faci2',check:true},{facility:'Faci3',check:true},{facility:'Faci4',check:true},{facility:'Faci5',check:true}])
-  const [Text, setText] = useState({text:''})
-  const [PartTable,setTable] =useState(true)
-  useEffect(()=>{
-    let Participants=[{ name:'Name', roll:'123444', check:false }, { name:'Name1', roll:'123321', check:true }, { name:'Name2', roll:'123244', check:true }, { name:'Name3', roll:'123443', check:true }, { name:'Name4', roll:'129443', check:true }, { name:'Name5', roll:'122444', check:true }, {  name:'Name6', roll:'123476', check:true }, { name:'Name7', roll:'134244', check:true }, { name:'Name8', roll:'126244', check:true } ];
-    setPeople(
-      Participants.map(d =>{
-        return{
-          name:d.name,
-          roll:d.roll,
-          check:d.check
-        }
-      }));
-  },[]);
+    const [From, setFrom] = useState( 'Coding Studio')
+    const [Req_data, setReq_data] = useState({})
+    const [Participants, setPeople] = useState([{"name": "No Name Yet", "roll": "No Roll Number Yet", "check": true}])
+    const [Subject, setSubject] = useState("")
+    const [Status, setStatus] = useState("")
+    const [Remarks, setRemarks] = useState("")
+    const [Description, setDescription] = useState("")
+    const [Facility, setFacility] = useState([{"facility": "No Facility Yet","check": true}])
+    const [Text, setText] = useState("Hrlrgdghisku")
+    const [PartTable,setTable] =useState(true)
+    useEffect(()=>{
+
+      let user = JSON.parse(localStorage.getItem("user"));
+      let userName = user.userName;
+      let accessToken = user.accessToken;
+      // console.log(props.location.Rprops.id)
+      let config = {
+      headers: {
+        'Authorization': 'Bearer ' + accessToken
+      },
+      params: {
+      "request_id" : JSON.parse(localStorage.getItem("req_id"))
+      }
+      }
+      console.log(config)
+      axios.get("http://localhost:8080/getrequest",config)
+        .then(res => {
+          var data = res.data[0];
+          setFrom(data.forum_name);
+          setSubject(data.request_data.subject);
+          setReq_data(data.request_data);
+          setDescription(data.request_data.description);
+          if(!data.request_data.selected_participants && !data.request_data.facilities)
+          {
+            setPeople(data.request_data.selected_participants);
+            setFacility(data.request_data.facilities);
+          }
+          setStatus(data.status);
+          setRemarks(data.remarks);
+          console.log(data);
+        }).catch((err) => {
+          console.log(err);
+        })
+    },[]);
 const handleInput=(e)=>{
   console.log(e.target.value)
  setText({
@@ -35,95 +63,24 @@ const chgTable=()=>{
 const chTable=()=>{
   setTable(true);
 }
-const addRemark=(sel,rej,f_sel,f_rej)=>{
-  console.log(sel);
-  
-    const  payload= { remark:Text.text,
-      selected: sel,
-      rejected:rej,
-      f_selected: f_sel,
-      f_rejected: f_rej,
-    }
-  setText({
-  text:''
- })
-  axios({
-    url:'http://localhost:8080/Remarks',
-    method:'POST',
-    data:payload
-  })
-    .then(() => {
-      console.log('Data has been sent')
-    })
-    .catch(() =>
-    {
-      console.log("Error sending data")
-    });
- }
- const Selected=()=>{
-  const sel=Participants.filter(data => data.check===true);
-  const rej=Participants.filter(data => data.check===false);
-  const f_sel=Facility.filter(data => data.check===true);
-  const f_rej=Facility.filter(data => data.check===false);
-  addRemark(sel,rej,f_sel,f_rej);
-
- }
-
 
   var count=1;
   var f_count=1;
   const list= Participants.map(item=> {
-  
+
   return(
   <tr>
     <td>{count++}</td>
     <td>{item.name}</td>
     <td>{item.roll}</td>
-    <td><input  
-    // onChange={event =>{
-      
-    //     let checked=event.target.checked;
-        
-    //     setPeople(
-    //       Participants.map(data=>{
-    //         if(item.roll===data.roll){
-    //           data.check=checked;
-    //         }
-    //         return data;
-    //       })
-    //     )
-      
-        
-    //   }}
-      type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
-    {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
     </tr>
     )});
     const list1= Facility.map(item=> {
-  
+
       return(
       <tr>
         <td>{f_count++}</td>
         <td>{item.facility}</td>
-        
-        <td><input  
-        // onChange={event =>{
-          
-        //     let checked=event.target.checked;
-            
-        //     setFacility(
-        //       Facility.map(data=>{
-        //         if(item.facility===data.facility){
-        //           data.check=checked;
-        //         }
-        //         return data;
-        //       })
-        //     )
-          
-            
-        //   }}
-          type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
-        {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
         </tr>
         )});
     return(
@@ -134,20 +91,20 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
         <center><h1>Letter Info</h1></center>
   <Row>
     <Col>
-    <Row><h3><span>From :</span> CodingStudio();</h3></Row>
-    <Row><h3><span>Subject : </span>Permission for codecraft</h3></Row>
-    <Row><h5><span>Description : </span>"Lorem ipsum dolor sit amet, cosed do eiusmod tempor incididunt ut labore eti ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</h5></Row>
-    <label>Remarks : </label>
-    <Row><textarea value={Text.text} style={{backgroundColor: '#222222'}} cols={80} rows={0} placeholder="Attendance to participants will not be granted"/></Row>
+    <Row><h3><span>From :</span>{From}</h3></Row>
+    <Row><h3><span>Subject : </span>{Subject}</h3></Row>
+    <Row><h5><span>Description : </span>{Description}</h5></Row>
+    <Row><h3><span>Remarks : </span>{Remarks}</h3></Row>
 
 
    </Col>
-    
-    <Col>
-    <Row><Col><Button variant='dark' className='prevbtn' onClick={chTable}><i class="arrow left"></i></Button></Col>
-    <Col><center>{PartTable?<h4>Participants</h4>:<h4>Facilities</h4>}</center></Col><Col>
-    <Button variant='dark' className='nxtbtn' onClick={chgTable}><i class="arrow right"></i></Button></Col></Row><div className="Table">
-    
+
+   <Col>
+   <Row><Col><i class="fas fa-chevron-circle-left" style={{"cursor":"pointer","color":"grey"}} onClick={chTable}></i></Col>
+   <Col style={{"padding":"0px"}}><center>{PartTable?<h4>Participants</h4>:<h4>Facilities</h4>}</center></Col>
+   <Col>
+   <i class="fas fa-chevron-circle-right" style={{"cursor":"pointer","color":"grey"}} onClick={chgTable}></i></Col></Row><div className="Table">
+
     <Row >{ PartTable ?(
     <Table striped bordered hover variant="dark">
   <thead>
@@ -155,23 +112,6 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
       <th>#</th>
       <th>Name</th>
       <th>Roll No</th>
-      <th>Approved
-          {/* <input onChange={event =>{
-      
-      let checked=event.target.checked;
-      setPeople(
-        Participants.map(data=>{
-         
-            data.check=checked;
-          
-          return data;
-        })
-      )
-      
-    }} type="checkbox"  id='Approve' name='App'  ></input> */}
-    </th>
-      {/* <th>Reject<input type="checkbox" id='Reject' name='rej'  ></input></th> */}
-      
     </tr>
   </thead>  <tbody>
     {list}</tbody></Table>) :(<Table striped bordered hover variant="dark">
@@ -179,56 +119,16 @@ const addRemark=(sel,rej,f_sel,f_rej)=>{
     <tr>
       <th>#</th>
       <th>Facilities</th>
-      <th>Approved
-          {/* <input 
-    //   onChange={event =>{
-      
-    //   let checked=event.target.checked;
-    //   setFacility(
-    //     Facility.map(data=>{
-         
-    //         data.check=checked;
-          
-    //       return data;
-    //     })
-    //   )
-      
-    // }}
-     type="checkbox" id='Approve' name='App'  ></input> */}
-     </th>
-      {/* <th>Reject<input type="checkbox" id='Reject' name='rej'  ></input></th> */}
-      
     </tr>
   </thead>  <tbody>
     {list1}</tbody></Table>) }
     </Row></div>
-    {/* <div className="Buttoncell">
-    <Row>
-      <Col><Button variant="primary" size="sm" >Approve All</Button></Col>
-      <Col><Button variant="primary" size="sm">Reject All</Button></Col>
-    </Row></div> */}
-    <div className="Buttons">
-    <Row>
-      <Col><Button variant="primary" siz="lg" onClick={Selected}>{status}</Button></Col>
-    </Row>
-    </div>
     </Col>
-    
-    
-    
+
+
+
   </Row>
 </Container></div>
-     {/*  <div className="remarkbox">
-        <Card className="bg-dark text-white">
-  <center><Card.Header>Remarks</Card.Header></center>
-  <Card.Body>
-    <Card.Title className="color">{this.state.Forum}</Card.Title>
-    <div className="color">{list}</div>
-    <input  placeholder="Give your Remarks here" value={this.state.text} className="buttonremark" onChange={this.handleInput.bind(this)}></input>
-    <center><Button variant="primary" className="buttonremark" onClick={this.addRemark}>Add Remark</Button></center>
-  </Card.Body>
-</Card>
-</div> */}
 </div>
     )}
 

@@ -70,12 +70,9 @@ class Table extends React.Component {
           <td style={{color: "#b007c4"}}>{i++}</td>
           <td>{item.subject}</td>
           <td>PENDING</td>
-          <td> <Link to= {{
-            pathname:"/remarks",
-            Rprops:{
-              id:item.request_id
-            }
-          }}>Click me!</Link> </td>
+          <td><a href="/ViewStatus" onClick={() => {
+            localStorage.setItem('req_id',item.request_id);
+          }}>Click me!</a></td>
           <td style={{"cursor":"pointer","color":"grey"}}><i class="far fa-edit"></i></td>
           <td style={{"cursor":"pointer","color":"grey"}}><i class="far fa-trash-alt" onClick={() => this.delete(item.request_id)} ></i></td>
        </tr>
