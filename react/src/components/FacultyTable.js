@@ -47,13 +47,9 @@ class FacultyTable extends React.Component{
           <td>{item.forum_name}</td>
           <td>{item.subject}</td>
           <td>{item.status}</td>
-          {/* <Link
-  to={{
-    pathname: "/Remarks",
-   
-    props: { data: item }
-  }}
-></Link> */} <td>Click here!</td>
+          <td><a href="/remarks" onClick={() => {
+            localStorage.setItem('req_id',item.request_id);
+          }}>Click me!</a></td>
       </tr>
 
              )
