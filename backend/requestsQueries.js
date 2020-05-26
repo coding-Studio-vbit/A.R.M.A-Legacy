@@ -66,12 +66,16 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 // let details = {
 //             designation: "HOD",
 //             department: "CSE",
-//             subject: "Prmission for attendance during quarantine ",
+//             subject: "Permission for attendance for codeFest ",
 //             date: "today",
-//             respects: "MX",
+//             respects: "Sir",
+//             participants:[{ name:'Yasaswiraj', roll:'18P61A05C2', check:true }, { name:'Aaris', roll:'18P61A05D7', check:true }, { name:'SaiKiran', roll:'18P61A05J1', check:true }, { name:'Sarvanan', roll:'17P61A05G4', check:true }, { name:'Axai', roll:'17P61A0543', check:true },
+//                         { name:'Yasaswiraj', roll:'18P61A05C2', check:true }, { name:'Aaris', roll:'18P61A05D7', check:true }, { name:'SaiKiran', roll:'18P61A05J1', check:true }, { name:'Sarvanan', roll:'17P61A05G4', check:true }, { name:'Axai', roll:'17P61A0543', check:true }],
+//             facilities:[{facility:'new TnP',check:true},{facility:'Chetana',check:true}],
+//             description:"A event aimming to inculcate coding culture among students of VBIT."
 // }
 // let data = JSON.stringify(details);
-// addRequest('CODINGSTUDIO','1346789',data,['16P61A05M0','18P61A05J1','18P61A05C2'],(err,state) => {
+// addRequest('CODINGSTUDIO','943215',data,['18P61A05C2'],(err,state) => {
 //   console.log(err||state);
 // });
 function changeRequest(forum_name,request_data,status,remarks,request_id, callback) {
@@ -80,8 +84,8 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
   client.connect();
   forum_name = forum_name.toUpperCase();
   client.query(
-    "update requests set forum_name = $1,request_data = $2,status = $3,remarks = $4 where request_id=$5;",
-    [forum_name,request_data,status,remarks,request_id],
+    "update requests set forum_name=$1,request_data=$2,remarks=$3,status=$4 where request_id=$5 AND forum_name=$6;",
+    [forum_name,request_data,remarks,status,request_id,forum_name],
     (err, res) => {
       if (err) {
         client.end();
@@ -93,13 +97,13 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
     }
   );
 }
-function deleteRequest(request_id, callback) {
+function deleteRequest(request_id, forum_name, callback) {
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
   client.query(
-    "DELETE FROM requests WHERE request_id = $1;",
-    [request_id],
+    "DELETE FROM requests WHERE request_id = $1 AND forum_name=$2;",
+    [request_id,forum_name],
     (err, res) => {
       if (err) {
         client.end();

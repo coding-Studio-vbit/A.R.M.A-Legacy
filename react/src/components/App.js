@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/App.css";
+import "../css/Form.css";
 //import UserForm from "./userForm";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
@@ -20,7 +20,10 @@ import Econ from "./LetterTemplates/Eventconduct";
 import Evenue from "./LetterTemplates/Eventvenue";
 import Tatten from "./LetterTemplates/Attendanceteam";
 import Patten from "./LetterTemplates/AttendanceParticipants";
+import Emeet from "./LetterTemplates/conductmeet";
 import Profile from "./Profile";
+import CreateRequest from "./CreateRequest";
+import EditCreateRequest from "./EditCreateRequest";
 
 function App() {
   return (
@@ -36,6 +39,8 @@ function App() {
               path="/Dashboard/TemplateDetails"
               component={TemplateDetails}
             />
+            <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
+            <Route path="/Dashboard/EditCreateRequest" component={EditCreateRequest} />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
             <Route path="/Remarks" component={Remarks} />
@@ -44,11 +49,19 @@ function App() {
             
 
 
+            <Route path="/campaining" component={Camp} />
+            <Route path="/conduct" component={Econ} />
+            <Route path="/venue" component={Evenue} />
+            <Route path="/conductmeet" component={Emeet}/>
+            <Route path="/TeamAttendance" component={Tatten} />
+            <Route path="/ParticipantsAttendance" component={Patten} />
+            
             <ProtectedRoute path="/campaining" component={Camp} />
             <ProtectedRoute path="/conduct" component={Econ} />
             <ProtectedRoute path="/venue" component={Evenue} />
             <ProtectedRoute path="/TeamAttendance" component={Tatten} />
             <ProtectedRoute path="/ParticipantsAttendance" component={Patten} />
+
             <Login />
           </Switch>
         </div>

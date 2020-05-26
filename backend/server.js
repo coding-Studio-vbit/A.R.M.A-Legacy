@@ -21,8 +21,9 @@ var campaigning = require("./campaigning");
 var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var usehall = require("./usehall");
+var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
-var requestQueries = require('./requestsQueries')
+var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
 
 var allowCrossDomain = function (req, res, next) {
@@ -41,6 +42,49 @@ var cors = require("cors");
 app.use(cors());
 //LOGIN
 
+app.get("/getForumDetails",(req,res)=>{
+	try
+	{
+		users.fetchAccessToken(req,(error,token)=>{
+			if(error){
+				console.log(error);
+				return res.status(400).json({err:error});
+			}
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
+				if(error){
+					console.log(error);
+					return res.status(400).json({err:error});
+				}
+				var client = new Client()
+				client.connect();
+				client.query('SELECT actual_name,email,phone_no FROM forums WHERE forum_name=$1',[username],(error,data)=>{
+					if(error){
+						console.log(error);
+						return res.status(500).json({err:error});
+					}
+          if(data.rows.length===0){
+    				return res.json({
+  						actual_name: " ",
+  						email: " ",
+  						phone_no: " "
+  					});
+    			}
+					res.json({
+						actual_name: data.rows[0].actual_name,
+						email: data.rows[0].email,
+						phone_no: data.rows[0].phone_no
+					}); // successful data retrieval.
+
+				})//end query
+			})//end auth
+		})//end fetch
+	}
+	catch(error){
+		console.log(error);
+		res.status(500).json({err:error});
+	}
+});
+
 app.post("/login", (req, res) => {
   //check password.
   try {
@@ -51,14 +95,15 @@ app.post("/login", (req, res) => {
         (error, status) => {
           if (error) {
             console.log(error);
-            return res.status(401).send({ err : error });
+            return res.status(401).send({ err: error });
           } else if (status == true) {
             const accessToken = users.generateAccessToken(
               req.body.user.username.toUpperCase(),
               process.env.SECRET_ACCESS_TOKEN
             );
 
-            res.send({message: "USERNAME: " + req.body.user.username.toUpperCase(),
+            res.send({
+              message: "USERNAME: " + req.body.user.username.toUpperCase(),
               accessToken: accessToken,
             });
             console.log("token: " + accessToken);
@@ -82,11 +127,12 @@ app.post("/login", (req, res) => {
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send({err:"Internal Server Error"});
+        res.status(500).send({ err: "Internal Server Error" });
       });
   } catch (error) {
-    res.status(400).json({err: "BAD REQUEST" });
-}});
+    res.status(400).json({ err: "BAD REQUEST" });
+  }
+});
 
 //Faculty Login
 
@@ -108,7 +154,6 @@ app.post("/loginFaculty", (req, res) => {
               process.env.SECRET_ACCESS_TOKEN
             );
             res.send({
-
               message: "USERNAME: " + req.body.user.username.toUpperCase(),
 
               accessToken: accessToken,
@@ -132,7 +177,7 @@ app.post("/loginFaculty", (req, res) => {
       )
       .catch((error) => {
         console.log(error);
-        res.status(500).send({err: "Internal Server Error"});
+        res.status(500).send({ err: "Internal Server Error" });
       });
   } catch (err) {
     res.status(400).json({ err: "BAD REQUEST" });
@@ -192,7 +237,7 @@ app.get("/facultydashboard", (req, res) => {
           client.connect();
           client
             .query(
-              "select forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
+              "select request_id,forum_name,remarks,status, request_data->'subject' as subject from requests where request_id in (select request_id from recipients where faculty_roll=$1)",
               [faculty_roll]
             )
             .then((data) => {
@@ -211,54 +256,75 @@ app.get("/facultydashboard", (req, res) => {
       }
     );
 
-    
+
   });
 });
 
 app.post("/createrequest", (req, res) => {
-    users.fetchAccessToken(req, (error, token)=>{
-      if (error){
-        return res.status(400).json({err: error})
-      }
-      users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN, (error,username) => {
-        if (error){
-          return res.status(400).json({err: error})
+  users.fetchAccessToken(req, (error, token) => {
+    if (error) {
+      return res.status(400).json({ err: error });
+    }
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (error, username) => {
+        if (error) {
+          return res.status(400).json({ err: error });
         }
         var unique_id = "";
         for (let a = 0; a < 10; a++) {
-          unique_id += String(Math.round(Math.random() * 10)%10);
+          unique_id += String(Math.round(Math.random() * 10) % 10);
         }
 
         console.log("Unique ID: ", unique_id); //DEBUG
 
-        var forum_name = username.toUpperCase()
-        var recipients = []
+        var forum_name = username.toUpperCase();
+        var recipients = [];
 
-       try{
-            for(let i=0;i<req.body.recipients.length;i++)
-            {
-              var client = new Client();
-              client.connect();
-              client.query('select faculty_roll from faculty where faculty_name=$1',[req.body.recipients[i]],
-              (err,data)=>{
-                  if(err){
-                    console.log(err);
-                    //client.end();
-                    throw err;
-                  }
-                    recipients.push(data.rows[0].faculty_roll);
-                })
+        try {
+          if (!req.body.recipients || !req.body.recipients.length)
+            throw "Invalid recipients!";
+
+          for (let i = 0; i < req.body.recipients.length; i++) {
+            var client = new Client();
+            client.connect();
+            client.query(
+              "select faculty_roll from faculty where faculty_name=$1",
+              [req.body.recipients[i]],
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                  //client.end();
+                  throw err;
+                }
+                if (data.rows.length != 0)
+                  recipients.push(data.rows[0].faculty_roll);
+              }
+            );
+          }
+          requestQueries.addRequest(
+            forum_name,
+            unique_id,
+            req.body.request_data,
+            recipients,
+            (error, status) => {
+              if (error) {
+                console.log(error);
+                return res
+                  .status(500)
+                  .json({ err: "Internal Server Error(database)" });
+              }
             }
-
-            requestQueries.addRequest(forum_name, unique_id, req.body.request_data, recipients, ((err,status)=>{console.log(err,status)}))
-            return res.send({message: "request sent succesfully!"})
+          );
+          return res.send({ message: "request sent succesfully!" });
+        } catch (error) {
+          console.log(error);
+          return res.status(400).json({ err: error });
         }
-        catch(error){
-           console.log(error)
-           return res.status(400).json({err: error})
-        }
-      })
-    })
+      }
+    );
+  });
 });
 
 app.delete("/createrequest", (req, res) => {
@@ -270,9 +336,22 @@ app.delete("/createrequest", (req, res) => {
       if (error){
         return res.status(400).json({err: error})
       }
+	  if(!req.body.request_id) return res.status(400).json({err:'Invalid Request! :('});
      try{
-          requestQueries.deleteRequest(req.body.request_id, ((error,status)=>{console.log(error,status); if(error){throw error}}))
-          return res.send({message: "Deleted!!"})
+
+    	  var data = fs.readFileSync("validkeys.json");
+    	  data = data.toString();
+    	  data = JSON.parse(data);
+
+		  if(data.hasOwnProperty(username) && data[username].userType == 'FORUM') //only forums can delete their requests.
+		  {
+          	requestQueries.deleteRequest(req.body.request_id, username, ((error,status)=>{console.log(error,status); if(error){throw error}}))
+         	return res.send({message: "Deleted!!"})
+		  }
+		  else
+		  {
+		  	return res.status(400).json({err:'Idi memu nishedinchali , meeru request delete cheyaleru'});
+		  }
       }
       catch(error){
          console.log(error)
@@ -283,6 +362,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
+  console.log(req.body.status)
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
       return res.status(400).json({err: error})
@@ -292,8 +372,10 @@ app.put("/createrequest", (req, res) => {
         return res.status(400).json({err: error})
       }
       var forum_name = username.toUpperCase()
+	  if(!req.body.request_data || !req.body.status || !req.body.remarks || !req.body.request_id)
+	  		return res.status(400).json({err: 'Invalid request. :('});
      try{
-          requestQueries.changeRequest(forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw error}})
+          requestQueries.changeRequest(req.body.forum_name, req.body.request_data, req.body.status, req.body.remarks, req.body.request_id,  (error,status)=> {console.log(error,status); if(error){throw {err:error}}})
           return res.send({message: "Updated succesfully!"})
       }
       catch(error){
@@ -302,6 +384,51 @@ app.put("/createrequest", (req, res) => {
       }
     })
   })
+});
+
+app.post("/approverequest", (req,res) => {
+	users.fetchAccessToken(req,(error,token)=>{
+	if(error){
+		return res.status(400).json({err:error});
+	}
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(error,username)=>{
+			if(error){
+				return res.status(400).json({err: error});
+			}
+			if(!req.body.status || !req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
+
+    	    var data = fs.readFileSync("validkeys.json");
+    	    data = data.toString();
+    	    data = JSON.parse(data);
+
+		    if(data.hasOwnProperty(username) && data[username].userType == 'FACULTY') //only faculty can approve or reject.
+		    {
+
+  		      var client = new Client();
+  		      client.connect();
+            console.log(data[username].userType)
+
+  		      client.query('update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)',[req.body.status, req.body.request_id,username],
+  		      (error,data)=>{
+  		          if(error){
+  		            console.log(error);
+  		            client.end();
+  		            return res.status(400).json({ err: error });
+  		              // throw err;
+  		          }
+  		          if(data.rowCount === 0){
+  		            return res.status(400).json({ err: "No such rows found" });
+  		          }
+  		          client.end();
+  		          return res.send({message: "approved", msg: data})
+  		      })
+		    }
+		    else{
+		    	return res.status(400).json({err:'Bad request, nice try.'});
+		    }
+
+		})
+	})
 });
 
 app.get("/forumdashboard", async (req, res) => {
@@ -319,10 +446,53 @@ app.get("/forumdashboard", async (req, res) => {
           client.connect();
           client
             .query(
-              "select remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
+              "select request_id,remarks,status, request_data->'subject' as subject from requests where forum_name=$1",
               [forum_name]
             )
             .then((data) => {
+              res.json(data.rows);
+              console.log(data);
+              client.end();
+            })
+            .catch((err) => {
+              console.log(err);
+              client.end();
+            });
+        } catch (err) {
+          res.status(500).json({ err: "Internal Database Error!" });
+          console.log(err);
+        }
+      }
+    );
+  });
+});
+app.get("/getrequest", async (req, res) => {
+  console.log(req.query.request_id)
+  users.fetchAccessToken(req, (err, token) => {
+    if (err) return res.status(400).json({ err: "couldnt find any token!" });
+    users.authenticateToken(
+      token,
+      process.env.SECRET_ACCESS_TOKEN,
+      (err, forum_name) => {
+
+		if (err) return res.json({ err: "Invalid Token!" });
+
+		if(!req.query.request_id) return res.json({err:'Invalid request! :('});
+
+        try {
+          console.log(req);
+          var client = new Client();
+          client.connect();
+          client
+            .query(
+              "select * from requests where request_id=$1",
+              [req.query.request_id]
+            )
+            .then((data) => {
+              if(data.rowCount === 0){
+                client.end();
+                return res.json({ err: "No such rows found" });
+              }
               res.json(data.rows);
               console.log(data);
               client.end();
@@ -355,7 +525,7 @@ app.get("/forumdashboard", async (req, res) => {
 
 //Remarks
 app.post("/Remarks", (req, res) => {
-  const remark = req.body;
+  const remark = req;
   console.log(remark);
 });
 
@@ -447,8 +617,8 @@ app.post("/registerForum", (req, res) => {
               //now create a new record in the registration request table.
               users.newForumRegistrationRequest(
                 data.username,
-                data.email,
                 data.phone,
+                data.email,
                 (error, st) => {
                   if (error)
                     return console.log(
@@ -776,7 +946,7 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
 });
 
 //NEXT LETTER
-/*app.post('/conductmeet' ,  urlencodedParser,function(req,res){
+app.post('/conductmeet' ,  urlencodedParser,function(req,res){
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -795,7 +965,8 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
   let time_start = req.body.time_start;
   let time_end = req.body.time_end;
   let letter_body = req.body.letter_body;
-  console.log(req.body);
+  let studentdetails = req.body.studentdetails;
+
   let details = {
               designation:designation,
               department: department,
@@ -812,13 +983,14 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
              end_hour:end_hour,
               end_min:end_min,
               end_meridian:end_meridian,
-              letter_body: letter_body
+              letter_body: letter_body,
+              studentdetails: studentdetails,
             }
             let data = JSON.stringify(details, null ,2);
            fs.writeFileSync('./details.json', data);
 conductmeet.generateLetterIndividual();
-res.download('./LetterGenerated/FINAL_CONDUCT_MEET_PERMISSION.docx'); //callback I*
-});*/
+res.download('./LetterGenerated/conductmeet.docx'); //callback I*
+});
 
 //Get user type using Access Token.
 
@@ -836,7 +1008,7 @@ app.post("/getUserType", (req, res) => {
         (error, username) => {
           if (error) {
             console.log(error);
-            return res.status(400).json({err:error});
+            return res.status(400).json({ err: error });
           }
           var fileData = fs.readFileSync("validkeys.json");
           fileData = fileData.toString();
@@ -850,7 +1022,7 @@ app.post("/getUserType", (req, res) => {
       );
     });
   } catch (error) {
-    res.status(500).json({err:"Internal Server Error"});
+    res.status(500).json({ err: "Internal Server Error" });
     console.log(error);
   }
 });
