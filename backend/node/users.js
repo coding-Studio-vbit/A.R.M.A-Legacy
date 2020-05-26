@@ -8,23 +8,30 @@ const path = require("path");
 //-----------TOKEN HANDLING-------------------------------//
 //--------------------------------------------------------//
 
-function fetchAccessToken(request, callback) {
-  console.log(request.header);
+async function fetchAccessToken(request) {
+
+ return new Promise((resolve, reject)=>{
+ 	
   if (!request.headers['authorization']) {
-    return callback("No Authorization field found in the header!", undefined);
+    return reject("No Authorization field found in the header!");
   }
 
   var token_parts = request.headers['authorization'].split(" ");
 
   if (token_parts[0] == "Bearer" && token_parts[1]) {
-    return callback(undefined, token_parts[1]);
+    return resolve(token_parts[1]);
   }
-  return callback("Malformed Auth token!", undefined);
+  return reject("Malformed Auth token!");
+ });
 }
 
-function generateAccessToken(data, secret, expirationTimeSeconds) {
-  if (expirationTimeSeconds == undefined) return jwt.sign(data, secret); //if no expiration date is specified, return token without expiration
-  return jwt.sign(data, secret, { expiresIn: expirationTimeSeconds }); //token with expiration.
+async function generateAccessToken(data, secret, expirationTimeSeconds) {
+
+  return new Promise((resolve, reject)=>{
+  	
+  		if (expirationTimeSeconds == undefined) return resolve(jwt.sign(data, secret)); //return token without expiration
+  		return resolve(jwt.sign(data, secret, { expiresIn: expirationTimeSeconds })); //token with expiration.
+  })
 }
 
 //--------------------------------------------------------//
@@ -34,68 +41,70 @@ function generateAccessToken(data, secret, expirationTimeSeconds) {
 //This function takes a req and checks the token present in the headers.authorization property,
 //if it is then it assigns the request a 'user' property.
 
-function authenticateToken(token, secret, callback) {
-  //verify the extracted token
-  jwt.verify(token, secret, (err, username) => {
-    //if err then send status code FORBIDDEN
-    if (err) return callback({ message: "access token incorrect!" }, undefined);
+async function authenticateToken(token, secret) {
 
-    //check if the token is still in the validkeys.json file.
-    var data = fs.readFileSync("validkeys.json");
-    data = data.toString();
-    data = JSON.parse(data);
-    if (!data.hasOwnProperty(username))
-      return callback({ message: "UNIDENTIFIED USER" }, undefined);
-    //here all the checks pass and the token is valid.
+	return new Promise((resolve, reject)=>{
+		
+  		//verify the extracted token
+  		jwt.verify(token, secret, (err, username) => {
+  		  //if err then send status code FORBIDDEN
+  		  if (err) return reject("access token incorrect!");
 
-    return callback(undefined, username);
-  });
+  		  //check if the token is still in the validkeys.json file.
+  		  var data = fs.readFileSync("validkeys.json");
+  		  data = data.toString();
+  		  data = JSON.parse(data);
+  		  if (!data.hasOwnProperty(username))
+  		    return reject( "UNIDENTIFIED USER");
+  		  //here all the checks pass and the token is valid.
+
+  		  return resolve(username);
+  		});
+	})
 }
 
 //--------------------------------------------------------//
 //-----------PASSWORD HANDLING----------------------------//
 //--------------------------------------------------------//
-function hashPassword(password) {
+async function hashPassword(password) {
+ return new Promise((resolve, reject)=>{
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
-  return hash;
+  return resolve(hash);
+ })
 }
 
-async function checkForumPassword(username, password, callback) {
-  var client = new Client();
-  await client.connect().catch((err) => {
-    console.log(err);
-  }); //connect to DB
+async function checkForumPassword(username, password) {
 
-  username = username.toUpperCase();
+ return new Promise((resolve, reject)=>{
+ 	
+  		var client = new Client();
+  		await client.connect().catch((err) => {
+  		  console.log(err);
+  		}); //connect to DB
 
-  if (!username || !password) {
-    client.end();
-    return callback("USERNAME AND PASSWORD UNDEFINED!", undefined);
-  }
-  client.query(
-    "SELECT pwd_hash FROM FORUMS WHERE forum_name= $1 ;",
-    [username],
-    (err, res) => {
-      if (err) {
-        client.end(); // kill the connection to DB
-        return callback(err, undefined); //return with error.
-      } else {
-        if (res.rowCount === 1) {
-          bcrypt.compare(password, res.rows[0].pwd_hash, (err, status) => {
-            //compare password hashes
-            client.end();
-            if (err) throw err;
-            else if (!status) return callback(undefined, false);
-            //if no match, then return false.
-            else return callback(undefined, true); //if match, return with true.
-          });
-        } else {
-          return callback("INVALID USERNAME OR PASSWORD", undefined);
-        }
-      }
-    }
-  );
+  		username = username.toUpperCase();
+
+  		if (!username || !password) {
+  		  client.end();
+  		  return reject("USERNAME AND PASSWORD UNDEFINED!");
+  		}
+  		client.query("SELECT pwd_hash FROM FORUMS WHERE forum_name= $1 ;",[username])
+  		 .then((res) => {
+  		      if (res.rowCount===1) {
+  		        bcrypt.compare(password, res.rows[0].pwd_hash, (err, status) => {
+  		          //compare password hashes
+  		          client.end();
+  		          if (err) throw err;
+  		          else if (!status) return resolve(false);
+  		          //if no match, then return false.
+  		          else return resolve(true); //if match, return with true.
+  		        });
+  		      } else {
+  		        return reject("INVALID USERNAME OR PASSWORD");
+  		      }
+  		}).catch(err=>reject(err))
+ 	});
 }
 
 async function checkFacultyPassword(faculty_roll, password, callback) {
