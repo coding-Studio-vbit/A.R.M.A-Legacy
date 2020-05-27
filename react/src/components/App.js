@@ -1,13 +1,13 @@
 import React from "react";
-import "../css/Form.css";
+// import "../css/Form.css";
 //import UserForm from "./userForm";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import Login from "./Login";
-import Register from "./Register";
+import Login from "../modules/Auth/Login";
+import Register from "../modules/Auth/Register";
 import Dashboard from "./Dashboard";
 import TemplateDetails from "./TemplateDetails";
-import FacultyRegister from "./FacultyRegistration";
-import FacultyLogin from "./FacultyLogin";
+import FacultyRegister from "../modules/Auth/FacultyRegistration";
+import FacultyLogin from "../modules/Auth/FacultyLogin";
 import Remarks from "./Remarks";
 import TemplateList from "./TemplateList";
 import ViewStatus from "./ViewStatus";

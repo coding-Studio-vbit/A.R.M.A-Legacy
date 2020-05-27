@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import logo from "../images/logo.png";
-import RegistrationCheck from "./RegistrationCheck";
+import { Link, useHistory } from "react-router-dom";
+import logo from "./logo.png";
 import Links from "./Links";
+import "./Form.css";
 
-const Login = () => {
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-    "ISE",
-  ];
+const FacultyLogin = () => {
   const history = useHistory();
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState(Forumlist[0]);
-  const [registered, isRegistered] = useState(false);
+  const [rollNo, setRollNo] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
     if (error !== "") {
@@ -29,13 +17,11 @@ const Login = () => {
   });
   const handleLogin = (e) => {
     e.preventDefault();
-    let un = value;
-    let pw = password;
     axios
-      .post("/login", {
+      .post("/loginFaculty", {
         user: {
-          username: un,
-          password: pw,
+          username: rollNo,
+          password: password,
         },
       })
       .then((res) => {
@@ -58,11 +44,7 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-  const changeStatus = (res) => {
-    isRegistered(res);
-  };
-  const isEnabled = password.length > 0 && registered;
-
+  const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
     <div className="all-items">
       <div className="forms">
@@ -80,28 +62,23 @@ const Login = () => {
           <div style={{ marginTop: 20 }}></div>
           <br />
           <div className="form-group">
-            <span className="form-label" htmlFor="Forumlist">
-              Forumlist:{" "}
+            <span className="form-label" htmlFor="Password">
+              RollNo:{" "}
             </span>
-            <select
+            <input
+              type="text"
               className="form-control"
-              name="value"
-              onChange={(e) => setValue(e.target.value)}
-            >
-              {Forumlist.map((club) => (
-                <option> {club} </option>
-              ))}
-            </select>
-
-            <span className="select-arrow"></span>
+              id="exampleInputPassword1"
+              placeholder="RollNo"
+              onChange={(e) => setRollNo(e.target.value)}
+            />
           </div>
-
+          <br />
           <div className="form-group">
             <span className="form-label" htmlFor="Password">
               Password:{" "}
             </span>
             <input
-              disabled={!registered ? "disabled" : ""}
               type="password"
               className="form-control"
               id="exampleInputPassword1"
@@ -109,27 +86,23 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <br />
           <button
+            type="submit"
             disabled={!isEnabled}
             className="submit-btn"
             onClick={handleLogin}
-            type="submit"
           >
             Login
           </button>
-
           <br />
-          <RegistrationCheck value={value} changeRegiValue={changeStatus} />
-          {!registered && (
-            <h4 style={{ color: "#ff1744" }}>Forum is not registered</h4>
-          )}
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
-          <Links value={1} />
+          <Links value={3} />
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default FacultyLogin;
