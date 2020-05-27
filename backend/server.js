@@ -42,45 +42,47 @@ var cors = require("cors");
 app.use(cors());
 //LOGIN
 
-app.get("/getForumDetails", (req, res) => {
-  try {
-    users.fetchAccessToken(req, (error, token) => {
-      if (error) {
-        console.log(error);
-        return res.status(400).json({ err: error });
-      }
-      users.authenticateToken(
-        token,
-        process.env.SECRET_ACCESS_TOKEN,
-        (err, username) => {
-          if (error) {
-            console.log(error);
-            return res.status(400).json({ err: error });
-          }
-          var client = new Client();
-          client.connect();
-          client.query(
-            "SELECT actual_name,email,phone_no FROM forums WHERE forum_name=$1",
-            [username],
-            (error, data) => {
-              if (error) {
-                console.log(error);
-                return res.status(500).json({ err: error });
-              }
-              res.json({
-                actual_name: data.rows[0].actual_name,
-                email: data.rows[0].email,
-                phone_no: data.rows[0].phone_no,
-              }); // successful data retrieval.
-            }
-          ); //end query
-        }
-      ); //end auth
-    }); //end fetch
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ err: error });
-  }
+app.get("/getForumDetails",(req,res)=>{
+	try
+	{
+		users.fetchAccessToken(req,(error,token)=>{
+			if(error){
+				console.log(error);
+				return res.status(400).json({err:error});
+			}
+			users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(err,username)=>{
+				if(error){
+					console.log(error);
+					return res.status(400).json({err:error});
+				}
+				var client = new Client()
+				client.connect();
+				client.query('SELECT actual_name,email,phone_no FROM forums WHERE forum_name=$1',[username],(error,data)=>{
+					if(error){
+						console.log(error);
+						return res.status(500).json({err:error});
+					}
+          if(data.rows.length===0){
+    				return res.json({
+  						actual_name: " ",
+  						email: " ",
+  						phone_no: " "
+  					});
+    			}
+					res.json({
+						actual_name: data.rows[0].actual_name,
+						email: data.rows[0].email,
+						phone_no: data.rows[0].phone_no
+					}); // successful data retrieval.
+
+				})//end query
+			})//end auth
+		})//end fetch
+	}
+	catch(error){
+		console.log(error);
+		res.status(500).json({err:error});
+	}
 });
 
 app.post("/login", (req, res) => {
@@ -380,10 +382,10 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
-  console.log(req);
-  users.fetchAccessToken(req, (error, token) => {
-    if (error) {
-      return res.status(400).json({ err: error });
+  console.log(req.body.status)
+  users.fetchAccessToken(req, (error, token)=>{
+    if (error){
+      return res.status(400).json({err: error})
     }
     users.authenticateToken(
       token,
@@ -424,56 +426,49 @@ app.put("/createrequest", (req, res) => {
   });
 });
 
-app.post("/approverequest", (req, res) => {
-  users.fetchAccessToken(req, (error, token) => {
-    if (error) {
-      return res.status(400).json({ err: error });
-    }
-    users.authenticateToken(
-      token,
-      process.env.SECRET_ACCESS_TOKEN,
-      (error, username) => {
-        if (error) {
-          return res.status(400).json({ err: error });
-        }
-        if (!req.body.status || !req.body.request_id)
-          return res.status(400).json({ err: "Invalid request! :(" });
+app.post("/approverequest", (req,res) => {
+	users.fetchAccessToken(req,(error,token)=>{
+	if(error){
+		return res.status(400).json({err:error});
+	}
+		users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN,(error,username)=>{
+			if(error){
+				return res.status(400).json({err: error});
+			}
+			if(!req.body.status || !req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
 
-        var data = fs.readFileSync("validkeys.json");
-        data = data.toString();
-        data = JSON.parse(data);
+    	    var data = fs.readFileSync("validkeys.json");
+    	    data = data.toString();
+    	    data = JSON.parse(data);
 
-        if (
-          data.hasOwnProperty(username) &&
-          data[username].userType == "FACULTY"
-        ) {
-          //only faculty can approve or reject.
-          var client = new Client();
-          client.connect();
+		    if(data.hasOwnProperty(username) && data[username].userType == 'FACULTY') //only faculty can approve or reject.
+		    {
 
-          client.query(
-            "update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)",
-            [req.body.status, req.body.request_id, username],
-            (error, data) => {
-              if (error) {
-                console.log(error);
-                client.end();
-                return res.status(400).json({ err: error });
-                // throw err;
-              }
-              if (data.rowCount === 0) {
-                return res.status(400).json({ err: "No such rows found" });
-              }
-              client.end();
-              return res.send({ message: "approved", msg: data });
-            }
-          );
-        } else {
-          return res.status(400).json({ err: "Bad request, nice try." });
-        }
-      }
-    );
-  });
+  		      var client = new Client();
+  		      client.connect();
+            console.log(data[username].userType)
+
+  		      client.query('update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)',[req.body.status, req.body.request_id,username],
+  		      (error,data)=>{
+  		          if(error){
+  		            console.log(error);
+  		            client.end();
+  		            return res.status(400).json({ err: error });
+  		              // throw err;
+  		          }
+  		          if(data.rowCount === 0){
+  		            return res.status(400).json({ err: "No such rows found" });
+  		          }
+  		          client.end();
+  		          return res.send({message: "approved", msg: data})
+  		      })
+		    }
+		    else{
+		    	return res.status(400).json({err:'Bad request, nice try.'});
+		    }
+
+		})
+	})
 });
 
 app.get("/forumdashboard", async (req, res) => {

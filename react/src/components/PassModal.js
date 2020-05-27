@@ -11,8 +11,23 @@ const PassModal =(props)=>{
     ]=useState("");
 
     return (
-        <div className="container1">
+        <div>
     <Modal 
+        style={
+          {
+            overlay:{
+              opacity:"1.0",
+              margin:250,
+              backgroundColor:""
+            },
+            content:{
+              backgroundColor:"#222222",
+              height:"350px",
+              width:"500px",
+              position:"absolute",
+            }
+          }
+        }
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
@@ -20,12 +35,12 @@ const PassModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-body">
-                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}}  onChange ={(e) =>setOldPassword(e.target.value)}placeholder="Enter old Password"></input><br/>
-                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}} onChange ={(e) =>setNewPassword(e.target.value)}placeholder="Enter new Password"></input><br/>
-                <input type="password" id="myInput" style={{WebkitTextFillColor:"grey"}} placeholder="Confirm new Password"></input><br/>
+                <input type="password" id="myInput" className="form-input"  onChange ={(e) =>setOldPassword(e.target.value)}placeholder="Enter old Password"></input><br/>
+                <input type="password" id="myInput" className="form-input" onChange ={(e) =>setNewPassword(e.target.value)}placeholder="Enter new Password"></input><br/>
+                <input type="password" id="myInput" className="form-input" placeholder="Confirm new Password"></input><br/>
                 </div>
                 <div className="modal-footer">
-                <button  type="submit" onClick={() =>{
+                <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));
                     if(user!==null){
                       let userName = user.userName;
