@@ -66,10 +66,12 @@ async function authenticateToken(token, secret) {
 //--------------------------------------------------------//
 //-----------PASSWORD HANDLING----------------------------//
 //--------------------------------------------------------//
-function hashPassword(password) {
+async function hashPassword(password) {
+ return new Promise((resolve, reject)=>{
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
-  return hash;
+  return resolve(hash);
+ })
 }
 
 async function checkForumPassword(username, password) {
