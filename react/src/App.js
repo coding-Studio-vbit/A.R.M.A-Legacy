@@ -2,28 +2,28 @@ import React from "react";
 // import "../css/Form.css";
 //import UserForm from "./userForm";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import Login from "../modules/Auth/Login";
-import Register from "../modules/Auth/Register";
-import Dashboard from "./Dashboard";
-import TemplateDetails from "./TemplateDetails";
-import FacultyRegister from "../modules/Auth/FacultyRegistration";
-import FacultyLogin from "../modules/Auth/FacultyLogin";
-import Remarks from "./Remarks";
-import TemplateList from "./TemplateList";
-import ViewStatus from "./ViewStatus";
+import Login from "./modules/Auth/Login";
+import Register from "./modules/Auth/Register";
+import Dashboard from "./components/Dashboard";
+import TemplateDetails from "./components/TemplateDetails";
+import FacultyRegister from "./modules/Auth/FacultyRegistration";
+import FacultyLogin from "./modules/Auth/FacultyLogin";
+import Remarks from "./components/Remarks";
+import TemplateList from "./components/TemplateList";
+import ViewStatus from "./components/ViewStatus";
 
-import { ProtectedRoute } from "./protected.route";
+import { ProtectedRoute } from "./components/protected.route";
 
 //LetterTemplates
-import Camp from "./LetterTemplates/Camp";
-import Econ from "./LetterTemplates/Eventconduct";
-import Evenue from "./LetterTemplates/Eventvenue";
-import Tatten from "./LetterTemplates/Attendanceteam";
-import Patten from "./LetterTemplates/AttendanceParticipants";
-import Emeet from "./LetterTemplates/conductmeet";
-import Profile from "./Profile";
-import CreateRequest from "./CreateRequest";
-import EditCreateRequest from "./EditCreateRequest";
+import Camp from "./components/LetterTemplates/Camp";
+import Econ from "./components/LetterTemplates/Eventconduct";
+import Evenue from "./components/LetterTemplates/Eventvenue";
+import Tatten from "./components/LetterTemplates/Attendanceteam";
+import Patten from "./components/LetterTemplates/AttendanceParticipants";
+import Emeet from "./components/LetterTemplates/conductmeet";
+import Profile from "./components/Profile";
+import CreateRequest from "./components/CreateRequest";
+import EditCreateRequest from "./components/EditCreateRequest";
 
 function App() {
   return (

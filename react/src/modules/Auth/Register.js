@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import logo from "./logo.png";
-import { Alert } from "react-bootstrap";
 import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
