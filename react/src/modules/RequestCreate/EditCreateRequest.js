@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
-import Nav from './Navi';
+import Nav from '../Dashboard/Navi';
 import axios from "axios";
-import "../css/Request.css";
+import "./css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
 
@@ -16,20 +16,20 @@ const EditCreateRequest = () => {
     const [description, setDescription] = useState("")
     const [addfacelities, setCustreq] = useState("")
 
-  
+
     const handleAddFields = () => {
       const values = [...inputFields];
       values.push({ Name: "", Roll: "", Dept: "", Year: "" });
       setInputFields(values);
     };
-  
+
     const handleRemoveFields = index => {
       const values = [...inputFields];
       values.splice(index, 1);
-      setInputFields(values); 
+      setInputFields(values);
     };
 
-  
+
     const handleInputChange = (index, event) => {
       const values = [...inputFields];
       if (event.target.name === "Name") {
@@ -44,17 +44,17 @@ const EditCreateRequest = () => {
 
       setInputFields(values);
     };
-  
+
     const handleSubmit = e => {
       e.preventDefault();
       console.log(request, Faculty, description, Facelities, addfacelities);
-      
+
     };
 
     var requestdetails =  inputFields;
 
     const submit = (e) => {
-      
+
       axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
      .then((result) => {
       console.log(result)
@@ -64,7 +64,7 @@ const EditCreateRequest = () => {
     //Add Update
 
     const update = (e) => {
-      
+
       axios.put('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
      .then((result) => {
       console.log(result)
@@ -74,7 +74,7 @@ const EditCreateRequest = () => {
     //Add Delete
 
     const remove = (e) => {
-      
+
       axios.delete('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
      .then((result) => {
       console.log(result)
@@ -99,8 +99,8 @@ const EditCreateRequest = () => {
       { label: "Internet", value: "Internet" },
 
     ];
-      
-  
+
+
     return (
       <React.Fragment>
         <Nav/>
@@ -109,14 +109,14 @@ const EditCreateRequest = () => {
                   <div className="container-fluid">
                     <div className="row">
                       <div className="col self-align-start">
-                        <h3> Edit Request </h3>  
+                        <h3> Edit Request </h3>
                       </div>
                     </div>
                     <hr className="line" />
                     <br />
                     <div className="row">
                       <div className="col self-align-start">
-                        <h5>Select Request Type :</h5>  
+                        <h5>Select Request Type :</h5>
                       </div>
                       <div className="col self-align-end">
                         <select required className="form-control" name="department" onChange={e =>{e.persist(); setRequest(e.target.value)}}>
@@ -135,10 +135,10 @@ const EditCreateRequest = () => {
                     <br />
                     <div className="row">
                       <div className="col">
-                        <h5>Select Faculty :</h5>  
+                        <h5>Select Faculty :</h5>
                       </div>
                       <div className="col">
-                        <MultiSelect options={Facultyoptions} value={Faculty} onChange={setFaculty} 
+                        <MultiSelect options={Facultyoptions} value={Faculty} onChange={setFaculty}
                         labelledBy={"Select Your Option"}
                         className="Multiselect"
                         />
@@ -149,11 +149,11 @@ const EditCreateRequest = () => {
                     <br />
                     <div className="row">
                       <div className="col">
-                        <h5>Description :</h5>  
+                        <h5>Description :</h5>
                       </div>
                       <div className="col">
                         <div className="form-group">
-                          <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Enter Details about your event" 
+                          <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Enter Details about your event"
                           rows="3" onChange={e =>{e.persist(); setDescription(e.target.value)}} />
                         </div>
                       </div>
@@ -163,7 +163,7 @@ const EditCreateRequest = () => {
                     <br />
                     <div className="row">
                       <div className="col">
-                        <h5>People Involved :</h5>  
+                        <h5>People Involved :</h5>
                       </div>
                       <div className="col">
                         <div className="form-group">
@@ -180,18 +180,18 @@ const EditCreateRequest = () => {
                                   <div className="form-group">
                                       <div class="row">
                                           <div class="col-sm-2">
-                                              <input 
-                                                  className="form-control" 
-                                                  type="text" 
-                                                  id="Name" 
-                                                  name="Name" 
+                                              <input
+                                                  className="form-control"
+                                                  type="text"
+                                                  id="Name"
+                                                  name="Name"
                                                   value={inputField.firstName}
                                                   onChange={event => handleInputChange(index, event)}
                                                   placeholder={`Name`}
                                               />
-                                          </div>  
+                                          </div>
                                           <div class="col-sm-2">
-                                              <input 
+                                              <input
                                                   className="form-control"
                                                   type="text"
                                                   id="Roll"
@@ -214,7 +214,7 @@ const EditCreateRequest = () => {
                                               <option value="CIVIL">CIVIL</option>
                                               <option value="MECH">MECH</option>
                                             </select>
-                                            
+
                                           </div>
                                           <div class="col-sm-2">
                                           <select required className="form-control" name="department" value={inputField.firstName}
@@ -227,16 +227,16 @@ const EditCreateRequest = () => {
                                               <option value="3">3</option>
                                               <option value="4">4</option>
                                           </select>
-                                          
+
                                           </div>
                                           <div class="col align-self-center">
                                               <button type="button" class="btn btn-danger" onClick={() => handleRemoveFields(index)}>X</button>
                                           </div>
-                                          
+
                                       </div>
                                   </div>
                               </Fragment>
-                          ))}                        
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -245,7 +245,7 @@ const EditCreateRequest = () => {
                     <br />
                     <div className="row">
                       <div className="col">
-                        <h5>Facilities Required :</h5>  
+                        <h5>Facilities Required :</h5>
                       </div>
                       <div className="col">
                         <MultiSelect options={Facilitiesoptions} value={Facelities} onChange={setFacilities}
@@ -263,14 +263,14 @@ const EditCreateRequest = () => {
                       <div className="row" style={{textAlign:"center"}}>
                         <div className="col align-self-center">
                           <button type="submit" class="btn btn-primary" onClick={() =>update()}>Update Request</button>
-                        </div>     
+                        </div>
                         <div className="col align-self-center">
                           <button type="submit" class="btn btn-success" onClick={() =>submit()}>Create New Request</button>
-                        </div>    
+                        </div>
                         <div className="col align-self-center">
                           <button type="submit" class="btn btn-danger" onClick={() =>remove()}>Delete Request</button>
-                        </div>   
-                      </div>     
+                        </div>
+                      </div>
                     </div>
                   </div>
             </form>

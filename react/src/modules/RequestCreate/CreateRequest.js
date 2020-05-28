@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
-import Nav from './Navi';
+import Nav from '../Dashboard/Navi';
 import axios from "axios";
-import "../css/Request.css";
+import "./css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
 import { useHistory } from "react-router-dom";
