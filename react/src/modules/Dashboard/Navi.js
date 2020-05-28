@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/nav.css';
+import './css/nav.css';
 import {Nav,Navbar} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 import axios from "axios";

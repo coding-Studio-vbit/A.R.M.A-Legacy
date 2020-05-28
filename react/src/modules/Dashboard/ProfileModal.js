@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "../css/ProfileModal.css";
+import "./css/ProfileModal.css";
 const ProfileModal =(props)=>{
     const [
         Email,setEmail
@@ -17,9 +17,9 @@ const ProfileModal =(props)=>{
     }
   });
     const isEnabled = Email === Cemail;
-    
+
     return (
-        <div> 
+        <div>
     <Modal
     style={
       {
@@ -79,7 +79,7 @@ const ProfileModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>SUBMIT</button>
                     <button className="btn-cancel" type="reset">CANCEL</button>
                 </div>
@@ -87,6 +87,6 @@ const ProfileModal =(props)=>{
     </Modal>
     </div>
     )
-        
+
 }
 export default ProfileModal;

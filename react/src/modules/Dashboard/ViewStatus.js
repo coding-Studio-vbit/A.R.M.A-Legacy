@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from './Navi';
 import axios from 'axios';
-import '../css/Remarks.css';
+import './css/Remarks.css';
 const ViewStatus =(props) => {
     const status='Accepted'
     const [From, setFrom] = useState( 'Coding Studio')

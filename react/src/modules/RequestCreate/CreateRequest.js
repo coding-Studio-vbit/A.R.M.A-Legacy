@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
-import Nav from './Navi';
+import Nav from '../Dashboard/Navi';
 import axios from "axios";
-import "../css/Request.css";
+import "./css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
 import { useHistory } from "react-router-dom";
@@ -99,6 +99,7 @@ const CreateRequest = () => {
 
       const Facultyoptions = [
         { label: "Yasaswi Raj", value: "Yasaswi Raj"},
+        { label: "saravanan", value: "saravanan"},
         { label: "Aaris", value: "Aaris" },
         { label: "Yashwanth", value: "Yashwanth" },
         { label: "Sai Kiran", value: "Sai Kiran" },

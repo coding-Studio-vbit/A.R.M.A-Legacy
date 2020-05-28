@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import {Container,Row,Col} from 'react-bootstrap';
 import Nav from './Navi';
 import axios from 'axios';
-import '../css/Remarks.css';
+import './css/Remarks.css';
 const Remarks =(props) => {
 
   const history = useHistory();
