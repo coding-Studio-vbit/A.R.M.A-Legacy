@@ -4,13 +4,15 @@ import "../css/Form.css";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import Dashboard from "./Dashboard";
-import TemplateDetails from "./TemplateDetails";
 import FacultyRegister from "./FacultyRegistration";
 import FacultyLogin from "./FacultyLogin";
-import Remarks from "./Remarks";
-import TemplateList from "./TemplateList";
-import ViewStatus from "./ViewStatus";
+
+//Dashboard Routes
+import Dashboard from "./modules/Dashboard/Dashboard";
+import TemplateDetails from "./modules/Dashboard/TemplateDetails";
+import Remarks from "./modules/Dashboard/Remarks";
+import TemplateList from "./modules/Dashboard/TemplateList";
+import ViewStatus from "./modules/Dashboard/ViewStatus";
 
 import {ProtectedRoute} from "./protected.route"
 
@@ -34,19 +36,11 @@ function App() {
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
-            <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
-            <ProtectedRoute
-              path="/Dashboard/TemplateDetails"
-              component={TemplateDetails}
-            />
             <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
             <Route path="/Dashboard/EditCreateRequest" component={EditCreateRequest} />
             <Route path="/facultylogin" component={FacultyLogin} />
             <Route path="/facultyregister" component={FacultyRegister} />
-            <Route path="/Remarks" component={Remarks} />
-            <Route path="/Dashboard/TemplateList" component={TemplateList} />
-            <Route path="/ViewStatus" component={ViewStatus} />
-            
+
 
 
             <Route path="/campaining" component={Camp} />
@@ -55,7 +49,7 @@ function App() {
             <Route path="/conductmeet" component={Emeet}/>
             <Route path="/TeamAttendance" component={Tatten} />
             <Route path="/ParticipantsAttendance" component={Patten} />
-            
+
             <ProtectedRoute path="/campaining" component={Camp} />
             <ProtectedRoute path="/conduct" component={Econ} />
             <ProtectedRoute path="/venue" component={Evenue} />
