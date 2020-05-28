@@ -10,7 +10,6 @@ const Navi = () => {
   const handleLogout = () => {
     let user = JSON.parse(localStorage.getItem("user"));
     if(user!==null){
-      let userName = user.userName;
       let accessToken = user.accessToken;
       console.log(user.userName);
       let config = {
