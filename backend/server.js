@@ -48,7 +48,7 @@ app.get("/getForumDetails", (req, res) => {
     .then((token) =>
       users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN)
     )
-    .then(() => {
+    .then((username) => {
       var client = new Client();
       client.connect();
       client
@@ -442,11 +442,6 @@ app.get("/getrequest", async (req, res) => {
       var client = new Client();
       client.connect();
       client
-
-        .query("select * from requests where request_id=$1", [
-          req.body.request_id,
-        ])
-
         .query("select * from requests where request_id=$1", [
           req.query.request_id,
         ])
