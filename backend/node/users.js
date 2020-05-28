@@ -265,18 +265,18 @@ function registerFaculty(
 }
 
 function newFacultyRegistrationRequest(
-  faculty_roll,
   faculty_name,
   faculty_dept,
-  phone,
+  faculty_roll,
   email,
+  phone,
   callback
 ) {
   var client = new Client();
   client.connect();
   client.query(
     "INSERT INTO faculty_registration_request(faculty_name,faculty_dept,faculty_roll,email,phone) VALUES($1,$2,$3,$4,$5)",
-    [faculty_roll, faculty_name, faculty_dept, email, phone],
+    [faculty_name, faculty_dept, faculty_roll, email, phone],
     (err, res) => {
       client.end();
       if (err) return callback(err, undefined);
