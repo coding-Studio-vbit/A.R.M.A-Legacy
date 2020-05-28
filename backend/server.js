@@ -441,9 +441,7 @@ app.get("/getrequest", async (req, res) => {
     .then((username) => {
       var client = new Client();
       client.connect();
-      client
-
-        .query("select * from requests where request_id=$1", [
+      client.query("select * from requests where request_id=$1", [
           req.query.request_id,
         ])
 
