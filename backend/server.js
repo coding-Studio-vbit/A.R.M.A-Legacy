@@ -16,11 +16,11 @@ var urlencodedParser = body_parser.urlencoded({ extended: true });
 var jsonfile = require("jsonfile");
 var file = "./details.json";
 //Letter Path
-var oc_attendance = require("./oc_attendance");
+var teamattendance = require("./teamattendance");
 var campaigning = require("./campaigning");
 var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
-var usehall = require("./usehall");
+var eventvenue = require("./eventvenue");
 var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
@@ -48,7 +48,7 @@ app.get("/getForumDetails", (req, res) => {
     .then((token) =>
       users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN)
     )
-    .then(() => {
+    .then((username) => {
       var client = new Client();
       client.connect();
       client
@@ -444,10 +444,6 @@ app.get("/getrequest", async (req, res) => {
       client
 
         .query("select * from requests where request_id=$1", [
-          req.body.request_id,
-        ])
-
-        .query("select * from requests where request_id=$1", [
           req.query.request_id,
         ])
 
@@ -663,7 +659,7 @@ app.post("/registerFaculty", (req, res) => {
 
 //Letter
 
-app.post("/TeamAttendance", urlencodedParser, function (req, res) {
+app.post("/teamattendance", urlencodedParser, function (req, res) {
   let designation = req.body.designation;
   let department = req.body.department;
   let subject = req.body.subject;
@@ -704,7 +700,7 @@ app.post("/TeamAttendance", urlencodedParser, function (req, res) {
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
-  oc_attendance.generateLetterIndividual();
+  teamattendance.generateLetterIndividual();
   res.download("./LetterGenerated/Final_attendance_OC.docx"); //callback I*
 });
 
@@ -794,7 +790,7 @@ app.post("/conductevent", urlencodedParser, function (req, res) {
   res.download("./LetterGenerated/FINAL_CONDUCT_EVENT.docx"); //callback I*
 });
 
-app.post("/usehall", urlencodedParser, function (req, res) {
+app.post("/eventvenue", urlencodedParser, function (req, res) {
   let subject = req.body.subject;
   let date = req.body.date;
   let respects = req.body.respects;
@@ -833,7 +829,7 @@ app.post("/usehall", urlencodedParser, function (req, res) {
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
-  usehall.generateLetterIndividual();
+  eventvenue.generateLetterIndividual();
   res.download("./LetterGenerated/FINAL_HALL_UTILIZATION_PERMISSION.docx"); //callback I*
 });
 

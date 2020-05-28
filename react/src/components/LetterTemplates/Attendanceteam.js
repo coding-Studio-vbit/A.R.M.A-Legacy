@@ -59,7 +59,7 @@ const Tatten = () => {
       const submit = (e) => {
             console.log("inputFields", team_name);
 
-            axios.post('/TeamAttendance', { designation, department, date, subject, respects, team_name, event_name, fromdate, todate, start_hour, start_min, start_meridian,
+            axios.post('/teamattendance', { designation, department, date, subject, respects, team_name, event_name, fromdate, todate, start_hour, start_min, start_meridian,
              end_hour, end_min, end_meridian, letter_body, studentdetails },{responseType: 'arraybuffer'})
            .then((result) => {
             console.log(result)
@@ -79,7 +79,7 @@ const Tatten = () => {
                     <div className="container">
                         <div className="row">
                             <div className="booking-form">
-                                <form id="txtb" method="POST" action="/TeamAttendance">
+                                <form id="txtb" method="POST" action="/teamattendance">
                                     <h3 style={{textAlign: 'center'}}>Team Attendance Permission</h3>
                                     <br/><br/>
                                     <div className="form-group">
