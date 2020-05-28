@@ -39,11 +39,8 @@ const ViewStatus =(props) => {
           setSubject(data.request_data.subject);
           setReq_data(data.request_data);
           setDescription(data.request_data.description);
-          if(data.request_data.selected_participants!==null && data.request_data.selected_facilities!==null)
-          {
-            setPeople(data.request_data.selected_participants);
-            setFacility(data.request_data.selected_facilities);
-          }
+          setPeople(data.request_data.selected_participants);
+          setFacility(data.request_data.selected_facilities);
           setStatus(data.status);
           setRemarks(data.remarks);
           console.log(data);

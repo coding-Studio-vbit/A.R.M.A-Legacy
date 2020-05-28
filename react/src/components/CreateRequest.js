@@ -4,6 +4,7 @@ import axios from "axios";
 import "../css/Request.css";
 import 'react-bootstrap';
 import MultiSelect from "react-multi-select-component";
+import { useHistory } from "react-router-dom";
 // const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
 const CreateRequest = () => {
@@ -11,6 +12,7 @@ const CreateRequest = () => {
         { name: "", roll: "", Dept: "", Year: "" }
       ]);
 
+      const history = useHistory();
       const [request, setRequest] = useState("")
       const [Faculty, setFaculty] = useState([]);
       const [Facilities, setFacilities] = useState([]);
@@ -73,7 +75,9 @@ const CreateRequest = () => {
             subject: request,
             description: description,
             facilities: arr1,
-            participants: requestdetails
+            participants: requestdetails,
+            selected_facilities:[{facility: "No Facility Yet",check: true}],
+            selected_participants:[{name: "No Name Yet", roll: "No Roll Number Yet", check: true}]
           },
           recipients: arr,
         },
@@ -87,16 +91,17 @@ const CreateRequest = () => {
         )
           .then(function (response) {
             console.log('helloo')
-            alert('class added successfully')
+            alert('Request made');
+            history.push('/dashboard');
           })
         .catch(err => {console.log(err)})
       }
 
       const Facultyoptions = [
         { label: "Yasaswi Raj", value: "Yasaswi Raj"},
-        { label: "nanavaras", value: 'nanavaras' },
-        { label: "Principal", value: "Principal" },
-        { label: "Vice Principal", value: "Vice Principal" },
+        { label: "Aaris", value: "Aaris" },
+        { label: "Yashwanth", value: "Yashwanth" },
+        { label: "Sai Kiran", value: "Sai Kiran" },
         { label: "CSE - HOD", value: "CSE - HOD" },
         { label: "IT - HOD", value: "IT - HOD" },
         { label: "ECE - HOD", value: "ECE - HOD" },
@@ -182,7 +187,7 @@ const CreateRequest = () => {
                         </div>
                         <div className="col">
                           <div className="form-group">
-                            <div className="row">
+                            <div className="row" style={{"color":"grey"}}>
                               <div class="col-sm-2 align-self-center"><h6>Name</h6></div>
                               <div class="col-sm-2 align-self-center"><h6>Roll.No</h6></div>
                               <div class="col-sm-2 align-self-center"><h6>Dept</h6></div>
@@ -202,7 +207,6 @@ const CreateRequest = () => {
                                                     name="name"
                                                     value={inputField.firstName}
                                                     onChange={event => handleInputChange(index, event)}
-                                                    placeholder={`name`}
                                                 />
                                             </div>
                                             <div class="col-sm-2">
@@ -213,7 +217,6 @@ const CreateRequest = () => {
                                                     name="roll"
                                                     value={inputField.firstName}
                                                     onChange={event => handleInputChange(index, event)}
-                                                    placeholder={`Roll No`}
                                                 />
                                             </div>
                                             <div class="col-sm-2">
@@ -267,9 +270,10 @@ const CreateRequest = () => {
                               labelledBy={"Select Your Option"}
                               className="Multiselect"
                            />
-                          <div className="form-group">
-                            <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Facelities not mentioned? Type in here!" rows="3" onChange={e =>{e.persist(); setCustreq(e.target.value)}}/>
-                          </div>
+                          {// <div className="form-group">
+                          //   <textarea className="form-control" id="exampleFormControlTextarea1" placeholder="Facilities not mentioned? Type in here!" rows="3" onChange={e =>{e.persist(); setCustreq(e.target.value)}}/>
+                          // </div>
+                        }
                         </div>
                       </div>
                       <br />
@@ -277,7 +281,7 @@ const CreateRequest = () => {
                       <br />
                       <div className="row">
                         <div className="col" style={{textAlign:"center"}}>
-                          <button type="submit" class="btn btn-success" onClick={() =>submit()}>Create Request</button>
+                          <button type="submit" class="btn btn-success" onClick={() =>{submit()}}>Create Request</button>
                         </div>
                       </div>
                     </div>
