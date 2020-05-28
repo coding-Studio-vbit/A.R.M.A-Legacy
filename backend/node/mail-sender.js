@@ -9,55 +9,60 @@ In short, what you need to do to send messages, would be the following:
 	NOTE: using this module requires a " .env " file that is used to store the USER_EMAIL and PASSWORD environment variables.
 
 */
-
 const nodemailer = require("nodemailer");
 
-function generateOTP() {
-  let OTP = "";
-  for (let a = 0; a < 4; a++) {
-    OTP += String(Math.round(Math.random() * 10)%10);
-  }
-  return OTP;
+async function generateOTP() {
+	return new Promise((resolve , reject)=>{
+  		let OTP = "";
+  		for (let a = 0; a < 4; a++) {
+  		  OTP += String(Math.round(Math.random() * 10)%10);
+  		}
+  		resolve(OTP);
+	})
 }
-function sendMail(subject, content, receiver, callback) {
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.USERMAIL,
-      pass: process.env.PASSWORD,
-    },
-    tls: {
-      rejectUnauthorized: false,
-    },
-  });
+async function sendMail(subject, content, receiver) {
+	return new Promise((resolve, reject)=>{
+		
+  			var transporter = nodemailer.createTransport({
+  			  service: "gmail",
+  			  auth: {
+  			    user: process.env.USERMAIL,
+  			    pass: process.env.PASSWORD,
+  			  },
+  			  tls: {
+  			    rejectUnauthorized: false,
+  			  },
+  			});
 
-  mailOptions = {
-    from: process.env.USERMAIL,
-    to: receiver,
-    subject: subject,
-    text: content,
-  };
+  			mailOptions = {
+  			  from: process.env.USERMAIL,
+  			  to: receiver,
+  			  subject: subject,
+  			  text: content,
+  			};
 
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) return callback(err, undefined);
-    else return callback(undefined, info);
-  });
+  			transporter.sendMail(mailOptions, (err, info) => {
+  			  if (err) return reject(err);
+  			  else return resolve(info);
+  			});
+	});
 }
-function sendOTP(OTP, receiver, callback) {
-  let newOTP = generateOTP();
-  sendMail(
-    "ARMA OTP",
-    "Your A.R.M.A OTP is " + String(newOTP),
-    receiver,
-    (err, info) => {
-      if (err) return callback(err, undefined);
-      else {
-        return callback(undefined, `OTP has been sent to ${receiver}`);
-      }
-    }
-  );
+async function sendOTP(OTP, receiver) {
+	 return new Promise((resolve, reject)=>{
+  			generateOTP()
+			.then((OTP)=>
+  				sendMail("ARMA OTP","Your A.R.M.A OTP is " + String(newOTP), receiver) 
+				.then((info) => {
+  			   	 if (err) return callback(err, undefined);
+  			   	 else {
+  			   	   return callback(undefined, `OTP has been sent to ${receiver}`);
+  			   	 }
+  			  	})
+				.catch(err=>reject(err))
+  			)
+			.catch(err=>reject(err))
+	 });
 }
-
 module.exports = {
   generateOTP: generateOTP,
   sendMail: sendMail,

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link,useHistory } from "react-router-dom";
-import logo from "../images/logo.png";
+import { useHistory } from "react-router-dom";
+import logo from "./logo.png";
 import Links from "./Links";
+import "./Form.css";
 
 const FacultyLogin = () => {
   const history = useHistory();
