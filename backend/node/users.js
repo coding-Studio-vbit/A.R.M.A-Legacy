@@ -191,29 +191,33 @@ async function registerForum(forum_name, password, email, phone) {
   return new Promise((resolve, reject) => {
     var client = new Client();
     client.connect();
-    const password_hash = hashPassword(password);
     checkRegistrationStatus(forum_name)
       .then((res) => {
         if (res == true) {
           client.end();
           return resolve(false);
         } else {
-          client
-            .query(
-              "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
-              [
-                forum_name.toUpperCase(),
-                password_hash,
-                email,
-                phone,
-                forum_name,
-              ]
-            )
-            .then((res) => {
-              client.end();
-              return resolve(true);
-            })
-            .catch((err) => reject(err));
+
+		  hashPassword(password)
+		  .then(password_hash=>{
+		  	
+          		client
+          		  .query(
+          		    "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
+          		    [
+          		      forum_name.toUpperCase(),
+          		      password_hash,
+          		      email,
+          		      phone,
+          		      forum_name,
+          		    ]
+          		  )
+          		  .then((res) => {
+          		    client.end();
+          		    return resolve(true);
+          		  })
+          		  .catch((err) => reject(err));
+		  }).catch(error=>{reject(error)})
         }
       })
       .catch((err) => reject(err));
@@ -237,31 +241,34 @@ async function registerFaculty(
 
     faculty_roll = faculty_roll.toUpperCase();
 
-    const password_hash = hashPassword(password);
-
     checkFacultyRegistrationStatus(faculty_roll)
       .then((res) => {
         if (res == true) {
           client.end();
           return resolve(false);
         } else {
-          client
-            .query(
-              "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
-              [
-                faculty_name,
-                faculty_roll,
-                faculty_dept,
-                email,
-                phone,
-                password_hash,
-              ]
-            )
-            .then((res) => {
-              client.end();
-              return resolve(true);
-            })
-            .catch((err) => reject(err));
+
+			hashPassword(password)
+			.then(password_hash=>{
+				
+          		client
+          		  .query(
+          		    "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
+          		    [
+          		      faculty_name,
+          		      faculty_roll,
+          		      faculty_dept,
+          		      email,
+          		      phone,
+          		      password_hash,
+          		    ]
+          		  )
+          		  .then((res) => {
+          		    client.end();
+          		    return resolve(true);
+          		  })
+          		  .catch((err) => reject(err));
+			}).catch(err=>reject(err))
         }
       })
       .catch((err) => reject(err));
@@ -371,17 +378,20 @@ async function changeForumPassword(forum_name, oldPassword, newPassword) {
           if (!stat) return reject(" old password incorrect!");
 
           //old password is correct.
-          const newPasswordHash = hashPassword(newPassword);
-          client
-            .query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2", [
-              newPasswordHash,
-              forum_name,
-            ])
-            .then((data) => {
-              client.end();
-              return resolve(true); //successful password update.
-            })
-            .catch((err) => reject(err));
+          hashPassword(password)
+		  .then(newPasswordHash=>{
+		  	
+          		client
+          		  .query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2", [
+          		    newPasswordHash,
+          		    forum_name,
+          		  ])
+          		  .then((data) => {
+          		    client.end();
+          		    return resolve(true); //successful password update.
+          		  })
+          		  .catch((err) => reject(err));
+		  }).catch(err=>reject(err))
         });
       })
       .catch((err) => reject(err));
@@ -409,17 +419,19 @@ async function changeFacultyPassword(faculty_roll, oldPassword, newPassword) {
           }
           if (!stat) return reject(" old password incorrect!");
           //old password is correct.
-          const newPasswordHash = hashPassword(newPassword);
-          client
-            .query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2", [
-              newPasswordHash,
-              faculty_roll,
-            ])
-            .then((data) => {
-              client.end();
-              return resolve(true); //successful password update.
-            })
-            .catch((err) => reject(err));
+          hashPassword(newPassword).then(newPasswordHash=>{
+		  	
+          		client
+          		  .query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2", [
+          		    newPasswordHash,
+          		    faculty_roll,
+          		  ])
+          		  .then((data) => {
+          		    client.end();
+          		    return resolve(true); //successful password update.
+          		  })
+          		  .catch((err) => reject(err));
+		  }).catch(err=>reject(err))
         });
       })
       .catch((err) => reject(err));
