@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import logo from "../images/logo.png";
+import logo from "./logo.png";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
+import "./Form.css";
 
 const Login = () => {
   const Forumlist = [
