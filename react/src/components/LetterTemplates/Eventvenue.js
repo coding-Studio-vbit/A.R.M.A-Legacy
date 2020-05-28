@@ -31,7 +31,7 @@ const Evenue = () => {
       const submit = (e) => {
             console.log("inputFields", team_name);
 
-            axios.post('/usehall', { team_name, date, subject, respects, event_name, letter_body, fromdate, start_hour, start_min,
+            axios.post('/eventvenue', { team_name, date, subject, respects, event_name, letter_body, fromdate, start_hour, start_min,
                 start_meridian, todate, end_hour, end_min, end_meridian,hall_name,reason },{responseType: 'arraybuffer'})
            .then((result) => {
             console.log(result)
@@ -51,7 +51,7 @@ const Evenue = () => {
         <div className="container">
             <div className="row">
                 <div className="booking-form">
-                    <form id="txtb" method="POST" action="/usehall">
+                    <form id="txtb" method="POST" action="/eventvenue">
                         <h3 style={{textAlign: 'center'}}>Permisssion to use hall for conducting event / use hall to work</h3>
                         <br/><br/>
                         <div className="form-group">

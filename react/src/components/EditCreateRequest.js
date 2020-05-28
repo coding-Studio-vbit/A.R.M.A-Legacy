@@ -65,7 +65,7 @@ const EditCreateRequest = () => {
 
     const update = (e) => {
       
-      axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
+      axios.put('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
      .then((result) => {
       console.log(result)
      });
@@ -75,7 +75,7 @@ const EditCreateRequest = () => {
 
     const remove = (e) => {
       
-      axios.post('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
+      axios.delete('/createrequest', {request, Faculty, description, Facelities, addfacelities, requestdetails },{responseType: 'arraybuffer'})
      .then((result) => {
       console.log(result)
      });

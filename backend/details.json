@@ -1,28 +1,18 @@
 {
-  "designation": "Director",
-  "department": "Department of Information Technology",
-  "subject": "Permission for Event Conduction",
-  "date": "2020-05-24",
+  "subject": "asdsd",
+  "date": "2020-05-28",
   "respects": "Ma'am",
-  "team_name": "StuTalk",
-  "event_name": "fcdfhfb",
-  "fromdate": "2020-05-27",
-  "todate": "2020-05-30",
-  "start_hour": "5",
-  "start_min": "40",
-  "start_meridian": "AM",
-  "end_hour": "8",
-  "end_min": "30",
-  "end_meridian": "PM",
-  "letter_body": "fbdfbfdhbdfn",
-  "studentdetails": [
-    {
-      "Name": "Aaris",
-      "Roll": "18P61A05D7"
-    },
-    {
-      "Name": "Yash",
-      "Roll": "18P61A05C2"
-    }
-  ]
+  "team_name": "Ebola",
+  "event_name": "123",
+  "reason": "its good",
+  "hall_name": "Gandhi Hospital",
+  "fromdate": "2020-05-28",
+  "todate": "2020-05-28",
+  "start_hour": "3",
+  "start_min": "05",
+  "start_meridian": "PM",
+  "end_hour": "12",
+  "end_min": "50",
+  "end_meridian": "AM",
+  "letter_body": "Fighting!!!!!"
 }
