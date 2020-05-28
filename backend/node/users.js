@@ -378,7 +378,7 @@ async function changeForumPassword(forum_name, oldPassword, newPassword) {
           if (!stat) return reject(" old password incorrect!");
 
           //old password is correct.
-          hashPassword(password)
+          hashPassword(newPassword)
 		  .then(newPasswordHash=>{
 		  	
           		client
