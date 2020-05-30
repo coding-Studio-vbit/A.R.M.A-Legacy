@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "../css/ProfileModal.css";
+import "./css/ProfileModal.css";
 const PassModal =(props)=>{
     const [
         NewPassword,setNewPassword
@@ -12,7 +12,7 @@ const PassModal =(props)=>{
 
     return (
         <div>
-    <Modal 
+    <Modal
         style={
           {
             overlay:{
@@ -60,7 +60,7 @@ const PassModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>SUBMIT</button>
                     <button className="btn-cancel" type="reset">CANCEL</button>
                 </div>
@@ -68,6 +68,6 @@ const PassModal =(props)=>{
     </Modal>
     </div>
     )
-        
+
 }
 export default PassModal;

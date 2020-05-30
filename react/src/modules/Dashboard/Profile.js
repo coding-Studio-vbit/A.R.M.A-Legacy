@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import profilePic from '../images/profilePic.png';
+import profilePic from './images/profilePic.png';
 import ProfileModal from './ProfileModal';
 import PassModal from './PassModal';
 import Nav from './Navi';

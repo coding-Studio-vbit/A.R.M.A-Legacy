@@ -200,7 +200,6 @@ async function registerForum(forum_name, password, email, phone) {
 
 		  hashPassword(password)
 		  .then(password_hash=>{
-		  	
           		client
           		  .query(
           		    "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
@@ -250,7 +249,11 @@ async function registerFaculty(
 
 			hashPassword(password)
 			.then(password_hash=>{
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> 63dd5bf07fa6cfa9ebab7056668f0e100be70687
           		client
           		  .query(
           		    "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
@@ -380,7 +383,11 @@ async function changeForumPassword(forum_name, oldPassword, newPassword) {
           //old password is correct.
           hashPassword(newPassword)
 		  .then(newPasswordHash=>{
+<<<<<<< HEAD
 		  	
+=======
+
+>>>>>>> 63dd5bf07fa6cfa9ebab7056668f0e100be70687
           		client
           		  .query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2", [
           		    newPasswordHash,
@@ -420,7 +427,11 @@ async function changeFacultyPassword(faculty_roll, oldPassword, newPassword) {
           if (!stat) return reject(" old password incorrect!");
           //old password is correct.
           hashPassword(newPassword).then(newPasswordHash=>{
+<<<<<<< HEAD
 		  	
+=======
+
+>>>>>>> 63dd5bf07fa6cfa9ebab7056668f0e100be70687
           		client
           		  .query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2", [
           		    newPasswordHash,

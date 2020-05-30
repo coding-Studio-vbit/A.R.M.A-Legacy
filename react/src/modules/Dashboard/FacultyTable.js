@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/table.css';
+import './css/table.css';
 import axios from 'axios';
 
 class FacultyTable extends React.Component{
