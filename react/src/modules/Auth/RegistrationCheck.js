@@ -7,7 +7,7 @@ const RegistrationCheck = (props) => {
     let un = value;
     if (un !== "Select a forum") {
       axios
-        .post("/checkRegistrationStatus", {
+        .post(`${process.env.REACT_APP_URL}/checkRegistrationStatus`, {
           query: {
             username: un,
           },

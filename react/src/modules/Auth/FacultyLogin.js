@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import logo from "./logo.png";
+import logo from "./images/logo.png";
 import Links from "./Links";
-import "./Form.css";
+import "./css/Form.css";
 
 const FacultyLogin = () => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const FacultyLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     axios
-      .post("/loginFaculty", {
+      .post(`${process.env.REACT_APP_URL}/loginFaculty`, {
         user: {
           username: rollNo,
           password: password,
