@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/template.css';
+import './css/template.css';
 import {Button} from 'react-bootstrap'
 
 export default class Template extends React.Component{

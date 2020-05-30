@@ -1,24 +1,24 @@
 import React, { useState, Fragment } from 'react'
-import "../css/Letter.css"
+import "./css/Letter.css"
 import "react-bootstrap"
 
 const TemplateDetails = () => {
   const [inputFields, setInputFields] = useState([
       { Name: "", Roll: "" }
     ]);
-  
+
     const handleAddFields = () => {
       const values = [...inputFields];
       values.push({ Name: "", Roll: "" });
       setInputFields(values);
     };
-  
+
     const handleRemoveFields = index => {
       const values = [...inputFields];
       values.splice(index, 1);
       setInputFields(values);
     };
-  
+
     const handleInputChange = (index, event) => {
       const values = [...inputFields];
       if (event.target.name === "firstName") {
@@ -26,10 +26,10 @@ const TemplateDetails = () => {
       } else {
         values[index].Roll = event.target.value;
       }
-  
+
       setInputFields(values);
     };
-  
+
     const handleSubmit = e => {
       e.preventDefault();
       console.log("inputFields", inputFields);
@@ -244,18 +244,18 @@ const TemplateDetails = () => {
                               <div className="form-group">
                                   <div class="row">
                                       <div class="col-sm-5">
-                                          <input 
-                                              className="form-control" 
-                                              type="text" 
-                                              id="Name" 
-                                              name="Name" 
+                                          <input
+                                              className="form-control"
+                                              type="text"
+                                              id="Name"
+                                              name="Name"
                                               value={inputField.firstName}
                                               onChange={event => handleInputChange(index, event)}
                                               placeholder={`Name`}
                                           />
-                                      </div>  
+                                      </div>
                                       <div class="col-sm-5">
-                                          <input 
+                                          <input
                                               className="form-control"
                                               type="text"
                                               id="Roll"
@@ -271,7 +271,7 @@ const TemplateDetails = () => {
                                   </div>
                               </div>
                           </Fragment>
-                      ))}                        
+                      ))}
                   <button type="button" class="btn btn-info" onClick={() => handleAddFields()}>Add</button>
                   <br /><br />
                   <div className="form-btn">
@@ -288,4 +288,3 @@ const TemplateDetails = () => {
 }
 
 export default TemplateDetails;
-

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import React from "react";
 import Table from "./Table";
 import FacultyTable from "./FacultyTable";
@@ -27,7 +29,7 @@ class Dashboard extends React.Component {
       };
       console.log(config);
       axios
-        .post("http://localhost:8080/getUserType", user, config)
+        .post(`${process.env.URL}/getUserType`, user, config)
         .then((response) => {
           var res = response.data;
           this.setState({ loginValue: response.data.userType });

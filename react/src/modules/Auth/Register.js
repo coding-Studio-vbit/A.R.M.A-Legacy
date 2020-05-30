@@ -49,7 +49,7 @@ function Register() {
     e.preventDefault();
     console.log({ values }, contact.email, contact.pnum);
     axios
-      .post("/registerForum", {
+      .post(`${process.env.URL}/registerForum`, {
         registrationData: {
           username: values,
           email: contact.email,

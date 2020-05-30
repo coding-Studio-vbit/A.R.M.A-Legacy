@@ -1,8 +1,10 @@
+require("dotenv").config();
+
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
 
-const Camp = () => {
+const Tatten = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
   const [team_name, setTeamname] = useState("");
   const [designation, setDesignation] = useState("");
@@ -20,7 +22,6 @@ const Camp = () => {
   const [end_hour, setEndhour] = useState("");
   const [end_min, setEndmin] = useState("");
   const [end_meridian, setEndmeridian] = useState("");
-  const [where, setWhere] = useState("");
 
   const handleAddFields = () => {
     const values = [...inputFields];
@@ -63,8 +64,7 @@ const Camp = () => {
       todate,
       end_hour,
       end_min,
-      end_meridian,
-      where
+      end_meridian
     );
   };
 
@@ -75,7 +75,7 @@ const Camp = () => {
 
     axios
       .post(
-        "/campaigning",
+        `${process.env.URL}/teamattendance`,
         {
           designation,
           department,
@@ -94,7 +94,6 @@ const Camp = () => {
           end_meridian,
           letter_body,
           studentdetails,
-          where,
         },
         { responseType: "arraybuffer" }
       )
@@ -105,7 +104,7 @@ const Camp = () => {
           type:
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         });
-        download(file, "Campaigning_Permission.docx");
+        download(file, "Team_Attendance.docx");
       });
   };
 
@@ -116,9 +115,9 @@ const Camp = () => {
           <div className="container">
             <div className="row">
               <div className="booking-form">
-                <form id="txtb" method="POST" action="/campaigning">
+                <form id="txtb" method="POST" action="/teamattendance">
                   <h3 style={{ textAlign: "center" }}>
-                    Permission for Campaigning Inside/Outside College
+                    Team Attendance Permission
                   </h3>
                   <br />
                   <br />
@@ -127,12 +126,21 @@ const Camp = () => {
                       Designation:{" "}
                     </span>
                     <select
+                      required
                       className="form-control"
                       name="designation"
-                      onChange={(e) => setDesignation(e.target.value)}
+                      onChange={(e) => {
+                        e.persist();
+                        setDesignation(e.target.value);
+                      }}
                     >
-                      <option>Head of Department</option>
-                      <option>Director</option>
+                      <option value="" disabled selected hidden>
+                        Select your option
+                      </option>
+                      <option value="Head of Department">
+                        Head of Department
+                      </option>
+                      <option value="Director">Director</option>
                     </select>
                     <span className="select-arrow"></span>
                   </div>
@@ -142,105 +150,125 @@ const Camp = () => {
                       Department:{" "}
                     </span>
                     <select
+                      required
                       className="form-control"
                       name="department"
-                      onChange={(e) => setDepartment(e.target.value)}
+                      onChange={(e) => {
+                        e.persist();
+                        setDepartment(e.target.value);
+                      }}
                     >
-                      <option>
+                      <option value="" disabled selected hidden>
+                        Select your option
+                      </option>
+                      <option value="Department of Computer Science and Engineering">
                         Department of Computer Science and Engineering
                       </option>
-                      <option>Department of Information Technology</option>
-                      <option>
+                      <option value="Department of Information Technology">
+                        Department of Information Technology
+                      </option>
+                      <option value="Department of Electrical and Electronics Engineering">
                         Department of Electrical and Electronics Engineering
                       </option>
-                      <option>
+                      <option value="Department of Electronics and Communication Engineering">
                         Department of Electronics and Communication Engineering
                       </option>
-                      <option>Department of Civil Engineering</option>
-                      <option>Department of Mechanical Engineering</option>
+                      <option value="Department of Civil Engineering">
+                        Department of Civil Engineering
+                      </option>
+                      <option value="Department of Mechanical Engineering">
+                        Department of Mechanical Engineering
+                      </option>
                     </select>
                     <span className="select-arrow"></span>
                   </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="date">
-                      {" "}
-                      Current Date :{" "}
+                      Current Date:{" "}
                     </span>
                     <input
                       className="form-control"
-                      name="date"
                       type="date"
-                      required
+                      name="date"
                       onChange={(e) => setDate(e.target.value)}
+                      required
                     />
                   </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="subject">
-                      Subject :
+                      Subject:{" "}
                     </span>
                     <input
+                      required
                       className="form-control"
+                      type="text"
                       name="subject"
-                      placeholder="Enter Letter Subject"
                       onChange={(e) => setSubject(e.target.value)}
+                      placeholder="Enter subject (ex: Requisition of attendance for Organising Committee)"
                     />
                   </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="respects">
-                      Respects :{" "}
+                      Respects:{" "}
                     </span>
                     <select
+                      required
                       className="form-control"
                       name="respects"
                       onChange={(e) => setRespects(e.target.value)}
                     >
-                      <option>Sir</option>
-                      <option>Ma'am</option>
+                      <option value="" disabled selected hidden>
+                        Select your option
+                      </option>
+                      <option value="Sir">Sir</option>
+                      <option value="Ma'am">Ma'am</option>
                     </select>
                     <span className="select-arrow"></span>
                   </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="team_name">
-                      Forrum/Team name :{" "}
+                      Forum/Team name :{" "}
                     </span>
                     <input
+                      required
                       className="form-control"
                       type="text"
                       name="team_name"
-                      placeholder="Enter name"
                       onChange={(e) => setTeamname(e.target.value)}
+                      placeholder="Enter name"
                     />
                   </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="event_name">
-                      Event Name
+                      Event name :{" "}
                     </span>
                     <input
+                      required
                       className="form-control"
+                      type="text"
                       name="event_name"
-                      placeholder="Enter event name"
                       onChange={(e) => setEventname(e.target.value)}
+                      placeholder="Enter event name"
                     />
                   </div>
                   <br />
                   <div className="form-group">
-                    <span className="form-label" for="where">
-                      Inside / Outside :{" "}
+                    <span className="form-label" for="letter_body">
+                      Letter Body :{" "}
                     </span>
-                    <select
+                    <input
+                      required
                       className="form-control"
-                      name="where"
-                      onChange={(e) => setWhere(e.target.value)}
-                    >
-                      <option>Inside</option>
-                      <option>Outside</option>
-                    </select>
-                    <span className="select-arrow"></span>
+                      type="text"
+                      name="letter_body"
+                      onChange={(e) => setLetterbody(e.target.value)}
+                      placeholder="Describe your Event"
+                    />
                   </div>
                   <br />
                   <span className="form-label">Select Date and Time :</span>
@@ -254,9 +282,9 @@ const Camp = () => {
                         <input
                           className="form-control"
                           name="fromdate"
+                          onChange={(e) => setFromdate(e.target.value)}
                           type="date"
                           required
-                          onChange={(e) => setFromdate(e.target.value)}
                         />
                       </div>
                     </div>
@@ -268,6 +296,7 @@ const Camp = () => {
                               Hour
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="start_hour"
                               onChange={(e) => {
@@ -275,18 +304,21 @@ const Camp = () => {
                                 setStarthour(e.target.value);
                               }}
                             >
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                              <option>11</option>
-                              <option>12</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
@@ -297,6 +329,7 @@ const Camp = () => {
                               Min
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="start_min"
                               onChange={(e) => {
@@ -304,18 +337,21 @@ const Camp = () => {
                                 setStartmin(e.target.value);
                               }}
                             >
-                              <option>00</option>
-                              <option>05</option>
-                              <option>10</option>
-                              <option>15</option>
-                              <option>20</option>
-                              <option>25</option>
-                              <option>30</option>
-                              <option>35</option>
-                              <option>40</option>
-                              <option>45</option>
-                              <option>50</option>
-                              <option>55</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="00">00</option>
+                              <option value="05">05</option>
+                              <option value="10">10</option>
+                              <option value="15">15</option>
+                              <option value="20">20</option>
+                              <option value="25">25</option>
+                              <option value="30">30</option>
+                              <option value="35">35</option>
+                              <option value="40">40</option>
+                              <option value="45">45</option>
+                              <option value="50">50</option>
+                              <option value="55">55</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
@@ -326,6 +362,7 @@ const Camp = () => {
                               AM/PM
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="start_meridian"
                               onChange={(e) => {
@@ -333,8 +370,11 @@ const Camp = () => {
                                 setStartmeridian(e.target.value);
                               }}
                             >
-                              <option>AM</option>
-                              <option>PM</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="AM">AM</option>
+                              <option value="PM">PM</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
@@ -365,6 +405,7 @@ const Camp = () => {
                               Hour
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="end_hour"
                               onChange={(e) => {
@@ -372,18 +413,21 @@ const Camp = () => {
                                 setEndhour(e.target.value);
                               }}
                             >
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                              <option>6</option>
-                              <option>7</option>
-                              <option>8</option>
-                              <option>9</option>
-                              <option>10</option>
-                              <option>11</option>
-                              <option>12</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
@@ -394,6 +438,7 @@ const Camp = () => {
                               Min
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="end_min"
                               onChange={(e) => {
@@ -401,18 +446,21 @@ const Camp = () => {
                                 setEndmin(e.target.value);
                               }}
                             >
-                              <option>00</option>
-                              <option>05</option>
-                              <option>10</option>
-                              <option>15</option>
-                              <option>20</option>
-                              <option>25</option>
-                              <option>30</option>
-                              <option>35</option>
-                              <option>40</option>
-                              <option>45</option>
-                              <option>50</option>
-                              <option>55</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="00">00</option>
+                              <option value="05">05</option>
+                              <option value="10">10</option>
+                              <option value="15">15</option>
+                              <option value="20">20</option>
+                              <option value="25">25</option>
+                              <option value="30">30</option>
+                              <option value="35">35</option>
+                              <option value="40">40</option>
+                              <option value="45">45</option>
+                              <option value="50">50</option>
+                              <option value="55">55</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
@@ -423,6 +471,7 @@ const Camp = () => {
                               AM/PM
                             </span>
                             <select
+                              required
                               className="form-control"
                               name="end_meridian"
                               onChange={(e) => {
@@ -430,27 +479,17 @@ const Camp = () => {
                                 setEndmeridian(e.target.value);
                               }}
                             >
-                              <option>AM</option>
-                              <option>PM</option>
+                              <option value="" disabled selected hidden>
+                                ...
+                              </option>
+                              <option value="AM">AM</option>
+                              <option value="PM">PM</option>
                             </select>
                             <span className="select-arrow"></span>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="letter_body">
-                      About your event body :{" "}
-                    </span>
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="letter_body"
-                      onChange={(e) => setLetterbody(e.target.value)}
-                      placeholder="Enter about Event"
-                    />
                   </div>
                   <br />
                   <span className="form-label">Team Details:</span>
@@ -461,6 +500,7 @@ const Camp = () => {
                         <div class="row">
                           <div class="col-sm-5">
                             <input
+                              required
                               className="form-control"
                               type="text"
                               id="Name"
@@ -474,6 +514,7 @@ const Camp = () => {
                           </div>
                           <div class="col-sm-5">
                             <input
+                              required
                               className="form-control"
                               type="text"
                               id="Roll"
@@ -526,4 +567,4 @@ const Camp = () => {
   );
 };
 
-export default Camp;
+export default Tatten;

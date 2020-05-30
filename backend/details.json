@@ -1,24 +1,17 @@
 {
-  "designation": "Head of Department",
-  "department": "Department of Civil Engineering",
-  "subject": "c",
-  "date": "2020-05-29",
-  "respects": "",
-  "team_name": "fds",
-  "event_name": "fds",
-  "fromdate": "2020-05-28",
-  "hall_name": "fds",
-  "start_hour": "10",
-  "start_min": "55",
-  "start_meridian": "AM",
-  "end_hour": "9",
+  "subject": "Permission for Event Conduction",
+  "date": "2020-05-21",
+  "respects": "Sir",
+  "team_name": "StuTalk",
+  "event_name": "fger",
+  "hall_name": "erherh",
+  "fromdate": "2020-05-29",
+  "todate": "2020-05-30",
+  "start_hour": "9",
+  "start_min": "50",
+  "start_meridian": "PM",
+  "end_hour": "11",
   "end_min": "45",
-  "end_meridian": "AM",
-  "letter_body": "fd",
-  "studentdetails": [
-    {
-      "Name": "fd",
-      "Roll": "fd"
-    }
-  ]
+  "end_meridian": "PM",
+  "letter_body": "ergr"
 }

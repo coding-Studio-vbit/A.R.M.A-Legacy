@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -33,7 +35,7 @@ const Login = () => {
     let un = value;
     let pw = password;
     axios
-      .post("/login", {
+      .post(`${process.env.URL}/login`, {
         user: {
           username: un,
           password: pw,
