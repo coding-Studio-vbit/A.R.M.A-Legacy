@@ -200,7 +200,6 @@ async function registerForum(forum_name, password, email, phone) {
 
 		  hashPassword(password)
 		  .then(password_hash=>{
-
           		client
           		  .query(
           		    "INSERT INTO forums(forum_name,pwd_hash,email,phone_no,actual_name) VALUES ($1,$2,$3,$4,$5);",
@@ -250,7 +249,6 @@ async function registerFaculty(
 
 			hashPassword(password)
 			.then(password_hash=>{
-
           		client
           		  .query(
           		    "INSERT INTO faculty(faculty_name,faculty_roll,faculty_dept,email,phone_no,pwd_hash) VALUES ($1,$2,$3,$4,$5,$6);",
@@ -327,7 +325,7 @@ async function changeForumUsername(forum_name, newUsername) {
     client.connect();
     forum_name = forum_name.toUpperCase();
     client
-      .query("UPDATE forums SET forum_name=$1 WHERE forum_name=$2", [
+      .query("UPDATE forums SET actual_name=$1 WHERE forum_name=$2", [
         newUsername,
         forum_name,
       ])
@@ -380,7 +378,6 @@ async function changeForumPassword(forum_name, oldPassword, newPassword) {
           //old password is correct.
           hashPassword(newPassword)
 		  .then(newPasswordHash=>{
-
           		client
           		  .query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2", [
           		    newPasswordHash,
@@ -420,7 +417,6 @@ async function changeFacultyPassword(faculty_roll, oldPassword, newPassword) {
           if (!stat) return reject(" old password incorrect!");
           //old password is correct.
           hashPassword(newPassword).then(newPasswordHash=>{
-
           		client
           		  .query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2", [
           		    newPasswordHash,
@@ -473,6 +469,7 @@ async function changeFacultyEmail(faculty_roll, newEmail) {
       .catch((err) => reject(err));
   }); //end promise
 }
+
 
 //_____END__OF__MODULE_____//
 
