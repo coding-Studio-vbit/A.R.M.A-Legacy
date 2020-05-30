@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.png";
+import logo from "./images/logo.png";
 import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
-import "./Form.css";
+import "./css/Form.css";
 
 function Register() {
   const Forumlist = [
@@ -49,7 +49,7 @@ function Register() {
     e.preventDefault();
     console.log({ values }, contact.email, contact.pnum);
     axios
-      .post("/registerForum", {
+      .post(`${process.env.REACT_APP_URL}/registerForum`, {
         registrationData: {
           username: values,
           email: contact.email,
