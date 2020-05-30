@@ -327,7 +327,7 @@ async function changeForumUsername(forum_name, newUsername) {
     client.connect();
     forum_name = forum_name.toUpperCase();
     client
-      .query("UPDATE forums SET forum_name=$1 WHERE forum_name=$2", [
+      .query("UPDATE forums SET actual_name=$1 WHERE forum_name=$2", [
         newUsername,
         forum_name,
       ])
@@ -473,6 +473,7 @@ async function changeFacultyEmail(faculty_roll, newEmail) {
       .catch((err) => reject(err));
   }); //end promise
 }
+
 
 //_____END__OF__MODULE_____//
 
