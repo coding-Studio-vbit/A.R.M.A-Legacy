@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React from "react";
 import "./css/table.css";
 import axios from "axios";
@@ -30,7 +28,7 @@ class FacultyTable extends React.Component {
       },
     };
     axios
-      .get(`${process.env.URL}/facultydashboard`, config)
+      .get(`${process.env.REACT_APP_URL}/facultydashboard`, config)
       .then((res) => {
         const persons = res.data;
         this.setState({ persons });

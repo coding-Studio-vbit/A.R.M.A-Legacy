@@ -1,4 +1,3 @@
-require("dotenv").config();
 import React, { useState, Fragment } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
@@ -77,7 +76,7 @@ const CreateRequest = () => {
 
     axios
       .post(
-        `${process.env.URL}/createrequest`,
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
           request_data: {
             subject: request,

@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-require("dotenv").config();
 
 const Camp = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
@@ -76,7 +75,7 @@ const Camp = () => {
 
     axios
       .post(
-        `${process.env.URL}/campaigning`,
+        `${process.env.REACT_APP_URL}/campaigning`,
         {
           designation,
           department,

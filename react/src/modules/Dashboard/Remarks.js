@@ -1,4 +1,3 @@
-require("dotenv").config();
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -42,7 +41,7 @@ const Remarks = (props) => {
 
     //fetch data from server
     axios
-      .get(`${process.env.URL}/getrequest`, config)
+      .get(`${process.env.REACT_APP_URL}/getrequest`, config)
       .then((res) => {
         var data = res.data[0];
         setFrom(data.forum_name);
@@ -87,7 +86,7 @@ const Remarks = (props) => {
     //send data to server
     axios
       .put(
-        `${process.env.URL}/createrequest`,
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
           forum_name: From,
           request_id: JSON.parse(localStorage.getItem("req_id")),
@@ -125,7 +124,7 @@ const Remarks = (props) => {
     //send data to server
     axios
       .post(
-        `${process.env.URL}/approverequest`,
+        `${process.env.REACT_APP_URL}/approverequest`,
         {
           request_id: JSON.parse(localStorage.getItem("req_id")),
           status: temp,

@@ -1,4 +1,3 @@
-require("dotenv").config();
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -19,7 +18,7 @@ const FacultyLogin = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.URL}/loginFaculty`, {
+      .post(`${process.env.REACT_APP_URL}/loginFaculty`, {
         user: {
           username: rollNo,
           password: password,

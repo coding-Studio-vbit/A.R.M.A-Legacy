@@ -74,7 +74,7 @@ const PassModal = (props) => {
                   console.log(config);
                   axios
                     .post(
-                      `${process.env.URL}/changeForumPassword`,
+                      `${process.env.REACT_APP_URL}/changeForumPassword`,
                       { newPassword: NewPassword, oldPassword: OldPassword },
                       config
                     )

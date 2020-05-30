@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import download from "js-file-download";
-require("dotenv").config();
 
 const Evenue = () => {
   const [team_name, setTeamname] = useState("");

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import download from "js-file-download";
-require("dotenv").config();
 
 const Econ = () => {
   const [team_name, setTeamname] = useState("");
@@ -46,7 +45,7 @@ const Econ = () => {
 
     axios
       .post(
-        `${process.env.URL}/conductevent`,
+        `${process.env.REACT_APP_URL}/conductevent`,
         {
           team_name,
           date,

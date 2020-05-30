@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React from "react";
 import "./css/nav.css";
 import { Nav, Navbar } from "react-bootstrap";
@@ -21,7 +19,7 @@ const Navi = () => {
       };
       console.log(config);
       axios
-        .post(`${process.env.URL}/logout`, user, config)
+        .post(`${process.env.REACT_APP_URL}/logout`, user, config)
         .then((response) => {
           console.log(response);
           localStorage.clear();

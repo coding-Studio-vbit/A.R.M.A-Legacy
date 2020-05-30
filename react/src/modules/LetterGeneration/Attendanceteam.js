@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
@@ -75,7 +73,7 @@ const Tatten = () => {
 
     axios
       .post(
-        `${process.env.URL}/teamattendance`,
+        `${process.env.REACT_APP_URL}/teamattendance`,
         {
           designation,
           department,

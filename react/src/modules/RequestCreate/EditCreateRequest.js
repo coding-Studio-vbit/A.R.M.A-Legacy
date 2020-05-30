@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React, { useState, Fragment } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
@@ -55,7 +53,7 @@ const EditCreateRequest = () => {
   const submit = (e) => {
     axios
       .post(
-        `${process.env.URL}/createrequest`,
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
           request,
           Faculty,
@@ -76,7 +74,7 @@ const EditCreateRequest = () => {
   const update = (e) => {
     axios
       .put(
-        `${process.env.URL}/createrequest`,
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
           request,
           Faculty,
@@ -97,7 +95,7 @@ const EditCreateRequest = () => {
   const remove = (e) => {
     axios
       .delete(
-        `${process.env.URL}/createrequest`,
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
           request,
           Faculty,

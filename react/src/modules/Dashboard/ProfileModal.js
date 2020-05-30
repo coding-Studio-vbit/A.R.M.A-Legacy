@@ -85,7 +85,7 @@ const ProfileModal = (props) => {
                   console.log(config);
                   axios
                     .post(
-                      `${process.env.URL}/changeForumEmail`,
+                      `${process.env.REACT_APP_URL}/changeForumEmail`,
                       { newEmail: Email },
                       config
                     )

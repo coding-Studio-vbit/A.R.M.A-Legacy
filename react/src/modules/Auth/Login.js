@@ -1,12 +1,10 @@
-require("dotenv").config();
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import logo from "./logo.png";
+import logo from "./images/logo.png";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
-import "./Form.css";
+import "./css/Form.css";
 
 const Login = () => {
   const Forumlist = [
@@ -35,7 +33,7 @@ const Login = () => {
     let un = value;
     let pw = password;
     axios
-      .post(`${process.env.URL}/login`, {
+      .post(`${process.env.REACT_APP_URL}/login`, {
         user: {
           username: un,
           password: pw,

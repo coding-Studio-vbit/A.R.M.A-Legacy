@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React from "react";
 import "./css/table.css";
 import axios from "axios";
@@ -36,7 +34,7 @@ class Table extends React.Component {
       };
       console.log(config);
       axios
-        .delete(`${process.env.URL}/createrequest`, config)
+        .delete(`${process.env.REACT_APP_URL}/createrequest`, config)
         .then((response) => {
           console.log("Deleted");
         })
@@ -57,7 +55,7 @@ class Table extends React.Component {
       },
     };
     axios
-      .get(`${process.env.URL}/forumdashboard`, config)
+      .get(`${process.env.REACT_APP_URL}/forumdashboard`, config)
       .then((res) => {
         const persons = res.data;
         this.setState({ persons });

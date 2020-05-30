@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-require("dotenv").config();
 import logo from "./images/logo.png";
 import axios from "axios";
 import Links from "./Links";
@@ -37,7 +36,7 @@ const FacultyRegister = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     axios
-      .post(`${process.env.URL}/registerFaculty`, {
+      .post(`${process.env.REACT_APP_URL}/registerFaculty`, {
         registrationData: {
           faculty_name: contact.name,
           faculty_dept: dept,

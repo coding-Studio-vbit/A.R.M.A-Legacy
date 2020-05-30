@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 import React from "react";
 import axios from "axios";
 import profilePic from "./images/profilePic.png";
@@ -37,15 +35,17 @@ class Profile extends React.Component {
         Authorization: "Bearer " + accessToken,
       },
     };
-    axios.get(`${process.env.URL}/getForumDetails`, config).then((res) => {
-      const persons = res.data;
-      this.setState({
-        profilename: res.data.actual_name,
-        profileemail: res.data.email,
-        profilephone: res.data.phone_no,
+    axios
+      .get(`${process.env.REACT_APP_URL}/getForumDetails`, config)
+      .then((res) => {
+        const persons = res.data;
+        this.setState({
+          profilename: res.data.actual_name,
+          profileemail: res.data.email,
+          profilephone: res.data.phone_no,
+        });
+        console.log(persons);
       });
-      console.log(persons);
-    });
   }
   render() {
     const items = this.state.persons.map((item) => {

@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-require("dotenv").config();
 
 const Emeet = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
@@ -74,7 +73,7 @@ const Emeet = () => {
 
     axios
       .post(
-        `${process.env.URL}/conductmeet`,
+        `${process.env.REACT_APP_URL}/conductmeet`,
         {
           designation,
           department,
