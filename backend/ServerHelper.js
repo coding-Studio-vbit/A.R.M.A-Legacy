@@ -1253,7 +1253,7 @@ async function getFacultyDetails(req)
 
 		users.fetchAccessToken(req)
 		.then(token=>{
-			return users.authenticateToken(token);
+			return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
 		})
 		.then(username=>{
 			var client = new Client();
