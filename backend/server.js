@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const body_parser = require("body-parser");
 const users = require("./node/users.js");
+const dash = require("./node/DashboardQueries.js");
 const dataValidator = require("./node/dataValidator.js");
 const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
@@ -401,8 +402,7 @@ app.post("/approverequest", (req, res) => {
 });
 
 app.get("/forumdashboard", async (req, res) => {
-  users
-    .fetchAccessToken(req)
+  users.fetchAccessToken(req)
     .then((token) => {
       return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
     })
@@ -429,6 +429,15 @@ app.get("/forumdashboard", async (req, res) => {
       return res.status(400).json({ err: error });
     });
 });
+
+// app.get("/forumdashboard", async (req, res) => {
+//   dash.getForumTable(req).then(
+//     console.log(successful)
+//   ).catch((err) => {
+//     console.log(err)
+//   })
+// });
+
 
 app.get("/getrequest", async (req, res) => {
   if (!req.query || !req.query.request_id)
