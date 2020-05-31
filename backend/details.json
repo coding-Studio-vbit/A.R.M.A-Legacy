@@ -1,28 +1,17 @@
 {
-  "designation": "Director",
-  "department": "Department of Information Technology",
   "subject": "Permission for Event Conduction",
-  "date": "2020-05-24",
-  "respects": "Ma'am",
+  "date": "2020-05-21",
+  "respects": "Sir",
   "team_name": "StuTalk",
-  "event_name": "fcdfhfb",
-  "fromdate": "2020-05-27",
+  "event_name": "fger",
+  "hall_name": "erherh",
+  "fromdate": "2020-05-29",
   "todate": "2020-05-30",
-  "start_hour": "5",
-  "start_min": "40",
-  "start_meridian": "AM",
-  "end_hour": "8",
-  "end_min": "30",
+  "start_hour": "9",
+  "start_min": "50",
+  "start_meridian": "PM",
+  "end_hour": "11",
+  "end_min": "45",
   "end_meridian": "PM",
-  "letter_body": "fbdfbfdhbdfn",
-  "studentdetails": [
-    {
-      "Name": "Aaris",
-      "Roll": "18P61A05D7"
-    },
-    {
-      "Name": "Yash",
-      "Roll": "18P61A05C2"
-    }
-  ]
+  "letter_body": "ergr"
 }

@@ -21,12 +21,12 @@
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.MTdwNjFhMDU4NA.xtokuKplZMtmJ_GKjK61QR5UZV9fLqNLtTA6LSQKDbs",
     "userType": "FACULTY"
   },
-  "IEEE-VBIT": {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.SUVFRS1WQklU.jDNFa5SL5DKwZI8N6Ul5Ri2jNooP-q5uInKcoMtNO-I",
-    "userType": "FORUM"
-  },
   "STUTALK": {
     "accessToken": "eyJhbGciOiJIUzI1NiJ9.U1RVVEFMSw.wC24KmKQmiWiVJha_ATQHl1WqaOuLkrrcLosofswyqw",
+    "userType": "FORUM"
+  },
+  "CODINGSTUDIO": {
+    "accessToken": "eyJhbGciOiJIUzI1NiJ9.Q09ESU5HU1RVRElP.xPXSKV8gyEmY1X4pcqorKxmDcGAkCPrSCRLS6JlqeTc",
     "userType": "FORUM"
   }
 }

@@ -9,6 +9,7 @@ request_data is stringified json object containing data of the letter (letter fi
 rec_arr is an array of roll numbers of the requested faculty
 */
 function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
+
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
