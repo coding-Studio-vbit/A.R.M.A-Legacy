@@ -22,6 +22,7 @@ import Tatten from "./components/LetterTemplates/Attendanceteam";
 import Patten from "./components/LetterTemplates/AttendanceParticipants";
 import Emeet from "./components/LetterTemplates/conductmeet";
 import Profile from "./components/Profile";
+import FacultyProfile from "./components/FacultyProfile";
 import CreateRequest from "./components/CreateRequest";
 import EditCreateRequest from "./components/EditCreateRequest";
 
@@ -34,6 +35,7 @@ function App() {
             <Route exact path="/" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
+            <Route path="/facultyprofile" component={FacultyProfile} />
             <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
             <ProtectedRoute
               path="/Dashboard/TemplateDetails"

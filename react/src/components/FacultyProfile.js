@@ -5,11 +5,13 @@ import ProfileModal from './ProfileModal';
 import PassModal from './PassModal';
 import NameModal from './NameModal';
 
-class Profile extends React.Component{
+class FacultyProfile extends React.Component{
   state = {
-    profilename:"",
-    profileemail:"",
-    profilephone:"",
+    facultyname:"",
+    facultyroll:"",
+    facultydept:"",
+    facultyemail:"",
+    facultyphone:"",
 
     persons: [
     ],
@@ -17,17 +19,17 @@ class Profile extends React.Component{
     Passwordon:undefined,
     Nameon: undefined,
   };
-  newElement=()=>{
+  newEle1=()=>{
     this.setState(()=>({
       Editingon:true
     }))
   }
-  newElement1=()=>{
+  newEle2=()=>{
     this.setState(()=>({
       Passwordon:true
     }))
   }
-  newElement2=()=>{
+  newEle3=()=>{
     this.setState(()=>({
       Nameon:true
     }))
@@ -42,10 +44,10 @@ componentWillMount() {
       'Authorization': 'Bearer ' + accessToken
       }
     }
-      axios.get(`http://localhost:8080/getForumDetails`,config)
+      axios.get(`http://localhost:8080/getFacultyDetails`,config)
       .then(res => {
         const persons = res.data;
-        this.setState({ profilename:res.data.actual_name,profileemail:res.data.email,profilephone:res.data.phone_no });
+        this.setState({ facultyname:res.data.actual_name,facultyemail:res.data.roll,facultyemail:res.data.dept,facultyemail:res.data.email,facultyphone:res.data.phone_no,});
         console.log(persons);
       })
   }
@@ -54,6 +56,8 @@ componentWillMount() {
 
        <tr>
           <td>{item.Name}</td>
+          <td>{item.Roll}</td>
+          <td>{item.Dept}</td>
           <td>{item.Email}</td>
           <td>{item.Password}</td>
           <td>{item.Phone}</td>
@@ -79,28 +83,40 @@ componentWillMount() {
 
            <tr>
           <td>Name</td>
-    <td colSpan="2">{this.state.profilename}</td>
+    <td colSpan="2">{this.state.facultyname}</td>
           <td>
-          <button onClick={this.newElement2}>Edit</button>
+          <button onClick={this.newEle}>Edit</button>
+          </td>
+          </tr>
+          <tr>
+          <td>Roll</td>
+    <td colSpan="2">{this.state.facultyroll}</td>
+    <td>
+    </td>
+          </tr>
+          <tr>
+          <td>Dept</td>
+    <td colSpan="2">{this.state.facultydept}</td>
+          <td>
           </td>
           </tr>
           <tr>
           <td>Email</td>
-    <td colSpan="2">{this.state.profileemail}</td>
+    <td colSpan="2">{this.state.facultyemail}</td>
           <td>
-          <button onClick={this.newElement}>Edit</button>
+          <button onClick={this.newEle2}>Edit</button>
           </td>
            </tr>
            <tr>
           <td>Password</td>
-          <td colSpan="2"></td>
+          <td colSpan="2">xxxxxxxx</td>
           <td>
-          <button onClick={this.newElement1}>Edit</button>
+          <button onClick={this.newEle3}>Edit</button>
           </td>
            </tr>
            <tr>
           <td>Phone</td>
-    <td colSpan="2">{this.state.profilephone}</td>
+    <td colSpan="2">{this.state.facultyphone}</td>
           <td>
           </td>
            </tr>
@@ -134,4 +150,4 @@ const Action = (props) => {
   );
 };
 
-export default  Profile;
+export default  FacultyProfile;
