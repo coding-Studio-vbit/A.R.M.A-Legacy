@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import profilePic from '../images/profilePic.png';
+import profilePic from './images/profilePic.png';
 import ProfileModal from './ProfileModal';
 import PassModal from './PassModal';
 import NameModal from './NameModal';
@@ -47,7 +47,8 @@ componentWillMount() {
       axios.get(`http://localhost:8080/getFacultyDetails`,config)
       .then(res => {
         const persons = res.data;
-        this.setState({ facultyname:res.data.actual_name,facultyemail:res.data.roll,facultyemail:res.data.dept,facultyemail:res.data.email,facultyphone:res.data.phone_no,});
+        console.log(res.data);
+        this.setState({ facultyname:res.data.faculty_name,facultyroll:res.data.faculty_roll,facultydept:res.data.faculty_dept,facultyemail:res.data.email,facultyphone:res.data.phone_no,});
         console.log(persons);
       })
   }
@@ -85,7 +86,7 @@ componentWillMount() {
           <td>Name</td>
     <td colSpan="2">{this.state.facultyname}</td>
           <td>
-          <button onClick={this.newEle}>Edit</button>
+          <button onClick={this.newEle3}>Edit</button>
           </td>
           </tr>
           <tr>
@@ -104,14 +105,14 @@ componentWillMount() {
           <td>Email</td>
     <td colSpan="2">{this.state.facultyemail}</td>
           <td>
-          <button onClick={this.newEle2}>Edit</button>
+          <button onClick={this.newEle1}>Edit</button>
           </td>
            </tr>
            <tr>
           <td>Password</td>
           <td colSpan="2">xxxxxxxx</td>
           <td>
-          <button onClick={this.newEle3}>Edit</button>
+          <button onClick={this.newEle2}>Edit</button>
           </td>
            </tr>
            <tr>

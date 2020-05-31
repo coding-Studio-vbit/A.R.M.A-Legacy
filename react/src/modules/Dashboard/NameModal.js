@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "../css/ProfileModal.css";
+import "./css/ProfileModal.css";
 const NameModal =(props)=>{
     const [
         Name,setName
