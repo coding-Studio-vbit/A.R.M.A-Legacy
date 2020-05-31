@@ -75,7 +75,7 @@ const Camp = () => {
 
     axios
       .post(
-        "/campaigning",
+        `${process.env.REACT_APP_URL}/campaigning`,
         {
           designation,
           department,
