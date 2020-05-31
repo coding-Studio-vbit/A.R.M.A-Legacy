@@ -442,9 +442,7 @@ async function deleteRequest(req)
 }
 async function updateRequest(req)
 {
-
 	return new Promise((resolve, reject)=>{
-		
 	var res = {};
 	//set status, set response object
 		  users
@@ -453,30 +451,83 @@ async function updateRequest(req)
 		      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
 		    })
 		    .then((username) => {
-		      requestQueries.changeRequest(
-		        req.body.forum_name,
-		        req.body.request_data,
-		        req.body.status,
-		        req.body.remarks,
-		        req.body.request_id,
-		        (error, status) => {
-		          console.log(error, status);
-		          if (error) {
-		            throw { err: error };
-		          }
-		        }
-		      );
-			  res.status = 200;
-			  res.response = {message: "Updated successfully!"};
-			  return resolve(res);
-		    })
-		    .catch((error) => {
+				//get user type.
+
+				var fileData = fs.readFileSync("validkeys.json");
+				fileData = JSON.parse(fileData.toString());
+				const userType = fileData[username].userType;
+
+				if(userType == 'FORUM')
+				{
+					//user is forum
+					//ignore status update, and remarks update. So we make them undefined
+					//check if the request_id is their own.this is done in the changeRequest query itself.
+		      		requestQueries.changeRequest(
+		      		  username,
+		      		  req.body.request_data,
+		      		  undefined,
+		      		  undefined,
+		      		  req.body.request_id,
+		      		  (error, status) => {
+		      		    console.log(error, status);
+		      		    if (error) {
+		      		      throw { err: error };
+		      		    }
+		      		  }
+		      		);
+			  		res.status = 200;
+			  		res.response = {message: "Updated successfully!"};
+					return resolve(res);
+				}
+				else
+				{
+					//user is faculty
+					//update status and remarks
+					//check if request_id is their own.
+					var client = new Client();
+					client.connect();
+					client.query("SELECT request_id from requests WHERE request_id=$1 AND request_id IN (SELECT request_id from recipients WHERE faculty_roll=$2)",[req.body.request_id, username])
+					.then((data)=>{
+						if(data.rows.length == 0)
+						{
+							res.status = 401;
+							res.response = {err:"Unauthorized!"};
+							client.end();
+							return resolve(res);
+						}
+							client.end();
+		      				requestQueries.changeRequest(
+		      				  req.body.forum_name,
+		      				  req.body.request_data,
+		      				  req.body.status,
+		      				  req.body.remarks,
+		      				  req.body.request_id,
+		      				  (error, status) => {
+		      				    console.log(error, status);
+		      				    if (error) {
+		      				      throw { err: error };
+		      				  }else
+							  {
+								res.status = 200;
+								res.response = {message:"Update Successful"}
+								return resolve(res);
+							  }
+		      				}
+		      			 );
+					})                                           				
+					.catch(error=>{                              				
+						res.status = 500;                        				
+						res.response = {err:"Internal Database error!"}
+						return resolve(res);                     				
+					})                                           				
+				}                                                				
+		    })                                                   				
+		    .catch((error) => {                                  				
 				res.status = 400;
 				res.response = {err:error};
 			  return resolve(res);
 		    });
 	})
-
 }
 async function approveRequest(req)
 {
