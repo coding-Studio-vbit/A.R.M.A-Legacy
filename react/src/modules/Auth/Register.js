@@ -6,23 +6,12 @@ import Links from "./Links";
 import "./css/Form.css";
 
 function Register() {
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-    "ISE",
-  ];
   const [contact, setContact] = useState({
     email: "",
     cemail: "",
     pnum: "",
   });
-  const [values, setValue] = useState(Forumlist[0]);
+  const [values, setValue] = useState("");
   const [registered, isRegistered] = useState(true);
   const [error, setError] = useState("");
   const [isMessage, setMessage] = useState(false);
@@ -90,17 +79,12 @@ function Register() {
             <span className="form-label" htmlFor="department">
               Forumlist:{" "}
             </span>
-            <select
+            <input
+              type="text"
               className="form-control"
-              name="value"
+              placeholder="ForumName"
               onChange={(e) => setValue(e.target.value)}
-            >
-              {Forumlist.map((club) => (
-                <option> {club} </option>
-              ))}
-            </select>
-
-            <span className="select-arrow"></span>
+            />
           </div>
           <div className="form-group">
             <span className="form-label" htmlFor="email">
