@@ -11,6 +11,8 @@ const fs = require("fs")
 	------------
 
 	getForumDetails
+	getFacultyDetails
+	getRegisteredForums
 	login
 	loginFaculty
 	logout
@@ -40,9 +42,31 @@ const fs = require("fs")
 	changeFacultyEmail
 */
 
+async function getRegisteredForums(req)
+{
+	return new Promise((resolve, reject)=>{
+		var res = {}
+		var client = new Client();
+		client.connect();
+		client.query("SELECT actual_name,forum_name FROM forums;")
+		.then((data)=>{
+			client.end();
+			res.status = 200;
+			res.response = data.rows;
+			return resolve(res);
+		})
+		.catch(error=>{
+			res.status = 500;
+			console.log(error)
+			client.end();
+			res.response= {err:"Internal Database Error"}
+			return resolve(res);
+		})
+	});
+}
+
 async function getForumDetails(req)
 {
-
 	return new Promise((resolve, reject)=>{
 		
 			var res = {};
@@ -1304,5 +1328,6 @@ module.exports = {
 	changeFacultyPassword,
 	changeForumEmail,
 	changeFacultyEmail,
-	getFacultyDetails
+	getFacultyDetails,
+	getRegisteredForums
 }
