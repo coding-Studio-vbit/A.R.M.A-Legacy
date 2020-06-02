@@ -62,6 +62,13 @@ app.get("/getForumDetails",(req,res)=>{
 						console.log(error);
 						return res.status(500).json({err:error});
 					}
+          if(data.rows.length===0){
+    				return res.json({
+  						actual_name: " ",
+  						email: " ",
+  						phone_no: " "
+  					});
+    			}
 					res.json({
 						actual_name: data.rows[0].actual_name,
 						email: data.rows[0].email,
@@ -355,7 +362,7 @@ app.delete("/createrequest", (req, res) => {
 });
 
 app.put("/createrequest", (req, res) => {
-  console.log(req)
+  console.log(req.body.status)
   users.fetchAccessToken(req, (error, token)=>{
     if (error){
       return res.status(400).json({err: error})
@@ -399,7 +406,7 @@ app.post("/approverequest", (req,res) => {
 
   		      var client = new Client();
   		      client.connect();
-
+            console.log(data[username].userType)
 
   		      client.query('update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)',[req.body.status, req.body.request_id,username],
   		      (error,data)=>{
@@ -459,31 +466,18 @@ app.get("/forumdashboard", async (req, res) => {
     );
   });
 });
-
-<<<<<<< HEAD
-app.get(`/getrequest/`, async (req, res) => {
-  // console.log(req.params.id)
-=======
 app.get("/getrequest", async (req, res) => {
   console.log(req.query.request_id)
->>>>>>> yasaswiraj-master
   users.fetchAccessToken(req, (err, token) => {
     if (err) return res.status(400).json({ err: "couldnt find any token!" });
     users.authenticateToken(
       token,
       process.env.SECRET_ACCESS_TOKEN,
       (err, forum_name) => {
-<<<<<<< HEAD
-        
-		if (err) return res.status(400).json({ err: "Invalid Token!" });
-		
-		// if(!req.body.request_id) return res.status(400).json({err:'Invalid request! :('});
-=======
 
 		if (err) return res.json({ err: "Invalid Token!" });
 
 		if(!req.query.request_id) return res.json({err:'Invalid request! :('});
->>>>>>> yasaswiraj-master
 
         try {
           console.log(req);
@@ -492,11 +486,7 @@ app.get("/getrequest", async (req, res) => {
           client
             .query(
               "select * from requests where request_id=$1",
-<<<<<<< HEAD
-              [req.params.id]
-=======
               [req.query.request_id]
->>>>>>> yasaswiraj-master
             )
             .then((data) => {
               if(data.rowCount === 0){
@@ -627,9 +617,8 @@ app.post("/registerForum", (req, res) => {
               //now create a new record in the registration request table.
               users.newForumRegistrationRequest(
                 data.username,
-                data.email,
                 data.phone,
-				data.actual_name,
+                data.email,
                 (error, st) => {
                   if (error)
                     return console.log(

@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
+import React from 'react';
 import axios from 'axios';
 import profilePic from '../images/profilePic.png';
 import ProfileModal from './ProfileModal';
 import PassModal from './PassModal';
+import Nav from './Navi';
 
 class Profile extends React.Component{
   state = {
@@ -54,9 +55,8 @@ componentWillMount() {
 
              )
     })
-    
-    return (
 
+    return (
       <div class="containerz" style={{textAlign: "center" }}>
         <div className="profile-pic">
             <img src={profilePic} alt="Logo" style={{ width: "150px", height: "150px" }}/>
@@ -70,7 +70,7 @@ componentWillMount() {
            <th colspan="1" style={{fontSize:"40px"}}>Profile</th>
            </tr>
            </thead>
-           
+
            <tr>
           <td>Name</td>
     <td colSpan="2">{this.state.profilename}</td>
@@ -108,7 +108,6 @@ componentWillMount() {
           Editingon={this.state.Passwordon} />
 
           </div>
-
           </div>
     )
   }
