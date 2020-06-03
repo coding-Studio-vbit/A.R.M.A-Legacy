@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "designation": "",
   "department": "",
   "subject": "Permission For Codecraft",
@@ -19,6 +20,29 @@
     {
       "Name": "dajjahdad",
       "Roll": "adaddas"
+=======
+  "designation": "Director",
+  "department": "Department of Electronics and Communication Engineering",
+  "subject": "Permission for Event Conduction",
+  "date": "2020-05-14",
+  "respects": "Ma'am",
+  "team_name": "StuTalk",
+  "event_name": "fcdfhfb",
+  "fromdate": "2020-05-14",
+  "todate": "2020-05-27",
+  "start_hour": "7",
+  "start_min": "25",
+  "start_meridian": "PM",
+  "end_hour": "7",
+  "end_min": "30",
+  "end_meridian": "PM",
+  "letter_body": "fbdfbfdhbdfn",
+  "where": "Outside",
+  "studentdetails": [
+    {
+      "Name": "Yash",
+      "Roll": "18P61A05C2"
+>>>>>>> 2e2611159e222b170114e028fbaeb3216322a3e6
     }
   ]
 }

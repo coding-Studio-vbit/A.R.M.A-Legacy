@@ -66,13 +66,13 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 // let details = {
 //             designation: "HOD",
 //             department: "CSE",
-//             subject: "Permission for attendance for codeCraft 2.0 ",
+//             subject: "Permission for attendance for codeFest ",
 //             date: "today",
 //             respects: "Sir",
 //             participants:[{ name:'Yasaswiraj', roll:'18P61A05C2', check:true }, { name:'Aaris', roll:'18P61A05D7', check:true }, { name:'SaiKiran', roll:'18P61A05J1', check:true }, { name:'Sarvanan', roll:'17P61A05G4', check:true }, { name:'Axai', roll:'17P61A0543', check:true },
 //                         { name:'Yasaswiraj', roll:'18P61A05C2', check:true }, { name:'Aaris', roll:'18P61A05D7', check:true }, { name:'SaiKiran', roll:'18P61A05J1', check:true }, { name:'Sarvanan', roll:'17P61A05G4', check:true }, { name:'Axai', roll:'17P61A0543', check:true }],
 //             facilities:[{facility:'new TnP',check:true},{facility:'Chetana',check:true}],
-//             description:"A competitive programming event aimming to inculcate coding culture among students of VBIT."
+//             description:"A event aimming to inculcate coding culture among students of VBIT."
 // }
 // let data = JSON.stringify(details);
 // addRequest('CODINGSTUDIO','943215',data,['18P61A05C2'],(err,state) => {
