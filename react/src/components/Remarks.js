@@ -145,7 +145,7 @@ axios({
     <td>{count++}</td>
     <td>{item.name}</td>
     <td>{item.roll}</td>
-    <td><input  onChange={event =>{
+    <td><input  className="in" onChange={event =>{
 
         let checked=event.target.checked;
 
@@ -170,7 +170,7 @@ axios({
         <td>{f_count++}</td>
         <td>{item.facility}</td>
 
-        <td><input  onChange={event =>{
+        <td><input className="in"  onChange={event =>{
 
             let checked=event.target.checked;
 
@@ -194,12 +194,12 @@ return(
       <Nav/>
       <div Classname="Con">
       <Container>
-        <center><h1>Letter Info</h1></center>
+        <center><h1 className="title">Letter Info</h1></center>
   <Row>
     <Col>
-    <Row><h3><span>From : </span>{From}</h3></Row>
-    <Row><h3><span>Subject : </span>{Subject}</h3></Row>
-    <Row><h5><span>Description : </span>{Description}</h5></Row>
+    <Row><h3 className="content"><span>From : </span>{From}</h3></Row>
+    <Row><h3 className="content"><span>Subject : </span>{Subject}</h3></Row>
+    <Row><h5 className="content"><span>Description : </span>{Description}</h5></Row>
     <label>Remarks : </label>
     <Row><textarea value={Text.text} onChange={handleInput} cols={80} rows={6} placeholder="Enter your Remarks here..."/></Row>
     <Button className='Rebtn' variant="primary" onClick={Selected} style={{"marginBottom":"50px"}}>Request changes</Button>
@@ -208,7 +208,7 @@ return(
 
     <Col>
     <Row><Col><i class="fas fa-chevron-circle-left" style={{"cursor":"pointer","color":"grey"}} onClick={chTable}></i></Col>
-    <Col style={{"padding":"0px"}}><center>{PartTable?<h4>Participants</h4>:<h4>Facilities</h4>}</center></Col>
+    <Col style={{"padding":"0px"}}><center>{PartTable?<h4 className="tab">Participants</h4>:<h4 className="tab">Facilities</h4>}</center></Col>
     <Col>
     <i class="fas fa-chevron-circle-right" style={{"cursor":"pointer","color":"grey"}} onClick={chgTable}></i></Col></Row><div className="Table">
 
@@ -219,7 +219,7 @@ return(
       <th>#</th>
       <th>Name</th>
       <th>Roll No</th>
-      <th>Approve<input onChange={event =>{
+      <th>Approve<input className="in" onChange={event =>{
 
       let checked=event.target.checked;
       setPeople(
@@ -239,7 +239,7 @@ return(
     <tr>
       <th>#</th>
       <th>Facilities</th>
-      <th>Approve<input onChange={event =>{
+      <th>Approve<input className="in" onChange={event =>{
 
       let checked=event.target.checked;
       setFacility(

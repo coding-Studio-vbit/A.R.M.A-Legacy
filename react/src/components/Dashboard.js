@@ -39,8 +39,8 @@ class Dashboard extends React.Component{
 
   render(){
 
-    const loginValue=this.state.loginValue;
-    // const login="FACULTY";
+     const loginValue=this.state.loginValue;
+    //  const loginValue="FACULTY";
 
     switch (loginValue) {
 
