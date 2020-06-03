@@ -16,6 +16,7 @@ const fs = require("fs")
 	login
 	loginFaculty
 	logout
+	forgotPassword
 	facultydashboard
 	createrequestPOST
 	createrequestDELETE
@@ -41,6 +42,32 @@ const fs = require("fs")
 	changeForumEmail
 	changeFacultyEmail
 */
+
+
+async function forgotPassword(req)
+{
+	// non-authenticated endpoint.
+	return new Promise((resolve, reject)=>{
+		var res = {};
+		if(!req.body.userType || !req.body.username)
+		{
+			res.status = 400;
+			res.response = {err:"Invalid number of arguments!"};
+			return resolve(res);
+		}
+		users.forgotPassword(req.body.userType, req.body.username.toUpperCase())
+		.then(state=>{
+			res.status = 200;
+			res.response = {message: "mail sent successfully to registered email."}
+			return resolve(res);
+		})
+		.catch(error=>{
+			res.status = 400;
+			res.response = {err: error};
+			return resolve(res);
+		})
+	});
+}
 
 async function getRegisteredForums(req)
 {
@@ -1310,6 +1337,7 @@ module.exports = {
 	loginForums,
 	loginFaculty,
 	logout,
+	forgotPassword,
 	facultyDashboard,
 	makeNewRequest,
 	deleteRequest,
