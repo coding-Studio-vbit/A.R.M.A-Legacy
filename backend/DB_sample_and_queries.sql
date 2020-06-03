@@ -11,7 +11,8 @@ CREATE TABLE forums(
 	forum_name varchar(128) PRIMARY KEY,
 	pwd_hash varchar(128),
 	email varchar(128) UNIQUE,
-	phone_no varchar(11)
+	phone_no varchar(11),
+	actual_name varchar(128) UNIQUE NOT NULL
 );
 
 Creating the Faculty table:
