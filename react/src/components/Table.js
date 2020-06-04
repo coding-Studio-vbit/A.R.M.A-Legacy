@@ -99,6 +99,7 @@ class Table extends React.Component {
            </tbody>
            </table>
           </div>
+         
         </div>
       </div>
     );

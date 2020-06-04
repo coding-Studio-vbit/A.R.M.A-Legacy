@@ -1,4 +1,26 @@
 {
+<<<<<<< HEAD
+  "designation": "",
+  "department": "",
+  "subject": "Permission For Codecraft",
+  "date": "2020-05-08",
+  "respects": "Sir",
+  "team_name": "Cs",
+  "event_name": "codecraft",
+  "fromdate": "2020-05-30",
+  "todate": "2020-05-14",
+  "start_hour": "11",
+  "start_min": "",
+  "start_meridian": "",
+  "end_hour": "5",
+  "end_min": "",
+  "end_meridian": "",
+  "letter_body": "",
+  "studentdetails": [
+    {
+      "Name": "dajjahdad",
+      "Roll": "adaddas"
+=======
   "designation": "Director",
   "department": "Department of Information Technology",
   "subject": "Permission for Event Conduction",
@@ -23,6 +45,7 @@
     {
       "Name": "Yash",
       "Roll": "18P61A05C2"
+>>>>>>> 2e2611159e222b170114e028fbaeb3216322a3e6
     }
   ]
 }
