@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import logo from "./images/logo.png";
-import Links from "./Links";
+import { useHistory, Link } from "react-router-dom";
 import "./css/Form.css";
-
+import ForgotPassword from "./ForgotPassword";
 const FacultyLogin = () => {
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [rollNo, setRollNo] = useState("");
   const [error, setError] = useState("");
+  const [modalShow, setModalShow] = useState(false);
   useEffect(() => {
     if (error !== "") {
       setTimeout(() => setError(""), 7000);
@@ -49,58 +48,69 @@ const FacultyLogin = () => {
     <div className="all-items">
       <div className="forms">
         <form>
-          <div>
-            <img
-              src={logo}
-              alt="logo"
-              style={{ width: "150px", height: "150px" }}
-            />
-          </div>
-          <br />
-          <h1 style={{ color: "white" }}> A.R.M.A LOGIN </h1>
+          <h1 style={{ color: "white" }}> Faculty login </h1>
 
           <div style={{ marginTop: 20 }}></div>
           <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="Password">
-              RollNo:{" "}
-            </span>
+          <div className="form-group justi">
+            <h4 style={{ paddingLeft: 20 }}> RollNo: </h4>
             <input
               type="text"
-              className="form-control"
+              className="inputboxes"
               id="exampleInputPassword1"
               placeholder="RollNo"
               onChange={(e) => setRollNo(e.target.value)}
             />
           </div>
-          <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="Password">
-              Password:{" "}
-            </span>
+          <div style={{ height: 20 }}></div>
+          <div className="form-group justi">
+            <h4 style={{ paddingLeft: 20 }}> Password: </h4>
             <input
               type="password"
-              className="form-control"
+              className="inputboxes"
               id="exampleInputPassword1"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
-          <br />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "end",
+              paddingTop: 2,
+              paddingRight: 67,
+            }}
+          >
+            <button
+              className="btn btn-link"
+              style={{ color: "#cc00ff" }}
+              type="button"
+              onClick={() => setModalShow(true)}
+            >
+              Forgot Password
+            </button>
+          </div>
+          <div style={{ height: 5 }}></div>
           <button
             type="submit"
             disabled={!isEnabled}
-            className="submit-btn"
+            className="buttonpurple"
             onClick={handleLogin}
           >
             Login
           </button>
-          <br />
+          <div style={{ height: 10 }}></div>
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
-          <Links value={3} />
+          <Link
+            to={"/facultyregister"}
+            style={{ display: "block", marginTop: 20, color: "#00e676" }}
+          >
+            Go to Faculty Registration Page
+          </Link>
         </form>
       </div>
+      <ForgotPassword show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };
