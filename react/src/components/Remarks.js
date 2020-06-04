@@ -18,6 +18,8 @@ const Remarks =(props) => {
   const [Facility, setFacility] = useState([{facility:'Faci1',check:true},{facility:'Faci2',check:true},{facility:'Faci3',check:true},{facility:'Faci4',check:true},{facility:'Faci5',check:true}])
   const [Text, setText] = useState("Hrlrgdghisku")
   const [PartTable,setTable] =useState(true)
+  const [TB_Facil,setTB]=useState(true)
+  const [TB_Part,setTB1]=useState(true)
 
   //getting data from database
   useEffect(()=>{
@@ -116,7 +118,22 @@ axios({
     console.log("Error sending data")
   });
  }
-
+ const notAllT= ()=>{
+  var t1=true; 
+  Participants.map(item=>{
+  if(item.check===false)
+    t1=false;
+} )
+setTB1(t1);
+}
+ const notAll= ()=>{
+  var t=true; 
+  Facility.map(item=>{
+  if(item.check===false)
+    t=false;
+} )
+setTB(t);
+}
  const Approve=(temp)=>{
    let user = JSON.parse(localStorage.getItem("user"));
    let accessToken = user.accessToken;
@@ -145,7 +162,7 @@ axios({
     <td>{count++}</td>
     <td>{item.name}</td>
     <td>{item.roll}</td>
-    <td><input  className="in" onChange={event =>{
+    <td><span className="TB"><label class="switch"><input className="in" onChange={event =>{
 
         let checked=event.target.checked;
 
@@ -157,9 +174,8 @@ axios({
             return data;
           })
         )
-
-
-      }}type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
+        notAllT();
+      }}type="checkbox" id="Approve" name="App" checked={item.check} ></input><span class="slider round"></span></label></span></td>
     {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
     </tr>
     )});
@@ -170,25 +186,26 @@ axios({
         <td>{f_count++}</td>
         <td>{item.facility}</td>
 
-        <td><input className="in"  onChange={event =>{
+        <td><span className="TB"><label class="switch"><input className="in" onChange={event =>{
 
             let checked=event.target.checked;
-
+             
             setFacility(
               Facility.map(data=>{
                 if(item.facility===data.facility){
                   data.check=checked;
                 }
                 return data;
+                
+                
               })
             )
-
-
-          }}type="checkbox" id="Approve" name="App" checked={item.check} ></input></td>
+            notAll();
+            }}type="checkbox" id="Approve" name="App" checked={item.check} ></input><span class="slider round"></span></label></span></td>
         {/* <td><input type="checkbox" id={Id1} name={Name}  ></input></td> */}
         </tr>
         )});
-
+        
 return(
       <div>
       <Nav/>
@@ -219,7 +236,7 @@ return(
       <th>#</th>
       <th>Name</th>
       <th>Roll No</th>
-      <th>Approve<input className="in" onChange={event =>{
+      <th>Approve<span className="TB"><label class="switch"><input className="in" onChange={event =>{
 
       let checked=event.target.checked;
       setPeople(
@@ -230,16 +247,17 @@ return(
           return data;
         })
       )
-
-    }} type="checkbox"  id='Approve' name='App'  ></input></th>
+setTB1(checked);
+    }} type="checkbox" checked={TB_Part} id='Approve' name='App'  ></input><span class="slider round"></span></label></span></th>
     </tr>
   </thead>  <tbody>
     {list}</tbody></Table>) :(<Table striped bordered hover variant="dark">
   <thead>
+    
     <tr>
       <th>#</th>
       <th>Facilities</th>
-      <th>Approve<input className="in" onChange={event =>{
+      <th>Approve<span className="TB"><label class="switch"><input className="in" onChange={event =>{
 
       let checked=event.target.checked;
       setFacility(
@@ -250,8 +268,8 @@ return(
           return data;
         })
       )
-
-    }} type="checkbox" id='Approve' name='App'  ></input></th>
+        setTB(checked)
+    }} type="checkbox" checked={TB_Facil} id='Approve' name='App'  ></input><span class="slider round"></span></label></span></th>
     </tr>
   </thead>  <tbody>
     {list1}</tbody></Table>) }
