@@ -88,6 +88,13 @@ app.post("/logout", (req, res) => {
 		return res.status(response.status).json(response.response)
 	}).catch(error=>res.status(400).json({err:error}))
 });
+//FORGOT PASSWORD
+
+app.post("/forgotPassword", (req, res)=>{
+	serverHelper.forgotPassword(req).then((response)=>{
+		return res.status(response.status).json(response.response);
+	}).catch(error=>{return res.status(400).json({err:error})})
+})
 
 app.get("/facultydashboard", (req, res) => {
 	serverHelper.facultyDashboard(req).then(response=>{

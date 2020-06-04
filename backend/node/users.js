@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const path = require("path");
-
+const mailSender = require('./mail-sender.js')
 //--------------------------------------------------------//
 //-----------TOKEN HANDLING-------------------------------//
 //--------------------------------------------------------//
@@ -134,6 +134,125 @@ async function checkFacultyPassword(faculty_roll, password) {
       })
       .catch((err) => reject(err));
   });
+}
+
+async function generateTempPassword()
+{
+	return new Promise((resolve, reject)=>{
+		let tempPass = "";
+  		for (let a = 0; a < 10; a++) {
+  		  tempPass += String(Math.round(Math.random() * 10)%10);
+  		}
+  		return resolve(tempPass);
+	})
+}
+
+async function forgotPassword(userType, username)
+{
+	return new Promise((resolve, reject)=>{
+		
+			if(userType == "FACULTY")
+			{
+				//query the username in the faculty table
+				var client = new Client();
+				client.connect();
+				client.query("SELECT email FROM faculty WHERE faculty_roll=$1",[username])
+				.then(data=>{
+					if(data.rows.length == 0)
+					{
+						client.end();
+						return reject("Invalid faculty roll!");
+					}
+					var email = data.rows[0].email;
+					var tempPass = ""
+					generateTempPassword()
+					.then(password=>{
+						tempPass = password;
+						return hashPassword(password)
+					})
+					.then(hash=>{
+						client.query("UPDATE faculty SET pwd_hash=$1 WHERE faculty_roll=$2",[hash,username])
+						.then(state=>{
+							//nothing. Password is updated.
+						})
+						.catch(error=>{
+						client.end();
+							console.log(error)
+							return reject("Database error!");
+						})
+						return mailSender.sendMail(
+							"ARMA PASSWORD RESET",
+							("Hey there!, You can login to ARMA using the temporary password: " + tempPass),
+							email
+						);
+					})
+					.then((mailStatus)=>{
+						client.end();
+						return resolve();
+					})
+					.catch(error=>{
+						client.end();
+						console.log(error)
+						return reject("error updating new password!");
+					})
+				})
+				.catch(error=>{
+						client.end();
+					console.log(error);
+					return reject(error);
+				})
+			}
+			else if(userType == "FORUM")
+			{
+				//query the username in the forums table
+				var client = new Client();
+				client.connect();
+				client.query("SELECT email FROM forums WHERE forum_name=$1",[username])
+				.then(data=>{
+					if(data.rows.length == 0)
+					{
+						return reject("Invalid forum name!");
+					}
+					var email = data.rows[0].email;
+					var tempPass = ""
+					generateTempPassword()
+					.then(password=>{
+						tempPass = password;
+						return hashPassword(password)
+					})
+					.then(hash=>{
+						client.query("UPDATE forums SET pwd_hash=$1 WHERE forum_name=$2",[hash, username])
+						.then(state=>{
+							//nothing. Password is updated.
+						})
+						.catch(error=>{
+						client.end();
+							console.log(error);
+							return reject("Database error!");
+						})
+						return mailSender.sendMail(
+							"ARMA PASSWORD RESET",
+							"Hey there!, You can login to ARMA using the temporary password: " + tempPass,
+							email
+						);
+					})
+					.then((mailStatus)=>{
+						client.end();
+						return resolve(mailStatus);
+					})
+					.catch(error=>{
+						client.end();
+						console.log(error);
+						return reject("error hashing new password!");
+					})
+				})
+				.catch(error=>{
+						client.end();
+					console.log(error);
+					return reject(error);
+				})
+			}
+	});
 }
 
 //--------------------------------------------------------//
@@ -496,4 +615,5 @@ module.exports = {
   changeFacultyUsername: changeFacultyUsername,
   changeFacultyPassword: changeFacultyPassword,
   changeFacultyEmail: changeFacultyEmail,
+  forgotPassword: forgotPassword
 };
