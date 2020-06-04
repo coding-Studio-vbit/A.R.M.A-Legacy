@@ -64,50 +64,46 @@ function Register() {
   };
   return (
     <div className="all-items">
-      <div className="forms">
+      <div className="rforms">
         <form>
           <img
             src={logo}
             alt="logo"
             style={{ width: "150px", height: "150px" }}
           />
-          <h1 style={{ color: "white" }}> A.R.M.A REGISTRATION</h1>
-
-          <div style={{ marginTop: 20 }}></div>
+          <h1 style={{ color: "white" }}> A.R.M.A FORUM REGISTRATION</h1>
           <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="department">
-              Forumlist:{" "}
-            </span>
+          <div className="justif">
+            <h4>Forum Name: </h4>
             <input
               type="text"
-              className="form-control"
+              className="inputboxess"
               placeholder="ForumName"
               onChange={(e) => setValue(e.target.value)}
             />
           </div>
-          <div className="form-group">
-            <span className="form-label" htmlFor="email">
-              Email:{" "}
-            </span>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Email: </h4>
             <input
               type="email"
               onChange={handleChange}
               name="email"
-              className="form-control"
+              className="inputboxess"
               value={contact.email}
               placeholder="Email"
             />
           </div>
-          <div className="form-group">
-            <span className="form-label" htmlFor="email">
-              Email:{" "}
-            </span>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Confirm Email: </h4>
             <input
               type="email"
               onChange={handleChange}
               name="cemail"
-              className="form-control"
+              className="inputboxess"
               value={contact.cemail}
               placeholder="Confirm Email"
             />
@@ -122,35 +118,32 @@ function Register() {
               Enter the same email as above
             </h5>
           </div>
-          <div className="form-group">
-            <span className="form-label" htmlFor="email">
-              PhoneNo:{" "}
-            </span>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>PhoneNo: </h4>
             <input
-              type="number"
+              type="text"
               onChange={handleChange}
-              className="form-control"
+              className="inputboxess"
               name="pnum"
               value={contact.pnum}
               placeholder="Phone Number"
             />
           </div>
           <br />
+          <br />
           <button
             disabled={registered && isEnabled}
             type="submit"
-            className="submit-btn"
+            className="buttonpurple"
             onClick={handleRegister}
           >
             Register
           </button>
           <br />
-          <RegistrationCheck value={values} changeRegiValue={changeStatus} />
-          {registered && (
-            <h4 style={{ color: "green" }}>Forum is registered</h4>
-          )}
+
           <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
-          <Links value={2} />
         </form>
       </div>
     </div>
