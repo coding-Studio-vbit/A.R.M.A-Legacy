@@ -139,12 +139,6 @@ app.get("/getrequest", async (req, res) => {
 
 //REGISTRATION STATUS CHECK
 
-//Remarks
-app.post("/Remarks", (req, res) => {
-  const remark = req;
-  console.log(remark);
-});
-
 app.post("/checkRegistrationStatus", (req, res) => {
 	serverHelper.checkForumRegistrationStatus(req).then(response=>{
 		return res.status(response.status).json(response.response)
@@ -193,7 +187,6 @@ app.post("/teamattendance", urlencodedParser, function (req, res) {
   let letter_body = req.body.letter_body;
   let studentdetails = req.body.studentdetails;
 
-  console.log(req.body);
   let details = {
     designation: designation,
     department: department,
@@ -238,7 +231,6 @@ app.post("/participantsattendance", urlencodedParser, function (req, res) {
   let letter_body = req.body.letter_body;
   let studentdetails = req.body.studentdetails;
 
-  console.log(req.body);
   let details = {
     designation: designation,
     department: department,
@@ -281,7 +273,6 @@ app.post("/conductevent", urlencodedParser, function (req, res) {
   let end_meridian = req.body.end_meridian;
   let letter_body = req.body.letter_body;
 
-  console.log(req.body);
   let details = {
     subject: subject,
     date: date,
@@ -323,7 +314,6 @@ app.post("/eventvenue", urlencodedParser, function (req, res) {
   let end_meridian = req.body.end_meridian;
   let letter_body = req.body.letter_body;
 
-  console.log(req.body);
   let details = {
     subject: subject,
     date: date,
@@ -368,7 +358,6 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
   let where = req.body.where;
   let studentdetails = req.body.studentdetails;
 
-  console.log(req.body);
   let details = {
     designation: designation,
     department: department,
