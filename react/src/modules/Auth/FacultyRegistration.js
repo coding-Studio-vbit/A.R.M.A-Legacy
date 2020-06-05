@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import logo from "./logo.png";
+import logo from "./images/logo.png";
 import axios from "axios";
 import Links from "./Links";
-import "./Form.css";
+import "./css/Form.css";
 
 const FacultyRegister = () => {
   const [dept, setDept] = useState("CSE");
@@ -36,7 +36,7 @@ const FacultyRegister = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     axios
-      .post("/registerFaculty", {
+      .post(`${process.env.REACT_APP_URL}/registerFaculty`, {
         registrationData: {
           faculty_name: contact.name,
           faculty_dept: dept,

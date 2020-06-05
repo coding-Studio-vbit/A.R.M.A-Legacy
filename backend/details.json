@@ -1,18 +1,25 @@
 {
-  "subject": "asdsd",
-  "date": "2020-05-28",
-  "respects": "Ma'am",
-  "team_name": "Ebola",
-  "event_name": "123",
-  "reason": "its good",
-  "hall_name": "Gandhi Hospital",
-  "fromdate": "2020-05-28",
-  "todate": "2020-05-28",
-  "start_hour": "3",
-  "start_min": "05",
-  "start_meridian": "PM",
-  "end_hour": "12",
-  "end_min": "50",
-  "end_meridian": "AM",
-  "letter_body": "Fighting!!!!!"
+  "designation": "",
+  "department": "",
+  "subject": "",
+  "date": "",
+  "respects": "",
+  "team_name": "",
+  "event_name": "",
+  "fromdate": "",
+  "todate": "",
+  "start_hour": "",
+  "start_min": "",
+  "start_meridian": "",
+  "end_hour": "",
+  "end_min": "",
+  "end_meridian": "",
+  "letter_body": "",
+  "where": "",
+  "studentdetails": [
+    {
+      "Name": "",
+      "Roll": ""
+    }
+  ]
 }

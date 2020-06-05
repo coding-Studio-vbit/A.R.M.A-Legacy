@@ -1,43 +1,38 @@
 import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "../css/ProfileModal.css";
-const PassModal =(props)=>{
+import "./css/ProfileModal.css";
+const NameModal =(props)=>{
     const [
-        NewPassword,setNewPassword
+        Name,setName
     ]=useState("");
-    const [
-        OldPassword,setOldPassword
-    ]=useState("");
-
     return (
-        <div>
-    <Modal 
-        style={
-          {
-            overlay:{
-              opacity:"1.0",
-              margin:250,
-              backgroundColor:""
-            },
-            content:{
-              backgroundColor:"#222222",
-              height:"350px",
-              width:"500px",
-              position:"absolute",
-            }
-          }
+        <div> 
+    <Modal
+    style={
+      {
+        overlay:{
+          opacity:"1.0",
+          margin:180,
+          backgroundColor:""
+
+        },
+        content:{
+          backgroundColor:"#222222",
+          height:"320px",
+          width:"800px",
+          position:"absolute",
         }
+      }
+    }
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
-                    <h3 style={{textDecorationColor:"black"}}>Edit Password</h3>
+                    <h3 style={{color:"grey"}}>Edit Name</h3>
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
-                <div className="modal-body">
-                <input type="password" id="myInput" className="form-input"  onChange ={(e) =>setOldPassword(e.target.value)}placeholder="Enter old Password"></input><br/>
-                <input type="password" id="myInput" className="form-input" onChange ={(e) =>setNewPassword(e.target.value)}placeholder="Enter new Password"></input><br/>
-                <input type="password" id="myInput" className="form-input" placeholder="Confirm new Password"></input><br/>
+                <div className="modal-content">
+                <input type="text" id="myInput"  className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer">
                 <button  type="submit" className="submit-button" onClick={() =>{
@@ -52,11 +47,13 @@ const PassModal =(props)=>{
                       }
                     }
                       console.log(config);
-                      axios.post("http://localhost:8080/changeForumPassword",{newPassword:NewPassword,oldPassword:OldPassword},config).then((response) => {
+                      axios.post("http://localhost:8080/",{newName:Name},config).then((response) => {
                         var res=response.data;
                         this.setState({loginValue:response.data.userType});
                         console.log(res.userType);
-                      }).catch((err) => {
+                      })
+
+                      .catch((err) => {
                         console.log(err);
                       })
                     }
@@ -70,4 +67,4 @@ const PassModal =(props)=>{
     )
         
 }
-export default PassModal;
+export default NameModal;
