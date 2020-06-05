@@ -1,18 +1,24 @@
 {
-  "subject": "asdsd",
-  "date": "2020-05-28",
-  "respects": "Ma'am",
-  "team_name": "Ebola",
+  "designation": "Head of Department",
+  "department": "Department of Computer Science and Engineering",
+  "subject": "Corona Lol",
+  "date": "2020-06-04",
+  "respects": "Sir",
+  "team_name": "asdasd",
   "event_name": "123",
-  "reason": "its good",
-  "hall_name": "Gandhi Hospital",
-  "fromdate": "2020-05-28",
-  "todate": "2020-05-28",
-  "start_hour": "3",
+  "fromdate": "2020-06-04",
+  "todate": "2020-06-05",
+  "start_hour": "2",
   "start_min": "05",
-  "start_meridian": "PM",
-  "end_hour": "12",
+  "start_meridian": "AM",
+  "end_hour": "10",
   "end_min": "50",
   "end_meridian": "AM",
-  "letter_body": "Fighting!!!!!"
+  "letter_body": "Fighting!!!!!",
+  "studentdetails": [
+    {
+      "Name": "asd",
+      "Roll": "123"
+    }
+  ]
 }
