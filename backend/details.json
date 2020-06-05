@@ -1,24 +1,25 @@
 {
-  "designation": "Head of Department",
-  "department": "Department of Computer Science and Engineering",
-  "subject": "Corona Lol",
-  "date": "2020-06-04",
-  "respects": "Sir",
-  "team_name": "asdasd",
-  "event_name": "123",
-  "fromdate": "2020-06-04",
-  "todate": "2020-06-05",
-  "start_hour": "2",
-  "start_min": "05",
-  "start_meridian": "AM",
-  "end_hour": "10",
-  "end_min": "50",
-  "end_meridian": "AM",
-  "letter_body": "Fighting!!!!!",
-  "studentdetails": [
-    {
-      "Name": "asd",
-      "Roll": "123"
-    }
-  ]
-}
+    "designation": "",
+    "department": "",
+    "subject": "",
+    "date": "",
+    "respects": "",
+    "team_name": "",
+    "event_name": "",
+    "fromdate": "",
+    "todate": "",
+    "start_hour": "",
+    "start_min": "",
+    "start_meridian": "",
+    "end_hour": "",
+    "end_min": "",
+    "end_meridian": "",
+    "letter_body": "",
+    "where": "",
+    "studentdetails": [
+      {
+        "Name": "",
+        "Roll": ""
+      }
+    ]
+  }

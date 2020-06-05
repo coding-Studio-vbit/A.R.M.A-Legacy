@@ -1,24 +1,11 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "../css/ProfileModal.css";
-const ProfileModal =(props)=>{
+import "./css/ProfileModal.css";
+const NameModal =(props)=>{
     const [
-        Email,setEmail
+        Name,setName
     ]=useState("");
-    const [
-      Cemail,setCemail
-  ]=useState("");
-  const [isMessage, setMessage] = useState(false);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    if (error !== "") {
-      setTimeout(() => setError(""), 7000);
-    }
-  });
-    const isEnabled = Email === Cemail;
-
-    
     return (
         <div> 
     <Modal
@@ -41,22 +28,11 @@ const ProfileModal =(props)=>{
     isOpen={props.Editingon}>
         <form>
          <div className="modal-header">
-                    <h3 style={{color:"grey"}}>Edit Email</h3>
+                    <h3 style={{color:"grey"}}>Edit Name</h3>
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="email" id="myInput"  className="form-input" onChange ={(e) =>setEmail(e.target.value)}placeholder="Enter new email"></input><br/>
-                <input type="email" id="myInput" className="form-input" onChange ={(e) =>setCemail(e.target.value)}placeholder="Confirm new email"></input><br/>
-
-                <h5
-              style={{
-                display: !isEnabled ? "inline" : "none",
-                color: "#ff1744",
-              }}
-              id="emailHelp"
-              className="form-text">
-              Enter the same email as above
-            </h5>
+                <input type="text" id="myInput"  className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer">
                 <button  type="submit" className="submit-button" onClick={() =>{
@@ -71,7 +47,7 @@ const ProfileModal =(props)=>{
                       }
                     }
                       console.log(config);
-                      axios.post("http://localhost:8080/changeForumEmail",{newEmail:Email},config).then((response) => {
+                      axios.post("http://localhost:8080/",{newName:Name},config).then((response) => {
                         var res=response.data;
                         this.setState({loginValue:response.data.userType});
                         console.log(res.userType);
@@ -91,4 +67,4 @@ const ProfileModal =(props)=>{
     )
         
 }
-export default ProfileModal;
+export default NameModal;
