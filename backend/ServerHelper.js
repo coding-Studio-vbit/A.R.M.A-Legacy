@@ -47,15 +47,17 @@ const fs = require("fs")
 async function forgotPassword(req)
 {
 	// non-authenticated endpoint.
+	//expects userType, username, reg_email.
+
 	return new Promise((resolve, reject)=>{
 		var res = {};
-		if(!req.body.userType || !req.body.username)
+		if(!req.body.userType || !req.body.username || !req.body.reg_email)
 		{
 			res.status = 400;
 			res.response = {err:"Invalid number of arguments!"};
 			return resolve(res);
 		}
-		users.forgotPassword(req.body.userType, req.body.username.toUpperCase())
+		users.forgotPassword(req.body.userType, req.body.username.toUpperCase(), req.body.reg_email)
 		.then(state=>{
 			res.status = 200;
 			res.response = {message: "mail sent successfully to registered email."}

@@ -147,7 +147,7 @@ async function generateTempPassword()
 	})
 }
 
-async function forgotPassword(userType, username)
+async function forgotPassword(userType, username, reg_email)
 {
 	return new Promise((resolve, reject)=>{
 		
@@ -164,7 +164,8 @@ async function forgotPassword(userType, username)
 						return reject("Invalid faculty roll!");
 					}
 					var email = data.rows[0].email;
-					var tempPass = ""
+					var tempPass = "";
+					if(email !=reg_email) return reject("Registered email is Invalid!");
 					generateTempPassword()
 					.then(password=>{
 						tempPass = password;
@@ -215,6 +216,7 @@ async function forgotPassword(userType, username)
 					}
 					var email = data.rows[0].email;
 					var tempPass = ""
+					if(email !=reg_email) return reject("Registered email is Invalid!");
 					generateTempPassword()
 					.then(password=>{
 						tempPass = password;
