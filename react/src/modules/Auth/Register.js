@@ -30,9 +30,6 @@ function Register() {
       };
     });
   };
-  const changeStatus = (res) => {
-    isRegistered(res);
-  };
   const isEnabled = contact.email === contact.cemail;
   const handleRegister = (e) => {
     e.preventDefault();

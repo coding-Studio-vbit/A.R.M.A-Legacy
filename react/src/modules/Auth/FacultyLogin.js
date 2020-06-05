@@ -43,6 +43,7 @@ const FacultyLogin = () => {
       })
       .catch((err) => console.log(err));
   };
+	const usertype = "FORUM" ;
   const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
     <div className="all-items">
@@ -110,7 +111,7 @@ const FacultyLogin = () => {
           </Link>
         </form>
       </div>
-      <ForgotPassword show={modalShow} onHide={() => setModalShow(false)} />
+      <ForgotPassword userType={usertype} show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };

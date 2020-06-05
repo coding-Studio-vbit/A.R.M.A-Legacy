@@ -66,7 +66,7 @@ const Login = () => {
     let theForum = e.target.value.toUpperCase();
     setValue(theForum);
   };
-
+	const userType = "FORUM";
   return (
     <div className="all-items">
       <div className="forms">
@@ -130,7 +130,7 @@ const Login = () => {
           </Link>
         </form>
       </div>
-      <ForgotPassword show={modalShow} onHide={() => setModalShow(false)} />
+      <ForgotPassword userType={userType} show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };
