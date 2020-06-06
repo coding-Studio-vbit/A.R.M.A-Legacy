@@ -1,17 +1,25 @@
 {
-  "subject": "Permission for Event Conduction",
-  "date": "2020-05-21",
-  "respects": "Sir",
-  "team_name": "StuTalk",
-  "event_name": "fger",
-  "hall_name": "erherh",
-  "fromdate": "2020-05-29",
-  "todate": "2020-05-30",
-  "start_hour": "9",
-  "start_min": "50",
-  "start_meridian": "PM",
-  "end_hour": "11",
-  "end_min": "45",
-  "end_meridian": "PM",
-  "letter_body": "ergr"
-}
+    "designation": "",
+    "department": "",
+    "subject": "",
+    "date": "",
+    "respects": "",
+    "team_name": "",
+    "event_name": "",
+    "fromdate": "",
+    "todate": "",
+    "start_hour": "",
+    "start_min": "",
+    "start_meridian": "",
+    "end_hour": "",
+    "end_min": "",
+    "end_meridian": "",
+    "letter_body": "",
+    "where": "",
+    "studentdetails": [
+      {
+        "Name": "",
+        "Roll": ""
+      }
+    ]
+  }

@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import logo from "./images/logo.png";
-import RegistrationCheck from "./RegistrationCheck";
-import Links from "./Links";
+import { useHistory, Link } from "react-router-dom";
 import "./css/Form.css";
+import ForgotPassword from "./ForgotPassword";
 
 const Login = () => {
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-    "ISE",
-  ];
+  const [ForumList, updateForumList] = useState([]);
   const history = useHistory();
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState(Forumlist[0]);
-  const [registered, isRegistered] = useState(false);
+  const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [modalShow, setModalShow] = useState(false);
   useEffect(() => {
     if (error !== "") {
       setTimeout(() => setError(""), 7000);
     }
   });
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
+      .then((res) => {
+        let ResForums = res.data;
+        updateForumList(ResForums);
+        setValue(ResForums[0].actual_name.toUpperCase());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
     let pw = password;
+    // console.log(un, pw);
     axios
       .post(`${process.env.REACT_APP_URL}/login`, {
         user: {
@@ -42,6 +44,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (!res.data.hasOwnProperty("err")) {
+          console.log("fdf");
           let userName = res.data.message.split(" ")[1];
           let accessToken = res.data.accessToken;
           localStorage.setItem(
@@ -51,7 +54,7 @@ const Login = () => {
               accessToken: accessToken,
             })
           );
-          history.push("/Dashboard");
+          history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
@@ -59,76 +62,75 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-  const changeStatus = (res) => {
-    isRegistered(res);
+  const ForumChangeHandler = (e) => {
+    let theForum = e.target.value.toUpperCase();
+    setValue(theForum);
   };
-  const isEnabled = password.length > 0 && registered;
-
+	const userType = "FORUM";
   return (
     <div className="all-items">
       <div className="forms">
         <form>
-          <div>
-            <img
-              src={logo}
-              alt="logo"
-              style={{ width: "150px", height: "150px" }}
-            />
-          </div>
-          <br />
-          <h1 style={{ color: "white" }}> A.R.M.A LOGIN </h1>
+          <h1 style={{ color: "white" }}> Forum login </h1>
 
           <div style={{ marginTop: 20 }}></div>
           <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="Forumlist">
-              Forumlist:{" "}
-            </span>
+          <div className="form-group justi">
+            <h4 style={{ paddingLeft: 20 }}>Forum List: </h4>
             <select
-              className="form-control"
+              className="selecti round"
               name="value"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => ForumChangeHandler(e)}
             >
-              {Forumlist.map((club) => (
-                <option> {club} </option>
+              {ForumList.map((club) => (
+                <option> {club.actual_name} </option>
               ))}
             </select>
-
-            <span className="select-arrow"></span>
           </div>
-
-          <div className="form-group">
-            <span className="form-label" htmlFor="Password">
-              Password:{" "}
-            </span>
+          <div style={{ height: 20 }}></div>
+          <div className="form-group ipflex justi">
+            <h4 style={{ paddingLeft: 20 }}> Password: </h4>
             <input
-              disabled={!registered ? "disabled" : ""}
               type="password"
-              className="form-control"
+              className="inputboxes"
               id="exampleInputPassword1"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <br />
-          <button
-            disabled={!isEnabled}
-            className="submit-btn"
-            onClick={handleLogin}
-            type="submit"
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "end",
+              paddingTop: 2,
+              paddingRight: 67,
+            }}
           >
+            <button
+              className="btn btn-link"
+              style={{ color: "#cc00ff" }}
+              onClick={() => setModalShow(true)}
+              type="button"
+            >
+              Forgot Password
+            </button>
+          </div>
+          <br />
+          <button className="buttonpurple" onClick={handleLogin} type="submit">
             Login
           </button>
 
-          <br />
-          <RegistrationCheck value={value} changeRegiValue={changeStatus} />
-          {!registered && (
-            <h4 style={{ color: "#ff1744" }}>Forum is not registered</h4>
-          )}
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
-          <Links value={1} />
+          <Link
+            to={"/register"}
+            style={{ display: "block", marginTop: 20, color: "#00e676" }}
+          >
+            Go to Forum Registration Page
+          </Link>
         </form>
       </div>
+      <ForgotPassword userType={userType} show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };

@@ -29,7 +29,7 @@ const Navi = () => {
   }
     return (
       <Navbar style={{backgroundColor: '#222222 !important', borderRadius:'5px'}} className="navigation" id= "page-top" collapseOnSelect expand="lg" bg="dark" variant="dark">
-  <Navbar.Brand href="#home">ARMA</Navbar.Brand>
+  <Navbar.Brand style={{color:"#C60CD5",textShadow: "0.5px 0.5px 2px #C60CD5"}} href="#home">ARMA</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="mr-auto">
