@@ -17,6 +17,7 @@ const ProfileModal =(props)=>{
     }
   });
     const isEnabled = Email === Cemail;
+
     
     return (
         <div> 
@@ -46,6 +47,7 @@ const ProfileModal =(props)=>{
                 <div className="modal-content">
                 <input type="email" id="myInput"  className="form-input" onChange ={(e) =>setEmail(e.target.value)}placeholder="Enter new email"></input><br/>
                 <input type="email" id="myInput" className="form-input" onChange ={(e) =>setCemail(e.target.value)}placeholder="Confirm new email"></input><br/>
+
                 <h5
               style={{
                 display: !isEnabled ? "inline" : "none",
