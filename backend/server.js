@@ -60,6 +60,11 @@ app.get("/getFacultyDetails", (req,res)=>{
 		res.status(400).json({err:error});
 	})
 })
+app.get("/getRegisteredForums",(req,res)=>{
+	serverHelper.getRegisteredForums(req)
+	.then(response=>{return res.status(response.status).json(response.response);})
+	.catch(error=>{return res.status(400).json({err:error})})
+})
 app.post("/login", async (req, res) => {
 
 	serverHelper.loginForums(req)

@@ -11,6 +11,8 @@ const fs = require("fs")
 	------------
 
 	getForumDetails
+	getFacultyDetails
+	getRegisteredForums
 	login
 	loginFaculty
 	logout
@@ -40,14 +42,36 @@ const fs = require("fs")
 	changeFacultyEmail
 */
 
+async function getRegisteredForums(req)
+{
+	return new Promise((resolve, reject)=>{
+		var res = {}
+		var client = new Client();
+		client.connect();
+		client.query("SELECT actual_name,forum_name FROM forums;")
+		.then((data)=>{
+			client.end();
+			res.status = 200;
+			res.response = data.rows;
+			return resolve(res);
+		})
+		.catch(error=>{
+			res.status = 500;
+			console.log(error)
+			client.end();
+			res.response= {err:"Internal Database Error"}
+			return resolve(res);
+		})
+	});
+}
+
 async function getForumDetails(req)
 {
-
 	return new Promise((resolve, reject)=>{
-		
+
 			var res = {};
 			//set status, set response object
-			
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) =>
@@ -63,7 +87,7 @@ async function getForumDetails(req)
 		        )
 		        .then((data) => {
 		          if (data.rows.length === 0) {
-		
+
 					res.status = 200;
 					res.response = {
 		              actual_name: " ",
@@ -103,7 +127,7 @@ async function loginForums(req)
 
 
 	return new Promise((resolve, reject)=>{
-		
+
 			var res = {};
 			//set status, set response object
 		  if (!req.body.user || !req.body.user.username || !req.body.user.password)
@@ -111,7 +135,7 @@ async function loginForums(req)
 		  	res.status = 400;
 			res.response = {err: "Invalid number of fields!"};
 						return resolve(res);
-		  } 
+		  }
 		 else
 		 {
 		  users
@@ -129,7 +153,7 @@ async function loginForums(req)
 		              message: "USERNAME: " + req.body.user.username.toUpperCase(),
 		              accessToken: token,
 		            };
-		
+
 		            var obj = fs.readFileSync("./validkeys.json");
 		            obj = obj.toString();
 		            obj = JSON.parse(obj);
@@ -167,7 +191,7 @@ async function loginForums(req)
 async function loginFaculty(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 
@@ -232,7 +256,7 @@ async function logout(req)
 {
 
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
   //if check token, remove the token from validkeys.json and redirect to login page.
@@ -264,12 +288,12 @@ async function logout(req)
 				return resolve(res);
 		    });
 			})
-	
+
 }
 async function facultyDashboard(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  users
@@ -311,7 +335,7 @@ async function facultyDashboard(req)
 async function makeNewRequest(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.recipients || !req.body.request_data)
@@ -330,14 +354,14 @@ async function makeNewRequest(req)
 		      for (let a = 0; a < 10; a++) {
 		        unique_id += String(Math.round(Math.random() * 10) % 10);
 		      }
-		
+
 		      console.log("Unique ID: ", unique_id); //DEBUG
-		
+
 		      var forum_name = username.toUpperCase();
 		      var recipients = [];
 		      if (!req.body.recipients || !req.body.recipients.length)
 		        throw "Invalid recipients!";
-		
+
 		      for (let i = 0; i < req.body.recipients.length; i++) {
 		        var client = new Client();
 		        client.connect();
@@ -379,13 +403,13 @@ async function makeNewRequest(req)
 			  res.response = {err: error};
 			  return resolve(res);
 		    });
-		  
+
 	})
 }
 async function deleteRequest(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.request_id)
@@ -396,7 +420,7 @@ async function deleteRequest(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -406,7 +430,7 @@ async function deleteRequest(req)
 		      var data = fs.readFileSync("validkeys.json");
 		      data = data.toString();
 		      data = JSON.parse(data);
-		
+
 		      if (data.hasOwnProperty(username) && data[username].userType == "FORUM") {
 		        //only forums can delete their requests.
 		        requestQueries.deleteRequest(
@@ -442,9 +466,7 @@ async function deleteRequest(req)
 }
 async function updateRequest(req)
 {
-
 	return new Promise((resolve, reject)=>{
-		
 	var res = {};
 	//set status, set response object
 		  users
@@ -453,22 +475,76 @@ async function updateRequest(req)
 		      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
 		    })
 		    .then((username) => {
-		      requestQueries.changeRequest(
-		        req.body.forum_name,
-		        req.body.request_data,
-		        req.body.status,
-		        req.body.remarks,
-		        req.body.request_id,
-		        (error, status) => {
-		          console.log(error, status);
-		          if (error) {
-		            throw { err: error };
-		          }
-		        }
-		      );
-			  res.status = 200;
-			  res.response = {message: "Updated successfully!"};
-			  return resolve(res);
+				//get user type.
+
+				var fileData = fs.readFileSync("validkeys.json");
+				fileData = JSON.parse(fileData.toString());
+				const userType = fileData[username].userType;
+
+				if(userType == 'FORUM')
+				{
+					//user is forum
+					//ignore status update, and remarks update. So we make them undefined
+					//check if the request_id is their own.this is done in the changeRequest query itself.
+		      		requestQueries.changeRequest(
+		      		  username,
+		      		  req.body.request_data,
+		      		  undefined,
+		      		  undefined,
+		      		  req.body.request_id,
+		      		  (error, status) => {
+		      		    console.log(error, status);
+		      		    if (error) {
+		      		      throw { err: error };
+		      		    }
+		      		  }
+		      		);
+			  		res.status = 200;
+			  		res.response = {message: "Updated successfully!"};
+					return resolve(res);
+				}
+				else
+				{
+					//user is faculty
+					//update status and remarks
+					//check if request_id is their own.
+					var client = new Client();
+					client.connect();
+					client.query("SELECT request_id from requests WHERE request_id=$1 AND request_id IN (SELECT request_id from recipients WHERE faculty_roll=$2)",[req.body.request_id, username])
+					.then((data)=>{
+						if(data.rows.length == 0)
+						{
+							res.status = 401;
+							res.response = {err:"Unauthorized!"};
+							client.end();
+							return resolve(res);
+						}
+							client.end();
+		      				requestQueries.changeRequest(
+		      				  req.body.forum_name,
+		      				  req.body.request_data,
+		      				  req.body.status,
+		      				  req.body.remarks,
+		      				  req.body.request_id,
+		      				  (error, status) => {
+		      				    console.log(error, status);
+		      				    if (error) {
+		      				      throw { err: error };
+		      				  }else
+							  {
+								res.status = 200;
+								res.response = {message:"Update Successful"}
+								return resolve(res);
+							  }
+		      				}
+		      			 );
+					})
+					.catch(error=>{
+						res.status = 500;
+						res.response = {err:"Internal Database error!"}
+						return resolve(res);
+					})
+				}
 		    })
 		    .catch((error) => {
 				res.status = 400;
@@ -476,13 +552,12 @@ async function updateRequest(req)
 			  return resolve(res);
 		    });
 	})
-
 }
 async function approveRequest(req)
 {
 
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.request_id || !req.body.status)
@@ -493,7 +568,7 @@ async function approveRequest(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -532,7 +607,7 @@ async function approveRequest(req)
 					}
 		          })
 		          .catch((error) => {
-		
+
 				  	res.status = 500;
 					res.response = {err: "Internal Database Error"};
 		            console.log(error);
@@ -557,7 +632,7 @@ async function forumsDashboard(req)
 {
 
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  users
@@ -599,7 +674,7 @@ async function forumsDashboard(req)
 async function fetchRequest(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 			  if (!req.query || !req.query.request_id)
@@ -610,7 +685,7 @@ async function fetchRequest(req)
 			  }
 			  else
 			  {
-			  	
+
 			  users
 			    .fetchAccessToken(req)
 			    .then((token) => {
@@ -623,7 +698,7 @@ async function fetchRequest(req)
 			        .query("select * from requests where request_id=$1", [
 			          req.query.request_id,
 			        ])
-			
+
 			        .then((data) => {
 			          if (data.rowCount === 0) {
 			            client.end();
@@ -689,7 +764,7 @@ async function checkForumRegistrationStatus(req)
 async function checkFacultyRegistrationStatus(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.query || !req.body.query.username)
@@ -700,7 +775,7 @@ async function checkFacultyRegistrationStatus(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .checkFacultyRegistrationStatus(req.body.query.username.toUpperCase())
 		    .then((state) => {
@@ -721,7 +796,7 @@ async function registerForum(req)
 {
 
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 			  const data = req.body.registrationData;
@@ -739,7 +814,7 @@ async function registerForum(req)
 			  }
 			  else
 			  {
-			  	
+
 			  dataValidator
 			    .validateRegistrationData(data)
 			    .then((ok) => {
@@ -815,7 +890,7 @@ async function registerForum(req)
 async function registerFaculty(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  const data = req.body.registrationData;
@@ -839,7 +914,7 @@ async function registerFaculty(req)
 		  }
 		  else
 		  {
-		  	
+
 		  dataValidator
 		    .validateFacultyRegistrationData(data)
 		    .then((ok) => {
@@ -867,7 +942,7 @@ async function registerFaculty(req)
 		          .catch((error) => {
 				  res.status = 400;
 				  res.response = {err:"Error sending mail to user!"};
-		
+
 		            console.log(
 		              "Error sending mail to user :" + data.faculty_email,
 		              error
@@ -928,7 +1003,7 @@ async function registerFaculty(req)
 async function getUserType(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  users
@@ -964,7 +1039,7 @@ async function changeForumUsername(req)
 {
 
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.newUsername)
@@ -975,7 +1050,7 @@ async function changeForumUsername(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -1002,7 +1077,7 @@ async function changeForumUsername(req)
 async function changeFacultyUsername(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.newUsername)
@@ -1013,7 +1088,7 @@ async function changeFacultyUsername(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -1040,7 +1115,7 @@ async function changeFacultyUsername(req)
 async function changeForumPassword(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.newPassword || !req.body.oldPassword)
@@ -1051,7 +1126,7 @@ async function changeForumPassword(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -1081,7 +1156,7 @@ async function changeForumPassword(req)
 async function changeFacultyPassword(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.newPassword || !req.body.oldPassword)
@@ -1092,7 +1167,7 @@ async function changeFacultyPassword(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -1122,7 +1197,7 @@ async function changeFacultyPassword(req)
 async function changeForumEmail(req)
 {
 	return new Promise((resolve, reject)=>{
-		
+
 
 	var res = {};
 	//set status, set response object
@@ -1134,7 +1209,7 @@ async function changeForumEmail(req)
 		  }
 		  else
 		  {
-		  	
+
 		  users
 		    .fetchAccessToken(req)
 		    .then((token) => {
@@ -1161,7 +1236,7 @@ async function changeForumEmail(req)
 async function changeFacultyEmail(req)
 {
 	return new Promise((resolve,reject)=>{
-		
+
 	var res = {};
 	//set status, set response object
 		  if (!req.body.newEmail)
@@ -1202,7 +1277,7 @@ async function getFacultyDetails(req)
 
 		users.fetchAccessToken(req)
 		.then(token=>{
-			return users.authenticateToken(token,process.env.SECRET_ACCESS_TOKEN);
+			return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
 		})
 		.then(username=>{
 			var client = new Client();
@@ -1231,7 +1306,7 @@ async function getFacultyDetails(req)
 }
 
 module.exports = {
-	getForumDetails,	
+	getForumDetails,
 	loginForums,
 	loginFaculty,
 	logout,
@@ -1253,5 +1328,6 @@ module.exports = {
 	changeFacultyPassword,
 	changeForumEmail,
 	changeFacultyEmail,
-	getFacultyDetails
+	getFacultyDetails,
+	getRegisteredForums
 }

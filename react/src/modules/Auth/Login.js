@@ -2,36 +2,38 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import logo from "./images/logo.png";
-import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
 import "./css/Form.css";
 
 const Login = () => {
-  const Forumlist = [
-    "codingStudio",
-    "stumagz",
-    "IEEE-Vbit",
-    "RoboticsClub",
-    "EcoClub",
-    "StreetCause",
-    "VBIT-MUN",
-    "Stutalk",
-    "ISE",
-  ];
+  const [ForumList, updateForumList] = useState([]);
   const history = useHistory();
   const [password, setPassword] = useState("");
-  const [value, setValue] = useState(Forumlist[0]);
-  const [registered, isRegistered] = useState(false);
+  const [value, setValue] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
     if (error !== "") {
       setTimeout(() => setError(""), 7000);
     }
   });
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
+      .then((res) => {
+        let ResForums = res.data;
+        updateForumList(ResForums);
+        setValue(ResForums[0].actual_name.toUpperCase());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
     let pw = password;
+    // console.log(un, pw);
     axios
       .post(`${process.env.REACT_APP_URL}/login`, {
         user: {
@@ -42,6 +44,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (!res.data.hasOwnProperty("err")) {
+          console.log("fdf");
           let userName = res.data.message.split(" ")[1];
           let accessToken = res.data.accessToken;
           localStorage.setItem(
@@ -59,10 +62,10 @@ const Login = () => {
       })
       .catch((err) => console.log(err));
   };
-  const changeStatus = (res) => {
-    isRegistered(res);
+  const ForumChangeHandler = (e) => {
+    let theForum = e.target.value.toUpperCase();
+    setValue(theForum);
   };
-  const isEnabled = password.length > 0 && registered;
 
   return (
     <div className="all-items">
@@ -87,10 +90,10 @@ const Login = () => {
             <select
               className="form-control"
               name="value"
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => ForumChangeHandler(e)}
             >
-              {Forumlist.map((club) => (
-                <option> {club} </option>
+              {ForumList.map((club) => (
+                <option> {club.actual_name} </option>
               ))}
             </select>
 
@@ -102,7 +105,6 @@ const Login = () => {
               Password:{" "}
             </span>
             <input
-              disabled={!registered ? "disabled" : ""}
               type="password"
               className="form-control"
               id="exampleInputPassword1"
@@ -111,20 +113,11 @@ const Login = () => {
             />
           </div>
           <br />
-          <button
-            disabled={!isEnabled}
-            className="submit-btn"
-            onClick={handleLogin}
-            type="submit"
-          >
+          <button className="submit-btn" onClick={handleLogin} type="submit">
             Login
           </button>
 
           <br />
-          <RegistrationCheck value={value} changeRegiValue={changeStatus} />
-          {!registered && (
-            <h4 style={{ color: "#ff1744" }}>Forum is not registered</h4>
-          )}
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
           <Links value={1} />
         </form>

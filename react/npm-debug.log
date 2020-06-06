@@ -7,7 +7,7 @@
 6 silly lifecycle rt@0.1.0~prestart: no script for prestart, continuing
 7 info lifecycle rt@0.1.0~start: rt@0.1.0
 8 verbose lifecycle rt@0.1.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle rt@0.1.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/saikiran/Desktop/ARMA/A.R.M.A/react/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+9 verbose lifecycle rt@0.1.0~start: PATH: /usr/share/npm/bin/node-gyp-bin:/home/saikiran/Desktop/ARMA/A.R.M.A/react/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 10 verbose lifecycle rt@0.1.0~start: CWD: /home/saikiran/Desktop/ARMA/A.R.M.A/react
 11 silly lifecycle rt@0.1.0~start: Args: [ '-c', 'react-scripts start' ]
 12 info lifecycle rt@0.1.0~start: Failed to exec start script
