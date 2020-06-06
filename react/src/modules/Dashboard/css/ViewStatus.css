@@ -1,0 +1,11 @@
+.tr,.td{
+    background-color:  lightgreen;
+     border: 2px solid lightgreen;
+     border-radius: 0px;
+ }
+ 
+ .tr,.td {
+     outline: none;
+     border-color: lightgreen;
+     box-shadow: 0 0 10px lightgreen;
+ }
