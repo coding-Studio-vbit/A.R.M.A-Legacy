@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
 import "./css/Remarks.css";
@@ -9,6 +9,7 @@ import "./css/ViewStatus.css"
 const ViewStatus = (props) => {
   const status = "Accepted";
   const [From, setFrom] = useState("Coding Studio");
+  const [Search, setSearch] = useState("");
   const [Req_data, setReq_data] = useState({});
   const [Participants, setPeople] = useState([
     { name: "No Name Yet", roll: "No Roll Number Yet", check: true },
@@ -54,6 +55,9 @@ const ViewStatus = (props) => {
         console.log(err);
       });
   }, []);
+  const updateSearch = (e) => {
+    setSearch(e.target.value)
+  }
   const handleInput = (e) => {
     console.log(e.target.value);
     setText({
@@ -69,14 +73,18 @@ const ViewStatus = (props) => {
 
   var count = 1;
   var f_count = 1;
-  const list = Participants.map((item) => {
-    var temp=item.check?"tr":"em"
-    return(
-    <tr className={temp}>
-      <td  className={temp}>{count++}</td>
-      <td className={temp}>{item.name}</td>
-      <td className={temp}>{item.roll}</td>
-    </tr>
+  const fliteredParticipants = Participants.filter(
+    (participant) => {
+      return (participant.name.toLowerCase().includes(Search.toLowerCase()))||(participant.roll.toLowerCase().includes(Search.toLowerCase()));
+    }
+  );
+  const list = fliteredParticipants.map((item) => {
+    return (
+      <tr>
+        <td>{count++}</td>
+        <td>{item.name}</td>
+        <td>{item.roll}</td>
+      </tr>
     );
   });
   const list1 = Facility.map((item) => {
@@ -147,6 +155,15 @@ const ViewStatus = (props) => {
                   ></i>
                 </Col>
               </Row>
+              {PartTable? (<Row>
+              <InputGroup className="mx-auto w-75">
+                  <FormControl
+                    placeholder="Search by name or roll number"
+                    onChange={updateSearch}
+                    style={{color:"grey"}}
+                  />
+                </InputGroup>
+              </Row>):(<Row></Row>)}
               <div className="Table">
                 <Row>
                   {PartTable ? (
