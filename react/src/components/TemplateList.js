@@ -54,15 +54,16 @@ class TemplateList extends React.Component{
               linkName:"/conductmeet"
 
 
-          },
+            },
         ]
     };
     render(){
       return(
-          <React.Fragment>
+          <React.Fragment class="body">
             <Nav/>
               <div >
-                <Container>
+                <div class="box">
+                  <Button className="addtemp">Add Template</Button>
                 <Row>
                 {this.state.template.map(template=>(
                   <Col xs={12} sm={12} md={6} lg={4}>
@@ -70,12 +71,8 @@ class TemplateList extends React.Component{
                   </Col>
                 ))}
                 </Row>
-                </Container>
-                <div style={{position:"fixed",bottom:"0",width:"100%"}}>
-                  <Button  variant="primary" size="lg" block>
-                  ADD A NEW TEMPLATE
-                  </Button>
-                  </div>
+                </div>
+
               </div>
           </React.Fragment>
       );
