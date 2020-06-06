@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "designation": "",
   "department": "",
   "subject": "Permission For Codecraft",
@@ -49,3 +50,29 @@
     }
   ]
 }
+=======
+    "designation": "",
+    "department": "",
+    "subject": "",
+    "date": "",
+    "respects": "",
+    "team_name": "",
+    "event_name": "",
+    "fromdate": "",
+    "todate": "",
+    "start_hour": "",
+    "start_min": "",
+    "start_meridian": "",
+    "end_hour": "",
+    "end_min": "",
+    "end_meridian": "",
+    "letter_body": "",
+    "where": "",
+    "studentdetails": [
+      {
+        "Name": "",
+        "Roll": ""
+      }
+    ]
+  }
+>>>>>>> 609043e74e3b676bcfba83698627606dd0a5a079

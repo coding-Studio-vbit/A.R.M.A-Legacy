@@ -20,16 +20,16 @@ padding-left: 10px;
 text-align: left;
 color: grey;
 }
-.Con label{
+/* .Con label{
 margin-top: 5px;
 font-size: 20px;
 color: darkorchid;
 font-weight: bolder;
 }
-.content span{color: darkorchid;
+span{color: darkorchid;
 
-font-weight: bold;}
-.title{color:darkorchid}
+font-weight: bold;} */
+h1{color:darkorchid}
 textarea{
 margin: 10px;
 background-color: grey;

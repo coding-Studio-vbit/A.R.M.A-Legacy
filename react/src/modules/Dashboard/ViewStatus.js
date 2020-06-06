@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
 import "./css/Remarks.css";
@@ -9,6 +9,7 @@ import "./css/ViewStatus.css"
 const ViewStatus = (props) => {
   const status = "Accepted";
   const [From, setFrom] = useState("Coding Studio");
+  const [Search, setSearch] = useState("");
   const [Req_data, setReq_data] = useState({});
   const [Participants, setPeople] = useState([
     { name: "No Name Yet", roll: "No Roll Number Yet", check: true },
@@ -54,6 +55,9 @@ const ViewStatus = (props) => {
         console.log(err);
       });
   }, []);
+  const updateSearch = (e) => {
+    setSearch(e.target.value)
+  }
   const handleInput = (e) => {
     console.log(e.target.value);
     setText({
@@ -70,9 +74,9 @@ const ViewStatus = (props) => {
   var count = 1;
   var f_count = 1;
   const list = Participants.map((item) => {
-    var temp=item.check?"tr":"em"
+    var temp=item.check?"td":"em";
     return(
-    <tr className={temp}>
+    <tr className={item.check?"tr":"em"}>
       <td  className={temp}>{count++}</td>
       <td className={temp}>{item.name}</td>
       <td className={temp}>{item.roll}</td>
@@ -80,9 +84,9 @@ const ViewStatus = (props) => {
     );
   });
   const list1 = Facility.map((item) => {
-    var temp=item.check?"tr":"em"
+    var temp=item.check?"td":"em"
     return(
-    <tr className={temp}>
+    <tr className={item.check?"tr":"em"}>
       <td className={temp}>{f_count++}</td>
       <td className={temp}>{item.facility}</td>
     </tr>
@@ -95,7 +99,7 @@ const ViewStatus = (props) => {
       <div Classname="Con">
         <Container>
           <center>
-            <h1>Letter Info</h1>
+            <h1 className='title'>Letter Info</h1>
           </center>
           <Row>
             <Col>
@@ -117,11 +121,17 @@ const ViewStatus = (props) => {
                   {Description}
                 </h5>
               </Row>
+              <label>Remarks </label>
               <Row>
-                <h5 className="content">
-                  <span>Remarks : </span>
+                <Col>
+                  <textarea 
+                  cols={80} 
+                  rows={6} 
+                  disabled>
                   {Remarks}
-                </h5 >
+                 </textarea>
+                
+                </Col>
               </Row>
             </Col>
 
@@ -136,7 +146,7 @@ const ViewStatus = (props) => {
                 </Col>
                 <Col style={{ padding: "0px" }}>
                   <center>
-                    {PartTable ? <h4>Participants</h4> : <h4>Facilities</h4>}
+                    {PartTable ? <h4 className='tab'>Participants</h4> : <h4 className='tab'>Facilities</h4>}
                   </center>
                 </Col>
                 <Col>
@@ -147,6 +157,15 @@ const ViewStatus = (props) => {
                   ></i>
                 </Col>
               </Row>
+              {PartTable? (<Row>
+              <InputGroup className="mx-auto w-75">
+                  <FormControl
+                    placeholder="Search by name or roll number"
+                    onChange={updateSearch}
+                    style={{color:"grey"}}
+                  />
+                </InputGroup>
+              </Row>):(<Row></Row>)}
               <div className="Table">
                 <Row>
                   {PartTable ? (

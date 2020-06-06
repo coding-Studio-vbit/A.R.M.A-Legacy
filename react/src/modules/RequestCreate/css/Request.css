@@ -5,7 +5,6 @@ label {
 
 .boxbg {
     border-radius: 25px;
-    border: 1px solid rgb(180, 180, 180);
     background: rgb(33, 33, 33);
     padding: 20px; 
     width: inherit;
@@ -29,3 +28,12 @@ label {
     text-align: start;
     color: white;
   }
+
+  .btn-circle.btn-sm { 
+    width: 40px; 
+    height: 40px; 
+    padding: 6px 0px; 
+    border-radius: 20px; 
+    font-size: 10px; 
+    text-align: center; 
+} 
