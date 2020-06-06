@@ -20,30 +20,35 @@ const ProfileModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 180,
+            margin: 200,
+            position:"absolute",
             backgroundColor: "",
           },
           content: {
-            backgroundColor: "#222222",
-            height: "320px",
-            width: "800px",
+            backgroundColor: "#181A1B",
+            height: "300px",
+            width: "500px",
             position: "absolute",
+            borderBlockColor:"#3E4245",
+            left: "35%",
+            top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
         <form>
           <div className="modal-header">
-            <h3 style={{ color: "grey" }}>Edit Email</h3>
+            <h3 style={{ color: "grey" }}></h3>
             <button className="close-modal-btn" type="submit">
               X
             </button>
           </div>
-          <div className="modal-content">
+          <div className="modal-content" style={{height:"150px"}}>
             <input
               type="email"
               id="myInput"
               className="form-input"
+              style={{width:"400px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
             ></input>
@@ -52,22 +57,25 @@ const ProfileModal = (props) => {
               type="email"
               id="myInput"
               className="form-input"
+              style={{width:"400px",borderRadius:"5px",borderColor:"#717170"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
             ></input>
-            <br />
+            <br/>
             <h5
               style={{
                 display: !isEnabled ? "inline" : "none",
                 color: "#ff1744",
               }}
               id="emailHelp"
-              className="form-text"
-            >
+              className="form-text">
               Enter the same email as above
             </h5>
           </div>
           <div className="modal-footer">
+          <button className="btn-cancel" type="reset">
+              Cancel
+            </button>
             <button
               type="submit"
               className="submit-button"
@@ -101,10 +109,7 @@ const ProfileModal = (props) => {
                 }
               }}
             >
-              SUBMIT
-            </button>
-            <button className="btn-cancel" type="reset">
-              CANCEL
+              Save Changes
             </button>
           </div>
         </form>
