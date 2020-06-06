@@ -75,11 +75,11 @@
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.2s ease-out;
-  
+
 }
 .button1{
   color:#F1F3F5;
-  background-image: linear-gradient(to right,#8957F6 0%,#4F3EC8 100%); 
+  background-image: linear-gradient(to right,#8957F6 0%,#4F3EC8 100%);
   width: 150px;
   box-shadow: 0px 0px 10px 0.8px #ECE4E4;
   -webkit-box-shadow: 0px 0px 10px 0.8px #ECE4E4;
@@ -91,17 +91,28 @@
 }
 .addtemp{
   color:#F1F3F5;
-  background-image: linear-gradient(to right,#8957F6 0%,#4F3EC8 100%); 
+  background-image: linear-gradient(to right,#8957F6 0%,#4F3EC8 100%);
   width: 150px;
   box-shadow: 0px 0px 10px 0.8px #ECE4E4;
   -webkit-box-shadow: 0px 0px 10px 0.8px #ECE4E4;
   -moz-box-shadow: 0px 0px 10px 0.8px #ECE4E4;
   border: none;
   font-size: 20px;
-  margin-top: 1%;
-  margin-left: 75%;
   height: 35px;
   text-align: center;
-  padding: 10px 10;
+  padding: 10px;
+  padding-bottom: 40px;
   font-family: "heebo", sans-serif;
+}
+@media only screen and (max-width: 600px) {
+  .searchTemplate{
+    width : 100% !important;
+    margin-bottom: 50px !important;
+    margin: 0;
+    padding: 0;
+  }
+  .templateButton {
+    display: block !important;
+
+  }
 }

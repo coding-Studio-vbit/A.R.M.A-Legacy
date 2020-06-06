@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ======================
 
 CREATE DATABASE armadb;
@@ -233,4 +232,3 @@ faculty_roll | faculty_name | faculty_dept |     email      |  phone_no  |      
 18P61A05C2   | Yasaswi Raj  | CSE          | s1th@gmail.com | 9999999999 | $2a$10$yX5PGu3c2XDv/j2889UUAu6CiGQi8bqEGdch3.HQWbY9XwwigYGiS
 18P61A05J1   | Sai Kiran    | CSE          | s1th@gmail.com | 9999999999 | $2a$10$8RLTqk4NxTAsew/yPBmSEuomSos0fKHtGPO2J5VHU1lVmFHX/t.e6
 18P61A05D7   | Aaris        | CSE          | s1th@gmail.com | 9999999999 | $2a$10$i3gR3buHbw9fHdlp4jTEOus.yL4Xx1jg8HGjuKSzwU40ePE4v9eg2
->>>>>>> 6d1b4e87103a4cfb701082c3962a22f5af794e39
