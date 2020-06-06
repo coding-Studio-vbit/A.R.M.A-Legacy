@@ -6,17 +6,27 @@ import "./css/Form.css";
 const ForgotPassword = (props) => {
   const [value, changeValue] = useState("");
   const [response, setResponse] = useState("");
+  const [username, changeUser] = useState("");
   const [error, isError] = useState(false);
   const forgot = (e) => {
+    console.log(props.userType);
     e.preventDefault();
+    let userType = props.userType;
     axios
-      .post(`${process.env.REACT_APP_URL}/forgotPassword`, {})
+      .post(`${process.env.REACT_APP_URL}/forgotPassword`, {
+        userType: userType,
+        username: username,
+        reg_email: value,
+      })
       .then((res) => {
-        if (!res.hasOwnProperty("err")) {
-          setResponse(res.message);
+        console.log(res.data);
+        if (res.data.hasOwnProperty("message")) {
+          setResponse(res.data.message);
           isError(false);
+          changeUser("");
+          changeValue("");
         } else {
-          setResponse(res.err);
+          setResponse(res.data.err);
           isError(true);
         }
       })
@@ -31,6 +41,21 @@ const ForgotPassword = (props) => {
     >
       <div style={{ padding: 60 }}>
         <div className="justi">
+          <h3>User Name</h3>
+          <br />
+          <br />
+
+          <input
+            type="text"
+            placeholder="User Name"
+            className="inputboxes"
+            onChange={(e) => changeUser(e.target.value)}
+          />
+        </div>
+        <br />
+        <br />
+
+        <div className="justi">
           <h3>Registered Email</h3>
           <br />
           <br />
@@ -42,11 +67,13 @@ const ForgotPassword = (props) => {
           />
         </div>
         <br />
-        <button type="submit" onChange={forgot} className="buttonpurple">
-          Submit
-        </button>
-        <br />
-        <h3 style={{ color: isError ? "red" : "green", textAlign: "center" }}>
+        <div className="justi">
+          <button type="submit" onClick={forgot} className="buttonpurple">
+            Submit
+          </button>
+          <br />
+        </div>
+        <h3 style={{ color: { error } ? "red" : "green", textAlign: "center" }}>
           {response}
         </h3>
       </div>
