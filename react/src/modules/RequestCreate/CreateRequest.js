@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
 import "./css/Request.css";
@@ -8,6 +8,12 @@ import { useHistory } from "react-router-dom";
 // const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
 const CreateRequest = () => {
+
+  //faculty endpoint is /getFaculty
+  //facility endpoint is /getFacilities
+  //getFaculty respose is all_faculty which is an array
+  //getFacility respose is all_facility which is an array
+
   const [inputFields, setInputFields] = useState([
     { name: "", roll: "", Dept: "", Year: "" },
   ]);
@@ -108,26 +114,53 @@ const CreateRequest = () => {
       });
   };
 
-  const Facultyoptions = [
-    { label: "Yasaswi Raj", value: "Yasaswi Raj" },
-    { label: "saravanan", value: "saravanan" },
-    { label: "Aaris", value: "Aaris" },
-    { label: "Yashwanth", value: "Yashwanth" },
-    { label: "Sai Kiran", value: "Sai Kiran" },
-    { label: "CSE - HOD", value: "CSE - HOD" },
-    { label: "IT - HOD", value: "IT - HOD" },
-    { label: "ECE - HOD", value: "ECE - HOD" },
-    { label: "EEE - HOD", value: "EEE - HOD" },
-    { label: "CIVIL - HOD", value: "CIVIL - HOD" },
-    { label: "MECH - HOD", value: "MECH - HOD" },
-  ];
+  const Facultyoptions = [];
 
-  const Facilitiesoptions = [
-    { label: "SAC Room", value: "SAC Room", facility: "SAC Room", check: true },
-    { label: "Chethana", value: "Chethana", facility: "Chethana", check: true },
-    { label: "Internet", value: "Internet", facility: "Internet", check: true },
-  ];
+  const Facilitiesoptions = [];
 
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    // console.log(props.location.Rprops.id)
+    let config = {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+      params: {
+        request_id: JSON.parse(localStorage.getItem("req_id")),
+      },
+    };
+    console.log(config);
+    axios
+      .get(`${process.env.REACT_APP_URL}/getFaculty`, config)
+      .then((res) => {
+        var data = res.data;
+        var all_faculty = data.all_faculty
+        all_faculty.forEach(fac => {Facultyoptions.push({
+          value: fac, label: fac
+        })})
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+    .get(`${process.env.REACT_APP_URL}/getFacility`, config)
+    .then((res) => {
+      var data = res.data;
+      var all_facilities = data.all_facilities
+      all_facilities.forEach(fci => {Facilitiesoptions.push({
+        value: fci, label: fci, facility: fci, check: true
+      })})
+      console.log(data);
+     })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  
   return (
     <React.Fragment>
       <Nav />
@@ -195,7 +228,7 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>Description :</h5>
               </div>
-              <div className="col">
+              <div className="col" style={{marginRight: "15px"}}>
                 <div className="form-group">
                   <textarea
                     className="form-control"
@@ -217,22 +250,22 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>People Involved :</h5>
               </div>
-              <div className="col">
+              <div className="col" style={{marginLeft: "150px"}}>
                 <div className="form-group">
                   <div className="row" style={{ color: "grey" }}>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Name</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Roll.No</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Dept</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Year</h6>
                     </div>
-                    <div class="col align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <button
                         type="button"
                         class="btn btn-info"
@@ -253,6 +286,7 @@ const CreateRequest = () => {
                               type="text"
                               id="name"
                               name="name"
+                              placeholder="Name"
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -265,6 +299,7 @@ const CreateRequest = () => {
                               type="text"
                               id="roll"
                               name="roll"
+                              placeholder="Roll.no"
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -275,6 +310,7 @@ const CreateRequest = () => {
                             <select
                               required
                               className="form-control"
+                              style={{marginTop: "5px"}}
                               name="department"
                               value={inputField.firstName}
                               onChange={(event) =>
@@ -299,6 +335,7 @@ const CreateRequest = () => {
                               className="form-control"
                               name="department"
                               value={inputField.firstName}
+                              style={{marginTop: "5px"}}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -313,10 +350,11 @@ const CreateRequest = () => {
                               <option value="4">4</option>
                             </select>
                           </div>
-                          <div class="col align-self-center">
+                          <div div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                             <button
                               type="button"
-                              class="btn btn-danger"
+                              
+                              class="btn btn-danger btn-circle btn-sm"
                               onClick={() => handleRemoveFields(index)}
                             >
                               X
