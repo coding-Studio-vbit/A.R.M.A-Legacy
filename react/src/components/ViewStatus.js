@@ -5,6 +5,7 @@ import {Container,Row,Col} from 'react-bootstrap';
 import Nav from './Navi';
 import axios from 'axios';
 import '../css/Remarks.css';
+import '../css/ViewStatus.css';
 const ViewStatus =(props) => {
     const status='Accepted'
     const [From, setFrom] = useState( 'Coding Studio')
@@ -64,34 +65,34 @@ const chTable=()=>{
   var count=1;
   var f_count=1;
   const list= Participants.map(item=> {
-
+  var temp=item.check?"tr":"em"
   return(
-  <tr>
-    <td>{count++}</td>
-    <td>{item.name}</td>
-    <td>{item.roll}</td>
+  <tr className={temp}>
+    <td  className={temp}>{count++}</td>
+    <td className={temp}>{item.name}</td>
+    <td className={temp}>{item.roll}</td>
     </tr>
     )});
     const list1= Facility.map(item=> {
-
+      var temp=item.check?"tr":"em"
       return(
-      <tr>
-        <td>{f_count++}</td>
-        <td>{item.facility}</td>
+      <tr   className={temp}>
+        <td   className={temp}>{f_count++}</td>
+        <td   className={temp}>{item.facility}</td>
         </tr>
         )});
     return(
       <div>
       <Nav/>
       <div Classname="Con">
-      <Container>
-        <center><h1>Letter Info</h1></center>
+      <Container> 
+         <center><h1 className="title">Letter Info</h1></center>
   <Row>
     <Col>
-    <Row><h3><span>From :</span>{From}</h3></Row>
-    <Row><h3><span>Subject : </span>{Subject}</h3></Row>
-    <Row><h5><span>Description : </span>{Description}</h5></Row>
-    <Row><h3><span>Remarks : </span>{Remarks}</h3></Row>
+    <Row><h3 className="content"><span>From : </span>{From}</h3></Row>
+    <Row><h3 className="content"><span>Subject : </span>{Subject}</h3></Row>
+    <Row><h5 className="content"><span>Description : </span>{Description}</h5></Row>
+    <Row><h5 className="content"><span>Remarks : </span>{Remarks}</h5></Row>
 
 
    </Col>
