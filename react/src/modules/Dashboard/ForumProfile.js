@@ -1,10 +1,11 @@
 import React from "react";
 import axios from "axios";
-import profilePic from "./images/profilePic.png";
-import ProfileModal from "./ProfileModal";
-import PassModal from "./PassModal";
+import cslogo from "./images/cslogo.png";
+import "./css/ForumProfile.css"
 import NameModal from './NameModal';
-import Nav from "./Navi";
+import ProfileModal from "./ProfileModal";
+import PhoneModal from './PhoneModal';
+import PassModal from "./PassModal";
 
 class Profile extends React.Component {
   state = {
@@ -13,25 +14,32 @@ class Profile extends React.Component {
     profilephone: "",
 
     persons: [],
-    Editingon: undefined,
     Nameon:undefined,
+    Editingon: undefined,   
+    Phoneon: undefined,
     Passwordon: undefined,
+    
   };
   newElement = () => {
-    this.setState(() => ({
-      Editingon: true,
-    }));
-  };
-  newElement1 = () => {
-    this.setState(() => ({
-      Passwordon: true,
-    }));
-  };
-  newElement2 = () => {
     this.setState(() => ({
       Nameon: true,
     }));
   };
+  newElement1 = () => {
+    this.setState(() => ({
+      Editingon: true,
+    }));
+  };
+  newElement2 = () => {
+    this.setState(() => ({
+      Phoneon: true,
+    }));
+  };
+  newElement3 = () => {
+    this.setState(() => ({
+      Passwordon: true,
+    }));
+  }; 
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -60,67 +68,68 @@ class Profile extends React.Component {
         <tr>
           <td>{item.Name}</td>
           <td>{item.Email}</td>
-          <td>{item.Password}</td>
           <td>{item.Phone}</td>
+          <td>{item.Password}</td>
+
         </tr>
       );
     });
 
     return (
-      <div class="containerz" style={{ textAlign: "center" }}>
+      <div class="containerz" >
+        <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
         <div className="profile-pic">
           <img
-            src={profilePic}
+            src={cslogo}
             alt="Logo"
-            style={{ width: "150px", height: "150px" }}
+            style={
+              {
+                width: "177px",
+                height: "174px" ,
+                borderRadius:"50%",
+                overflow: "hidden",
+
+              }
+            }
+            roundedCircle
           />
         </div>
         <br />
-        <div class="container" style={{ width: "700px" }}>
-          <div class="table-responsive">
-            <table class="table" bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th colspan="1" style={{ fontSize: "40px" }}>
-                    Profile
-                  </th>
-                </tr>
-              </thead>
-
-              <tr>
-                <td>Name</td>
-                <td colSpan="2">{this.state.profilename}</td>
+        <div class="container">
+          <div class="table-responsive" >
+            <table class="table" >
+              <tr style={{borderRadius:"10px",padding:"2px"}}>
+                <td colSpan="1">{this.state.profilename}</td>
                 <td>
-                <button onClick={this.newElement2}>Edit</button>
-                </td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Email</td>
-                <td colSpan="2">{this.state.profileemail}</td>
-                <td>
-                  <button onClick={this.newElement}>Edit</button>
+                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent",borderBlockStyle:"hidden"}} onClick={this.newElement}></button>
                 </td>
               </tr>
               <tr>
-                <td>Password</td>
-                <td colSpan="2">xxxxxxxx</td>
+                <td colSpan="1">{this.state.profileemail}</td>
                 <td>
-                  <button onClick={this.newElement1}>Edit</button>
+                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement1}></button>
                 </td>
               </tr>
               <tr>
-                <td>Phone</td>
-                <td colSpan="2">{this.state.profilephone}</td>
-                <td></td>
+                <td colSpan="1">{this.state.profilephone}</td>
+                <td>
+                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement2}></button>
+                </td>
+              </tr>              
+              <tr>
+                <td colSpan="1">xxxxxxxx</td>
+                <td>
+                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement3}></button>
+                </td>
               </tr>
               <tbody>{items}</tbody>
             </table>
           </div>
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
-          <ProfileModal Editingon={this.state.Editingon} />
-          <PassModal Editingon={this.state.Passwordon} />
           <NameModal Editingon={this.state.Nameon} />
+          <ProfileModal Editingon={this.state.Editingon} />
+          <PhoneModal Editingon={this.state.Phoneon} />
+          <PassModal Editingon={this.state.Passwordon} />
         </div>
       </div>
     );
