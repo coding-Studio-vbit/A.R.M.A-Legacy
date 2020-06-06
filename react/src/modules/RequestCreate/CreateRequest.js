@@ -228,7 +228,7 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>Description :</h5>
               </div>
-              <div className="col">
+              <div className="col" style={{marginRight: "15px"}}>
                 <div className="form-group">
                   <textarea
                     className="form-control"
@@ -250,22 +250,22 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>People Involved :</h5>
               </div>
-              <div className="col">
+              <div className="col" style={{marginLeft: "150px"}}>
                 <div className="form-group">
                   <div className="row" style={{ color: "grey" }}>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Name</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Roll.No</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Dept</h6>
                     </div>
-                    <div class="col-sm-2 align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Year</h6>
                     </div>
-                    <div class="col align-self-center">
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <button
                         type="button"
                         class="btn btn-info"
@@ -286,6 +286,7 @@ const CreateRequest = () => {
                               type="text"
                               id="name"
                               name="name"
+                              placeholder="Name"
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -298,6 +299,7 @@ const CreateRequest = () => {
                               type="text"
                               id="roll"
                               name="roll"
+                              placeholder="Roll.no"
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -308,6 +310,7 @@ const CreateRequest = () => {
                             <select
                               required
                               className="form-control"
+                              style={{marginTop: "5px"}}
                               name="department"
                               value={inputField.firstName}
                               onChange={(event) =>
@@ -332,6 +335,7 @@ const CreateRequest = () => {
                               className="form-control"
                               name="department"
                               value={inputField.firstName}
+                              style={{marginTop: "5px"}}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -346,10 +350,11 @@ const CreateRequest = () => {
                               <option value="4">4</option>
                             </select>
                           </div>
-                          <div class="col align-self-center">
+                          <div div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                             <button
                               type="button"
-                              class="btn btn-danger"
+                              
+                              class="btn btn-danger btn-circle btn-sm"
                               onClick={() => handleRemoveFields(index)}
                             >
                               X

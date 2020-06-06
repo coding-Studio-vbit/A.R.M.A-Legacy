@@ -45,6 +45,7 @@ const fs = require("fs");
 	changeFacultyEmail
 */
 
+
 async function getFaculty(req)
 {
 	return new Promise((resolve, reject)=>{
@@ -1302,7 +1303,7 @@ async function getFacultyDetails(req) {
 }
 
 module.exports = {
-	getForumDetails,	
+	getForumDetails,
 	loginForums,
 	loginFaculty,
 	logout,
