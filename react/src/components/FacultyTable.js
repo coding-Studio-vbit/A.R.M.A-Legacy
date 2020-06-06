@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/table.css';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 class FacultyTable extends React.Component{
   /*approval = (id) =>{
@@ -30,7 +31,7 @@ class FacultyTable extends React.Component{
     axios.get("http://localhost:8080/facultydashboard",config)
       .then(res => {
         const persons = res.data;
-        this.setState({ persons });
+         this.setState({ persons });
         console.log(persons);
       }).catch((err) => {
         console.log(err);
@@ -72,7 +73,9 @@ class FacultyTable extends React.Component{
            </tbody>
            </table>
           </div>
+          
         </div>
+        
       </div>
     )
   }
