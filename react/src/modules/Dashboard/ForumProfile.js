@@ -3,6 +3,7 @@ import axios from "axios";
 import profilePic from "./images/profilePic.png";
 import ProfileModal from "./ProfileModal";
 import PassModal from "./PassModal";
+import NameModal from './NameModal';
 import Nav from "./Navi";
 
 class Profile extends React.Component {
@@ -13,6 +14,7 @@ class Profile extends React.Component {
 
     persons: [],
     Editingon: undefined,
+    Nameon:undefined,
     Passwordon: undefined,
   };
   newElement = () => {
@@ -23,6 +25,11 @@ class Profile extends React.Component {
   newElement1 = () => {
     this.setState(() => ({
       Passwordon: true,
+    }));
+  };
+  newElement2 = () => {
+    this.setState(() => ({
+      Nameon: true,
     }));
   };
 
@@ -83,6 +90,9 @@ class Profile extends React.Component {
               <tr>
                 <td>Name</td>
                 <td colSpan="2">{this.state.profilename}</td>
+                <td>
+                <button onClick={this.newElement2}>Edit</button>
+                </td>
                 <td></td>
               </tr>
               <tr>
@@ -94,7 +104,7 @@ class Profile extends React.Component {
               </tr>
               <tr>
                 <td>Password</td>
-                <td colSpan="2"></td>
+                <td colSpan="2">xxxxxxxx</td>
                 <td>
                   <button onClick={this.newElement1}>Edit</button>
                 </td>
@@ -110,6 +120,7 @@ class Profile extends React.Component {
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
           <ProfileModal Editingon={this.state.Editingon} />
           <PassModal Editingon={this.state.Passwordon} />
+          <NameModal Editingon={this.state.Nameon} />
         </div>
       </div>
     );

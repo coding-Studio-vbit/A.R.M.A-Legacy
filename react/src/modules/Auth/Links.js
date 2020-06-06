@@ -16,18 +16,18 @@ const Links = (props) => {
       )}
       {value !== 2 && (
         <Link
-          to={"/register"}
-          style={{ display: "block", marginTop: 20, color: "#00e676" }}
-        >
-          Go to Forum Registration Page
-        </Link>
-      )}
-      {value !== 3 && (
-        <Link
           to={"/facultylogin"}
           style={{ display: "block", marginTop: 20, color: "#00e676" }}
         >
           Go to Faculty Login Page
+        </Link>
+      )}
+      {value !== 3 && (
+        <Link
+          to={"/register"}
+          style={{ display: "block", marginTop: 20, color: "#00e676" }}
+        >
+          Go to Forum Registration Page
         </Link>
       )}
       {value !== 4 && (
