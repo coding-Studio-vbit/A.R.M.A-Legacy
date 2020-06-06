@@ -54,9 +54,8 @@ class TemplateList extends React.Component{
               linkName:"/conductmeet"
 
 
-          },
-        ],
-        search: ""
+            },
+        ]
     };
 
     updateSearch = (e) => {
@@ -69,8 +68,10 @@ class TemplateList extends React.Component{
         }
       );
       return(
-          <React.Fragment>
+          <React.Fragment class="body">
             <Nav/>
+            <div>
+            <div class="box">
             <InputGroup className="mx-auto my-5 w-50">
                 <FormControl
                   placeholder="Search a template "
@@ -81,8 +82,9 @@ class TemplateList extends React.Component{
                   <Button variant="outline-secondary" className="my-auto"><i class="fa fa-search" aria-hidden="true"></i></Button>
                 </InputGroup.Append>*/}
               </InputGroup>
-              <div>
-                <Container>
+              <Button className="addtemp">Add Template</Button>
+              
+              
                 <Row>
                 {fliteredTemplates.map(template=>(
                   <Col xs={12} sm={12} md={6} lg={4}>
@@ -90,13 +92,10 @@ class TemplateList extends React.Component{
                   </Col>
                 ))}
                 </Row>
-                </Container>
-                <div style={{position:"fixed",bottom:"0",width:"100%"}}>
-                  <Button  variant="primary" size="lg" block>
-                  ADD A NEW TEMPLATE
-                  </Button>
-                  </div>
-              </div>
+                </div>
+                </div>
+
+             
           </React.Fragment>
       );
     }
