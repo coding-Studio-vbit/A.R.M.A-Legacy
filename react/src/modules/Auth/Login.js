@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import logo from "./images/logo.png";
-import Links from "./Links";
+import { useHistory, Link } from "react-router-dom";
 import "./css/Form.css";
+import ForgotPassword from "./ForgotPassword";
 
 const Login = () => {
   const [ForumList, updateForumList] = useState([]);
@@ -11,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [modalShow, setModalShow] = useState(false);
   useEffect(() => {
     if (error !== "") {
       setTimeout(() => setError(""), 7000);
@@ -66,29 +66,19 @@ const Login = () => {
     let theForum = e.target.value.toUpperCase();
     setValue(theForum);
   };
-
+	const userType = "FORUM";
   return (
     <div className="all-items">
       <div className="forms">
         <form>
-          <div>
-            <img
-              src={logo}
-              alt="logo"
-              style={{ width: "150px", height: "150px" }}
-            />
-          </div>
-          <br />
-          <h1 style={{ color: "white" }}> A.R.M.A LOGIN </h1>
+          <h1 style={{ color: "white" }}> Forum login </h1>
 
           <div style={{ marginTop: 20 }}></div>
           <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="Forumlist">
-              Forumlist:{" "}
-            </span>
+          <div className="form-group justi">
+            <h4 style={{ paddingLeft: 20 }}>Forum List: </h4>
             <select
-              className="form-control"
+              className="selecti round"
               name="value"
               onChange={(e) => ForumChangeHandler(e)}
             >
@@ -96,32 +86,51 @@ const Login = () => {
                 <option> {club.actual_name} </option>
               ))}
             </select>
-
-            <span className="select-arrow"></span>
           </div>
-
-          <div className="form-group">
-            <span className="form-label" htmlFor="Password">
-              Password:{" "}
-            </span>
+          <div style={{ height: 20 }}></div>
+          <div className="form-group ipflex justi">
+            <h4 style={{ paddingLeft: 20 }}> Password: </h4>
             <input
               type="password"
-              className="form-control"
+              className="inputboxes"
               id="exampleInputPassword1"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "end",
+              paddingTop: 2,
+              paddingRight: 67,
+            }}
+          >
+            <button
+              className="btn btn-link"
+              style={{ color: "#cc00ff" }}
+              onClick={() => setModalShow(true)}
+              type="button"
+            >
+              Forgot Password
+            </button>
+          </div>
           <br />
-          <button className="submit-btn" onClick={handleLogin} type="submit">
+          <button className="buttonpurple" onClick={handleLogin} type="submit">
             Login
           </button>
 
-          <br />
           <h4 style={{ color: "#ff1744" }}>{error} </h4>
-          <Links value={1} />
+          <Link
+            to={"/register"}
+            style={{ display: "block", marginTop: 20, color: "#00e676" }}
+          >
+            Go to Forum Registration Page
+          </Link>
         </form>
       </div>
+      <ForgotPassword userType={userType} show={modalShow} onHide={() => setModalShow(false)} />
     </div>
   );
 };

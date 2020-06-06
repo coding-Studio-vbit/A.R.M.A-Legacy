@@ -5,7 +5,7 @@ const body_parser = require("body-parser");
 const users = require("./node/users.js");
 const dash = require("./node/DashboardQueries.js");
 const dataValidator = require("./node/dataValidator.js");
-const serverHelper = require("./ServerHelper")
+const serverHelper = require("./ServerHelper");
 const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
@@ -27,7 +27,6 @@ var conductmeet = require("./conductmeet");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
-
 
 var allowCrossDomain = function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -65,66 +64,116 @@ app.get("/getRegisteredForums",(req,res)=>{
 	.then(response=>{return res.status(response.status).json(response.response);})
 	.catch(error=>{return res.status(400).json({err:error})})
 })
-app.post("/login", async (req, res) => {
 
-	serverHelper.loginForums(req)
-	.then((response)=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>{
-		return res.status(400).json({err:error})
-	})
+app.get("/getFaculty",(req,res)=>{
+	serverHelper.getFaculty(req).then(response=>{
+		return res.status(response.status).json(response.response);
+	}).catch(error=>{return res.status(response.status).json(response.response)})
+});
+
+app.get("/getFacilities",(req,res)=>{
+	serverHelper.getFacilities(req).then(response=>{
+		return res.status(response.status).json(response.response);
+	}).catch(error=>{return res.status(response.status).json(response.response)})
+});
+
+app.post("/login", async (req, res) => {
+  serverHelper
+    .loginForums(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      return res.status(400).json({ err: error });
+    });
 });
 
 //Faculty Login
 
 app.post("/loginFaculty", (req, res) => {
-	serverHelper.loginFaculty(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=> res.status(400).json({err:error}))
+  serverHelper
+    .loginFaculty(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //LOGOUT
 app.post("/logout", (req, res) => {
-	serverHelper.logout(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .logout(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
+});
+//FORGOT PASSWORD
+
+app.post("/forgotPassword", (req, res) => {
+  serverHelper
+    .forgotPassword(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      return res.status(400).json({ err: error });
+    });
 });
 
 app.get("/facultydashboard", (req, res) => {
-	serverHelper.facultyDashboard(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .facultyDashboard(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
-app.post("/createrequest",  (req, res) => {
-	serverHelper.makeNewRequest(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+app.post("/createrequest", (req, res) => {
+  serverHelper
+    .makeNewRequest(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.delete("/createrequest", (req, res) => {
-	serverHelper.deleteRequest(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .deleteRequest(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //<<<<<<<<<<<<<<<< INSECURE >>>>>>>>>>>>>>>>>
 app.put("/createrequest", (req, res) => {
-	serverHelper.updateRequest(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .updateRequest(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.post("/approverequest", (req, res) => {
-	serverHelper.approveRequest(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .approveRequest(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.get("/forumdashboard", async (req, res) => {
-	serverHelper.forumsDashboard(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .forumsDashboard(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 // app.get("/forumdashboard", async (req, res) => {
@@ -137,38 +186,53 @@ app.get("/forumdashboard", async (req, res) => {
 
 
 app.get("/getrequest", async (req, res) => {
-	serverHelper.fetchRequest(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .fetchRequest(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //REGISTRATION STATUS CHECK
 
 app.post("/checkRegistrationStatus", (req, res) => {
-	serverHelper.checkForumRegistrationStatus(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .checkForumRegistrationStatus(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 //REGISTRATION STATUS CHECK FOR FACULTY
 app.post("/checkFacultyRegistrationStatus", (req, res) => {
-	serverHelper.checkFacultyRegistrationStatus(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .checkFacultyRegistrationStatus(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //REGISTER FORUM REQUEST
 
 app.post("/registerForum", (req, res) => {
-	serverHelper.registerForum(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .registerForum(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //REGISTER FACULTY REQUEST
 app.post("/registerFaculty", (req, res) => {
-	serverHelper.registerFaculty(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .registerFaculty(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //Letter
@@ -439,46 +503,67 @@ app.post("/conductmeet", urlencodedParser, function (req, res) {
 //Get user type using Access Token.
 
 app.post("/getUserType", (req, res) => {
-	serverHelper.getUserType(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .getUserType(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 //---------ROUTES FOR USER CREDENTIALS UPDATE---------//
 
 app.post("/changeForumUsername", (req, res) => {
-	serverHelper.changeForumUsername(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeForumUsername(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.post("/changeFacultyUsername", (req, res) => {
-	serverHelper.changeFacultyUsername(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeFacultyUsername(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.post("/changeForumPassword", (req, res) => {
-	serverHelper.changeForumPassword(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeForumPassword(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 app.post("/changeFacultyPassword", (req, res) => {
-	serverHelper.changeFacultyPassword(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeFacultyPassword(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.post("/changeForumEmail", (req, res) => {
-	serverHelper.changeForumEmail(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeForumEmail(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 
 app.post("/changeFacultyEmail", (req, res) => {
-	serverHelper.changeFacultyEmail(req).then(response=>{
-		return res.status(response.status).json(response.response)
-	}).catch(error=>res.status(400).json({err:error}))
+  serverHelper
+    .changeFacultyEmail(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => res.status(400).json({ err: error }));
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 //start the server.
