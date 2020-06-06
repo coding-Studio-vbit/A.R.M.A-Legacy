@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "./images/logo.png";
 import axios from "axios";
-import Links from "./Links";
 import "./css/Form.css";
 
 const FacultyRegister = () => {
@@ -68,7 +67,7 @@ const FacultyRegister = () => {
   const deptList = ["CSE", "IT", "EEE", "ECE", "MECH", "CIVIL", "MBA"];
   return (
     <div className="all-items">
-      <div className="forms">
+      <div className="rforms">
         <form>
           <img
             src={logo}
@@ -77,68 +76,68 @@ const FacultyRegister = () => {
           />
           <h1 style={{ color: "white" }}>A.R.M.A Faculty Registration</h1>
           <br />
-          <div className="form-group">
-            <span className="form-label" htmlFor="rollNo">
-              RollNo:{" "}
-            </span>
+          <div className="justif">
+            <h4>Roll No: </h4>
             <input
               type="text"
               onChange={handleChange}
               name="rollNo"
-              className="form-control"
+              className="inputboxess"
               value={contact.rollNo}
               placeholder="Roll Number"
             />
-
-            <span className="form-label" htmlFor="rollNo">
-              Name:{" "}
-            </span>
+          </div>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Name: </h4>
             <input
               type="text"
               onChange={handleChange}
               name="name"
-              className="form-control"
+              className="inputboxess"
               value={contact.name}
               placeholder="Name"
             />
-            <br />
-            <div className="form-group">
-              <span className="form-label" htmlFor="department">
-                Department:{" "}
-              </span>
-              <select
-                className="form-control"
-                name="value"
-                onChange={(e) => setDept(e.target.value)}
-              >
-                {deptList.map((depts) => (
-                  <option> {depts} </option>
-                ))}
-              </select>
+          </div>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Department: </h4>
+            <select
+              className="selecti round"
+              name="value"
+              onChange={(e) => setDept(e.target.value)}
+            >
+              {deptList.map((depts) => (
+                <option> {depts} </option>
+              ))}
+            </select>
 
-              <span className="select-arrow"></span>
-            </div>
-            <span className="form-label" htmlFor="rollNo">
-              Email:{" "}
-            </span>
+            <span className="select-arrow"></span>
+          </div>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Email: </h4>
             <input
               type="email"
               onChange={handleChange}
               name="email"
-              className="form-control"
+              className="inputboxess"
               value={contact.email}
               placeholder="Email"
             />
           </div>
-          <div className="form-group">
-            <span className="form-label" htmlFor="rollNo">
-              confirm Email:{" "}
-            </span>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>Confirm Email: </h4>
             <input
               type="email"
               onChange={handleChange}
               name="cemail"
-              className="form-control"
+              className="inputboxess"
               value={contact.cemail}
               placeholder="Confirm Email"
             />
@@ -153,27 +152,31 @@ const FacultyRegister = () => {
               Enter the same email as above
             </h5>
           </div>
-          <div className="form-group">
-            <span className="form-label" htmlFor="rollNo">
-              PhoneNo:{" "}
-            </span>
+          <br />
+          <br />
+          <div className="justif">
+            <h4>PhoneNo: </h4>
             <input
-              type="number"
+              type="text"
               onChange={handleChange}
-              className="form-control"
+              className="inputboxess"
               name="pnum"
               value={contact.pnum}
               placeholder="Phone Number"
             />
           </div>
           <br />
-          <button type="submit" className="submit-btn" onClick={handleRegister}>
+          <br />
+          <button
+            type="submit"
+            className="buttonpurple"
+            onClick={handleRegister}
+          >
             Register
           </button>
 
           <br />
           <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
-          <Links value={4} />
         </form>
       </div>
     </div>
