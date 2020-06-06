@@ -45,9 +45,6 @@ const fs = require("fs");
 	changeFacultyEmail
 */
 
-async function forgotPassword(req) {
-  // non-authenticated endpoint.
-  //expects userType, username, reg_email.
 
 async function getFaculty(req)
 {
