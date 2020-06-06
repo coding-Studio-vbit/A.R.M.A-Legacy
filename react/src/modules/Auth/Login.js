@@ -51,7 +51,7 @@ const Login = () => {
               accessToken: accessToken,
             })
           );
-          history.push("/Dashboard");
+          history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
