@@ -146,7 +146,7 @@ const Remarks = (props) => {
       if(item.check===false)
           temp=false;
   })
-  setTButton1(temp);
+  setTButton(temp);
   }
    const SelectAll_TButton1= ()=>{
     var temp=true; 
@@ -154,7 +154,7 @@ const Remarks = (props) => {
     if(item.check===false)
       temp=false;
   } )
-  setTButton(temp);
+  setTButton1(temp);
   }
 
   var count = 1;
@@ -361,6 +361,7 @@ const Remarks = (props) => {
                                       return data;
                                     })
                                   );
+                                  setTButton1(checked);
                                 }}
                                 type="checkbox"
                                 checked={TButton1}
