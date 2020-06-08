@@ -50,7 +50,7 @@ async function forgotPassword(req) {
   return new Promise((resolve, reject) => {
     var res = {};
     if (!req.body.userType || !req.body.username || !req.body.reg_email) {
-      //   res.status = 400;
+      res.status = 200;
       res.response = { err: "Invalid number of arguments!" };
       return resolve(res);
     }
@@ -68,7 +68,7 @@ async function forgotPassword(req) {
         return resolve(res);
       })
       .catch((error) => {
-        // res.status = 400;
+        res.status = 200;
         res.response = { err: error };
         return resolve(res);
       });
