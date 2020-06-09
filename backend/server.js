@@ -43,34 +43,39 @@ var cors = require("cors");
 app.use(cors());
 //LOGIN
 
-app.get("/getForumDetails", async (req, res) => {
-  await serverHelper
-    .getForumDetails(req)
-    .then((response) => {
-      res.status(response.status).json(response.response);
-    })
-    .catch((err) => res.status(400).json({ err: err }));
+app.get("/getForumDetails",async (req, res) => {	
+
+	await serverHelper.getForumDetails(req).then((response)=>{
+		res.status(response.status).json(response.response)
+	}).catch(err=>res.status(400).json({err:err}));
 });
-app.get("/getFacultyDetails", (req, res) => {
-  serverHelper
-    .getFacultyDetails(req)
-    .then((response) => {
-      res.status(response.status).json(response.response);
-    })
-    .catch((error) => {
-      res.status(400).json({ err: error });
-    });
+app.get("/getFacultyDetails", (req,res)=>{
+	serverHelper.getFacultyDetails(req)
+	.then(response=>{
+		res.status(response.status).json(response.response);
+	})
+	.catch(error=>{
+		res.status(400).json({err:error});
+	})
+})
+app.get("/getRegisteredForums",(req,res)=>{
+	serverHelper.getRegisteredForums(req)
+	.then(response=>{return res.status(response.status).json(response.response);})
+	.catch(error=>{return res.status(400).json({err:error})})
+})
+
+app.get("/getFaculty",(req,res)=>{
+	serverHelper.getFaculty(req).then(response=>{
+		return res.status(response.status).json(response.response);
+	}).catch(error=>{return res.status(response.status).json(response.response)})
 });
-app.get("/getRegisteredForums", (req, res) => {
-  serverHelper
-    .getRegisteredForums(req)
-    .then((response) => {
-      return res.status(response.status).json(response.response);
-    })
-    .catch((error) => {
-      return res.status(400).json({ err: error });
-    });
+
+app.get("/getFacilities",(req,res)=>{
+	serverHelper.getFacilities(req).then(response=>{
+		return res.status(response.status).json(response.response);
+	}).catch(error=>{return res.status(response.status).json(response.response)})
 });
+
 app.post("/login", async (req, res) => {
   serverHelper
     .loginForums(req)

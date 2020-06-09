@@ -13,6 +13,8 @@ const fs = require("fs");
 	getForumDetails
 	getFacultyDetails
 	getRegisteredForums
+	getFaculty
+	getFacilities
 	login
 	loginFaculty
 	logout
@@ -43,6 +45,82 @@ const fs = require("fs");
 	changeFacultyEmail
 */
 
+async function getFaculty(req) {
+  return new Promise((resolve, reject) => {
+    var res = {};
+    users
+      .fetchAccessToken(req)
+      .then((token) => {
+        return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+      })
+      .then((username) => {
+        var client = new Client();
+        client.connect();
+        client
+          .query("SELECT faculty_name FROM faculty;")
+          .then((data) => {
+            var faculty = [];
+            data.rows.forEach((row) => {
+              faculty.push(row.faculty_name);
+            });
+            res.status = 200;
+            res.response = { all_faculty: faculty };
+            client.end();
+            return resolve(res);
+          })
+          .catch((error) => {
+            res.status = 500;
+            res.response = { err: "Internal Database error" };
+            client.end();
+            return resolve(res);
+          });
+      })
+      .catch((error) => {
+        res.status = 400;
+        res.response = { err: error };
+        return resolve(res);
+      });
+  });
+}
+
+async function getFacilities(req) {
+  return new Promise((resolve, reject) => {
+    var res = {};
+    users
+      .fetchAccessToken(req)
+      .then((token) => {
+        return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+      })
+      .then((username) => {
+        var client = new Client();
+        client.connect();
+        client
+          .query("SELECT facility_name FROM facilities;")
+          .then((data) => {
+            var facilities = [];
+            data.rows.forEach((row) => {
+              facilities.push(row.facility_name);
+            });
+            res.status = 200;
+            res.response = { all_facilities: facilities };
+            client.end();
+            return resolve(res);
+          })
+          .catch((error) => {
+            res.status = 500;
+            res.response = { err: "Internal Database error" };
+            client.end();
+            return resolve(res);
+          });
+      })
+      .catch((error) => {
+        res.status = 400;
+        res.response = { err: error };
+        return resolve(res);
+      });
+  });
+}
+
 async function forgotPassword(req) {
   // non-authenticated endpoint.
   //expects userType, username, reg_email.
@@ -50,7 +128,7 @@ async function forgotPassword(req) {
   return new Promise((resolve, reject) => {
     var res = {};
     if (!req.body.userType || !req.body.username || !req.body.reg_email) {
-      res.status = 200;
+      res.status = 400;
       res.response = { err: "Invalid number of arguments!" };
       return resolve(res);
     }
@@ -68,7 +146,7 @@ async function forgotPassword(req) {
         return resolve(res);
       })
       .catch((error) => {
-        res.status = 200;
+        res.status = 400;
         res.response = { err: error };
         return resolve(res);
       });
@@ -1260,4 +1338,6 @@ module.exports = {
   changeFacultyEmail,
   getFacultyDetails,
   getRegisteredForums,
+  getFaculty,
+  getFacilities,
 };
