@@ -2,6 +2,7 @@ import React from "react";
 import logo from "./images/logo.png";
 import Login from "./Login";
 import FacultyLogin from "./FacultyLogin";
+import StudentLogin from "./StudentLogin";
 
 const LoginPages = () => {
   return (
@@ -20,6 +21,7 @@ const LoginPages = () => {
           </div>
         </div>
       </div>
+      <StudentLogin />
     </div>
   );
 };
