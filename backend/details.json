@@ -1,25 +1,28 @@
 {
-    "designation": "",
-    "department": "",
-    "subject": "",
-    "date": "",
-    "respects": "",
-    "team_name": "",
-    "event_name": "",
-    "fromdate": "",
-    "todate": "",
-    "start_hour": "",
-    "start_min": "",
-    "start_meridian": "",
-    "end_hour": "",
-    "end_min": "",
-    "end_meridian": "",
-    "letter_body": "",
-    "where": "",
-    "studentdetails": [
-      {
-        "Name": "",
-        "Roll": ""
-      }
-    ]
-  }
+  "designation": "Head of Department",
+  "department": "Department of Computer Science and Engineering",
+  "subject": "Permission",
+  "date": "2020-06-06",
+  "respects": "Sir",
+  "team_name": "CodingStudio",
+  "event_name": "CodeCraft",
+  "fromdate": "2020-06-10",
+  "todate": "2020-06-11",
+  "start_hour": "10",
+  "start_min": "40",
+  "start_meridian": "AM",
+  "end_hour": "4",
+  "end_min": "20",
+  "end_meridian": "PM",
+  "letter_body": "An competitive programing event",
+  "studentdetails": [
+    {
+      "Name": "Yash",
+      "Roll": "18P61A05C2"
+    },
+    {
+      "Name": "Aaris",
+      "Roll": "18P61A05D7"
+    }
+  ]
+}
