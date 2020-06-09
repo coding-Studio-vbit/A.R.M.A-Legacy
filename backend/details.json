@@ -1,78 +1,28 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "designation": "",
-  "department": "",
-  "subject": "Permission For Codecraft",
-  "date": "2020-05-08",
+  "designation": "Head of Department",
+  "department": "Department of Computer Science and Engineering",
+  "subject": "Permission",
+  "date": "2020-06-06",
   "respects": "Sir",
-  "team_name": "Cs",
-  "event_name": "codecraft",
-  "fromdate": "2020-05-30",
-  "todate": "2020-05-14",
-  "start_hour": "11",
-  "start_min": "",
-  "start_meridian": "",
-  "end_hour": "5",
-  "end_min": "",
-  "end_meridian": "",
-  "letter_body": "",
-  "studentdetails": [
-    {
-      "Name": "dajjahdad",
-      "Roll": "adaddas"
-=======
-  "designation": "Director",
-  "department": "Department of Information Technology",
-  "subject": "Permission for Event Conduction",
-  "date": "2020-05-24",
-  "respects": "Ma'am",
-  "team_name": "StuTalk",
-  "event_name": "fcdfhfb",
-  "fromdate": "2020-05-27",
-  "todate": "2020-05-30",
-  "start_hour": "5",
+  "team_name": "CodingStudio",
+  "event_name": "CodeCraft",
+  "fromdate": "2020-06-10",
+  "todate": "2020-06-11",
+  "start_hour": "10",
   "start_min": "40",
   "start_meridian": "AM",
-  "end_hour": "8",
-  "end_min": "30",
+  "end_hour": "4",
+  "end_min": "20",
   "end_meridian": "PM",
-  "letter_body": "fbdfbfdhbdfn",
+  "letter_body": "An competitive programing event",
   "studentdetails": [
-    {
-      "Name": "Aaris",
-      "Roll": "18P61A05D7"
-    },
     {
       "Name": "Yash",
       "Roll": "18P61A05C2"
->>>>>>> 2e2611159e222b170114e028fbaeb3216322a3e6
+    },
+    {
+      "Name": "Aaris",
+      "Roll": "18P61A05D7"
     }
   ]
 }
-=======
-    "designation": "",
-    "department": "",
-    "subject": "",
-    "date": "",
-    "respects": "",
-    "team_name": "",
-    "event_name": "",
-    "fromdate": "",
-    "todate": "",
-    "start_hour": "",
-    "start_min": "",
-    "start_meridian": "",
-    "end_hour": "",
-    "end_min": "",
-    "end_meridian": "",
-    "letter_body": "",
-    "where": "",
-    "studentdetails": [
-      {
-        "Name": "",
-        "Roll": ""
-      }
-    ]
-  }
->>>>>>> 609043e74e3b676bcfba83698627606dd0a5a079

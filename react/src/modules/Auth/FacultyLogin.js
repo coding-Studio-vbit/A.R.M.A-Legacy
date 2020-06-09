@@ -35,7 +35,7 @@ const FacultyLogin = () => {
               accessToken: accessToken,
             })
           );
-          history.push("/Dashboard");
+          history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
@@ -43,7 +43,7 @@ const FacultyLogin = () => {
       })
       .catch((err) => console.log(err));
   };
-	const usertype = "FORUM" ;
+	const usertype = "FACULTY" ;
   const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
     <div className="all-items">
