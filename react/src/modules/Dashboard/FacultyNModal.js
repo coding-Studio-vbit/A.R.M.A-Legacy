@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
 import "./css/ProfileModal.css";
-const NameModal =(props)=>{
+const FacultyNModal =(props)=>{
     const [
         Name,setName
     ]=useState("");
@@ -50,7 +50,9 @@ const NameModal =(props)=>{
                       }
                     }
                       console.log(config);
-                      axios.post("http://localhost:8080/changeForumUsername",{newUsername:Name},config).then((response) => {
+                      axios
+                      .post(
+                        `${process.env.REACT_APP_URL}/changeFacultyUsername`,{newUsername:Name},config).then((response) => {
                         var res=response.data;
                         this.setState({loginValue:response.data.userType});
                         console.log(res.userType);
@@ -70,4 +72,4 @@ const NameModal =(props)=>{
     )
         
 }
-export default NameModal;
+export default FacultyNModal;

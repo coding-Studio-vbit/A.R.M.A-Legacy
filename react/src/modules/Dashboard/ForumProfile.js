@@ -4,7 +4,6 @@ import cslogo from "./images/cslogo.png";
 import "./css/ForumProfile.css"
 import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
-import PhoneModal from './PhoneModal';
 import PassModal from "./PassModal";
 import Nav from "./Navi";
 
@@ -17,7 +16,6 @@ class Profile extends React.Component {
     persons: [],
     Nameon:undefined,
     Editingon: undefined,
-    Phoneon: undefined,
     Passwordon: undefined,
 
   };
@@ -32,11 +30,6 @@ class Profile extends React.Component {
     }));
   };
   newElement2 = () => {
-    this.setState(() => ({
-      Phoneon: true,
-    }));
-  };
-  newElement3 = () => {
     this.setState(() => ({
       Passwordon: true,
     }));
@@ -115,14 +108,12 @@ class Profile extends React.Component {
               </tr>
               <tr>
                 <td colSpan="1">{this.state.profilephone}</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
-                </td>
+                <td></td>
               </tr>
               <tr>
                 <td colSpan="1">xxxxxxxx</td>
                 <td>
-                <i class="far fa-edit" onClick={this.newElement3} style={{ cursor: "pointer"}}></i>
+                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
                 </td>
               </tr>
               <tbody>{items}</tbody>
@@ -131,7 +122,6 @@ class Profile extends React.Component {
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
           <NameModal Editingon={this.state.Nameon} />
           <ProfileModal Editingon={this.state.Editingon} />
-          <PhoneModal Editingon={this.state.Phoneon} />
           <PassModal Editingon={this.state.Passwordon} />
         </div>
       </div>
