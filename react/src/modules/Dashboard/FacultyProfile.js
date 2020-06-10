@@ -68,82 +68,93 @@ componentWillMount() {
         <td>{item.Password}</td>
         </tr>
       );
+      console.log(item)
     });
 
     return (
       <div><Nav/>
       <div className="container-fluid">
-      <div class="containerz">
+      <div className="containerz" >
         <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
+
+        <br />
+        <div class="profile-container">
         <div className="profile-pic">
           <img
             src={profilePic}
             alt="Logo"
             style={
               {
-                width: "177px",
-                height: "174px" ,
+                width: "127px",
+                height: "124px" ,
                 borderRadius:"50%",
                 overflow: "hidden",
-                marginTop:"0px",
-                
 
               }
             }
             roundedCircle
           />
         </div>
-        <br />
-        <div className="profile-container">
-        <div class="table-responsive" >
+          <div class="table-responsive">
             <table class="table profile-table" >
-          <tr style={{borderRadius:"10px",padding:"2px"}}>
-          <td colSpan="1">{this.state.facultyname}</td>
-          <td>
-            <i class="far fa-edit" onClick={this.newEle1} style={{ cursor: "pointer"}}></i>
-          </td>
-            </tr>
-            <tr>
-                <td colSpan="1">{this.state.facultyroll}</td>
-                <td></td>
-                </tr>
-                <tr>
-                <td colSpan="1">{this.state.facultydept}</td>
-                <td></td>
-                </tr>
-              <tr>
-                <td colSpan="1">{this.state.facultyemail}</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newEle2} style={{ cursor: "pointer"}}></i>
-                </td>
+              <tr style={{borderRadius:"10px",padding:"2px"}}>
+                <div className="dataSnippet" >
+                  <div className="profile-text" colSpan="1">{this.state.facultyname}</div>
+                  <div className="profile-text" style={{float:"right"}} >
+                  <i class="far fa-edit" onClick={this.newEle1} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td colSpan="1">{this.state.facultyphone}</td>
-                <td></td>
+                <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.facultyroll}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" style={{ color:"red"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td colSpan="1">xxxxxxxx</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newEle3} style={{ cursor: "pointer"}}></i>
-                </td>
+                <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.facultydept}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" style={{ color:"red"}}></i>
+                  </div>
+                </div>
               </tr>
-          <tbody>
-          {items}
-          </tbody>
-           </table>
-           </div>
-               {/* <span onChange = "newElement()" className="btn btn-primary float-right"></span> */}
-          <FacultyNModal
-          Editingon={this.state.Nameon} />
-          <FacultyEModal
-          Editingon={this.state.Editingon} />
-          <FacultyPsModal
-          Editingon={this.state.Passwordon} />
-
+              <tr>
+                <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.facultyemail}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">{this.state.facultyphone}</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit"  style={{ color:"red"}}></i>
+                </div>
+              </div>
+              </tr>
+              <tr>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">xxxxxxxx</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
+                </div>
+              </div>
+              </tr>
+            </table>
           </div>
-          </div>
-          </div>
-          </div>
+          {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+          <FacultyNModal Editingon={this.state.Nameon} />
+          <FacultyEModal Editingon={this.state.Editingon} />
+          <FacultyPsModal Editingon={this.state.Passwordon} />
+        </div>
+      </div>
+      </div>
+      </div>
     )
   }
 }
