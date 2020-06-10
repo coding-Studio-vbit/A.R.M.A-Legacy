@@ -6,7 +6,7 @@ import ProfileModal from './ProfileModal';
 import PhoneModal from './PhoneModal';
 import PassModal from './PassModal';
 import "./css/ForumProfile.css";
-
+import Nav from "./Navi";
 
 class FacultyProfile extends React.Component{
   state = {
@@ -22,7 +22,7 @@ class FacultyProfile extends React.Component{
     Editingon: undefined,
     Phoneon: undefined,
     Passwordon:undefined,
-    
+
   };
   newEle1=()=>{
     this.setState(()=>({
@@ -64,22 +64,22 @@ componentWillMount() {
       })
   }
   render() {
-    const items=this.state.persons.map(item =>{return(
-
-       <tr>
-          <td>{item.Name}</td>
-          <td>{item.Roll}</td>
-          <td>{item.Dept}</td>
-          <td>{item.Email}</td>
-          <td>{item.Phone}</td>
-          <td>{item.Password}</td>
-          
-    </tr>
-
-             )
-    })
+    const items = this.state.persons.map((item) => {
+      return (
+        <tr>
+        <td>{item.Name}</td>
+        <td>{item.Roll}</td>
+        <td>{item.Dept}</td>
+        <td>{item.Email}</td>
+        <td>{item.Phone}</td>
+        <td>{item.Password}</td>
+        </tr>
+      );
+    });
 
     return (
+      <div><Nav/>
+      <div className="container-fluid">
       <div class="containerz">
         <h1 className="header"><a><span>ACCOUNT</span></a></h1>
         <div className="profile-pic">
@@ -87,7 +87,7 @@ componentWillMount() {
             src={profilePic}
             alt="Logo"
             style={
-              { 
+              {
                 width: "150px",
                 height: "150px",
                 overflow: "hidden",
@@ -151,7 +151,9 @@ componentWillMount() {
           Editingon={this.state.Nameon} />
           <PassModal
           Editingon={this.state.Passwordon} />
-          
+
+          </div>
+          </div>
           </div>
           </div>
           </div>

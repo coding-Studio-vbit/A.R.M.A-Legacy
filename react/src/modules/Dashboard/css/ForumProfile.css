@@ -3,12 +3,21 @@
     padding: 15px 20px 0px 10px;
     width: 400px;
     padding-block-start: 5px;
- 
+    color:white;
+    padding-bottom: 0px;
+
   }
   body{
     background-color: #1a1a1a !important;
   }
-  .table-profile{
+  th{
+    color: #b007c4;
+    border: 0 !important;
+  }
+  thead{
+    border: 0;
+  }
+  .profile-table{
     border: 0;
     font-family:heebo;
     font-size:18px;
@@ -16,7 +25,7 @@
     border-collapse:separate;
     box-sizing: border-box;
   }
-  .container-profile{
+  .profile-container{
     text-align: center;
     border-radius: 15px;
     background-color: #222222;
@@ -24,7 +33,8 @@
     margin-bottom: auto;
     opacity: 90%;
     color: white;
-    
+    text-align: center;
+		margin: auto;
     width: 700px;
   }
   .containerz{
@@ -42,7 +52,7 @@
     text-align: center;
     color: white;
     gap: 20px;
-    
+
   }
   .header-responsive a:before{
       content: "\2022";
@@ -56,17 +66,17 @@
       object-position: center;
     }
   .header-responsive{
-      
-      width: 100%; 
-      text-align: center; 
-      border-bottom: 1px solid #F9F2F2; 
+
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid #F9F2F2;
       line-height: 0.2em;
       margin: 80px auto;
       color: white;
   }
   .header-responsive span {
-    padding:0 30px; 
-    background:#1A1A1A; 
+    padding:0 30px;
+    background:#1A1A1A;
     font-size: 25px;
     color: white;
     font-family: heebo;

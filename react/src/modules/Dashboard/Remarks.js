@@ -79,7 +79,7 @@ const Remarks = (props) => {
     console.log(selected_participants);
     Req_data.selected_participants = selected_participants;
     Req_data.selected_facilities = selected_facilities;
-    console.log(Text);
+    console.log(Req_data);
     let user = JSON.parse(localStorage.getItem("user"));
     let accessToken = user.accessToken;
     let config = {
@@ -110,11 +110,8 @@ const Remarks = (props) => {
       });
   };
   const Selected = () => {
-    const selected_participants = Participants.filter(
-      (data) => data.check === true
-    );
-    const selected_facilities = Facility.filter((data) => data.check === true);
-    console.log(selected_participants);
+    const selected_participants = Participants;
+    const selected_facilities = Facility;
     addRemark(selected_participants, selected_facilities);
   };
 
@@ -145,7 +142,7 @@ const Remarks = (props) => {
       });
   };
   const SelectAll_TButton= ()=>{
-    var temp=true; 
+    var temp=true;
     Participants.map(item=>{
       if(item.check===false)
           temp=false;
@@ -153,7 +150,7 @@ const Remarks = (props) => {
   setTButton(temp);
   }
    const SelectAll_TButton1= ()=>{
-    var temp=true; 
+    var temp=true;
     Facility.map(item=>{
     if(item.check===false)
       temp=false;
@@ -175,6 +172,7 @@ const Remarks = (props) => {
               <input className="in"
                onChange={event =>{
                 let checked = event.target.checked;
+                console.log(checked)
 
                 setPeople(
                   Participants.map((data) => {
@@ -331,7 +329,7 @@ const Remarks = (props) => {
                             Approve
                             <span className="TB">
                               <label class="switch">
-                                <input className="in" 
+                                <input className="in"
                                   onChange={event => {
                                   let checked = event.target.checked;
                                   setPeople(
