@@ -15,7 +15,7 @@ const CreateRequest = () => {
   //getFacility respose is all_facility which is an array
 
   const [inputFields, setInputFields] = useState([
-    { name: "", roll: "", Dept: "", Year: "" },
+    { name: "", roll: "", Dept: "", Year: "", check: false },
   ]);
 
   const history = useHistory();
@@ -27,7 +27,7 @@ const CreateRequest = () => {
 
   const handleAddFields = () => {
     const values = [...inputFields];
-    values.push({ name: "", roll: "", Dept: "", Year: "" });
+    values.push({ name: "", roll: "", Dept: "", Year: "", check: false });
     setInputFields(values);
   };
 
@@ -146,7 +146,7 @@ const CreateRequest = () => {
         console.log(err);
       });
     axios
-    .get(`${process.env.REACT_APP_URL}/getFacility`, config)
+    .get(`${process.env.REACT_APP_URL}/getFacilities`, config)
     .then((res) => {
       var data = res.data;
       var all_facilities = data.all_facilities
@@ -158,9 +158,9 @@ const CreateRequest = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  });
 
-  
+
   return (
     <React.Fragment>
       <Nav />
@@ -353,7 +353,7 @@ const CreateRequest = () => {
                           <div div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                             <button
                               type="button"
-                              
+
                               class="btn btn-danger btn-circle btn-sm"
                               onClick={() => handleRemoveFields(index)}
                             >
