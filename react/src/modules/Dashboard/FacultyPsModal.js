@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./css/ProfileModal.css";
-const PhoneModal = (props) => {
-  const [NewPhone, setNewPhone] = useState("");
+const FacultyPsModal = (props) => {
+  const [NewPassword, setNewPassword] = useState("");
+  const [OldPassword, setOldPassword] = useState("");
+  const [CPassword, setCPassword] = useState("");
+  const [isMessage, setMessage] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => setError(""), 7000);
+    }
+  });
+  const isEnabled = NewPassword === CPassword;
 
   return (
     <div>
@@ -16,7 +26,7 @@ const PhoneModal = (props) => {
           },
           content: {
             backgroundColor: "#181A1B",
-            height: "270px",
+            height: "300px",
             width: "500px",
             position: "absolute",
             left: "35%",
@@ -33,14 +43,41 @@ const PhoneModal = (props) => {
             </button>
           </div>
             <input
-              type="phone"
+              type="password"
               id="myInput"
               className="form-input"
               style={{width:"350px"}}
-              onChange={(e) => setNewPhone(e.target.value)}
-              placeholder="Enter new Phone number"
+              onChange={(e) => setOldPassword(e.target.value)}
+              placeholder="Enter old Password"
             ></input>
             <br />
+            <input
+              type="password"
+              id="myInput"
+              className="form-input"
+              style={{width:"350px"}}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new Password"
+            ></input>
+            <br />
+            <input
+              type="password"
+              id="myInput"
+              className="form-input"
+              style={{width:"350px"}}
+              placeholder="Confirm new Password"
+            ></input>
+            <br />
+            <h5
+              style={{
+                display: !isEnabled ? "inline" : "none",
+                color: "#ff1744",
+              }}
+              id="passwordHelp"
+              className="form-text"
+            >
+              Enter the same password as above
+            </h5>
           <div className="modal-footer">
           <button className="btn-cancel" type="reset">
               Cancel
@@ -62,8 +99,8 @@ const PhoneModal = (props) => {
                   console.log(config);
                   axios
                     .post(
-                      `${process.env.REACT_APP_URL}/changeForumPhone`,
-                      { newPhone: NewPhone},
+                      `${process.env.REACT_APP_URL}/changeFacultyPassword`,
+                      { newPassword: NewPassword, oldPassword: OldPassword },
                       config
                     )
                     .then((response) => {
@@ -85,4 +122,4 @@ const PhoneModal = (props) => {
     </div>
   );
 };
-export default PhoneModal;
+export default FacultyPsModal;
