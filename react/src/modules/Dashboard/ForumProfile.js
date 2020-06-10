@@ -15,10 +15,10 @@ class Profile extends React.Component {
 
     persons: [],
     Nameon:undefined,
-    Editingon: undefined,   
+    Editingon: undefined,
     Phoneon: undefined,
     Passwordon: undefined,
-    
+
   };
   newElement = () => {
     this.setState(() => ({
@@ -39,7 +39,7 @@ class Profile extends React.Component {
     this.setState(() => ({
       Passwordon: true,
     }));
-  }; 
+  };
 
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -95,31 +95,31 @@ class Profile extends React.Component {
           />
         </div>
         <br />
-        <div class="container">
+        <div class="profile-container">
           <div class="table-responsive" >
-            <table class="table" >
+            <table class="table profile-table" >
               <tr style={{borderRadius:"10px",padding:"2px"}}>
                 <td colSpan="1">{this.state.profilename}</td>
                 <td>
-                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent",borderBlockStyle:"hidden"}} onClick={this.newElement}></button>
+                <i class="far fa-edit" onClick={this.newElement} style={{ cursor: "pointer"}}></i>
                 </td>
               </tr>
               <tr>
                 <td colSpan="1">{this.state.profileemail}</td>
                 <td>
-                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement1}></button>
+                <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
                 </td>
               </tr>
               <tr>
                 <td colSpan="1">{this.state.profilephone}</td>
                 <td>
-                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement2}></button>
+                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
                 </td>
-              </tr>              
+              </tr>
               <tr>
                 <td colSpan="1">xxxxxxxx</td>
                 <td>
-                <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newElement3}></button>
+                <i class="far fa-edit" onClick={this.newElement3} style={{ cursor: "pointer"}}></i>
                 </td>
               </tr>
               <tbody>{items}</tbody>

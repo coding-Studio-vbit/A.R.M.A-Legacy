@@ -73,7 +73,21 @@ const ViewStatus = (props) => {
 
   var count = 1;
   var f_count = 1;
-  const list = Participants.map((item) => {
+  const fliteredParticipants = Participants.filter(
+    (participant) => {
+      return (participant.name.toLowerCase().includes(Search.toLowerCase()))||(participant.roll.toLowerCase().includes(Search.toLowerCase()));
+    }
+  );
+  // const list = fliteredParticipants.map((item) => {
+  //   return (
+  //     <tr>
+  //       <td>{count++}</td>
+  //       <td>{item.name}</td>
+  //       <td>{item.roll}</td>
+  //     </tr>
+  //   );
+  // });
+  const list = fliteredParticipants.map((item) => {
     var temp=item.check?"td":"em";
     return(
     <tr className={item.check?"tr":"em"}>
@@ -104,34 +118,31 @@ const ViewStatus = (props) => {
           <Row>
             <Col>
               <Row>
-                <h3 className="content">
-                  <span>From :</span>
+                <h4 className="content">
+                  <span>From : </span>
                   {From}
-                </h3>
+                </h4>
               </Row>
+              <br/>
               <Row>
-                <h3 className="content">
+                <h4 className="content">
                   <span>Subject : </span>
                   {Subject}
-                </h3>
+                </h4>
               </Row>
+              <br/>
               <Row>
-                <h5 className="content">
+                <h4 className="content">
                   <span>Description : </span>
                   {Description}
-                </h5>
+                </h4>
               </Row>
-              <label>Remarks </label>
+              <br/>
               <Row>
-                <Col>
-                  <textarea 
-                  cols={80} 
-                  rows={6} 
-                  disabled>
+                <h4 className="content">
+                  <span>Remarks : </span>
                   {Remarks}
-                 </textarea>
-                
-                </Col>
+                </h4>
               </Row>
             </Col>
 

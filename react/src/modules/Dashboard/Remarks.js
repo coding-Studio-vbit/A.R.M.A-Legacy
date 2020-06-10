@@ -110,9 +110,7 @@ const Remarks = (props) => {
       });
   };
   const Selected = () => {
-    const selected_participants = Participants.filter(
-      (data) => data.check === true
-    );
+    const selected_participants = Participants;
     const selected_facilities = Facility.filter((data) => data.check === true);
     console.log(selected_participants);
     addRemark(selected_participants, selected_facilities);
@@ -145,7 +143,7 @@ const Remarks = (props) => {
       });
   };
   const SelectAll_TButton= ()=>{
-    var temp=true; 
+    var temp=true;
     Participants.map(item=>{
       if(item.check===false)
           temp=false;
@@ -153,7 +151,7 @@ const Remarks = (props) => {
   setTButton(temp);
   }
    const SelectAll_TButton1= ()=>{
-    var temp=true; 
+    var temp=true;
     Facility.map(item=>{
     if(item.check===false)
       temp=false;
@@ -175,6 +173,7 @@ const Remarks = (props) => {
               <input className="in"
                onChange={event =>{
                 let checked = event.target.checked;
+                console.log(checked)
 
                 setPeople(
                   Participants.map((data) => {
@@ -331,7 +330,7 @@ const Remarks = (props) => {
                             Approve
                             <span className="TB">
                               <label class="switch">
-                                <input className="in" 
+                                <input className="in"
                                   onChange={event => {
                                   let checked = event.target.checked;
                                   setPeople(
