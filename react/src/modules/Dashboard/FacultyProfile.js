@@ -99,9 +99,10 @@ componentWillMount() {
           />
         </div>
         <br />
-        <div class="container">
+        <div className="container">
+        <div class="container-profile">
           <div class="table-responsive">
-            <table class="table">
+            <table class="table-profile">
            <tr>
           <td colSpan="1">{this.state.facultyname}</td>
           <td>
@@ -151,6 +152,7 @@ componentWillMount() {
           <PassModal
           Editingon={this.state.Passwordon} />
           
+          </div>
           </div>
           </div>
     )
