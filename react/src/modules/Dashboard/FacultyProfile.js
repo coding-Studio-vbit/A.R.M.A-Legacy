@@ -75,6 +75,7 @@ componentWillMount() {
         <td>{item.Password}</td>
         </tr>
       );
+      console.log(item)
     });
 
     return (
@@ -99,13 +100,13 @@ componentWillMount() {
           />
         </div>
         <br />
-        <div class="container">
+        <div class="profile-container">
           <div class="table-responsive">
-            <table class="table">
+            <table class="table profile-table">
            <tr>
           <td colSpan="1">{this.state.facultyname}</td>
           <td>
-          <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newEle1}></button>
+          <i class="far fa-edit" onClick={this.newEle1} style={{ cursor: "pointer"}}></i>
           </td>
           </tr>
           <tr>
@@ -121,19 +122,19 @@ componentWillMount() {
           <tr>
           <td colSpan="1">{this.state.facultyemail}</td>
           <td>
-          <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newEle2}></button>
+          <i class="far fa-edit" onClick={this.newEle2} style={{ cursor: "pointer"}}></i>
           </td>
           </tr>
           <tr>
           <td colSpan="1">{this.state.facultyphone}</td>
           <td>
-          <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newEle3}></button>
+          <i class="far fa-edit" onClick={this.newEle3} style={{ cursor: "pointer"}}></i>
           </td>
           </tr>
           <tr>
           <td colSpan="1"><input type="text" id="myInput" className="form-input" >XXXXXXXX</input></td>
           <td>
-          <button title="Edit" size="sm" color="info" className="fa fa-pencil" style={{color:"white" ,backgroundColor:"transparent" , borderBlockColor:"transparent"}} onClick={this.newEle4}></button>
+          <i class="far fa-edit" onClick={this.newEle4} style={{ cursor: "pointer"}}></i>
           </td>
           </tr>
           <tbody>
