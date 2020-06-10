@@ -95,9 +95,10 @@ class Profile extends React.Component {
           />
         </div>
         <br />
-        <div class="container">
+        <div className="container">
+        <div class="container-profile">
           <div class="table-responsive" >
-            <table class="table" >
+            <table class="table-profile" >
               <tr style={{borderRadius:"10px",padding:"2px"}}>
                 <td colSpan="1">{this.state.profilename}</td>
                 <td>
@@ -131,6 +132,7 @@ class Profile extends React.Component {
           <PhoneModal Editingon={this.state.Phoneon} />
           <PassModal Editingon={this.state.Passwordon} />
         </div>
+      </div>
       </div>
     );
   }
