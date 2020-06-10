@@ -111,8 +111,7 @@ const Remarks = (props) => {
   };
   const Selected = () => {
     const selected_participants = Participants;
-    const selected_facilities = Facility.filter((data) => data.check === true);
-    console.log(selected_participants);
+    const selected_facilities = Facility;
     addRemark(selected_participants, selected_facilities);
   };
 

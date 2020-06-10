@@ -6,6 +6,7 @@ import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
 import PhoneModal from './PhoneModal';
 import PassModal from "./PassModal";
+import Nav from "./Navi";
 
 class Profile extends React.Component {
   state = {
@@ -76,7 +77,9 @@ class Profile extends React.Component {
     });
 
     return (
-      <div class="containerz" >
+      <div><Nav/>
+      <div className="container-fluid">
+      <div className="containerz" >
         <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
         <div className="profile-pic">
           <img
@@ -131,6 +134,8 @@ class Profile extends React.Component {
           <PhoneModal Editingon={this.state.Phoneon} />
           <PassModal Editingon={this.state.Passwordon} />
         </div>
+      </div>
+      </div>
       </div>
     );
   }
