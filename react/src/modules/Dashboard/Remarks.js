@@ -79,7 +79,7 @@ const Remarks = (props) => {
     console.log(selected_participants);
     Req_data.selected_participants = selected_participants;
     Req_data.selected_facilities = selected_facilities;
-    console.log(Text);
+    console.log(Req_data);
     let user = JSON.parse(localStorage.getItem("user"));
     let accessToken = user.accessToken;
     let config = {

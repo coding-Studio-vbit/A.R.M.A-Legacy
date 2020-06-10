@@ -15,7 +15,7 @@ const CreateRequest = () => {
   //getFacility respose is all_facility which is an array
 
   const [inputFields, setInputFields] = useState([
-    { name: "", roll: "", Dept: "", Year: "" },
+    { name: "", roll: "", Dept: "", Year: "", check: false },
   ]);
 
   const history = useHistory();
@@ -27,7 +27,7 @@ const CreateRequest = () => {
 
   const handleAddFields = () => {
     const values = [...inputFields];
-    values.push({ name: "", roll: "", Dept: "", Year: "" });
+    values.push({ name: "", roll: "", Dept: "", Year: "", check: false });
     setInputFields(values);
   };
 
