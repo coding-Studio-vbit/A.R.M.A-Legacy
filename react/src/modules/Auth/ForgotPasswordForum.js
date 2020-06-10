@@ -3,12 +3,30 @@ import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import "./css/Form.css";
 
-const ForgotPassword = (props) => {
+const ForgotPasswordForum = (props) => {
+  const [ForumList, updateForumList] = useState([]);
+  const [values, setValue] = useState("");
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
+      .then((res) => {
+        let ResForums = res.data;
+        updateForumList(ResForums);
+        setValue(ResForums[0].actual_name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   useEffect(() => {
     if (response !== "") {
       setTimeout(() => setResponse(""), 3000);
     }
   });
+  const ForumChangeHandler = (e) => {
+    let theForum = e.target.value.toUpperCase();
+    setValue(theForum);
+  };
   const [value, changeValue] = useState("");
   const [response, setResponse] = useState("");
   const [username, changeUser] = useState("");
@@ -20,11 +38,11 @@ const ForgotPassword = (props) => {
     axios
       .post(`${process.env.REACT_APP_URL}/forgotPassword`, {
         userType: userType,
-        username: username,
+        username: values.toUpperCase(),
         reg_email: value,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         if (res.data.hasOwnProperty("message")) {
           setResponse(res.data.message);
           isError(false);
@@ -45,17 +63,17 @@ const ForgotPassword = (props) => {
       centered
     >
       <div style={{ padding: 60 }}>
-        <div className="justi">
-          <h3>Roll No</h3>
-          <br />
-          <br />
-
-          <input
-            type="text"
-            placeholder="User Name"
-            className="inputboxes"
-            onChange={(e) => changeUser(e.target.value)}
-          />
+        <div className="form-group justi">
+          <h4 style={{ paddingLeft: 20 }}>Forum List: </h4>
+          <select
+            className="selecti round"
+            name="value"
+            onChange={(e) => ForumChangeHandler(e)}
+          >
+            {ForumList.map((club) => (
+              <option> {club.actual_name} </option>
+            ))}
+          </select>
         </div>
         <br />
         <br />
@@ -86,4 +104,4 @@ const ForgotPassword = (props) => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordForum;

@@ -15,7 +15,10 @@
   flex-direction: "row";
   justify-content: space-between;
 }
-
+.justiff {
+  display: flex;
+  flex-direction: "row";
+}
 .landingPageImage {
   max-width: 253px;
   width: auto;
@@ -38,6 +41,14 @@
   margin: auto;
   margin-bottom: 30px;
 }
+.sforms {
+  max-width: 1400px;
+  width: 100%;
+  max-height: 100%;
+  height: 100%;
+  margin: auto;
+  margin-bottom: 30px;
+}
 
 .rforms > form {
   background-color: #1a1a1a;
@@ -47,6 +58,13 @@
   margin: auto;
 }
 
+.sforms > form {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border: 1px solid #ffffff;
+  border-radius: 20px;
+  margin: auto;
+}
 .ipflex {
   display: "flex";
   flex-direction: "row";
