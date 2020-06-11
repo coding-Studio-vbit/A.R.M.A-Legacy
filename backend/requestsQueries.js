@@ -9,6 +9,7 @@ request_data is stringified json object containing data of the letter (letter fi
 rec_arr is an array of roll numbers of the requested faculty
 */
 function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
+
   //returns status of registration (true or false)
   var client = new Client();
   client.connect();
@@ -83,19 +84,44 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
   var client = new Client();
   client.connect();
   forum_name = forum_name.toUpperCase();
-  client.query(
-    "update requests set forum_name=$1,request_data=$2,remarks=$3,status=$4 where request_id=$5 AND forum_name=$6;",
-    [forum_name,request_data,remarks,status,request_id,forum_name],
-    (err, res) => {
-      if (err) {
-        client.end();
-        return callback(err, undefined);
-      } else{
-        client.end();
-        return callback(undefined,true);
-      }
-    }
-  );
+
+  if(status===undefined){
+  	//update is from a forum
+	// don't update remarks and status.
+	//forums can only update request_data.
+
+ 		 client.query(
+ 		   "update requests set request_data=$1 where request_id=$2 AND forum_name=$3;",
+ 		   [request_data,request_id,forum_name],
+ 		   (err, res) => {
+ 		     if (err) {
+ 		       client.end();
+ 		       return callback(err, undefined);
+ 		     } else{
+ 		       client.end();
+ 		       return callback(undefined,true);
+ 		     }
+ 		   }
+ 		 );
+  }
+  else{
+  	//update is from a faculty
+	//faculty can update request that only they received.
+	//they can update remarks and status
+ 		client.query(
+ 		  "update requests set remarks=$1,status=$2 where request_id=$3 AND forum_name=$4;",
+ 		  [remarks,status,request_id,forum_name],
+ 		  (err, res) => {
+ 		    if (err) {
+ 		      client.end();
+ 		      return callback(err, undefined);
+ 		    } else{
+ 		      client.end();
+ 		      return callback(undefined,true);
+ 		    }
+ 		  }
+ 		);
+  }
 }
 function deleteRequest(request_id, forum_name, callback) {
   //returns status of registration (true or false)
