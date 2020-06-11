@@ -5,6 +5,7 @@ import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
 import "./css/Remarks.css";
+import "./css/ViewStatus.css"
 const ViewStatus = (props) => {
   const status = "Accepted";
   const [From, setFrom] = useState("Coding Studio");
@@ -77,21 +78,33 @@ const ViewStatus = (props) => {
       return (participant.name.toLowerCase().includes(Search.toLowerCase()))||(participant.roll.toLowerCase().includes(Search.toLowerCase()));
     }
   );
+  // const list = fliteredParticipants.map((item) => {
+  //   return (
+  //     <tr>
+  //       <td>{count++}</td>
+  //       <td>{item.name}</td>
+  //       <td>{item.roll}</td>
+  //     </tr>
+  //   );
+  // });
   const list = fliteredParticipants.map((item) => {
-    return (
-      <tr>
-        <td>{count++}</td>
-        <td>{item.name}</td>
-        <td>{item.roll}</td>
-      </tr>
+    var temp=item.check?"td":"em";
+    return(
+    <tr className={item.check?"tr":"em"}>
+      <td  className={temp}>{count++}</td>
+      <td className={temp}>{item.name}</td>
+      <td className={temp}>{item.roll}</td>
+    </tr>
     );
   });
   const list1 = Facility.map((item) => {
-    return (
-      <tr>
-        <td>{f_count++}</td>
-        <td>{item.facility}</td>
-      </tr>
+    var temp=item.check?"td":"em"
+    return(
+    <tr className={item.check?"tr":"em"}>
+      <td className={temp}>{f_count++}</td>
+      <td className={temp}>{item.facility}</td>
+    </tr>
+
     );
   });
   return (
@@ -100,33 +113,36 @@ const ViewStatus = (props) => {
       <div Classname="Con">
         <Container>
           <center>
-            <h1>Letter Info</h1>
+            <h1 className='title'>Letter Info</h1>
           </center>
           <Row>
             <Col>
               <Row>
-                <h3>
-                  <span>From :</span>
+                <h4 className="content">
+                  <span>From : </span>
                   {From}
-                </h3>
+                </h4>
               </Row>
+              <br/>
               <Row>
-                <h3>
+                <h4 className="content">
                   <span>Subject : </span>
                   {Subject}
-                </h3>
+                </h4>
               </Row>
+              <br/>
               <Row>
-                <h5>
+                <h4 className="content">
                   <span>Description : </span>
                   {Description}
-                </h5>
+                </h4>
               </Row>
+              <br/>
               <Row>
-                <h3>
+                <h4 className="content">
                   <span>Remarks : </span>
                   {Remarks}
-                </h3>
+                </h4>
               </Row>
             </Col>
 
@@ -141,7 +157,7 @@ const ViewStatus = (props) => {
                 </Col>
                 <Col style={{ padding: "0px" }}>
                   <center>
-                    {PartTable ? <h4>Participants</h4> : <h4>Facilities</h4>}
+                    {PartTable ? <h4 className='tab'>Participants</h4> : <h4 className='tab'>Facilities</h4>}
                   </center>
                 </Col>
                 <Col>

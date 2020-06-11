@@ -20,8 +20,6 @@ class TemplateList extends React.Component{
                 recepient:"HOD",
                 letter:"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
                 linkName:"/conduct"
-
-
             },
             {
                 id:3,
@@ -43,8 +41,6 @@ class TemplateList extends React.Component{
               recepient:"HOD",
               letter:"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
               linkName:"/venue"
-
-
           },
           {
               id:4,
@@ -52,51 +48,49 @@ class TemplateList extends React.Component{
               recepient:"HOD",
               letter:"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).",
               linkName:"/conductmeet"
-
-
-          },
+          }
         ],
-        search: ""
+        search:""
     };
 
     updateSearch = (e) => {
       this.setState({search : e.target.value})
+      console.log(this.state.search)
     }
     render(){
       let fliteredTemplates = this.state.template.filter(
-        (template) => {
-          return template.subject.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1;
+        (temp) => {
+          return temp.subject.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1;
         }
       );
       return(
-          <React.Fragment>
+          <React.Fragment class="body">
             <Nav/>
-            <InputGroup className="mx-auto my-5 w-50">
+            <div>
+            <div class="box">
+            <InputGroup className="mx-auto my-5 w-50 templateButton">
                 <FormControl
                   placeholder="Search a template "
                   onChange={this.updateSearch}
-                  style={{color:"grey"}}
+                  style={{color:"grey", marginTop:"0", height:"50px"}}
+                  className="searchTemplate"
                 />
-                {/*<InputGroup.Append>
-                  <Button variant="outline-secondary" className="my-auto"><i class="fa fa-search" aria-hidden="true"></i></Button>
-                </InputGroup.Append>*/}
+                <InputGroup.Append>
+                  <Button className="addtemp ml-3">Add Template</Button>
+                </InputGroup.Append>
               </InputGroup>
-              <div>
-                <Container>
+
                 <Row>
                 {fliteredTemplates.map(template=>(
-                  <Col xs={12} sm={12} md={6} lg={4}>
+                  <Col xs={12} sm={12} md={6} lg={4} className="px-0">
                   <Template key={template.id} template={template} linkName={template.linkName}/>
                   </Col>
                 ))}
                 </Row>
-                </Container>
-                <div style={{position:"fixed",bottom:"0",width:"100%"}}>
-                  <Button  variant="primary" size="lg" block>
-                  ADD A NEW TEMPLATE
-                  </Button>
-                  </div>
-              </div>
+                </div>
+                </div>
+
+
           </React.Fragment>
       );
     }

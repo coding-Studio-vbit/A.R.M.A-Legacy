@@ -1,24 +1,25 @@
 {
-  "designation": "Head of Department",
-  "department": "Department of Information Technology",
-  "subject": "hi",
-  "date": "2020-06-25",
-  "respects": "Sir",
-  "team_name": "as",
-  "event_name": "fds",
-  "fromdate": "2020-06-17",
-  "todate": "2020-07-03",
-  "start_hour": "3",
-  "start_min": "15",
-  "start_meridian": "AM",
-  "end_hour": "10",
-  "end_min": "50",
-  "end_meridian": "PM",
-  "letter_body": "fd",
+  "designation": "",
+  "department": "",
+  "subject": "",
+  "date": "",
+  "respects": "",
+  "team_name": "",
+  "event_name": "",
+  "fromdate": "",
+  "todate": "",
+  "start_hour": "",
+  "start_min": "",
+  "start_meridian": "",
+  "end_hour": "",
+  "end_min": "",
+  "end_meridian": "",
+  "letter_body": "",
+  "where": "",
   "studentdetails": [
     {
-      "Name": "fdsf",
-      "Roll": "ffd"
+      "Name": "",
+      "Roll": ""
     }
   ]
 }

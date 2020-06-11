@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./css/ProfileModal.css";
-const ProfileModal = (props) => {
+const FacultyEModal = (props) => {
   const [Email, setEmail] = useState("");
   const [Cemail, setCemail] = useState("");
   const [isMessage, setMessage] = useState(false);
@@ -93,7 +93,7 @@ const ProfileModal = (props) => {
                   console.log(config);
                   axios
                     .post(
-                      `${process.env.REACT_APP_URL}/changeForumEmail`,
+                      `${process.env.REACT_APP_URL}/changeFacultyEmail`,
                       { newEmail: Email },
                       config
                     )
@@ -117,4 +117,4 @@ const ProfileModal = (props) => {
     </div>
   );
 };
-export default ProfileModal;
+export default FacultyEModal;

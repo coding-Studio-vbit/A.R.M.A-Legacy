@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import "./css/ProfileModal.css";
 const PassModal = (props) => {
   const [NewPassword, setNewPassword] = useState("");
   const [OldPassword, setOldPassword] = useState("");
+  const [CPassword, setCPassword] = useState("");
+  const [isMessage, setMessage] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (error !== "") {
+      setTimeout(() => setError(""), 7000);
+    }
+  });
+  const isEnabled = NewPassword === CPassword;
 
   return (
     <div>
@@ -12,30 +21,32 @@ const PassModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 250,
+            margin: 200,
             backgroundColor: "",
           },
           content: {
-            backgroundColor: "#222222",
-            height: "350px",
+            backgroundColor: "#181A1B",
+            height: "300px",
             width: "500px",
             position: "absolute",
+            left: "35%",
+            top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
         <form>
           <div className="modal-header">
-            <h3 style={{ textDecorationColor: "black" }}>Edit Password</h3>
+            <h3 style={{ textDecorationColor: "black" }}></h3>
             <button className="close-modal-btn" type="submit">
               X
             </button>
           </div>
-          <div className="modal-body">
             <input
               type="password"
               id="myInput"
               className="form-input"
+              style={{width:"350px"}}
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
             ></input>
@@ -44,6 +55,7 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
+              style={{width:"350px"}}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
             ></input>
@@ -52,11 +64,24 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
+              style={{width:"350px"}}
               placeholder="Confirm new Password"
             ></input>
             <br />
-          </div>
+            <h5
+              style={{
+                display: !isEnabled ? "inline" : "none",
+                color: "#ff1744",
+              }}
+              id="passwordHelp"
+              className="form-text"
+            >
+              Enter the same password as above
+            </h5>
           <div className="modal-footer">
+          <button className="btn-cancel" type="reset">
+              Cancel
+            </button>
             <button
               type="submit"
               className="submit-button"
@@ -89,10 +114,7 @@ const PassModal = (props) => {
                 }
               }}
             >
-              SUBMIT
-            </button>
-            <button className="btn-cancel" type="reset">
-              CANCEL
+              Save Changes
             </button>
           </div>
         </form>

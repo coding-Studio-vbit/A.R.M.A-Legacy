@@ -1,0 +1,8 @@
+.tr,.td{
+    background-color:  green;
+ }
+
+ .tr,.td {
+     outline: none;
+     border-color: green;
+ }
