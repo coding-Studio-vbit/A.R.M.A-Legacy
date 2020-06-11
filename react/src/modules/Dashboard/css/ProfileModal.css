@@ -1,50 +1,74 @@
 .modal-header {
   width: 100%;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid none;
   font-size: 12px;
   text-align: center;
   padding: 5px;
+  border:none;
 }
 .modal-content {
-  background-color: #222222;
-  color: black;
+  background-color:#181A1B;
+  color:#181A1B;
+  padding-top: 0px;
+  border:none;
+}
+.modal-footer{
+  border:none;
 }
 .submit-button {
   color: #ffffff;
-  background-color: #73007e;
-  font-weight: 700;
-  height: 50px;
+  background-color:#8957F6;
+  font-weight: 400;
+  height: 35px;
   border: none;
-  width: 25%;
+  width: 188px;
   display: block;
-  border-radius: 3px;
+  border-radius: 16px;
   text-transform: uppercase;
 }
 .btn-cancel {
   color: #ffffff;
-  background-color: #0f7e00;
-  font-weight: 700;
-  height: 50px;
+  background-color:#3E4245;
+  font-weight: 400;
+  font-family: Palatino Linotype;
+  height: 35px;
   border: none;
-  width: 25%;
+  width: 120px;
   display: block;
-  border-radius: 3px;
+  border-radius: 16px;
   text-transform: uppercase;
 }
 .close-modal-btn {
-  border-radius: 1px;
+  border-radius: 0px;
+  border-color:transparent;
+  color: #ffffff;
+  font-weight:800;
+  background-color: transparent;
+}
+.form-input:hover
+{
+   border-style:solid;
+}
+.form-input:focus
+{
+   border-style:solid;
 }
 .form-input {
-  background-color: #f5f5f5;
-  border: none;
-  height: 45px;
-  border-radius: 3px;
+  font-family: Palatino Linotype;
+  border: visible;
+  height: 40px;
+  border-radius: 16px;
+  border-color:#717170;
   -webkit-box-shadow: none;
   box-shadow: none;
+  opacity: 100%;
   font-weight: 400;
-  color: #101113;
-  text-decoration-color: black;
+  font-size: 30;
+  border-style:none;
+  background-color:transparent;
 }
 .form-input::-webkit-input-placeholder {
-  color: rgba(16, 17, 19, 0.3);
+  color: whitesmoke;
+  font-family:Palatino Linotype;
+  font-size: 30;
 }

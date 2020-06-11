@@ -105,7 +105,7 @@ const Camp = () => {
           type:
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         });
-        download(file, "Campaigning_Permission.docx");
+        download(file, "FINAL_CAMPAIGNING.docx");
       });
   };
 

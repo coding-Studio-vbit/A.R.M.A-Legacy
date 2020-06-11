@@ -109,8 +109,8 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
 	//faculty can update request that only they received.
 	//they can update remarks and status
  		client.query(
- 		  "update requests set remarks=$1,status=$2 where request_id=$3 AND forum_name=$4;",
- 		  [remarks,status,request_id,forum_name],
+ 		  "update requests set remarks=$1,status=$2,request_data=$3 where request_id=$4 AND forum_name=$5;",
+ 		  [remarks,status,request_data,request_id,forum_name],
  		  (err, res) => {
  		    if (err) {
  		      client.end();

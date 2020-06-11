@@ -70,11 +70,11 @@ class Table extends React.Component {
     var i = 1;
     const items = this.state.persons.map((item) => {
       return (
-        <tr>
-          <td style={{ color: "#b007c4" }}>{i++}</td>
-          <td>{item.subject}</td>
-          <td>{item.status}</td>
-          <td>
+        <tr className="tableTR">
+          <td className="tableTD"  style={{ color: "#b007c4" }}>{i++}</td>
+          <td className="tableTD" >{item.subject}</td>
+          <td className="tableTD" >{item.status}</td>
+          <td className="tableTD" >
             <a
               href="/ViewStatus"
               onClick={() => {
@@ -84,10 +84,10 @@ class Table extends React.Component {
               Click me!
             </a>
           </td>
-          <td style={{ cursor: "pointer", color: "grey" }}>
+          <td className="tableTD"  style={{ cursor: "pointer", color: "grey" }}>
             <i class="far fa-edit"></i>
           </td>
-          <td style={{ cursor: "pointer", color: "grey" }}>
+          <td className="tableTD"  style={{ cursor: "pointer", color: "grey" }}>
             <i
               class="far fa-trash-alt"
               onClick={() => {
@@ -104,18 +104,18 @@ class Table extends React.Component {
         <div class="container">
           <div class="table-responsive">
             <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Subject</th>
-                  <th scope="col" style={{ width: "10%" }}>
+              <thead className="tablehead">
+                <tr className="tableTR">
+                  <th className="tableTH" scope="col">#</th>
+                  <th className="tableTH" scope="col">Subject</th>
+                  <th className="tableTH" scope="col" style={{ width: "10%" }}>
                     Status
                   </th>
-                  <th scope="col">Remarks</th>
-                  <th scope="col" style={{ width: "5%" }}>
+                  <th className="tableTH" scope="col">Remarks</th>
+                  <th className="tableTH" scope="col" style={{ width: "5%" }}>
                     Edit
                   </th>
-                  <th scope="col" style={{ width: "5%" }}>
+                  <th className="tableTH" scope="col" style={{ width: "5%" }}>
                     Delete
                   </th>
                   {

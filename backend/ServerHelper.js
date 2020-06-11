@@ -1303,7 +1303,7 @@ async function getFacultyDetails(req) {
 }
 
 module.exports = {
-	getForumDetails,	
+	getForumDetails,
 	loginForums,
 	loginFaculty,
 	logout,
