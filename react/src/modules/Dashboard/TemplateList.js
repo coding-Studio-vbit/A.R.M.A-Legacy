@@ -1,6 +1,6 @@
 import React from 'react';
 import Template from './Template';
-import {Button,Col,Row,Container} from 'react-bootstrap';
+import {Button,Col,Row,Container,InputGroup, FormControl} from 'react-bootstrap';
 import Nav from './Navi';
 
 
@@ -55,16 +55,36 @@ class TemplateList extends React.Component{
 
 
           },
-        ]
+        ],
+        search: ""
     };
+
+    updateSearch = (e) => {
+      this.setState({search : e.target.value})
+    }
     render(){
+      let fliteredTemplates = this.state.template.filter(
+        (template) => {
+          return template.subject.toLowerCase().indexOf(this.state.search.toLowerCase())!==-1;
+        }
+      );
       return(
           <React.Fragment>
             <Nav/>
-              <div >
+            <InputGroup className="mx-auto my-5 w-50">
+                <FormControl
+                  placeholder="Search a template "
+                  onChange={this.updateSearch}
+                  style={{color:"grey"}}
+                />
+                {/*<InputGroup.Append>
+                  <Button variant="outline-secondary" className="my-auto"><i class="fa fa-search" aria-hidden="true"></i></Button>
+                </InputGroup.Append>*/}
+              </InputGroup>
+              <div>
                 <Container>
                 <Row>
-                {this.state.template.map(template=>(
+                {fliteredTemplates.map(template=>(
                   <Col xs={12} sm={12} md={6} lg={4}>
                   <Template key={template.id} template={template} linkName={template.linkName}/>
                   </Col>
