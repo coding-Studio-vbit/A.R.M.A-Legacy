@@ -3,7 +3,7 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import "./css/Form.css";
 import ForgotPassword from "./ForgotPassword";
-
+import ForgotPasswordForum from "./ForgotPasswordForum";
 const Login = () => {
   const [ForumList, updateForumList] = useState([]);
   const history = useHistory();
@@ -23,7 +23,7 @@ const Login = () => {
       .then((res) => {
         let ResForums = res.data;
         updateForumList(ResForums);
-        setValue(ResForums[0].actual_name.toUpperCase());
+        setValue(ResForums[0].actual_name);
       })
       .catch((err) => {
         console.log(err);
@@ -66,7 +66,7 @@ const Login = () => {
     let theForum = e.target.value.toUpperCase();
     setValue(theForum);
   };
-	const userType = "FORUM";
+  const userType = "FORUM";
   return (
     <div className="all-items">
       <div className="forms">
@@ -130,7 +130,11 @@ const Login = () => {
           </Link>
         </form>
       </div>
-      <ForgotPassword userType={userType} show={modalShow} onHide={() => setModalShow(false)} />
+      <ForgotPasswordForum
+        userType={userType}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   );
 };

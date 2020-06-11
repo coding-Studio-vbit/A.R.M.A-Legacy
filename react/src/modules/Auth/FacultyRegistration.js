@@ -141,17 +141,20 @@ const FacultyRegister = () => {
               value={contact.cemail}
               placeholder="Confirm Email"
             />
-            <h5
-              style={{
-                display: !isEnabled ? "inline" : "none",
-                color: "#ff1744",
-              }}
-              id="emailHelp"
-              className="form-text"
-            >
-              Enter the same email as above
-            </h5>
           </div>
+          <h5
+            style={{
+              display: !isEnabled ? "inline" : "none",
+              color: "#ff1744",
+              float: "right",
+              paddingRight: 50,
+            }}
+            id="emailHelp"
+            className="form-text"
+          >
+            Enter the same email as above
+          </h5>
+
           <br />
           <br />
           <div className="justif">
