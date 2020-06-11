@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
-import profilePic from "./images/profilePic.png";
+import cslogo from "./images/cslogo.png";
+import "./css/ForumProfile.css"
+import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
 import PassModal from "./PassModal";
-import NameModal from './NameModal';
 import Nav from "./Navi";
 
 class Profile extends React.Component {
@@ -13,23 +14,24 @@ class Profile extends React.Component {
     profilephone: "",
 
     persons: [],
-    Editingon: undefined,
     Nameon:undefined,
+    Editingon: undefined,
     Passwordon: undefined,
+
   };
   newElement = () => {
     this.setState(() => ({
-      Editingon: true,
+      Nameon: true,
     }));
   };
   newElement1 = () => {
     this.setState(() => ({
-      Passwordon: true,
+      Editingon: true,
     }));
   };
   newElement2 = () => {
     this.setState(() => ({
-      Nameon: true,
+      Passwordon: true,
     }));
   };
 
@@ -55,73 +57,73 @@ class Profile extends React.Component {
       });
   }
   render() {
-    const items = this.state.persons.map((item) => {
-      return (
-        <tr>
-          <td>{item.Name}</td>
-          <td>{item.Email}</td>
-          <td>{item.Password}</td>
-          <td>{item.Phone}</td>
-        </tr>
-      );
-    });
-
     return (
-      <div class="containerz" style={{ textAlign: "center" }}>
+      <div><Nav/>
+      <div className="container-fluid">
+      <div className="containerz" >
+        <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
+
+        <br />
+        <div class="profile-container">
         <div className="profile-pic">
           <img
-            src={profilePic}
+            src={cslogo}
             alt="Logo"
-            style={{ width: "150px", height: "150px" }}
+            style={
+              {
+                width: "127px",
+                height: "124px" ,
+                borderRadius:"50%",
+                overflow: "hidden",
+
+              }
+            }
+            roundedCircle
           />
         </div>
-        <br />
-        <div class="container" style={{ width: "700px" }}>
           <div class="table-responsive">
-            <table class="table" bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th colspan="1" style={{ fontSize: "40px" }}>
-                    Profile
-                  </th>
-                </tr>
-              </thead>
-
-              <tr>
-                <td>Name</td>
-                <td colSpan="2">{this.state.profilename}</td>
-                <td>
-                <button onClick={this.newElement2}>Edit</button>
-                </td>
-                <td></td>
+            <table class="table profile-table" >
+              <tr style={{borderRadius:"10px",padding:"2px"}}>
+                <div className="dataSnippet" >
+                  <div className="profile-text" colSpan="1">{this.state.profilename}</div>
+                  <div className="profile-text" style={{float:"right"}} >
+                  <i class="far fa-edit" onClick={this.newElement} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td>Email</td>
-                <td colSpan="2">{this.state.profileemail}</td>
-                <td>
-                  <button onClick={this.newElement}>Edit</button>
-                </td>
+                <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.profileemail}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td>Password</td>
-                <td colSpan="2">xxxxxxxx</td>
-                <td>
-                  <button onClick={this.newElement1}>Edit</button>
-                </td>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">{this.state.profilephone}</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit"  style={{color:"red"}}></i>
+                </div>
+              </div>
               </tr>
               <tr>
-                <td>Phone</td>
-                <td colSpan="2">{this.state.profilephone}</td>
-                <td></td>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">xxxxxxxx</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
+                </div>
+              </div>
               </tr>
-              <tbody>{items}</tbody>
             </table>
           </div>
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+          <NameModal Editingon={this.state.Nameon} />
           <ProfileModal Editingon={this.state.Editingon} />
           <PassModal Editingon={this.state.Passwordon} />
-          <NameModal Editingon={this.state.Nameon} />
         </div>
+      </div>
+      </div>
       </div>
     );
   }

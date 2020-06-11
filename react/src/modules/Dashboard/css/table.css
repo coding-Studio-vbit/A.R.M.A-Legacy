@@ -10,22 +10,22 @@
 		text-align: center;
 		border: 0;
 	}
-	td{
+	.tableTD{
 		font-size: 10px;
 	}
-	th{
+	.tableTH{
 		font-size: 12px;
 	}
 }
-tr{
+.tableTR{
 	color:white;
   padding-bottom: 0px;
 }
-th {
+.tableTH {
   color: #b007c4;
   border: 0 !important;
 }
-thead {
+.tablehead{
   border: 0;
 }
 body {

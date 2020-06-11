@@ -52,7 +52,7 @@ const DashboardRoutes = () => {
     <ProtectedRoute path="/profile" component={FacultyProfile} />
     </div>
   );
- 
+
   return(
     <div>
     <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
