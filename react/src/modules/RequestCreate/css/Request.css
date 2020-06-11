@@ -1,0 +1,39 @@
+label {
+  color: white;
+  font-size: medium;
+}
+
+.boxbg {
+    border-radius: 25px;
+    background: rgb(33, 33, 33);
+    padding: 20px; 
+    width: inherit;
+    height: inherit;  
+    display: flex;
+    margin-top: 50px;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 50px;
+  }
+
+  .line {
+    background-color: rgb(109, 0, 143);    
+  }
+
+  .linew {
+    background-color: gray;
+  }
+
+  .Multiselect {
+    text-align: start;
+    color: white;
+  }
+
+  .btn-circle.btn-sm { 
+    width: 40px; 
+    height: 40px; 
+    padding: 6px 0px; 
+    border-radius: 20px; 
+    font-size: 10px; 
+    text-align: center; 
+} 

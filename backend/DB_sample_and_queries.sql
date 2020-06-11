@@ -1,4 +1,3 @@
-
 Creating the Database:
 ======================
 
@@ -11,7 +10,8 @@ CREATE TABLE forums(
 	forum_name varchar(128) PRIMARY KEY,
 	pwd_hash varchar(128),
 	email varchar(128) UNIQUE,
-	phone_no varchar(11)
+	phone_no varchar(11),
+	actual_name varchar(128) UNIQUE NOT NULL
 );
 
 Creating the Faculty table:
@@ -54,9 +54,22 @@ CREATE TABLE personal_templates(
 	template_name varchar(64) UNIQUE
 );
 
+Creating the Faculty Registration Request table
+===============================================
 Create table faculty_registration_request(faculty_name varchar(128),faculty_dept varchar(8),faculty_roll varchar(11),email varchar(128),phone varchar(11));
-
+Creating the Forum Registration Request table
+=============================================
 Create table forum_registration_request(forum_name varchar(128),email varchar(128),phone varchar(11));
+
+Creating the Facilities Table
+==============================
+
+Create table facilities(
+	facility_name varchar(128) PRIMARY KEY,
+	timings jsonb
+);
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 forum_name  |                           pwd_hash                           |     email     |  phone_no
 --------------+--------------------------------------------------------------+---------------+------------
