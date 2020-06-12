@@ -10,6 +10,16 @@ const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const pool = require("./db");
+const multer = require("multer")
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb){cb(null, './personalTemplates/allTemplates');},
+	filename:function (req, file, cb){cb(null, Date.now()+'-'+file.originalname);}
+}); 
+
+var upload = multer({storage: storage}).single('file');
+
+
 //Letter Template
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
@@ -551,6 +561,21 @@ app.post("/changeFacultyEmail", (req, res) => {
     })
     .catch((error) => res.status(400).json({ err: error }));
 });
+
+app.post("/uploadTemplate",(req, res)=>{
+	upload(req, res, (error)=>{
+		if(error instanceof multer.MulterError){
+			return res.status(500).json({err:error});
+		}
+		else if(err)
+		{
+			return res.status(500).json({err:error});
+		}
+		console.log(req.file);
+		return res.status(200).json({message: "Template successfully uploaded"});
+	})
+});
+
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 //start the server.
 app.listen(port_number, () => {

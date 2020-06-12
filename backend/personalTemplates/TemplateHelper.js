@@ -1,6 +1,7 @@
 const fs = require('fs');
-const docxTemplater = require('docxtemplater')
-const mammoth = require('mammoth')
+const docxTemplater = require('docxtemplater');
+const mammoth = require('mammoth');
+const {Client} = require('pg');
 
 
 async function readDocx(filepath)
@@ -26,23 +27,49 @@ async function checkPlaceHolders(filepath)
 			arr.forEach(str=>{
 				
 				let allowed = [
-					'','','',
-
+					'{designation}',
+					'{department}',
+					'{date}',
+					'{subject}',
+					'{respects}',
+					'{team_name}',
+					'{event_name}',
+					'{fromdate}',
+					'{todate}',
+					'{letter_body}',
+					'{hall_name}',
+					'{start_hour}',
+					'{start_min}',
+					'{start_meridian}',
+					'{end_hour}',
+					'{end_min}',
+					'{end_meridian}',
+					'{campaignwhere}',
+					'{#studentdetails}',
+					'{Name}',
+					'{Roll}',
+					'{/studentdetails}',
 				];
-				
-				if(!allowed.includes(str)) return reject("Invalid placeholder");
+				if(!allowed.includes(str)) return reject("Invalid placeholder "+str);
 			});
 			return resolve();
 		})
 		.catch(error=>{
 			return reject(error);
 		})
-	});
+	})
 }
 
-checkPlaceHolders('./TeamAttendanceTemplate.docx')
-.then(()=>{
-})
-.catch(error=>{
-	console.log(error);
-})
+async function insertNewTemplate(templateName, filepath)
+{
+	return new Promise((resolve, reject)=>{
+		var client = new Client();
+		client.connect();
+
+	})
+}
+
+module.exports = {
+	readDocx,
+	checkPlaceHolders
+};
