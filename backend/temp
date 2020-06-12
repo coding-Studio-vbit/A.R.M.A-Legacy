@@ -1,0 +1,10 @@
+	users.fetchAccessToken(req)
+	.then(token=>{
+		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+	})
+	.then(username=>{
+		
+	})
+	.catch(error=>{
+		return res.status(400).json({err:error});
+	})

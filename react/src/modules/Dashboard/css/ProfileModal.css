@@ -1,0 +1,74 @@
+.modal-header {
+  width: 100%;
+  border-bottom: 1px solid none;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+  border:none;
+}
+.modal-content {
+  background-color:#181A1B;
+  color:#181A1B;
+  padding-top: 0px;
+  border:none;
+}
+.modal-footer{
+  border:none;
+}
+.submit-button {
+  color: #ffffff;
+  background-color:#8957F6;
+  font-weight: 400;
+  height: 35px;
+  border: none;
+  width: 188px;
+  display: block;
+  border-radius: 16px;
+  text-transform: uppercase;
+}
+.btn-cancel {
+  color: #ffffff;
+  background-color:#3E4245;
+  font-weight: 400;
+  font-family: Palatino Linotype;
+  height: 35px;
+  border: none;
+  width: 120px;
+  display: block;
+  border-radius: 16px;
+  text-transform: uppercase;
+}
+.close-modal-btn {
+  border-radius: 0px;
+  border-color:transparent;
+  color: #ffffff;
+  font-weight:800;
+  background-color: transparent;
+}
+.form-input:hover
+{
+   border-style:solid;
+}
+.form-input:focus
+{
+   border-style:solid;
+}
+.form-input {
+  font-family: Palatino Linotype;
+  border: visible;
+  height: 40px;
+  border-radius: 16px;
+  border-color:#717170;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: 100%;
+  font-weight: 400;
+  font-size: 30;
+  border-style:none;
+  background-color:transparent;
+}
+.form-input::-webkit-input-placeholder {
+  color: whitesmoke;
+  font-family:Palatino Linotype;
+  font-size: 30;
+}
