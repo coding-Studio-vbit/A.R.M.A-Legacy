@@ -1,0 +1,4 @@
+.flexi {
+  display: flex;
+  justify-content: space-between; /* Can be changed in the live sample */
+}
