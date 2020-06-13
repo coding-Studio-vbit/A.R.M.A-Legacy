@@ -1,24 +1,25 @@
 {
-  "designation": "Head of Department",
-  "department": "Department of Computer Science and Engineering",
-  "subject": "kj",
-  "date": "2020-06-11",
-  "respects": "Sir",
-  "team_name": "jk",
-  "event_name": "kjj",
-  "fromdate": "2020-06-11",
-  "todate": "2020-06-11",
-  "start_hour": "4",
-  "start_min": "15",
-  "start_meridian": "AM",
-  "end_hour": "7",
-  "end_min": "25",
-  "end_meridian": "AM",
-  "letter_body": "kjj",
+  "designation": "",
+  "department": "",
+  "subject": "",
+  "date": "",
+  "respects": "",
+  "team_name": "",
+  "event_name": "",
+  "fromdate": "",
+  "todate": "",
+  "start_hour": "",
+  "start_min": "",
+  "start_meridian": "",
+  "end_hour": "",
+  "end_min": "",
+  "end_meridian": "",
+  "letter_body": "",
+  "where": "",
   "studentdetails": [
     {
-      "Name": "jsikj",
-      "Roll": "1018"
+      "Name": "",
+      "Roll": ""
     }
   ]
 }
