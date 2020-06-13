@@ -2,3 +2,116 @@
   display: flex;
   justify-content: space-between; /* Can be changed in the live sample */
 }
+
+.inputboxfess {
+  border: #707070;
+  background-color: #22252c;
+  color-adjust: economy;
+  border-radius: 10px;
+  width: 400px;
+  font-style: heebo;
+  padding: 10px 5px;
+  /* margin: 0 auto 10px auto; */
+
+  text-align: center;
+  font-size: 18px;
+  color: grey;
+  font-weight: 300;
+}
+
+.justif {
+  display: flex;
+  flex-direction: "row";
+  justify-content: space-evenly;
+}
+
+.buttonpurple {
+  border: black;
+  background-color: #5e18d9;
+  width: 200px;
+  border-radius: 5px;
+  font-style: heebo;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  font-weight: 300;
+}
+
+.title {
+  font-size: 29.8px;
+  margin-top: 100px;
+  color: #ff00ff;
+}
+.subtitle1 {
+  font-size: 23px;
+  margin-top: 100px;
+  margin-left: 20px;
+  color: white;
+}
+.text1 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.text2 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.all-items {
+  text-align: center;
+}
+p {
+  font-size: 20px;
+}
+.subtitle2 {
+  font-size: 23px;
+  margin-top: 38px;
+  margin-left: 20px;
+  color: white;
+}
+.imgud {
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.text3 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.subtitle3 {
+  font-size: 23px;
+  margin-top: 38px;
+  margin-left: 20px;
+  color: white;
+}
+.text4 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.text5 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.text6 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.text7 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}

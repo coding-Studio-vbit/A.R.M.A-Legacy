@@ -584,7 +584,7 @@ app.post("/changeFacultyEmail", (req, res) => {
 });
 
 app.post("/uploadTemplate", (req, res) => {
-  console.log("fs");
+  console.log(req);
   users
     .fetchAccessToken(req)
     .then((token) => {
@@ -601,9 +601,12 @@ app.post("/uploadTemplate", (req, res) => {
           return res.status(500).json({ err: error });
         }
         console.log(req.file);
+        let templateName = req.file.originalname;
+        templateName = templateName.slice(0, templateName.length - 5);
+        console.log(templateName);
         //res.status(200).json({ message: "Template successfully uploaded" });
         templateHelper
-          .insertNewTemplate(username, "newfdsftemp", req.file.path)
+          .insertNewTemplate(username, templateName, req.file.path)
           .then((result) => {
             return res.status(200).json({ message: result });
           })

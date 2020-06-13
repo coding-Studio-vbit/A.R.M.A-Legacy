@@ -97,17 +97,18 @@ async function insertNewTemplate(forum_name, templateName, filepath) {
       })
       .then((okay) => {
         if (!okay) return resolve("Placeholders are invalid in the template!");
-        return client.query(
-          "INSERT INTO personal_templates(forum_name, template_name, filepath) VALUES ($1,$2,$3)",
-          [forum_name, templateName, filepath]
-        );
-      })
-      .then((state) => {
-        client.end();
-        return resolve("Created new template!");
-      })
-      .catch((error) => {
-        return reject(error);
+        client
+          .query(
+            "INSERT INTO personal_templates(forum_name, template_name, filepath) VALUES ($1,$2,$3)",
+            [forum_name, templateName, filepath]
+          )
+          .then((state) => {
+            client.end();
+            return resolve("Created new template!");
+          })
+          .catch((error) => {
+            return reject(error);
+          });
       });
   });
 }
