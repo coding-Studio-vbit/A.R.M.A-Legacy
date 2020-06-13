@@ -107,6 +107,22 @@ componentWillMount() {
               </tr>
               <tr>
                 <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.facultyemail}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" onClick={this.newEle2} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
+              </tr>
+              <tr>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">xxxxxxxx</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit" onClick={this.newEle3} style={{ cursor: "pointer"}}></i>
+                </div>
+              </div>
+              </tr>
+              <tr>
+                <div className="dataSnippet">
                   <div className="profile-text" colSpan="1">{this.state.facultyroll}</div>
                   <div className="profile-text" style={{float:"right"}}>
                   <i class="far fa-edit" style={{ color:"red"}}></i>
@@ -118,14 +134,6 @@ componentWillMount() {
                   <div className="profile-text" colSpan="1">{this.state.facultydept}</div>
                   <div className="profile-text" style={{float:"right"}}>
                   <i class="far fa-edit" style={{ color:"red"}}></i>
-                  </div>
-                </div>
-              </tr>
-              <tr>
-                <div className="dataSnippet">
-                  <div className="profile-text" colSpan="1">{this.state.facultyemail}</div>
-                  <div className="profile-text" style={{float:"right"}}>
-                  <i class="far fa-edit" onClick={this.newEle2} style={{ cursor: "pointer"}}></i>
                   </div>
                 </div>
               </tr>
