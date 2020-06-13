@@ -7,7 +7,7 @@ const FacultyNModal =(props)=>{
         Name,setName
     ]=useState("");
     return (
-        <div> 
+        <div class="modal"> 
     <Modal
     style={
       {
@@ -20,9 +20,9 @@ const FacultyNModal =(props)=>{
         content:{
           backgroundColor:"#181A1B",
           height:"250px",
-          width:"500px",
+          width:"400px",
           position:"absolute",
-          left: "35%",
+          left: "30%",
           top: "50%",
         }
       }
@@ -34,7 +34,7 @@ const FacultyNModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="text" id="myInput" style={{opacity:"1.0",width:"400px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
+                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer">
                 <button className="btn-cancel" type="reset">Cancel</button>

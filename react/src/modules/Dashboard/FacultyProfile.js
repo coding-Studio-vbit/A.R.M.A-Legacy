@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import profilePic from './images/profilePic.png';
+import {Row, Col } from "react-bootstrap";
 import FacultyNModal from './FacultyNModal';
 import FacultyEModal from './FacultyEModal';
 import FacultyPsModal from './FacultyPsModal';
@@ -75,9 +76,12 @@ componentWillMount() {
       <div><Nav/>
       <div className="container-fluid">
       <div className="containerz" >
+      <Row>
         <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
 
         <br />
+        </Row>
+        <Row>
         <div class="profile-container">
         <div className="profile-pic">
           <img
@@ -114,14 +118,6 @@ componentWillMount() {
                 </div>
               </tr>
               <tr>
-              <div className="dataSnippet">
-                <div className="profile-text" colSpan="1">xxxxxxxx</div>
-                <div className="profile-text" style={{float:"right"}}>
-                <i class="far fa-edit" onClick={this.newEle3} style={{ cursor: "pointer"}}></i>
-                </div>
-              </div>
-              </tr>
-              <tr>
                 <div className="dataSnippet">
                   <div className="profile-text" colSpan="1">{this.state.facultyroll}</div>
                   <div className="profile-text" style={{float:"right"}}>
@@ -156,10 +152,13 @@ componentWillMount() {
             </table>
           </div>
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+          <Col>
           <FacultyNModal Editingon={this.state.Nameon} />
           <FacultyEModal Editingon={this.state.Editingon} />
           <FacultyPsModal Editingon={this.state.Passwordon} />
+          </Col>
         </div>
+        </Row>
       </div>
       </div>
       </div>

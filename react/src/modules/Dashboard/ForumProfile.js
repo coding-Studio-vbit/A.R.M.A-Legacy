@@ -2,12 +2,13 @@ import React from "react";
 import axios from "axios";
 import cslogo from "./images/cslogo.png";
 import "./css/ForumProfile.css"
+import {Row, Col } from "react-bootstrap";
 import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
 import PassModal from "./PassModal";
 import Nav from "./Navi";
 
-class Profile extends React.Component {
+class ForumProfile extends React.Component {
   state = {
     profilename: "",
     profileemail: "",
@@ -58,12 +59,15 @@ class Profile extends React.Component {
   }
   render() {
     return (
-      <div><Nav/>
+<div><Nav/>
       <div className="container-fluid">
       <div className="containerz" >
+        <Row>
         <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
 
         <br />
+        </Row>
+        <Row>
         <div class="profile-container">
         <div className="profile-pic">
           <img
@@ -118,10 +122,13 @@ class Profile extends React.Component {
             </table>
           </div>
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+        <Col>
           <NameModal Editingon={this.state.Nameon} />
           <ProfileModal Editingon={this.state.Editingon} />
           <PassModal Editingon={this.state.Passwordon} />
+          </Col> 
         </div>
+        </Row>
       </div>
       </div>
       </div>
@@ -136,4 +143,4 @@ const Action = (props) => {
   );
 };
 
-export default Profile;
+export default ForumProfile;
