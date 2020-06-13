@@ -20,17 +20,17 @@ const FacultyEModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 200,
+            margin: 220,
             position:"absolute",
             backgroundColor: "",
           },
           content: {
             backgroundColor: "#181A1B",
             height: "300px",
-            width: "500px",
+            width: "450px",
             position: "absolute",
             borderBlockColor:"#3E4245",
-            left: "35%",
+            left: "30%",
             top: "50%",
           },
         }}
@@ -48,7 +48,7 @@ const FacultyEModal = (props) => {
               type="email"
               id="myInput"
               className="form-input"
-              style={{width:"400px"}}
+              style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
             ></input>
@@ -57,7 +57,7 @@ const FacultyEModal = (props) => {
               type="email"
               id="myInput"
               className="form-input"
-              style={{width:"400px"}}
+              style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
             ></input>

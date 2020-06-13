@@ -1,3 +1,21 @@
+@media only screen and (max-device-width:360px) {
+  .modal-content{
+    width: 270px;
+    font-size: 11px;
+    height: 40px;
+    text-align: center;
+  }
+.modal{
+  text-align: center;
+  width: 310px;
+  position: relative;
+  left:10%;
+}
+.form-responsive{
+  width: 310px;
+  left:10%;
+}
+}
 .modal-header {
   width: 100%;
   border-bottom: 1px solid none;
