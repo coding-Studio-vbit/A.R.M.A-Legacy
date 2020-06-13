@@ -4,7 +4,6 @@ import cslogo from "./images/cslogo.png";
 import "./css/ForumProfile.css"
 import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
-import PhoneModal from './PhoneModal';
 import PassModal from "./PassModal";
 import Nav from "./Navi";
 
@@ -17,7 +16,6 @@ class Profile extends React.Component {
     persons: [],
     Nameon:undefined,
     Editingon: undefined,
-    Phoneon: undefined,
     Passwordon: undefined,
 
   };
@@ -32,11 +30,6 @@ class Profile extends React.Component {
     }));
   };
   newElement2 = () => {
-    this.setState(() => ({
-      Phoneon: true,
-    }));
-  };
-  newElement3 = () => {
     this.setState(() => ({
       Passwordon: true,
     }));
@@ -64,31 +57,22 @@ class Profile extends React.Component {
       });
   }
   render() {
-    const items = this.state.persons.map((item) => {
-      return (
-        <tr>
-          <td>{item.Name}</td>
-          <td>{item.Email}</td>
-          <td>{item.Phone}</td>
-          <td>{item.Password}</td>
-
-        </tr>
-      );
-    });
-
     return (
       <div><Nav/>
       <div className="container-fluid">
       <div className="containerz" >
         <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
+
+        <br />
+        <div class="profile-container">
         <div className="profile-pic">
           <img
             src={cslogo}
             alt="Logo"
             style={
               {
-                width: "177px",
-                height: "174px" ,
+                width: "127px",
+                height: "124px" ,
                 borderRadius:"50%",
                 overflow: "hidden",
 
@@ -97,41 +81,45 @@ class Profile extends React.Component {
             roundedCircle
           />
         </div>
-        <br />
-        <div class="profile-container">
-          <div class="table-responsive" >
+          <div class="table-responsive">
             <table class="table profile-table" >
               <tr style={{borderRadius:"10px",padding:"2px"}}>
-                <td colSpan="1">{this.state.profilename}</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newElement} style={{ cursor: "pointer"}}></i>
-                </td>
+                <div className="dataSnippet" >
+                  <div className="profile-text" colSpan="1">{this.state.profilename}</div>
+                  <div className="profile-text" style={{float:"right"}} >
+                  <i class="far fa-edit" onClick={this.newElement} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td colSpan="1">{this.state.profileemail}</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
-                </td>
+                <div className="dataSnippet">
+                  <div className="profile-text" colSpan="1">{this.state.profileemail}</div>
+                  <div className="profile-text" style={{float:"right"}}>
+                  <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
+                  </div>
+                </div>
               </tr>
               <tr>
-                <td colSpan="1">{this.state.profilephone}</td>
-                <td>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">{this.state.profilephone}</div>
+                <div className="profile-text" style={{float:"right"}}>
+                <i class="far fa-edit"  style={{color:"red"}}></i>
+                </div>
+              </div>
+              </tr>
+              <tr>
+              <div className="dataSnippet">
+                <div className="profile-text" colSpan="1">xxxxxxxx</div>
+                <div className="profile-text" style={{float:"right"}}>
                 <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
-                </td>
+                </div>
+              </div>
               </tr>
-              <tr>
-                <td colSpan="1">xxxxxxxx</td>
-                <td>
-                <i class="far fa-edit" onClick={this.newElement3} style={{ cursor: "pointer"}}></i>
-                </td>
-              </tr>
-              <tbody>{items}</tbody>
             </table>
           </div>
           {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
           <NameModal Editingon={this.state.Nameon} />
           <ProfileModal Editingon={this.state.Editingon} />
-          <PhoneModal Editingon={this.state.Phoneon} />
           <PassModal Editingon={this.state.Passwordon} />
         </div>
       </div>
