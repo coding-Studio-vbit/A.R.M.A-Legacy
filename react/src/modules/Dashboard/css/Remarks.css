@@ -32,7 +32,7 @@ font-weight: bolder;
 font-weight: bold;}
 .title{color:darkorchid}
 textarea{
-margin: 10px;
+font-weight:bold;
 background-color: grey;
 border: 0;
 border-radius: 15px;
@@ -73,9 +73,18 @@ margin:15px;
 margin-bottom: 5px;
 position: relative;
 }
-.tab{
-text-align: center;
+.tabactive{
 color:darkorchid;
+font-weight: bold;
+}
+.tab .btn:hover{
+  color:darkviolet;
+}
+.tab .btn:active{
+  color:darkviolet;
+}
+.tab .btn:focus{
+  color:darkviolet;
 }
 .Table{
 margin-top:5px;
