@@ -11,6 +11,7 @@ const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const pool = require("./db");
 const multer = require("multer")
+const templateHelper = require("./personalTemplates/TemplateHelper.js");
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb){cb(null, './personalTemplates/allTemplates');},
