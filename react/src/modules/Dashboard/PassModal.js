@@ -16,21 +16,13 @@ const PassModal = (props) => {
   const isEnabled = NewPassword === CPassword;
 
   return (
-    <div>
+    <div className="profileModals" style={{textAlign:"center"}}>
       <Modal
         style={{
           overlay: {
             opacity: "1.0",
             margin: 200,
             backgroundColor: "",
-          },
-          content: {
-            backgroundColor: "#181A1B",
-            height: "300px",
-            width: "500px",
-            position: "absolute",
-            left: "35%",
-            top: "50%",
           },
         }}
         isOpen={props.Editingon}

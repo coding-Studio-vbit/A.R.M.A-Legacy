@@ -114,7 +114,7 @@ const ViewStatus = (props) => {
       <div Classname="Con">
         <Container>
           <center>
-            <h1 className='title'>Letter Info</h1>
+            <h3 className='title'>Letter Info</h3>
           </center>
           <Row>
             <Col>
@@ -124,27 +124,28 @@ const ViewStatus = (props) => {
                   {From}
                 </h3>
               </Row>
-              
+
               <Row>
                 <h3 className="content">
                   <span>Subject : </span>
                   {Subject}
                 </h3>
               </Row>
-              
+
               <Row>
-                <h5 className="content">
+                <h3 className="content">
                   <span>Description : </span>
                   {Description}
-                </h5>
+                </h3>
               </Row>
                 <label>Remarks : </label>
                   <Row>
                 <Col>
-                <textarea               
+                <textarea
                   cols={60}
                   rows={6}
                   disabled
+                  placeholder={Remarks}
                 >{Remarks}</textarea>
                 </Col>
               </Row>
@@ -189,7 +190,7 @@ const ViewStatus = (props) => {
                 </InputGroup>
               </Row>):(<Row></Row>)}
               <div className="Table">
-                
+
                 <Row> {PartTable ? (<Col>
                     <Table striped bordered hover variant="dark">
                       <thead>
