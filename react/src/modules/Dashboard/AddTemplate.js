@@ -9,6 +9,9 @@ const AddTemplate = () => {
   const [response, setResponse] = useState("");
   useEffect(() => {
     if (filename) {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let userName = user.userName;
+      let accessToken = user.accessToken;
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
@@ -17,6 +20,7 @@ const AddTemplate = () => {
         .post(`${process.env.REACT_APP_URL}/uploadTemplate`, formData, {
           headers: {
             "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + accessToken,
           },
         })
         .then((res) => {

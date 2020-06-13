@@ -82,7 +82,7 @@ async function checkTemplateExists(forum_name, templateName) {
       });
   });
 }
-async function insertNewaTemplate(forum_name, templateName, filepath) {
+async function insertNewTemplate(forum_name, templateName, filepath) {
   //inserts a new template for the forum by taking its path name.
 
   return new Promise((resolve, reject) => {

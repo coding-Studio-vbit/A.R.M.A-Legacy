@@ -585,17 +585,37 @@ app.post("/changeFacultyEmail", (req, res) => {
 
 app.post("/uploadTemplate", (req, res) => {
   console.log("fs");
-  upload(req, res, (error) => {
-    if (error instanceof multer.MulterError) {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      //YOUR ENDPOINT CODE HERE
+      upload(req, res, (error) => {
+        if (error instanceof multer.MulterError) {
+          console.log(error);
+          return res.status(500).json({ err: error });
+        } else if (error) {
+          console.log(error);
+          return res.status(500).json({ err: error });
+        }
+        console.log(req.file);
+        //res.status(200).json({ message: "Template successfully uploaded" });
+        templateHelper
+          .insertNewTemplate(username, "newfdsftemp", req.file.path)
+          .then((result) => {
+            return res.status(200).json({ message: result });
+          })
+          .catch((err) => {
+            return res.status(400).json({ err: err });
+          });
+      });
+    })
+    .catch((error) => {
       console.log(error);
-      return res.status(500).json({ err: error });
-    } else if (error) {
-      console.log(error);
-      return res.status(500).json({ err: error });
-    }
-    console.log(req.file);
-    return res.status(200).json({ message: "Template successfully uploaded" });
-  });
+      return res.status(400).json({ err: error });
+    });
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
