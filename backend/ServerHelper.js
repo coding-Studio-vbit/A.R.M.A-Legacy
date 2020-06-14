@@ -45,102 +45,112 @@ const fs = require("fs");
 	changeFacultyEmail
 */
 
-
-async function getFaculty(req)
-{
-	return new Promise((resolve, reject)=>{
-		var res = {};
-		users.fetchAccessToken(req)
-		.then(token=>{
-			return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
-		})
-		.then(username=>{
-			var client = new Client();
-			client.connect();
-			client.query("SELECT faculty_name FROM faculty;")
-			.then(data=>{
-				var faculty = [];
-				data.rows.forEach(row=>{faculty.push(row.faculty_name)})
-				res.status =200;
-				res.response = {all_faculty: faculty};
-				client.end();
-				return resolve(res);
-			})
-			.catch(error=>{
-				res.status = 500;
-				res.response = {err: "Internal Database error"}
-				client.end();
-				return resolve(res);
-			})
-		})
-		.catch(error=>{
-			res.status = 400;
-			res.response = {err: error};
-			return resolve(res);
-		})
-	});
+async function getFaculty(req) {
+  return new Promise((resolve, reject) => {
+    var res = {};
+    users
+      .fetchAccessToken(req)
+      .then((token) => {
+        return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+      })
+      .then((username) => {
+        var client = new Client();
+        client.connect();
+        client
+          .query("SELECT faculty_name FROM faculty;")
+          .then((data) => {
+            var faculty = [];
+            data.rows.forEach((row) => {
+              faculty.push(row.faculty_name);
+            });
+            res.status = 200;
+            res.response = { all_faculty: faculty };
+            client.end();
+            return resolve(res);
+          })
+          .catch((error) => {
+            res.status = 500;
+            res.response = { err: "Internal Database error" };
+            client.end();
+            return resolve(res);
+          });
+      })
+      .catch((error) => {
+        res.status = 400;
+        res.response = { err: error };
+        return resolve(res);
+      });
+  });
 }
 
-async function getFacilities(req)
-{
-	return new Promise((resolve, reject)=>{
-		var res = {};
-		users.fetchAccessToken(req)
-		.then(token=>{
-			return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
-		})
-		.then(username=>{
-			var client = new Client();
-			client.connect();
-			client.query("SELECT facility_name FROM facilities;")
-			.then(data=>{
-				var facilities = [];
-				data.rows.forEach(row=>{facilities.push(row.facility_name)})
-				res.status =200;
-				res.response = {all_facilities: facilities};
-				client.end();
-				return resolve(res);
-			})
-			.catch(error=>{
-				res.status = 500;
-				res.response = {err: "Internal Database error"}
-				client.end();
-				return resolve(res);
-			})
-		})
-		.catch(error=>{
-			res.status = 400;
-			res.response = {err: error};
-			return resolve(res);
-		})
-	});
+async function getFacilities(req) {
+  return new Promise((resolve, reject) => {
+    var res = {};
+    users
+      .fetchAccessToken(req)
+      .then((token) => {
+        return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+      })
+      .then((username) => {
+        var client = new Client();
+        client.connect();
+        client
+          .query("SELECT facility_name FROM facilities;")
+          .then((data) => {
+            var facilities = [];
+            data.rows.forEach((row) => {
+              facilities.push(row.facility_name);
+            });
+            res.status = 200;
+            res.response = { all_facilities: facilities };
+            client.end();
+            return resolve(res);
+          })
+          .catch((error) => {
+            res.status = 500;
+            res.response = { err: "Internal Database error" };
+            client.end();
+            return resolve(res);
+          });
+      })
+      .catch((error) => {
+        res.status = 400;
+        res.response = { err: error };
+        return resolve(res);
+      });
+  });
 }
 
-async function forgotPassword(req)
-{
-	// non-authenticated endpoint.
-	//expects userType, username, reg_email.
+async function forgotPassword(req) {
+  // non-authenticated endpoint.
+  //expects userType, username, reg_email.
 
-	return new Promise((resolve, reject)=>{
-		var res = {};
-		if(!req.body.userType || !req.body.username || !req.body.reg_email)
-		{
-			res.status = 400;
-			res.response = {err:"Invalid number of arguments!"};
-			return resolve(res);
-		}
-		users.forgotPassword(req.body.userType, req.body.username.toUpperCase(), req.body.reg_email)
-		.then(state=>{
-			res.status = 200;
-			res.response = {message: "mail sent successfully to registered email."}
-			return resolve(res);
-		})
-		.catch(error=>{
-			res.status = 400;
-			res.response = {err: error};
-			return resolve(res);
-		})
-	});
+  return new Promise((resolve, reject) => {
+    var res = {};
+    if (!req.body.userType || !req.body.username || !req.body.reg_email) {
+      res.status = 400;
+      res.response = { err: "Invalid number of arguments!" };
+      return resolve(res);
+    }
+    users
+      .forgotPassword(
+        req.body.userType,
+        req.body.username.toUpperCase(),
+        req.body.reg_email
+      )
+      .then((state) => {
+        res.status = 200;
+        res.response = {
+          message: "mail sent successfully to registered email.",
+        };
+        return resolve(res);
+      })
+      .catch((error) => {
+        res.status = 400;
+        res.response = { err: error };
+        return resolve(res);
+      });
+  });
 }
 
 async function getRegisteredForums(req) {
@@ -1303,31 +1313,31 @@ async function getFacultyDetails(req) {
 }
 
 module.exports = {
-	getForumDetails,
-	loginForums,
-	loginFaculty,
-	logout,
-	forgotPassword,
-	facultyDashboard,
-	makeNewRequest,
-	deleteRequest,
-	updateRequest,
-	approveRequest,
-	forumsDashboard,
-	fetchRequest,
-	checkForumRegistrationStatus,
-	checkFacultyRegistrationStatus,
-	registerForum,
-	registerFaculty,
-	getUserType,
-	changeForumUsername,
-	changeFacultyUsername,
-	changeForumPassword,
-	changeFacultyPassword,
-	changeForumEmail,
-	changeFacultyEmail,
-	getFacultyDetails,
-	getRegisteredForums,
-	getFaculty,
-	getFacilities
+  getForumDetails,
+  loginForums,
+  loginFaculty,
+  logout,
+  forgotPassword,
+  facultyDashboard,
+  makeNewRequest,
+  deleteRequest,
+  updateRequest,
+  approveRequest,
+  forumsDashboard,
+  fetchRequest,
+  checkForumRegistrationStatus,
+  checkFacultyRegistrationStatus,
+  registerForum,
+  registerFaculty,
+  getUserType,
+  changeForumUsername,
+  changeFacultyUsername,
+  changeForumPassword,
+  changeFacultyPassword,
+  changeForumEmail,
+  changeFacultyEmail,
+  getFacultyDetails,
+  getRegisteredForums,
+  getFaculty,
+  getFacilities,
 };

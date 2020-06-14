@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import "./css/Form.css";
 
 const ForgotPassword = (props) => {
+  useEffect(() => {
+    if (response !== "") {
+      setTimeout(() => setResponse(""), 3000);
+    }
+  });
   const [value, changeValue] = useState("");
   const [response, setResponse] = useState("");
   const [username, changeUser] = useState("");
@@ -41,7 +46,7 @@ const ForgotPassword = (props) => {
     >
       <div style={{ padding: 60 }}>
         <div className="justi">
-          <h3>User Name</h3>
+          <h3>Roll No</h3>
           <br />
           <br />
 
@@ -73,7 +78,7 @@ const ForgotPassword = (props) => {
           </button>
           <br />
         </div>
-        <h3 style={{ color: { error } ? "red" : "green", textAlign: "center" }}>
+        <h3 style={{ color: { error } ? "green" : "red", textAlign: "center" }}>
           {response}
         </h3>
       </div>
