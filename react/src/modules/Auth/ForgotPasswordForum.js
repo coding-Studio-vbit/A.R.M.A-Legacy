@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
 import "./css/Form.css";
+import "./css/Modal.css";
 
 const ForgotPasswordForum = (props) => {
   const [ForumList, updateForumList] = useState([]);
@@ -62,39 +63,34 @@ const ForgotPasswordForum = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <div style={{ padding: 60 }}>
-        <div className="form-group justi">
-          <h4 style={{ paddingLeft: 20 }}>Forum List: </h4>
-          <select
-            className="selecti round"
+      <div className="container modal-bg">
+        <div className="form-group row forgotmodal-row">
+          <div className="col-md modal-text"><h4 style={{ paddingTop:"3%" }}>Forum List : </h4></div>
+          <div className="col-md"><select
+            className="login-dropdown round"
+            style={{margin:0}}
             name="value"
             onChange={(e) => ForumChangeHandler(e)}
           >
-            {ForumList.map((club) => (
-              <option> {club.actual_name} </option>
-            ))}
-          </select>
+            {ForumList.map((club) => (<option> {club.actual_name} </option>))}
+          </select></div>
         </div>
-        <br />
-        <br />
-
-        <div className="justi">
-          <h3>Registered Email</h3>
-          <br />
-          <br />
-          <input
+        <br/>
+        <div className="row forgotmodal-row">
+          <div className="col-md modal-text"><h4 style={{ paddingTop:"3%" }}>Registered email : </h4></div>
+          <div className="col-md"><input
             type="email"
             placeholder="email address"
             className="inputboxes"
             onChange={(e) => changeValue(e.target.value)}
-          />
+          /></div>
         </div>
-        <br />
-        <div className="justi">
+        <br/>
+        <br/>
+        <div className="row forgotmodal-row">
           <button type="submit" onClick={forgot} className="buttonpurple">
             Submit
           </button>
-          <br />
         </div>
         <h3 style={{ color: { error } ? "green" : "red", textAlign: "center" }}>
           {response}
