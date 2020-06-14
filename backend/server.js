@@ -10,16 +10,19 @@ const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const pool = require("./db");
-const multer = require("multer")
+const multer = require("multer");
 const templateHelper = require("./personalTemplates/TemplateHelper.js");
 
 var storage = multer.diskStorage({
-	destination: function (req, file, cb){cb(null, './personalTemplates/allTemplates');},
-	filename:function (req, file, cb){cb(null, Date.now()+'-'+file.originalname);}
-}); 
+  destination: function (req, file, cb) {
+    cb(null, "./personalTemplates/allTemplates");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-var upload = multer({storage: storage}).single('file');
-
+var upload = multer({ storage: storage }).single("file");
 
 //Letter Template
 var PizZip = require("pizzip");
@@ -54,37 +57,55 @@ var cors = require("cors");
 app.use(cors());
 //LOGIN
 
-app.get("/getForumDetails",async (req, res) => {
-
-	await serverHelper.getForumDetails(req).then((response)=>{
-		res.status(response.status).json(response.response)
-	}).catch(err=>res.status(400).json({err:err}));
+app.get("/getForumDetails", async (req, res) => {
+  await serverHelper
+    .getForumDetails(req)
+    .then((response) => {
+      res.status(response.status).json(response.response);
+    })
+    .catch((err) => res.status(400).json({ err: err }));
 });
-app.get("/getFacultyDetails", (req,res)=>{
-	serverHelper.getFacultyDetails(req)
-	.then(response=>{
-		res.status(response.status).json(response.response);
-	})
-	.catch(error=>{
-		res.status(400).json({err:error});
-	})
-})
-app.get("/getRegisteredForums",(req,res)=>{
-	serverHelper.getRegisteredForums(req)
-	.then(response=>{return res.status(response.status).json(response.response);})
-	.catch(error=>{return res.status(400).json({err:error})})
-})
-
-app.get("/getFaculty",(req,res)=>{
-	serverHelper.getFaculty(req).then(response=>{
-		return res.status(response.status).json(response.response);
-	}).catch(error=>{return res.status(response.status).json(response.response)})
+app.get("/getFacultyDetails", (req, res) => {
+  serverHelper
+    .getFacultyDetails(req)
+    .then((response) => {
+      res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      res.status(400).json({ err: error });
+    });
+});
+app.get("/getRegisteredForums", (req, res) => {
+  serverHelper
+    .getRegisteredForums(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      return res.status(400).json({ err: error });
+    });
 });
 
-app.get("/getFacilities",(req,res)=>{
-	serverHelper.getFacilities(req).then(response=>{
-		return res.status(response.status).json(response.response);
-	}).catch(error=>{return res.status(response.status).json(response.response)})
+app.get("/getFaculty", (req, res) => {
+  serverHelper
+    .getFaculty(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      return res.status(response.status).json(response.response);
+    });
+});
+
+app.get("/getFacilities", (req, res) => {
+  serverHelper
+    .getFacilities(req)
+    .then((response) => {
+      return res.status(response.status).json(response.response);
+    })
+    .catch((error) => {
+      return res.status(response.status).json(response.response);
+    });
 });
 
 app.post("/login", async (req, res) => {
@@ -196,7 +217,6 @@ app.get("/getrequest", async (req, res) => {
 });
 
 //REGISTRATION STATUS CHECK
-
 
 app.post("/checkRegistrationStatus", (req, res) => {
   serverHelper
@@ -563,18 +583,42 @@ app.post("/changeFacultyEmail", (req, res) => {
     .catch((error) => res.status(400).json({ err: error }));
 });
 
-app.post("/uploadTemplate",(req, res)=>{
-	upload(req, res, (error)=>{
-		if(error instanceof multer.MulterError){
-			return res.status(500).json({err:error});
-		}
-		else if(err)
-		{
-			return res.status(500).json({err:error});
-		}
-		console.log(req.file);
-		return res.status(200).json({message: "Template successfully uploaded"});
-	})
+app.post("/uploadTemplate", (req, res) => {
+  console.log(req);
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      //YOUR ENDPOINT CODE HERE
+      upload(req, res, (error) => {
+        if (error instanceof multer.MulterError) {
+          console.log(error);
+          return res.status(500).json({ err: error });
+        } else if (error) {
+          console.log(error);
+          return res.status(500).json({ err: error });
+        }
+        console.log(req.file);
+        let templateName = req.file.originalname;
+        templateName = templateName.slice(0, templateName.length - 5);
+        console.log(templateName);
+        //res.status(200).json({ message: "Template successfully uploaded" });
+        templateHelper
+          .insertNewTemplate(username, templateName, req.file.path)
+          .then((result) => {
+            return res.status(200).json({ message: result });
+          })
+          .catch((err) => {
+            return res.status(400).json({ err: err });
+          });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
