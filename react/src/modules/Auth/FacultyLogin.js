@@ -53,8 +53,8 @@ const FacultyLogin = () => {
         <br/>
         <div className="container">
           <div className="form-group login-row row">
-            <div className="col login-text"><h4 style={{paddingTop:"3%" }}>Roll number : </h4></div>
-            <div className="col"><input
+            <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Roll number : </h4></div>
+            <div className="col-md"><input
               type="text"
               className="inputboxes"
               id="exampleInputPassword1"
@@ -63,8 +63,8 @@ const FacultyLogin = () => {
             /></div>
           </div>
           <div className="form-group login-row row">
-            <div className="col login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
-              <div className="col">
+            <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
+              <div className="col-md">
                 <input
                   type="password"
                   className="inputboxes"

@@ -65,8 +65,8 @@ const ForgotPasswordForum = (props) => {
     >
       <div className="container modal-bg">
         <div className="form-group row forgotmodal-row">
-          <div className="col modal-text"><h4 style={{ paddingTop:"3%" }}>Forum List : </h4></div>
-          <div className="col"><select
+          <div className="col-md modal-text"><h4 style={{ paddingTop:"3%" }}>Forum List : </h4></div>
+          <div className="col-md"><select
             className="login-dropdown round"
             style={{margin:0}}
             name="value"
@@ -77,8 +77,8 @@ const ForgotPasswordForum = (props) => {
         </div>
         <br/>
         <div className="row forgotmodal-row">
-          <div className="col modal-text"><h4 style={{ paddingTop:"3%" }}>Registered email : </h4></div>
-          <div className="col"><input
+          <div className="col-md modal-text"><h4 style={{ paddingTop:"3%" }}>Registered email : </h4></div>
+          <div className="col-md"><input
             type="email"
             placeholder="email address"
             className="inputboxes"

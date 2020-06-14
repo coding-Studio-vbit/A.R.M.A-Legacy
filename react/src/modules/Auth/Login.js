@@ -75,8 +75,8 @@ const Login = () => {
       <br/>
       <div className="container">
         <div className="form-group login-row row">
-          <div className="col login-text"><h4 style={{paddingTop:"3%" }}>Forum : </h4></div>
-          <div className="col"><select
+          <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Forum : </h4></div>
+          <div className="col-md"><select
             className="login-dropdown round"
             style={{margin:0}}
             name="value"
@@ -86,8 +86,8 @@ const Login = () => {
           </select></div>
         </div>
         <div className="form-group login-row row">
-          <div className="col login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
-            <div className="col">
+          <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
+            <div className="col-md">
               <input
                 type="password"
                 className="inputboxes"
