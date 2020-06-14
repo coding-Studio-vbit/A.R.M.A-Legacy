@@ -112,7 +112,7 @@ const ViewStatus = (props) => {
     <div>
       <Nav />
       <div Classname="Con">
-        <Container>
+        <Container className="table-container">
           <center>
             <h3 className='title'>Letter Info</h3>
           </center>

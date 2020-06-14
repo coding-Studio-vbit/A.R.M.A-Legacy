@@ -240,7 +240,7 @@ const Remarks = (props) => {
     <div>
       <Nav />
       <div Classname="Con">
-        <Container>
+        <Container className="table-container">
           <center>
             <h1 className='title'>Letter Info</h1>
           </center>
@@ -297,7 +297,7 @@ const Remarks = (props) => {
                 </Col>
                 <Col style={{ padding: "0px" }}>
                   <center>
-                    {PartTable ? <h4 className="tab">Participants</h4> : <h4 className="tab">Facilities</h4>} 
+                    {PartTable ? <h4 className="tab">Participants</h4> : <h4 className="tab">Facilities</h4>}
 
                   </center>
                 </Col>
