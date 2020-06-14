@@ -1,0 +1,15 @@
+@media only screen and (max-width: 768px)  {
+  .modal-text{
+    padding-bottom: 20px !important;
+  }
+}
+
+.modal-bg{
+  padding: 60px !important;
+  border-radius: 25px !important;
+  border: 1px solid grey;
+}
+
+.forgotmodal-row {
+  color: #b007c4;
+}

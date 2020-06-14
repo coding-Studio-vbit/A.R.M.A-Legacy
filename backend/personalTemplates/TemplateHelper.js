@@ -117,7 +117,7 @@ async function fetchPlaceHolders(filepath)
 	//fetches the placeholders of a given template file.
 	return new Promise((resolve, reject)=>{
 		readDocx(filepath)
-		.then(text=>{	
+		.then(text=>{
 			let regex = /\{[a-zA-Z]*}/g;
 			let arr = text.match(regex);
 			return resolve(arr);
@@ -134,7 +134,7 @@ async function fetchTemplatePlaceHolders(forum_name, template_name)
 		client.connect();
 		client.query('SELECT filepath FROM personal_templates WHERE forum_name=$1 AND template_name=$2',[forum_name, template_name])
 		.then(data=>{
-			
+
 			if(data.rows.length == 0) return reject("No suck template found for the forum!");
 			filepath = data.rows[0].filepath;
 
@@ -178,12 +178,7 @@ async function fetchForumTemplates(forum_name)
 }
 
 module.exports = {
-<<<<<<< HEAD
-  insertNewTemplate,
-  fetchForumTemplates,
-=======
 	insertNewTemplate,
 	fetchForumTemplates,
 	fetchTemplatePlaceHolders
->>>>>>> 32be1dcccc2b905db2c45a45a8dc9426243e3516
 };

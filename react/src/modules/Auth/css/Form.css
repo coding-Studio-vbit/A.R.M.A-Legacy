@@ -1,14 +1,23 @@
-.all-items {
-  text-align: center;
-}
-.mycontainer {
-  background-color: #1a1a1a;
-}
-
-.justi {
-  display: flex;
-  flex-direction: "row";
-  justify-content: space-around;
+.login-dropdown {
+  /* styling */
+  background-color: #22252c;
+  border-radius: 10px !important;
+  border: 0px;
+  display: block;
+  font: inherit;
+  font-size: 20px;
+  width: 250px;
+  line-height: 1.5em;
+  padding: 10px 70px 10px 25%;
+  color: white;
+  /* reset */
+  border-radius: 20px;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 .justif {
   display: flex;
@@ -25,14 +34,7 @@
   max-height: 253px;
   height: auto;
 }
-.forms {
-  max-width: 647px;
-  width: 100%;
-  max-height: 100%;
-  height: 100%;
-  margin: auto;
-  margin-bottom: 30px;
-}
+
 .rforms {
   max-width: 700px;
   width: 100%;
@@ -61,18 +63,6 @@
 .sforms > form {
   background-color: #1a1a1a;
   padding: 20px;
-  border: 1px solid #ffffff;
-  border-radius: 20px;
-  margin: auto;
-}
-.ipflex {
-  display: "flex";
-  flex-direction: "row";
-}
-
-.forms > form {
-  background-color: #1a1a1a;
-  padding: 10% 20px;
   border: 1px solid #ffffff;
   border-radius: 20px;
   margin: auto;
@@ -114,7 +104,6 @@
   width: 32px;
   line-height: 32px;
   height: 32px;
-  text-align: center;
   pointer-events: none;
   color: #101113;
   font-size: 14px;
@@ -128,7 +117,6 @@
 }
 
 .forms .form-label {
-  text-align: start;
   color: #fff;
   font-size: 12px;
   font-weight: 400;
@@ -137,9 +125,6 @@
   text-transform: uppercase;
 }
 
-.hone {
-  text-align: center;
-}
 .inputboxes {
   border: #707070;
   background-color: #22252c;
