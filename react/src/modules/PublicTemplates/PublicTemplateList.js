@@ -1,5 +1,5 @@
 import React from "react";
-import Template from "./Template";
+import Template from "../Dashboard/Template";
 import {
   Button,
   Col,
@@ -8,10 +8,9 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import Nav from "./Navi";
-import AddTemplate from "./AddTemplate";
+import Nav from "../Dashboard/Navi";
 
-class TemplateList extends React.Component {
+class Templates extends React.Component {
   state = {
     template: [
       {
@@ -65,44 +64,36 @@ class TemplateList extends React.Component {
     ],
     search: "",
   };
+
   updateSearch = (e) => {
     this.setState({ search: e.target.value });
-    console.log(this.state.search);
   };
   render() {
-    let fliteredTemplates = this.state.template.filter((temp) => {
+    let fliteredTemplates = this.state.template.filter((template) => {
       return (
-        temp.subject.toLowerCase().indexOf(this.state.search.toLowerCase()) !==
-        -1
+        template.subject
+          .toLowerCase()
+          .indexOf(this.state.search.toLowerCase()) !== -1
       );
     });
     return (
-      <React.Fragment class="body">
+      <React.Fragment>
         <Nav />
+        <InputGroup className="mx-auto my-5 w-50">
+          <FormControl
+            placeholder="Search a template "
+            onChange={this.updateSearch}
+            style={{ color: "grey" }}
+          />
+          {/*<InputGroup.Append>
+                  <Button variant="outline-secondary" className="my-auto"><i class="fa fa-search" aria-hidden="true"></i></Button>
+                </InputGroup.Append>*/}
+        </InputGroup>
         <div>
-          <div class="box">
-            <InputGroup className="mx-auto my-5 w-50 templateButton">
-              <FormControl
-                placeholder="Search a template "
-                onChange={this.updateSearch}
-                style={{ color: "grey", marginTop: "0", height: "50px" }}
-                className="searchTemplate"
-              />
-              <InputGroup.Append>
-                <Button
-                  className="addtemp ml-3"
-                  onClick={() => {
-                    this.props.history.push("/Dashboard/AddTemplate");
-                  }}
-                >
-                  Add Template
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-
+          <Container>
             <Row>
               {fliteredTemplates.map((template) => (
-                <Col xs={12} sm={12} md={6} lg={4} className="px-0">
+                <Col xs={12} sm={12} md={6} lg={4}>
                   <Template
                     key={template.id}
                     template={template}
@@ -111,11 +102,11 @@ class TemplateList extends React.Component {
                 </Col>
               ))}
             </Row>
-          </div>
+          </Container>
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default TemplateList;
+export default Templates;

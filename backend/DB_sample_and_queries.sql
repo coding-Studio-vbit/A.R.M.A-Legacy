@@ -51,7 +51,8 @@ Creating the personal templates table:
 
 CREATE TABLE personal_templates(
 	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
-	template_name varchar(64) UNIQUE
+	template_name varchar(64),
+	filepath varchar(512);
 );
 
 Creating the Faculty Registration Request table
