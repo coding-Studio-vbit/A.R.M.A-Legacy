@@ -24,14 +24,6 @@ const PassModal = (props) => {
             margin: 220,
             backgroundColor: "",
           },
-          content: {
-            backgroundColor: "#181A1B",
-            height: "300px",
-            width: "450px",
-            position: "absolute",
-            left: "30%",
-            top: "50%",
-          },
         }}
         isOpen={props.Editingon}
       >

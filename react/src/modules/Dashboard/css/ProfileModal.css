@@ -85,6 +85,22 @@
   border-style:none;
   background-color:transparent;
 }
+.ReactModal__Content{
+  position: absolute;
+  top: 50%;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(24, 26, 27) !important;
+  overflow: auto;
+  border-radius: 25px !important;
+  outline: none;
+  height: 100%;
+  margin-top: 0% !important;
+  margin-left: 15% !important;
+  width: 70% !important;
+}
 .form-input::-webkit-input-placeholder {
   color: whitesmoke;
   font-family:Palatino Linotype;
