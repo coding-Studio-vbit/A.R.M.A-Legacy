@@ -3,6 +3,7 @@ import axios from "axios";
 import download from "js-file-download";
 
 const Dform = (props) => {
+  const [allPlaceholders, setPlaceholders] = useState([]);
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
   const [team_name, setTeamname] = useState("");
   const [designation, setDesignation] = useState("");
@@ -46,6 +47,34 @@ const Dform = (props) => {
       })
       .then((res) => {
         console.log(res.placeholders);
+		setPlaceholders(res.placeholders);
+		allPlaceholders.forEach((placehoder)=>{
+			switch(placeholder)
+			{
+				case 'designation': setbdesignation(true);break;
+				case 'department': setbdepartment(true); break;
+				case 'date': setbdate(true); break;
+				case 'subject': setbsubject(true); break;
+				case 'respects': setbrespects(true); break;
+				case 'team_name': setbteamname(true); break;
+				case 'event_name': setbevent_name(true); break;
+				case 'from_date': setbfromdate(true); break;
+				case 'todate': setbtodate(true); break;
+				case 'letter_body': setbletter_body(true); break;
+				case 'hall_name': setbhall_name(true); break;
+				case 'start_hour': setbstart_hour(true); break;
+				case 'start_min': setbstart_min(true); break;
+				case 'start_meridian': setbstart_meridian(true); break;
+				case 'end_hour': setbend_hour(true); break;
+				case 'end_min': setbend_min(true); break;
+				case 'end_meridian': setbend_meridian(true); break;
+				//case 'campaignwhere': ; break;
+				//case '#studentsdetails': ; break;
+				//case 'Name': ; break;
+				//case 'Roll': ; break;
+				//case '/studentdetails': ; break;
+			}
+		})
       })
       .catch((err) => {
         console.log(err);
