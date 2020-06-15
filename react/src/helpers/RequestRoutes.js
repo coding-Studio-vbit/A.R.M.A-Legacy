@@ -11,6 +11,7 @@ import Emeet from "../modules/LetterGeneration/conductmeet";
 import CreateRequest from "../modules/RequestCreate/CreateRequest";
 import EditCreateRequest from "../modules/RequestCreate/EditCreateRequest";
 
+import Dform from "../modules/RequestCreate/Dform";
 // //Route Component
 // import { Route } from "./Route";
 
@@ -28,6 +29,7 @@ const RequestRoutes = () => {
       <Route path="/conductmeet" component={Emeet} />
       <Route path="/TeamAttendance" component={Tatten} />
       <Route path="/ParticipantsAttendance" component={Patten} />
+      <Route path="/dynamic" component={Dform} />
     </div>
   );
 };

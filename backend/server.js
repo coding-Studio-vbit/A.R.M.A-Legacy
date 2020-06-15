@@ -517,6 +517,27 @@ app.post("/conductmeet", urlencodedParser, function (req, res) {
   res.download("./LetterGenerated/conductmeet.docx"); //callback I*
 });
 
+app.post("getPlaceholders", (req, res) => {
+  console.log("asdf");
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      //YOUR ENDPOINT CODE HERE
+      templateHelper
+        .fetchTemplatePlaceHolders(username, req.body.templateName)
+        .then((response) => {
+          return res.status(200).json(response.response);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
 //Get user type using Access Token.
 
 app.post("/getUserType", (req, res) => {
