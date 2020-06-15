@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-
+import Nav from "../Dashboard/Navi"
 const Tatten = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
   const [team_name, setTeamname] = useState("");
@@ -108,6 +108,8 @@ const Tatten = () => {
   };
 
   return (
+    <div>
+    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -564,6 +566,7 @@ const Tatten = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 
