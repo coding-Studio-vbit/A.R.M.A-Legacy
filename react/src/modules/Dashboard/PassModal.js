@@ -21,21 +21,25 @@ const PassModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 220,
+            margin: 300,
             backgroundColor: "",
           },
           content: {
             backgroundColor: "#181A1B",
+           right:'auto',
+            bottom : 'auto',
+            marginRight : '-30%',
             height: "300px",
             width: "450px",
-            position: "absolute",
-            left: "30%",
+            
+            left: "20%",
+            
             top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
-        <form>
+        <form >
           <div className="modal-header">
             <h3 style={{ textDecorationColor: "black" }}></h3>
             <button className="close-modal-btn" type="submit">
@@ -46,7 +50,6 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
-              style={{width:"350px"}}
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
             ></input>
@@ -55,7 +58,7 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
-              style={{width:"350px"}}
+             
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
             ></input>
@@ -64,7 +67,7 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
-              style={{width:"350px"}}
+             
               placeholder="Confirm new Password"
             ></input>
             <br />
@@ -78,7 +81,7 @@ const PassModal = (props) => {
             >
               Enter the same password as above
             </h5>
-          <div className="modal-footer">
+          <div className="modal-footer" style={{height:"100px"}}>
           <button className="btn-cancel" type="reset">
               Cancel
             </button>

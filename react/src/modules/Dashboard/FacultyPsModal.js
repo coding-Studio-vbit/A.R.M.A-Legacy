@@ -21,7 +21,7 @@ const FacultyPsModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 200,
+            margin: 300,
             backgroundColor: "",
           },
           content: {
@@ -29,13 +29,17 @@ const FacultyPsModal = (props) => {
             height: "300px",
             width: "450px",
             position: "absolute",
-            left: "30%",
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-30%',
+            
+            left: "20%",
             top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
-        <form>
+        <form >
           <div className="modal-header">
             <h3 style={{ textDecorationColor: "black" }}></h3>
             <button className="close-modal-btn" type="submit">

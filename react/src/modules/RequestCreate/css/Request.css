@@ -7,6 +7,7 @@ label {
     border-radius: 25px;
     background: rgb(33, 33, 33);
     padding: 20px; 
+    color:black;
     width: inherit;
     height: inherit;  
     display: flex;
@@ -26,7 +27,7 @@ label {
 
   .Multiselect {
     text-align: start;
-    color: white;
+    color:black;
   }
 
   .btn-circle.btn-sm { 
@@ -37,3 +38,4 @@ label {
     font-size: 10px; 
     text-align: center; 
 } 
+
