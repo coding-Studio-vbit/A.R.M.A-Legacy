@@ -1,33 +1,5 @@
 {
   "designation": "Head of Department",
-<<<<<<< HEAD
-   "department": "Department of Computer Science and Engineering",
-   "subject": "Permission for Event Conduction",
-   "date": "2020-06-14",
-   "respects": "Sir",
-   "team_name": "Robotic Club",
-   "event_name": "fcdfhfb",
-   "fromdate": "2020-06-15",
-   "todate": "2020-06-17",
-   "start_hour": "8",
-   "start_min": "30",
-   "start_meridian": "AM",
-   "end_hour": "10",
-   "end_min": "20",
-   "end_meridian": "PM",
-   "letter_body": "This is an workshop for 1st year Students.",
-  "studentdetails": [
-    {
-      "Name": "Aaris",
-   "Roll": "18P61A05D7"
- },
- {
-   "Name": "Yash",
-   "Roll": "18P61A05C2"
- }
-  ]
-}
-=======
   "department": "Department of Computer Science and Engineering",
   "subject": "Permission for Event Conduction",
   "date": "2020-06-14",
@@ -54,4 +26,3 @@
     }
   ]
 }
->>>>>>> upstream/master
