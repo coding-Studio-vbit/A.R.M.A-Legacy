@@ -28,7 +28,7 @@ const Dform = (props) => {
   });
   useEffect(() => {
     let data = {
-      templateName: "newtemp",
+      templateName: "PERMIT_EVENT_TEMPLATE",
     };
     console.log("fdfsf");
     let user = JSON.parse(localStorage.getItem("user"));
@@ -46,42 +46,77 @@ const Dform = (props) => {
         },
       })
       .then((res) => {
-        console.log(res.placeholders);
-		setPlaceholders(res.placeholders);
-		allPlaceholders.forEach((placehoder)=>{
-			switch(placeholder)
-			{
-				case 'designation': setbdesignation(true);break;
-				case 'department': setbdepartment(true); break;
-				case 'date': setbdate(true); break;
-				case 'subject': setbsubject(true); break;
-				case 'respects': setbrespects(true); break;
-				case 'team_name': setbteamname(true); break;
-				case 'event_name': setbevent_name(true); break;
-				case 'from_date': setbfromdate(true); break;
-				case 'todate': setbtodate(true); break;
-				case 'letter_body': setbletter_body(true); break;
-				case 'hall_name': setbhall_name(true); break;
-				case 'start_hour': setbstart_hour(true); break;
-				case 'start_min': setbstart_min(true); break;
-				case 'start_meridian': setbstart_meridian(true); break;
-				case 'end_hour': setbend_hour(true); break;
-				case 'end_min': setbend_min(true); break;
-				case 'end_meridian': setbend_meridian(true); break;
-				//case 'campaignwhere': ; break;
-				//case '#studentsdetails': ; break;
-				//case 'Name': ; break;
-				//case 'Roll': ; break;
-				//case '/studentdetails': ; break;
-			}
-		})
+        console.log(res.data.placeholders);
+
+        // setPlaceholders(res.data.placeholders);
+        // console.log(allPlaceholders);
+        res.data.placeholders.forEach((placeholder) => {
+          switch (placeholder) {
+            case "designation":
+              setbdesignation(true);
+              break;
+            case "department":
+              setbdepartment(true);
+              break;
+            case "date":
+              setbdate(true);
+              break;
+            case "subject":
+              setbsubject(true);
+              break;
+            case "respects":
+              setbrespects(true);
+              break;
+            case "team_name":
+              setbteamname(true);
+              break;
+            case "event_name":
+              setbevent_name(true);
+              break;
+            case "fromdate":
+              setbfromdate(true);
+              break;
+            case "todate":
+              setbtodate(true);
+              break;
+            case "letter_body":
+              setbletter_body(true);
+              break;
+            case "hall_name":
+              setbhall_name(true);
+              break;
+            case "start_hour":
+              setbstart_hour(true);
+              break;
+            case "start_min":
+              setbstart_min(true);
+              break;
+            case "start_meridian":
+              setbstart_meridian(true);
+              break;
+            case "end_hour":
+              setbend_hour(true);
+              break;
+            case "end_min":
+              setbend_min(true);
+              break;
+            case "end_meridian":
+              setbend_meridian(true);
+              break;
+            //case 'campaignwhere': ; break;
+            //case '#studentsdetails': ; break;
+            //case 'Name': ; break;
+            //case 'Roll': ; break;
+            //case '/studentdetails': ; break;
+          }
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
   //boolean values
-  const [binputFields,setbInputFields] = useState(false);
+  const [binputFields, setbInputFields] = useState(false);
   const [bdesignation, setbdesignation] = useState(false);
   const [bdepartment, setbdepartment] = useState(false);
   const [bteamname, setbteamname] = useState(false);
@@ -273,399 +308,449 @@ const Dform = (props) => {
                       <br />
                     </div>
                   )}
-                  <div className="form-group">
-                    <span className="form-label" for="date">
-                      Current Date:{" "}
-                    </span>
-                    <input
-                      className="form-control"
-                      type="date"
-                      name="date"
-                      onChange={(e) => setDate(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="subject">
-                      Subject:{" "}
-                    </span>
-                    <input
-                      required
-                      className="form-control"
-                      type="text"
-                      name="subject"
-                      onChange={(e) => setSubject(e.target.value)}
-                      placeholder="Enter subject (ex: Requisition of attendance for Organising Committee)"
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="respects">
-                      Respects:{" "}
-                    </span>
-                    <select
-                      required
-                      className="form-control"
-                      name="respects"
-                      onChange={(e) => setRespects(e.target.value)}
-                    >
-                      <option value="" disabled selected hidden>
-                        Select your option
-                      </option>
-                      <option value="Sir">Sir</option>
-                      <option value="Ma'am">Ma'am</option>
-                    </select>
-                    <span className="select-arrow"></span>
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="team_name">
-                      Forum/Team name :{" "}
-                    </span>
-                    <input
-                      required
-                      className="form-control"
-                      type="text"
-                      name="team_name"
-                      onChange={(e) => setTeamname(e.target.value)}
-                      placeholder="Enter name"
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="event_name">
-                      Event name :{" "}
-                    </span>
-                    <input
-                      required
-                      className="form-control"
-                      type="text"
-                      name="event_name"
-                      onChange={(e) => setEventname(e.target.value)}
-                      placeholder="Enter event name"
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="hall_name">
-                      Enter Hall Name :{" "}
-                    </span>
-                    <input
-                      required
-                      className="form-control"
-                      type="text"
-                      name="hall_name"
-                      placeholder="Enter Hall name"
-                      onChange={(e) => setHallname(e.target.value)}
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="letter_body">
-                      Letter Body :{" "}
-                    </span>
-                    <input
-                      required
-                      className="form-control"
-                      type="text"
-                      name="letter_body"
-                      onChange={(e) => setLetterbody(e.target.value)}
-                      placeholder="Describe your Event"
-                    />
-                  </div>
-                  <br />
-                  <div className="form-group">
-                    <span className="form-label" for="where">
-                      Inside / Outside :{" "}
-                    </span>
-                    <select
-                      className="form-control"
-                      name="where"
-                      onChange={(e) => setWhere(e.target.value)}
-                    >
-                      <option>Inside</option>
-                      <option>Outside</option>
-                    </select>
-                    <span className="select-arrow"></span>
-                  </div>
-                  <br />
-                  <span className="form-label">Select Date and Time :</span>
-                  <br />
-                  <div className="row">
-                    <div className="col-sm-5">
+                  {bdate && (
+                    <div>
                       <div className="form-group">
-                        <span className="form-label" for="fromdate">
-                          From
+                        <span className="form-label" for="date">
+                          Current Date:{" "}
                         </span>
                         <input
                           className="form-control"
                           type="date"
-                          name="fromdate"
+                          name="date"
+                          onChange={(e) => setDate(e.target.value)}
                           required
-                          onChange={(e) => setFromdate(e.target.value)}
                         />
                       </div>
+                      <br />
                     </div>
-                    <div className="col-sm-7">
-                      <div className="row">
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="start_hour">
-                              Hour
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="start_hour"
-                              onChange={(e) => {
-                                e.persist();
-                                setStarthour(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                              <option value="11">11</option>
-                              <option value="12">12</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="start_min">
-                              Min
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="start_min"
-                              onChange={(e) => {
-                                e.persist();
-                                setStartmin(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="00">00</option>
-                              <option value="05">05</option>
-                              <option value="10">10</option>
-                              <option value="15">15</option>
-                              <option value="20">20</option>
-                              <option value="25">25</option>
-                              <option value="30">30</option>
-                              <option value="35">35</option>
-                              <option value="40">40</option>
-                              <option value="45">45</option>
-                              <option value="50">50</option>
-                              <option value="55">55</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="start_meridian">
-                              AM/PM
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="start_meridian"
-                              onChange={(e) => {
-                                e.persist();
-                                setStartmeridian(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="AM">AM</option>
-                              <option value="PM">PM</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-5">
+                  )}
+                  {bsubject && (
+                    <div>
                       <div className="form-group">
-                        <span className="form-label" for="todate">
-                          To
+                        <span className="form-label" for="subject">
+                          Subject:{" "}
                         </span>
                         <input
-                          className="form-control"
-                          name="todate"
-                          type="date"
                           required
-                          onChange={(e) => setTodate(e.target.value)}
+                          className="form-control"
+                          type="text"
+                          name="subject"
+                          onChange={(e) => setSubject(e.target.value)}
+                          placeholder="Enter subject (ex: Requisition of attendance for Organising Committee)"
                         />
                       </div>
+                      <br />
                     </div>
-                    <div className="col-sm-7">
-                      <div className="row">
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="end_hour">
-                              Hour
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="end_hour"
-                              onChange={(e) => {
-                                e.persist();
-                                setEndhour(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                              <option value="5">5</option>
-                              <option value="6">6</option>
-                              <option value="7">7</option>
-                              <option value="8">8</option>
-                              <option value="9">9</option>
-                              <option value="10">10</option>
-                              <option value="11">11</option>
-                              <option value="12">12</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="end_min">
-                              Min
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="end_min"
-                              onChange={(e) => {
-                                e.persist();
-                                setEndmin(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="00">00</option>
-                              <option value="05">05</option>
-                              <option value="10">10</option>
-                              <option value="15">15</option>
-                              <option value="20">20</option>
-                              <option value="25">25</option>
-                              <option value="30">30</option>
-                              <option value="35">35</option>
-                              <option value="40">40</option>
-                              <option value="45">45</option>
-                              <option value="50">50</option>
-                              <option value="55">55</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                        <div className="col-sm-4">
-                          <div className="form-group">
-                            <span className="form-label" for="end_meridian">
-                              AM/PM
-                            </span>
-                            <select
-                              required
-                              className="form-control"
-                              name="end_meridian"
-                              onChange={(e) => {
-                                e.persist();
-                                setEndmeridian(e.target.value);
-                              }}
-                            >
-                              <option value="" disabled selected hidden>
-                                ...
-                              </option>
-                              <option value="AM">AM</option>
-                              <option value="PM">PM</option>
-                            </select>
-                            <span className="select-arrow"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <span className="form-label">Team Details:</span>
-                  <br />
-                  {inputFields.map((inputField, index) => (
-                    <Fragment key={`${inputField}~${index}`}>
+                  )}
+                  {brespects && (
+                    <div>
                       <div className="form-group">
-                        <div class="row">
-                          <div class="col-sm-5">
+                        <span className="form-label" for="respects">
+                          Respects:{" "}
+                        </span>
+                        <select
+                          required
+                          className="form-control"
+                          name="respects"
+                          onChange={(e) => setRespects(e.target.value)}
+                        >
+                          <option value="" disabled selected hidden>
+                            Select your option
+                          </option>
+                          <option value="Sir">Sir</option>
+                          <option value="Ma'am">Ma'am</option>
+                        </select>
+                        <span className="select-arrow"></span>
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {bteamname && (
+                    <div>
+                      <div className="form-group">
+                        <span className="form-label" for="team_name">
+                          Forum/Team name :{" "}
+                        </span>
+                        <input
+                          required
+                          className="form-control"
+                          type="text"
+                          name="team_name"
+                          onChange={(e) => setTeamname(e.target.value)}
+                          placeholder="Enter name"
+                        />
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {bevent_name && (
+                    <div>
+                      <div className="form-group">
+                        <span className="form-label" for="event_name">
+                          Event name :{" "}
+                        </span>
+                        <input
+                          required
+                          className="form-control"
+                          type="text"
+                          name="event_name"
+                          onChange={(e) => setEventname(e.target.value)}
+                          placeholder="Enter event name"
+                        />
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {bhall_name && (
+                    <div>
+                      <div className="form-group">
+                        <span className="form-label" for="hall_name">
+                          Enter Hall Name :{" "}
+                        </span>
+                        <input
+                          required
+                          className="form-control"
+                          type="text"
+                          name="hall_name"
+                          placeholder="Enter Hall name"
+                          onChange={(e) => setHallname(e.target.value)}
+                        />
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {bletter_body && (
+                    <div>
+                      <div className="form-group">
+                        <span className="form-label" for="letter_body">
+                          Letter Body :{" "}
+                        </span>
+                        <input
+                          required
+                          className="form-control"
+                          type="text"
+                          name="letter_body"
+                          onChange={(e) => setLetterbody(e.target.value)}
+                          placeholder="Describe your Event"
+                        />
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {bwhere && (
+                    <div>
+                      <div className="form-group">
+                        <span className="form-label" for="where">
+                          Inside / Outside :{" "}
+                        </span>
+                        <select
+                          className="form-control"
+                          name="where"
+                          onChange={(e) => setWhere(e.target.value)}
+                        >
+                          <option>Inside</option>
+                          <option>Outside</option>
+                        </select>
+                        <span className="select-arrow"></span>
+                      </div>
+                      <br />
+                    </div>
+                  )}
+
+                  {bfromdate && (
+                    <div>
+                      <span className="form-label">Select Date and Time :</span>
+                      <br />
+                      <div className="row">
+                        <div className="col-sm-5">
+                          <div className="form-group">
+                            <span className="form-label" for="fromdate">
+                              From
+                            </span>
                             <input
-                              required
                               className="form-control"
-                              type="text"
-                              id="Name"
-                              name="Name"
-                              value={inputField.firstName}
-                              onChange={(event) =>
-                                handleInputChange(index, event)
-                              }
-                              placeholder={`Name`}
+                              type="date"
+                              name="fromdate"
+                              required
+                              onChange={(e) => setFromdate(e.target.value)}
                             />
                           </div>
-                          <div class="col-sm-5">
-                            <input
-                              required
-                              className="form-control"
-                              type="text"
-                              id="Roll"
-                              name="Roll"
-                              value={inputField.firstName}
-                              onChange={(event) =>
-                                handleInputChange(index, event)
-                              }
-                              placeholder={`Roll No`}
-                            />
-                          </div>
-                          <div class="col align-self-center">
-                            <button
-                              type="button"
-                              class="btn btn-danger"
-                              onClick={() => handleRemoveFields(index)}
-                            >
-                              X
-                            </button>
+                        </div>
+
+                        <div className="col-sm-7">
+                          <div className="row">
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span className="form-label" for="start_hour">
+                                  Hour
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="start_hour"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setStarthour(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span className="form-label" for="start_min">
+                                  Min
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="start_min"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setStartmin(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="00">00</option>
+                                  <option value="05">05</option>
+                                  <option value="10">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                  <option value="30">30</option>
+                                  <option value="35">35</option>
+                                  <option value="40">40</option>
+                                  <option value="45">45</option>
+                                  <option value="50">50</option>
+                                  <option value="55">55</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span
+                                  className="form-label"
+                                  for="start_meridian"
+                                >
+                                  AM/PM
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="start_meridian"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setStartmeridian(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="AM">AM</option>
+                                  <option value="PM">PM</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </Fragment>
-                  ))}
-                  <button
-                    type="button"
-                    class="btn btn-info"
-                    onClick={() => handleAddFields()}
-                  >
-                    Add
-                  </button>
-                  <br />
+                    </div>
+                  )}
+                  {btodate && (
+                    <div>
+                      <div className="row">
+                        <div className="col-sm-5">
+                          <div className="form-group">
+                            <span className="form-label" for="todate">
+                              To
+                            </span>
+                            <input
+                              className="form-control"
+                              name="todate"
+                              type="date"
+                              required
+                              onChange={(e) => setTodate(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-sm-7">
+                          <div className="row">
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span className="form-label" for="end_hour">
+                                  Hour
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="end_hour"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setEndhour(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                  <option value="11">11</option>
+                                  <option value="12">12</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span className="form-label" for="end_min">
+                                  Min
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="end_min"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setEndmin(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="00">00</option>
+                                  <option value="05">05</option>
+                                  <option value="10">10</option>
+                                  <option value="15">15</option>
+                                  <option value="20">20</option>
+                                  <option value="25">25</option>
+                                  <option value="30">30</option>
+                                  <option value="35">35</option>
+                                  <option value="40">40</option>
+                                  <option value="45">45</option>
+                                  <option value="50">50</option>
+                                  <option value="55">55</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
+                            <div className="col-sm-4">
+                              <div className="form-group">
+                                <span className="form-label" for="end_meridian">
+                                  AM/PM
+                                </span>
+                                <select
+                                  required
+                                  className="form-control"
+                                  name="end_meridian"
+                                  onChange={(e) => {
+                                    e.persist();
+                                    setEndmeridian(e.target.value);
+                                  }}
+                                >
+                                  <option value="" disabled selected hidden>
+                                    ...
+                                  </option>
+                                  <option value="AM">AM</option>
+                                  <option value="PM">PM</option>
+                                </select>
+                                <span className="select-arrow"></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <br />
+                    </div>
+                  )}
+                  {binputFields && (
+                    <div>
+                      <span className="form-label">Team Details:</span>
+                      <br />
+                      {inputFields.map((inputField, index) => (
+                        <Fragment key={`${inputField}~${index}`}>
+                          <div className="form-group">
+                            <div class="row">
+                              <div class="col-sm-5">
+                                <input
+                                  required
+                                  className="form-control"
+                                  type="text"
+                                  id="Name"
+                                  name="Name"
+                                  value={inputField.firstName}
+                                  onChange={(event) =>
+                                    handleInputChange(index, event)
+                                  }
+                                  placeholder={`Name`}
+                                />
+                              </div>
+                              <div class="col-sm-5">
+                                <input
+                                  required
+                                  className="form-control"
+                                  type="text"
+                                  id="Roll"
+                                  name="Roll"
+                                  value={inputField.firstName}
+                                  onChange={(event) =>
+                                    handleInputChange(index, event)
+                                  }
+                                  placeholder={`Roll No`}
+                                />
+                              </div>
+                              <div class="col align-self-center">
+                                <button
+                                  type="button"
+                                  class="btn btn-danger"
+                                  onClick={() => handleRemoveFields(index)}
+                                >
+                                  X
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </Fragment>
+                      ))}
+
+                      <button
+                        type="button"
+                        class="btn btn-info"
+                        onClick={() => handleAddFields()}
+                      >
+                        Add
+                      </button>
+                      <br />
+                    </div>
+                  )}
                   <br />
                   <div className="form-btn">
                     <button
