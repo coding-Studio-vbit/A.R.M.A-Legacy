@@ -1,25 +1,28 @@
 {
-    "designation": "",
-    "department": "",
-    "subject": "",
-    "date": "",
-    "respects": "",
-    "team_name": "",
-    "event_name": "",
-    "fromdate": "",
-    "todate": "",
-    "start_hour": "",
-    "start_min": "",
-    "start_meridian": "",
-    "end_hour": "",
-    "end_min": "",
-    "end_meridian": "",
-    "letter_body": "",
-    "where": "",
-    "studentdetails": [
-      {
-        "Name": "",
-        "Roll": ""
-      }
-    ]
-  }
+  "designation": "Head of Department",
+  "department": "Department of Computer Science and Engineering",
+  "subject": "Permission for Event Conduction",
+  "date": "2020-06-14",
+  "respects": "Sir",
+  "team_name": "Robotic Club",
+  "event_name": "fcdfhfb",
+  "fromdate": "2020-06-15",
+  "todate": "2020-06-17",
+  "start_hour": "8",
+  "start_min": "30",
+  "start_meridian": "AM",
+  "end_hour": "10",
+  "end_min": "20",
+  "end_meridian": "PM",
+  "letter_body": "This is an workshop for 1st year Students.",
+  "studentdetails": [
+    {
+      "Name": "Aaris",
+      "Roll": "18P61A05D7"
+    },
+    {
+      "Name": "Yash",
+      "Roll": "18P61A05C2"
+    }
+  ]
+}

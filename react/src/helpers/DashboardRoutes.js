@@ -9,9 +9,10 @@ import TemplateList from "../modules/Dashboard/TemplateList";
 import ViewStatus from "../modules/Dashboard/ViewStatus";
 import ForumProfile from "../modules/Dashboard/ForumProfile";
 import FacultyProfile from "../modules/Dashboard/FacultyProfile";
+import AddTemplate from "../modules/Dashboard/AddTemplate";
 
 //Protected Route component
-import {ProtectedRoute} from "./ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const DashboardRoutes = () => {
   const [type, setType] = useState("");
@@ -31,39 +32,48 @@ const DashboardRoutes = () => {
         .post(`${process.env.REACT_APP_URL}/getUserType`, user, config)
         .then((response) => {
           var res = response.data;
-          setType(response.data.userType );
+          setType(response.data.userType);
           console.log(type);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-
-  },[]);
+  }, []);
   console.log(type);
-  if(type=="FACULTY")
-  return(
+  if (type == "FACULTY")
+    return (
+      <div>
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        <ProtectedRoute
+          path="/Dashboard/TemplateDetails"
+          component={TemplateDetails}
+        />
+        <ProtectedRoute path="/Remarks" component={Remarks} />
+        <ProtectedRoute
+          path="/Dashboard/TemplateList"
+          component={TemplateList}
+        />
+
+        <ProtectedRoute path="/ViewStatus" component={ViewStatus} />
+        <ProtectedRoute path="/profile" component={FacultyProfile} />
+      </div>
+    );
+
+  return (
     <div>
-    <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
-    <ProtectedRoute path="/Dashboard/TemplateDetails" component={TemplateDetails} />
-    <ProtectedRoute path="/Remarks" component={Remarks} />
-    <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
-    <ProtectedRoute path="/ViewStatus" component={ViewStatus} />
-    <ProtectedRoute path="/profile" component={FacultyProfile} />
+      <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+      <ProtectedRoute
+        path="/Dashboard/TemplateDetails"
+        component={TemplateDetails}
+      />
+      <ProtectedRoute path="/Remarks" component={Remarks} />
+      <ProtectedRoute path="/Dashboard/AddTemplate" component={AddTemplate} />
+      <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
+      <ProtectedRoute path="/ViewStatus" component={ViewStatus} />
+      <ProtectedRoute path="/profile" component={ForumProfile} />
     </div>
   );
-
-  return(
-    <div>
-    <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
-    <ProtectedRoute path="/Dashboard/TemplateDetails" component={TemplateDetails} />
-    <ProtectedRoute path="/Remarks" component={Remarks} />
-    <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
-    <ProtectedRoute path="/ViewStatus" component={ViewStatus} />
-    <ProtectedRoute path="/profile" component={ForumProfile} />
-    </div>
-  );
-}
-
+};
 
 export default DashboardRoutes;
