@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
-import "./css/Remarks.css";
+
 import "./css/ViewStatus.css"
 const ViewStatus = (props) => {
   const status = "Accepted";
@@ -111,43 +112,46 @@ const ViewStatus = (props) => {
     <div>
       <Nav />
       <div Classname="Con">
-        <Container>
+        <Container className="table-container">
           <center>
-            <h1 className='title'>Letter Info</h1>
+            <h3 className='title'>Letter Info</h3>
           </center>
           <Row>
             <Col>
               <Row>
-                <h4 className="content">
+                <h3 className="content">
                   <span>From : </span>
                   {From}
-                </h4>
+                </h3>
               </Row>
-              <br/>
+
               <Row>
-                <h4 className="content">
+                <h3 className="content">
                   <span>Subject : </span>
                   {Subject}
-                </h4>
+                </h3>
               </Row>
-              <br/>
+
               <Row>
-                <h4 className="content">
+                <h3 className="content">
                   <span>Description : </span>
                   {Description}
-                </h4>
+                </h3>
               </Row>
-              <br/>
-              <Row>
-                <h4 className="content">
-                  <span>Remarks : </span>
-                  {Remarks}
-                </h4>
+                <label>Remarks : </label>
+                  <Row>
+                <Col>
+                <textarea
+                  cols={60}
+                  rows={6}
+                  disabled
+                  placeholder={Remarks}
+                >{Remarks}</textarea>
+                </Col>
               </Row>
-            </Col>
-
+             </Col>
             <Col>
-              <Row>
+              {/* <Row>
                 <Col>
                   <i
                     class="fas fa-chevron-circle-left"
@@ -155,7 +159,7 @@ const ViewStatus = (props) => {
                     onClick={chTable}
                   ></i>
                 </Col>
-                <Col style={{ padding: "0px" }}>
+                <Col >
                   <center>
                     {PartTable ? <h4 className='tab'>Participants</h4> : <h4 className='tab'>Facilities</h4>}
                   </center>
@@ -166,6 +170,14 @@ const ViewStatus = (props) => {
                     style={{ cursor: "pointer", color: "grey" }}
                     onClick={chgTable}
                   ></i>
+                </Col>
+              </Row> */}
+              <Row style={{margin:"10px"}}>
+                <Col>
+                 <ButtonGroup aria-label="Basic example" className="tab">
+                   <Button variant="dark" className={PartTable?"tabactive":""} onClick={chTable}>Participants</Button>
+                   <Button variant="dark" className={PartTable?"":"tabactive"} onClick={chgTable}>Facilities</Button>
+                 </ButtonGroup>
                 </Col>
               </Row>
               {PartTable? (<Row>
@@ -178,8 +190,8 @@ const ViewStatus = (props) => {
                 </InputGroup>
               </Row>):(<Row></Row>)}
               <div className="Table">
-                <Row>
-                  {PartTable ? (
+
+                <Row> {PartTable ? (<Col>
                     <Table striped bordered hover variant="dark">
                       <thead>
                         <tr>
@@ -190,7 +202,8 @@ const ViewStatus = (props) => {
                       </thead>{" "}
                       <tbody>{list}</tbody>
                     </Table>
-                  ) : (
+                    </Col>
+                  ) : (<Col>
                     <Table striped bordered hover variant="dark">
                       <thead>
                         <tr>
@@ -200,6 +213,7 @@ const ViewStatus = (props) => {
                       </thead>{" "}
                       <tbody>{list1}</tbody>
                     </Table>
+                    </Col>
                   )}
                 </Row>
               </div>
