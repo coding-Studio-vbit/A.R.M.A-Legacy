@@ -32,6 +32,7 @@ const Tatten = () => {
     values.splice(index, 1);
     setInputFields(values);
   };
+  const isSubmit = designation === "" || department === "" || date ==="" || subject === ""|| respects ===""||team_name===""||event_name===""||letter_body===""||fromdate===""||start_hour===""||start_min===""||start_meridian===""||todate===""||end_hour===""||end_min===""||end_meridian===""||inputFields[0].Name===""||inputFields[0].Roll===""? false:true
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
@@ -551,6 +552,7 @@ const Tatten = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
+                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
