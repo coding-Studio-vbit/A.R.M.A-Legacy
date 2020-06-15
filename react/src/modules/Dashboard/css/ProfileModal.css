@@ -1,10 +1,10 @@
 @media only screen and (max-device-width:800px) {
   .ReactModal__Content{
     height:50%;
-    transform : translate(-90%, -40%);
+    transform : translate(-75%, -40%);
     border-radius: 25px !important;
-    width: 310px !important;
-    height: 400px;
+    width: 350px !important;
+    height: 350px;
     position:left;
     outline: none;
     margin:0px;
@@ -13,10 +13,7 @@
     font-size: 15px;
     width: 70% !important;
   }
-  .modal-content{
-    width:280px;
-    height: 50%;
-  }
+  
   .modal-footer{
     width: 280px;
     padding: 10px;
