@@ -27,9 +27,9 @@ const FacultyPsModal = (props) => {
           content: {
             backgroundColor: "#181A1B",
             height: "300px",
-            width: "500px",
+            width: "450px",
             position: "absolute",
-            left: "35%",
+            left: "30%",
             top: "50%",
           },
         }}
