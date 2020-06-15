@@ -39,21 +39,38 @@ const Dform = (props) => {
       `${process.env.REACT_APP_URL}/getPlaceHolders`
     );
     axios
-      .post(`${process.env.REACT_APP_URL}/getPlaceHolders`, data, {
+      .post(`${process.env.REACT_APP_URL}/getPlaceholders`, data, {
         headers: {
           Authorization: "Bearer " + accessToken,
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log(res.placeholders);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
   //boolean values
-  const [bdesignation, setbdesignation] = useState(true);
+  const [binputFields,setbInputFields] = useState(false);
+  const [bdesignation, setbdesignation] = useState(false);
   const [bdepartment, setbdepartment] = useState(false);
+  const [bteamname, setbteamname] = useState(false);
+  const [bdate, setbdate] = useState(false);
+  const [bsubject, setbsubject] = useState(false);
+  const [brespects, setbrespects] = useState(false);
+  const [bevent_name, setbevent_name] = useState(false);
+  const [bletter_body, setbletter_body] = useState(false);
+  const [bhall_name, setbhall_name] = useState(false);
+  const [bfromdate, setbfromdate] = useState(false);
+  const [bstart_hour, setbstart_hour] = useState(false);
+  const [bstart_min, setbstart_min] = useState(false);
+  const [btodate, setbtodate] = useState(false);
+  const [bstart_meridian, setbstart_meridian] = useState(false);
+  const [bend_hour, setbend_hour] = useState(false);
+  const [bend_min, setbend_min] = useState(false);
+  const [bend_meridian, setbend_meridian] = useState(false);
+  const [bwhere, setbwhere] = useState(false);
 
   const handleAddFields = () => {
     const values = [...inputFields];
