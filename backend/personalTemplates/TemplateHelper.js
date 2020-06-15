@@ -120,6 +120,7 @@ async function fetchPlaceHolders(filepath)
 		.then(text=>{
 			let regex = /\{[a-zA-Z]*}/g;
 			let arr = text.match(regex);
+			arr = arr.map((str)=>{return str.slice(1,str.length-1)})
 			return resolve(arr);
 		})
 		.catch(error=>{

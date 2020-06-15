@@ -179,7 +179,6 @@ app.delete("/createrequest", (req, res) => {
     .catch((error) => res.status(400).json({ err: error }));
 });
 
-//<<<<<<<<<<<<<<<< INSECURE >>>>>>>>>>>>>>>>>
 app.put("/createrequest", (req, res) => {
   serverHelper
     .updateRequest(req)
@@ -517,27 +516,6 @@ app.post("/conductmeet", urlencodedParser, function (req, res) {
   res.download("./LetterGenerated/conductmeet.docx"); //callback I*
 });
 
-app.post("getPlaceholders", (req, res) => {
-  console.log("asdf");
-  users
-    .fetchAccessToken(req)
-    .then((token) => {
-      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
-    })
-    .then((username) => {
-      //YOUR ENDPOINT CODE HERE
-      templateHelper
-        .fetchTemplatePlaceHolders(username, req.body.templateName)
-        .then((response) => {
-          return res.status(200).json(response.response);
-        });
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.status(400).json({ err: error });
-    });
-});
-
 //Get user type using Access Token.
 
 app.post("/getUserType", (req, res) => {
@@ -635,6 +613,24 @@ app.post("/uploadTemplate", (req, res) => {
             return res.status(400).json({ err: err });
           });
       });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
+app.post("/getPlaceholders", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      return templateHelper.fetchTemplatePlaceHolders(username, req.body.templateName);
+    })
+    .then((response) => {
+       return res.status(200).json({placeholders: response});
     })
     .catch((error) => {
       console.log(error);
