@@ -8,6 +8,7 @@ import FacultyRegister from "../modules/Auth/FacultyRegistration";
 import FacultyLogin from "../modules/Auth/FacultyLogin";
 import LandingPage from "../modules/Auth/LandingPage";
 import LoginPages from "../modules/Auth/LoginPages";
+import { ProtectedLogin } from "./ProtectedLogin";
 
 const LoginRoutes = () => {
   return (

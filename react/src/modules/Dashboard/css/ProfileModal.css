@@ -1,20 +1,41 @@
-@media only screen and (max-device-width:360px) {
-  .modal-content{
-    width: 270px;
-    font-size: 11px;
-    height: 40px;
-    text-align: center;
+@media only screen and (max-device-width:800px) {
+  .ReactModal__Content{
+    height:50%;
+    transform : translate(-90%, -40%);
+    border-radius: 25px !important;
+    width: 310px !important;
+    height: 400px;
+    position:left;
+    outline: none;
+    margin:0px;
   }
-.modal{
-  text-align: center;
-  width: 310px;
-  position: relative;
-  left:10%;
-}
-.form-responsive{
-  width: 310px;
-  left:10%;
-}
+  .form-input{
+    font-size: 15px;
+    width: 70% !important;
+  }
+  .modal-content{
+    width:280px;
+    height: 50%;
+  }
+  .modal-footer{
+    width: 280px;
+    padding: 10px;
+    height:30%;
+  }
+  .submit-button{
+    float: right !important;
+    width: 40% !important;
+    font-size: 12px !important;
+    height: 35px;
+  }
+  .btn-cancel{
+    float: left !important;
+    width:30% !important;
+    font-size: 15px!important;
+    height: 35px;
+
+  }
+
 }
 .modal-header {
   width: 100%;
@@ -28,7 +49,9 @@
   background-color:#181A1B;
   color:#181A1B;
   padding-top: 0px;
+  text-decoration: white;
   border:none;
+  border-radius: 25px;
 }
 .modal-footer{
   border:none;
@@ -79,27 +102,13 @@
   border-color:#717170;
   -webkit-box-shadow: none;
   box-shadow: none;
+  width: 350px;
+  color: grey;
   opacity: 100%;
   font-weight: 400;
   font-size: 30;
   border-style:none;
   background-color:transparent;
-}
-.ReactModal__Content{
-  position: absolute;
-  top: 50%;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 40px;
-  border: 1px solid rgb(204, 204, 204);
-  background: rgb(24, 26, 27) !important;
-  overflow: auto;
-  border-radius: 25px !important;
-  outline: none;
-  height: 100%;
-  margin-top: 0% !important;
-  margin-left: 15% !important;
-  width: 70% !important;
 }
 .form-input::-webkit-input-placeholder {
   color: whitesmoke;

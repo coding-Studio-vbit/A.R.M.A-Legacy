@@ -107,7 +107,7 @@ const CreateRequest = () => {
       .then(function (response) {
         console.log("helloo");
         alert("Request made");
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import "./css/Form.css";
 import "./css/login.css";
 import ForgotPassword from "./ForgotPassword";
@@ -55,13 +55,13 @@ const Login = () => {
               accessToken: accessToken,
             })
           );
-          history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
         }
       })
       .catch((err) => console.log(err));
+      return <Redirect to='/Dashboard' />
   };
   const ForumChangeHandler = (e) => {
     let theForum = e.target.value.toUpperCase();

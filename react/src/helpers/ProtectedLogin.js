@@ -1,26 +1,26 @@
-import React  from 'react';
+import React,{useEffect,useState}  from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
-export const ProtectedRoute = ({component:Component, ...rest}) => {
-  var user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
+export const ProtectedLogin = ({component:Component, ...rest}) => {
+  var isLoggedIn = localStorage.getItem("loggedIn");
+  var isLoggedOut = localStorage.getItem("loggedOut");
+  console.log(isLoggedIn===true)
   return (
     <Route {...rest}
     render={
       (props) => {
-        if(user){
+        if(isLoggedIn===true){
           return <Component {...props} />;
         }
-        else{
           return <Redirect to={
             {
-              pathname:"/",
+              pathname:"/login",
               state: {
               from:props.location
               }
             }
           }/>;
-        }
+        
       }
     }/>
   );
