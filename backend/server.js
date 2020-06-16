@@ -243,7 +243,7 @@ app.post("/registerForum", (req, res) => {
     .then((response) => {
       return res.status(response.status).json(response.response);
     })
-    .catch((error) => res.status(400).json({ err: error }));
+    .catch((error) => res.status(200).json({ err: error }));
 });
 
 //REGISTER FACULTY REQUEST
@@ -627,10 +627,13 @@ app.post("/getPlaceholders", (req, res) => {
       return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
     })
     .then((username) => {
-      return templateHelper.fetchTemplatePlaceHolders(username, req.body.templateName);
+      return templateHelper.fetchTemplatePlaceHolders(
+        username,
+        req.body.templateName
+      );
     })
     .then((response) => {
-       return res.status(200).json({placeholders: response});
+      return res.status(200).json({ placeholders: response });
     })
     .catch((error) => {
       console.log(error);
