@@ -187,41 +187,72 @@ const Dform = (props) => {
 
   const submit = (e) => {
     console.log("inputFields", team_name);
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    // let data = []
+    // if(binputFields)
+    // data.push(designation)
+    // if(bdepartment)
+    // data.push(department)
+    // if(bteamname)
+    // data.push(team_name)
+    // if(bdate)
+    // data.push(date)
+    // if(bsubject)
+    // data.push(subject)
+    // if(brespects)
+    // data.push(respects)
+    // if(bevent_name)
+    // data.push(event_name)
+    // if(bletter_body)
+    // data.push(letter_body)
+    // if(bhall_name)
+    // data.push(hall_name)
 
     axios
       .post(
-        `${process.env.REACT_APP_URL}/conductmeet`,
+        `${process.env.REACT_APP_URL}/generateTemplateLetter`,
         {
-          designation,
-          department,
-          date,
-          subject,
-          respects,
-          team_name,
-          event_name,
-          hall_name,
-          fromdate,
-          start_hour,
-          start_min,
-          start_meridian,
-          todate,
-          end_hour,
-          end_min,
-          end_meridian,
-          letter_body,
-          studentdetails,
-          where,
+          template_name: "PERMIT_EVENT_TEMPLATE",
+          form_data: {
+            designation,
+            department,
+            date,
+            subject,
+            respects,
+            team_name,
+            event_name,
+            hall_name,
+            fromdate,
+            start_hour,
+            start_min,
+            start_meridian,
+            todate,
+            end_hour,
+            end_min,
+            end_meridian,
+            letter_body,
+            studentdetails,
+            where,
+          },
         },
-        { responseType: "arraybuffer" }
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            Authorization: "Bearer " + accessToken,
+          },
+          responseType: "arraybuffer",
+        }
       )
       .then((result) => {
-        console.log(result);
+        //console.log(result.data);
         //download(result.data, 'Team_Attendance_Permission.docx');
         const file = new Blob([result.data], {
           type:
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         });
-        download(file, "conductmeet.docx");
+        download(file, "generated.docx");
       });
   };
 
