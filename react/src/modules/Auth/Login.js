@@ -18,6 +18,10 @@ const Login = () => {
     }
   });
 
+  const directRoute = () => {
+
+  }
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
@@ -55,13 +59,13 @@ const Login = () => {
               accessToken: accessToken,
             })
           );
+          history.push("/Dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
         }
       })
       .catch((err) => console.log(err));
-      return <Redirect to='/Dashboard' />
   };
   const ForumChangeHandler = (e) => {
     let theForum = e.target.value.toUpperCase();

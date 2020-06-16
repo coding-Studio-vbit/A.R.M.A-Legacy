@@ -15,7 +15,12 @@ const Navi = () => {
       bg="dark"
       variant="dark"
     >
-      <Navbar.Brand style={{color:"#C60CD5",textShadow: "0.5px 0.5px 2px #C60CD5"}} href="#home">ARMA</Navbar.Brand>
+      <Navbar.Brand
+        style={{ color: "#C60CD5", textShadow: "0.5px 0.5px 2px #C60CD5" }}
+        href="/"
+      >
+        ARMA
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto"></Nav>
