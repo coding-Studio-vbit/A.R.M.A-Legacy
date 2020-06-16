@@ -641,24 +641,33 @@ app.post("/getPlaceholders", (req, res) => {
     });
 });
 
-app.post("/generateTemplateLetter", (req, res)=>{
-	users.fetchAccessToken(req)
-	.then(token=>{return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN)})
-	.then(username=>{
-		if(!req.body.template_name || !req.body.form_data) return res.status(400).json({err: "Invalid number of fields"});
-		return templateHelper.generateTemplateLetter(username, req.body.template_name, req.body.form_data);
-	})
-	.then(filepath=>{
-		res.download(filepath);
-		fs.unlink(filepath,(error)=>{
-			console.log("Error deleting generated letter: "+filepath, error);
-		});
-	})
-	.catch(error=>{
-		console.log(error);
-		return res.status(400).json({err:error});
-	})
-})
+app.post("/generateTemplateLetter", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      if (!req.body.template_name || !req.body.form_data)
+        return res.status(400).json({ err: "Invalid number of fields" });
+      return templateHelper.generateTemplateLetter(
+        username,
+        req.body.template_name,
+        req.body.form_data
+      );
+    })
+    .then((filepath) => {
+      console.log(filepath);
+      res.download(filepath);
+      // fs.unlink(filepath,(error)=>{
+      // 	console.log("Error deleting generated letter: "+filepath, error);
+      // });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 //start the server.
