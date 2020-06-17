@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import "./css/Form.css";
 import "./css/login.css";
 import ForgotPassword from "./ForgotPassword";
@@ -17,6 +17,8 @@ const Login = () => {
       setTimeout(() => setError(""), 7000);
     }
   });
+
+  const directRoute = () => {};
 
   useEffect(() => {
     axios

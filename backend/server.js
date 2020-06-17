@@ -9,7 +9,6 @@ const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
-const pool = require("./db");
 const multer = require("multer");
 const templateHelper = require("./personalTemplates/TemplateHelper.js");
 
@@ -37,7 +36,6 @@ var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var eventvenue = require("./eventvenue");
 var conductmeet = require("./conductmeet");
-var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
 
