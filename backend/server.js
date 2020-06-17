@@ -44,7 +44,7 @@ var latefee = require("./latefee");
 var periodabsent = require("./periodabsent");
 var laterecordsub = require("./laterecordsub");
 var latetoclass = require("./latetoclass");
-var allowtolabexam =require("./allowtolabexam");
+var allowtolabexam = require("./allowtolabexam");
 var hostelleave = require("./hostelleave");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
@@ -180,6 +180,9 @@ app.post("/createrequest", (req, res) => {
 });
 
 app.delete("/createrequest", (req, res) => {
+  console.log(req.body);
+  console.log(req.params);
+  console.log(req.query);
   serverHelper
     .deleteRequest(req)
     .then((response) => {
@@ -303,11 +306,11 @@ app.post("/participantsattendance", urlencodedParser, function (req, res) {
     team_name: req.body.team_name,
     event_name: req.body.event_name,
     fromdate: req.body.fromdate,
-    todate:req.body.todate,
+    todate: req.body.todate,
     start_hour: req.body.start_hour,
     start_min: req.body.start_min,
     start_meridian: req.body.start_min,
-    end_hour:req.body.end_hour ,
+    end_hour: req.body.end_hour,
     end_min: req.body.end_min,
     end_meridian: req.body.end_meridian,
     letter_body: req.body.letter_body,
@@ -430,12 +433,12 @@ app.post("/halfdayleave", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -451,14 +454,14 @@ app.post("/leaveletter", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    start_date:req.body.start_date,
-    end_date:req.body.end_date,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    start_date: req.body.start_date,
+    end_date: req.body.end_date,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -474,14 +477,14 @@ app.post("/aknowledgeabsence", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    start_date:req.body.start_date,
-    end_date:req.body.end_date,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    start_date: req.body.start_date,
+    end_date: req.body.end_date,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -497,12 +500,12 @@ app.post("/latefee", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -518,13 +521,13 @@ app.post("/periodabsent", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    period:req.body.period,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    period: req.body.period,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -540,12 +543,12 @@ app.post("/laterecordsub", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -561,12 +564,12 @@ app.post("/latetoclass", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -582,13 +585,13 @@ app.post("/allowtolabexam", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    exam:req.body.exam,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    exam: req.body.exam,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -604,20 +607,18 @@ app.post("/hostelleave", urlencodedParser, function (req, res) {
     respects: req.body.respects,
     your_name: req.body.your_name,
     year: req.body.year,
-    section:req.body.section,
-    roll_no:req.body.roll_no,
-    reason:req.body.reason,
-    hod_name:req.body.hod_name,
-    faculty_name:req.body.faculty_name,
-    faculty:req.body.faculty,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
   hostelleave.generateLetterIndividual();
   res.download("./LetterGenerated/hostelleave.docx"); //callback I*
 });
-
-
 
 //Get user type using Access Token.
 
@@ -772,21 +773,22 @@ app.post("/generateTemplateLetter", (req, res) => {
     });
 });
 
-app.get("/getPersonalTemplateList", (req, res)=>{
-	users.fetchAccessToken(req)
-	.then(token=>{
-		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
-	})
-	.then(username=>{
-		return templateHelper.getPersonalTemplatesList(username);
-	})
-	.then(list=>{
-		return res.json({personalTemplateList: list});
-	})
-	.catch(error=>{
-		console.log(error);
-		return res.status(400).json({err:error});
-	})
+app.get("/getPersonalTemplateList", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      return templateHelper.getPersonalTemplatesList(username);
+    })
+    .then((list) => {
+      return res.json({ personalTemplateList: list });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
