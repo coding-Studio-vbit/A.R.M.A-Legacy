@@ -1,25 +1,15 @@
 {
-  "designation": "",
-  "department": "",
-  "subject": "",
-  "date": "",
-  "respects": "",
-  "team_name": "",
-  "event_name": "",
-  "fromdate": "",
-  "todate": "",
-  "start_hour": "",
-  "start_min": "",
-  "start_meridian": "",
-  "end_hour": "",
-  "end_min": "",
-  "end_meridian": "",
-  "letter_body": "",
-  "where": "",
-  "studentdetails": [
-    {
-      "Name": "",
-      "Roll": ""
-    }
-  ]
+  "department": "Department of Computer Science and Engineering",
+  "subject": "permission",
+  "date": "2020-06-17",
+  "respects": "Sir",
+  "your_name": "poojitha",
+  "year": "Second",
+  "section": "C",
+  "roll_no": "18p61a05h9",
+  "reason": "not well",
+  "period": "6th",
+  "hod_name": "me",
+  "faculty_name": "me only",
+  "faculty": "Principal"
 }

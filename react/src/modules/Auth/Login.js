@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
 import "./css/Form.css";
+import "./css/login.css";
 import ForgotPassword from "./ForgotPassword";
 import ForgotPasswordForum from "./ForgotPasswordForum";
 const Login = () => {
@@ -17,6 +18,8 @@ const Login = () => {
     }
   });
 
+  const directRoute = () => {};
+
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
@@ -29,6 +32,18 @@ const Login = () => {
         console.log(err);
       });
   }, []);
+
+  const ss = (userName, accessToken, callback) => {
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        userName: userName,
+        accessToken: accessToken,
+      })
+    );
+    return callback();
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
@@ -47,14 +62,11 @@ const Login = () => {
           console.log("fdf");
           let userName = res.data.message.split(" ")[1];
           let accessToken = res.data.accessToken;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              userName: userName,
-              accessToken: accessToken,
-            })
-          );
-          history.push("/dashboard");
+          ss(userName, accessToken, () => {
+            history.push("/dashboard");
+          }); //history.push("/dashboard"));
+          // localStorage.setItem("user", JSON.stringify(res.data));
+          // history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
@@ -68,45 +80,43 @@ const Login = () => {
   };
   const userType = "FORUM";
   return (
-    <div className="all-items">
-      <div className="forms">
-        <form>
-          <h1 style={{ color: "white" }}> Forum login </h1>
-
-          <div style={{ marginTop: 20 }}></div>
-          <br />
-          <div className="form-group justi">
-            <h4 style={{ paddingLeft: 20 }}>Forum List: </h4>
-            <select
-              className="selecti round"
-              name="value"
-              onChange={(e) => ForumChangeHandler(e)}
-            >
-              {ForumList.map((club) => (
-                <option> {club.actual_name} </option>
-              ))}
-            </select>
+    <div className="forms">
+      <form>
+        <h1 style={{ color: "white" }}> Forum login </h1>
+        <br />
+        <div className="container">
+          <div className="form-group login-row row">
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Forum : </h4>
+            </div>
+            <div className="col-md">
+              <select
+                className="login-dropdown round"
+                style={{ margin: 0 }}
+                name="value"
+                onChange={(e) => ForumChangeHandler(e)}
+              >
+                {ForumList.map((club) => (
+                  <option> {club.actual_name} </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div style={{ height: 20 }}></div>
-          <div className="form-group ipflex justi">
-            <h4 style={{ paddingLeft: 20 }}> Password: </h4>
-            <input
-              type="password"
-              className="inputboxes"
-              id="exampleInputPassword1"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <div className="form-group login-row row">
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Password : </h4>
+            </div>
+            <div className="col-md">
+              <input
+                type="password"
+                className="inputboxes"
+                id="exampleInputPassword1"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "end",
-              paddingTop: 2,
-              paddingRight: 67,
-            }}
-          >
+          <div className="row">
             <button
               className="btn btn-link"
               style={{ color: "#cc00ff" }}
@@ -116,20 +126,18 @@ const Login = () => {
               Forgot Password
             </button>
           </div>
-          <br />
-          <button className="buttonpurple" onClick={handleLogin} type="submit">
-            Login
-          </button>
+        </div>
 
-          <h4 style={{ color: "#ff1744" }}>{error} </h4>
-          <Link
-            to={"/register"}
-            style={{ display: "block", marginTop: 20, color: "#00e676" }}
-          >
-            Go to Forum Registration Page
-          </Link>
-        </form>
-      </div>
+        <br />
+        <button className="buttonpurple" onClick={handleLogin} type="submit">
+          Login
+        </button>
+
+        <h4 style={{ color: "#ff1744" }}>{error} </h4>
+        <Link to={"/register"} style={{ color: "#00e676" }}>
+          Go to Forum Registration Page
+        </Link>
+      </form>
       <ForgotPasswordForum
         userType={userType}
         show={modalShow}

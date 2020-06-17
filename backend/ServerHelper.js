@@ -844,12 +844,12 @@ async function registerForum(req) {
     //set status, set response object
     const data = req.body.registrationData;
     if (!data) {
-      res.status = 400;
-      res.response = { err: "No registrationData field!" };
+      res.status = 200;
+      res.response = { err: { errmessage: "No registrationData field!" } };
       return resolve(res);
     } else if (!data.username || !data.phone || !data.email) {
-      res.status = 400;
-      res.response = { err: "Invalid number of arguments" };
+      res.status = 200;
+      res.response = { err: { errmessage: "Invalid number of arguments" } };
       return resolve(res);
     } else {
       dataValidator
@@ -875,9 +875,11 @@ async function registerForum(req) {
                 //nothing. Mail is sent to forum.
               })
               .catch((error) => {
-                res.status = 400;
+                res.status = 200;
                 res.response = {
-                  err: "error sending mail to user" + data.email,
+                  err: {
+                    errmessage: "error sending mail to user" + data.email,
+                  },
                 };
                 console.log("Error sending mail to user :" + data.email, error);
                 return resolve(res);
@@ -894,7 +896,9 @@ async function registerForum(req) {
               })
               .catch((error) => {
                 res.status(500);
-                res.reponse = { err: "Server couldnt register request!" };
+                res.reponse = {
+                  err: { errmessage: "Server couldnt register request!" },
+                };
                 console.log("Error sending mail to self", error);
               })
               .then(() => {
@@ -920,7 +924,7 @@ async function registerForum(req) {
           }
         })
         .catch((error) => {
-          res.status = 400;
+          res.status = 200;
           res.response = { err: error };
           return resolve(res);
         });
@@ -933,8 +937,8 @@ async function registerFaculty(req) {
     //set status, set response object
     const data = req.body.registrationData;
     if (!data) {
-      res.status = 400;
-      res.response = { err: "No registrationData field!" };
+      res.status = 200;
+      res.response = { err: { errmessage: "No registrationData field!" } };
       return resolve(res);
     } else if (
       !data.faculty_name ||
@@ -943,8 +947,8 @@ async function registerFaculty(req) {
       !data.faculty_dept ||
       !data.faculty_roll
     ) {
-      res.status = 400;
-      res.response = { err: "Invalid number of arguments!" };
+      res.status = 200;
+      res.response = { err: { errmessage: "Invalid number of arguments" } };
       return resolve(res);
     } else {
       dataValidator
@@ -970,8 +974,12 @@ async function registerFaculty(req) {
                 //nothing. Mail is sent to faculty.
               })
               .catch((error) => {
-                res.status = 400;
-                res.response = { err: "Error sending mail to user!" };
+                res.status = 200;
+                res.response = {
+                  err: {
+                    errmessage: "error sending mail to user" + data.email,
+                  },
+                };
 
                 console.log(
                   "Error sending mail to user :" + data.faculty_email,
@@ -991,8 +999,8 @@ async function registerFaculty(req) {
               })
               .catch((error) => {
                 res.status = 500;
-                res.response = {
-                  err: "Error registering user!",
+                res.reponse = {
+                  err: { errmessage: "Server couldnt register request!" },
                 };
                 console.log("Error sending mail to self", error);
                 return resolve(res);
@@ -1022,7 +1030,7 @@ async function registerFaculty(req) {
           }
         })
         .catch((error) => {
-          res.status = 400;
+          res.status = 200;
           res.response = { err: error };
           return resolve(res);
         });

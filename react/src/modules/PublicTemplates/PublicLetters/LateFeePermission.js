@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-
+import Nav from "../Navi";
 const LFP = () => {
   const [department, setDepartment] = useState("");
   const [date, setDate] = useState("");
@@ -15,7 +15,7 @@ const LFP = () => {
   const [hod_name, setHODname] = useState("");
   const [faculty_name, setFacultyName] = useState("");
   const [faculty, setFaculty] = useState("");
-  
+  const isSubmit = department === "" || date ==="" || subject === ""|| respects ===""||your_name===""||year===""||section===""||roll_no===""||reason===""||hod_name===""||faculty_name===""||faculty===""? false:true
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
@@ -34,9 +34,9 @@ const LFP = () => {
     );
   };
 
- 
+
   const submit = (e) => {
-    
+
     axios
       .post(
         `${process.env.REACT_APP_URL}/latefee`,
@@ -68,6 +68,8 @@ const LFP = () => {
   };
 
   return (
+    <div>
+    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -145,7 +147,7 @@ const LFP = () => {
                       type="text"
                       name="subject"
                       onChange={(e) => setSubject(e.target.value)}
-                      placeholder="Enter subject (ex: Requisition of attendance for Participants)"
+                      placeholder="Enter subject"
                     />
                   </div>
 
@@ -204,21 +206,21 @@ const LFP = () => {
                       <option value="" disabled selected hidden>
                         Select your option
                       </option>
-                      <option value="1">
-                        1
+                      <option value="First">
+                        First
                       </option>
-                      <option value="2">
-                        2
+                      <option value="Second">
+                        Second
                       </option>
-                      <option value="3">
-                        3
+                      <option value="Third">
+                        Third
                       </option>
-                      <option value="4">
-                        4
+                      <option value="Forth">
+                        Forth
                       </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
                   <br />
 
@@ -252,9 +254,9 @@ const LFP = () => {
                       </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
-                  <br />    
+                  <br />
 
                   <div className="form-group">
                     <span className="form-label" htmlFor="roll_no">
@@ -302,7 +304,7 @@ const LFP = () => {
                     />
                   </div>
 
-                  <br />   
+                  <br />
 
                   <div className="form-group">
                     <span className="form-label" htmlFor="Faculty_name">
@@ -335,28 +337,19 @@ const LFP = () => {
                     >
                       <option value="" disabled selected hidden>
                         Select your option
-                      </option>
-                      <option value="A">
-                        CSE
-                      </option>
-                      <option value="B">
-                        IT
-                      </option>
-                      <option value="C">
-                        ECE
-                      </option>
-                      <option value="D">
-                        EEE
-                      </option>
-                      <option value="D">
-                        CIVIL
-                      </option>
-                      <option value="D">
-                        MECH
-                      </option>
+                        </option>
+                        <option value="Principal">
+                          Principal
+                        </option>
+                        <option value="Class-Incharge">
+                          Class-Incharge
+                        </option>
+                        <option value="Mentor">
+                          Mentor
+                        </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
                   <br />
                   <br />
@@ -365,6 +358,7 @@ const LFP = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
+                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -376,6 +370,7 @@ const LFP = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 

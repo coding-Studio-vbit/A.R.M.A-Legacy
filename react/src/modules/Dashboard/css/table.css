@@ -1,5 +1,5 @@
 @media only screen and (max-width: 800px) {
-	.container{
+	.table-container{
 		text-align: center;
 		margin: auto;
 	}
@@ -38,7 +38,7 @@ body {
 .table {
   border: 0;
 }
-.container {
+.table-container {
   text-align: center;
   border-radius: 30px;
   margin-top: 50px;

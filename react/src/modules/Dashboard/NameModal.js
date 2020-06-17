@@ -13,30 +13,34 @@ const NameModal =(props)=>{
       {
         overlay:{
           opacity:"1.0",
-          margin:220,
+          margin:300,
           backgroundColor:""
 
         },
         content:{
           backgroundColor:"#181A1B",
           height:"250px",
-          width:"500px",
+          width:"400px",
           position:"absolute",
-          left: "35%",
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-30%',
+          
+          left: "20%",
           top: "50%",
         }
       }
     }
     isOpen={props.Editingon}>
-        <form className="form-responsive">
+        <form >
          <div className="modal-header">
                     <h3 style={{color:"grey"}}></h3>
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="text" id="myInput" style={{opacity:"1.0",width:"400px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
+                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer" >
                 <button className="btn-cancel" type="reset">Cancel</button>
                 <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));

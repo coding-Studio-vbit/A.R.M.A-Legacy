@@ -9,7 +9,6 @@ const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
-const pool = require("./db");
 const multer = require("multer");
 const templateHelper = require("./personalTemplates/TemplateHelper.js");
 
@@ -189,7 +188,6 @@ app.delete("/createrequest", (req, res) => {
     .catch((error) => res.status(400).json({ err: error }));
 });
 
-//<<<<<<<<<<<<<<<< INSECURE >>>>>>>>>>>>>>>>>
 app.put("/createrequest", (req, res) => {
   serverHelper
     .updateRequest(req)
@@ -254,7 +252,7 @@ app.post("/registerForum", (req, res) => {
     .then((response) => {
       return res.status(response.status).json(response.response);
     })
-    .catch((error) => res.status(400).json({ err: error }));
+    .catch((error) => res.status(200).json({ err: error }));
 });
 
 //REGISTER FACULTY REQUEST
@@ -688,7 +686,7 @@ app.post("/changeFacultyEmail", (req, res) => {
 });
 
 app.post("/uploadTemplate", (req, res) => {
-  console.log("fs");
+  console.log(req);
   users
     .fetchAccessToken(req)
     .then((token) => {
@@ -705,9 +703,12 @@ app.post("/uploadTemplate", (req, res) => {
           return res.status(500).json({ err: error });
         }
         console.log(req.file);
+        let templateName = req.file.originalname;
+        templateName = templateName.slice(0, templateName.length - 5);
+        console.log(templateName);
         //res.status(200).json({ message: "Template successfully uploaded" });
         templateHelper
-          .insertNewTemplate(username, "newfdsftemp", req.file.path)
+          .insertNewTemplate(username, templateName, req.file.path)
           .then((result) => {
             return res.status(200).json({ message: result });
           })
@@ -720,6 +721,72 @@ app.post("/uploadTemplate", (req, res) => {
       console.log(error);
       return res.status(400).json({ err: error });
     });
+});
+
+app.post("/getPlaceholders", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      return templateHelper.fetchTemplatePlaceHolders(
+        username,
+        req.body.templateName
+      );
+    })
+    .then((response) => {
+      return res.status(200).json({ placeholders: response });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
+app.post("/generateTemplateLetter", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      if (!req.body.template_name || !req.body.form_data)
+        return res.status(400).json({ err: "Invalid number of fields" });
+      return templateHelper.generateTemplateLetter(
+        username,
+        req.body.template_name,
+        req.body.form_data
+      );
+    })
+    .then((filepath) => {
+      console.log(filepath);
+      res.download(filepath);
+      // fs.unlink(filepath,(error)=>{
+      // 	console.log("Error deleting generated letter: "+filepath, error);
+      // });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
+app.get("/getPersonalTemplateList", (req, res)=>{
+	users.fetchAccessToken(req)
+	.then(token=>{
+		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+	})
+	.then(username=>{
+		return templateHelper.getPersonalTemplatesList(username);
+	})
+	.then(list=>{
+		return res.json({personalTemplateList: list});
+	})
+	.catch(error=>{
+		console.log(error);
+		return res.status(400).json({err:error});
+	})
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//

@@ -20,23 +20,26 @@ const FacultyEModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 200,
+            margin: 300,
             position:"absolute",
             backgroundColor: "",
           },
           content: {
             backgroundColor: "#181A1B",
             height: "300px",
-            width: "500px",
+            width: "450px",
             position: "absolute",
-            borderBlockColor:"#3E4245",
-            left: "35%",
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-30%',
+            
+            left: "20%",
             top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
-        <form>
+        <form >
           <div className="modal-header">
             <h3 style={{ color: "grey" }}></h3>
             <button className="close-modal-btn" type="submit">
@@ -48,7 +51,7 @@ const FacultyEModal = (props) => {
               type="email"
               id="myInput"
               className="form-input"
-              style={{width:"400px"}}
+              style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
             ></input>
@@ -57,7 +60,7 @@ const FacultyEModal = (props) => {
               type="email"
               id="myInput"
               className="form-input"
-              style={{width:"400px"}}
+              style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
             ></input>
@@ -68,7 +71,7 @@ const FacultyEModal = (props) => {
                 color: "#ff1744",
               }}
               id="emailHelp"
-              className="form-text">
+              className="form-word">
               Enter the same email as above
             </h5>
           </div>
@@ -79,6 +82,7 @@ const FacultyEModal = (props) => {
             <button
               type="submit"
               className="submit-button"
+              disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
                 if (user !== null) {

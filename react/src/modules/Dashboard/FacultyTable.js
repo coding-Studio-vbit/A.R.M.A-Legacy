@@ -63,7 +63,7 @@ class FacultyTable extends React.Component {
     });
     return (
       <div class="containerz">
-        <div class="container">
+        <div class="container table-container">
           <div class="table-responsive">
             <table class="table">
               <thead>

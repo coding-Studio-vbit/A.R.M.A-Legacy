@@ -25,6 +25,8 @@ const CreateRequest = () => {
   const [description, setDescription] = useState("");
   const [addfacilities, setCustreq] = useState("");
 
+
+
   const handleAddFields = () => {
     const values = [...inputFields];
     values.push({ name: "", roll: "", Dept: "", Year: "", check: false });
@@ -107,7 +109,7 @@ const CreateRequest = () => {
       .then(function (response) {
         console.log("helloo");
         alert("Request made");
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -228,7 +230,7 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>Description :</h5>
               </div>
-              <div className="col" style={{marginRight: "15px"}}>
+              <div className="col" >
                 <div className="form-group">
                   <textarea
                     className="form-control"
@@ -283,6 +285,7 @@ const CreateRequest = () => {
                           <div class="col-sm-2">
                             <input
                               className="form-control"
+                              style={{marginTop: "5px"}}
                               type="text"
                               id="name"
                               name="name"
@@ -300,6 +303,7 @@ const CreateRequest = () => {
                               id="roll"
                               name="roll"
                               placeholder="Roll.no"
+                              style={{marginTop: "5px"}}
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -397,9 +401,8 @@ const CreateRequest = () => {
                 <button
                   type="submit"
                   class="btn btn-success"
-                  onClick={() => {
-                    submit();
-                  }}
+                  onClick={() => submit()}
+                  disabled = {request===""||Faculty===null||Facilities===null||description===""||inputFields[0].name===""||inputFields[0].roll===""||inputFields[0].Dept===""||inputFields[0].Year===""? false:true}
                 >
                   Create Request
                 </button>

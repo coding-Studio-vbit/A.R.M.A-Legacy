@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { useHistory } from "react-router-dom";
 import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
@@ -103,7 +104,7 @@ const Remarks = (props) => {
         config
       )
       .then((res) => {
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -135,7 +136,7 @@ const Remarks = (props) => {
         config
       )
       .then((res) => {
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -239,7 +240,7 @@ const Remarks = (props) => {
     <div>
       <Nav />
       <div Classname="Con">
-        <Container>
+        <Container className="table-container">
           <center>
             <h1 className='title'>Letter Info</h1>
           </center>
@@ -269,7 +270,7 @@ const Remarks = (props) => {
                 <textarea
                   value={Text.text}
                   onChange={handleInput}
-                  cols={80}
+                  cols={60}
                   rows={6}
                   placeholder="Enter your Remarks here..."
                 />
@@ -279,14 +280,14 @@ const Remarks = (props) => {
                 className="Rebtn"
                 variant="primary"
                 onClick={Selected}
-                style={{ marginBottom: "50px" }}
+                style={{ margin: "10px" }}
               >
                 Request changes
               </Button>
             </Col>
 
             <Col>
-              <Row>
+              {/* <Row>
                 <Col>
                   <i
                     class="fas fa-chevron-circle-left"
@@ -297,6 +298,7 @@ const Remarks = (props) => {
                 <Col style={{ padding: "0px" }}>
                   <center>
                     {PartTable ? <h4 className="tab">Participants</h4> : <h4 className="tab">Facilities</h4>}
+
                   </center>
                 </Col>
                 <Col>
@@ -305,6 +307,14 @@ const Remarks = (props) => {
                     style={{ cursor: "pointer", color: "grey" }}
                     onClick={chgTable}
                   ></i>
+                </Col>
+              </Row> */}
+              <Row style={{margin:"10px"}}>
+                <Col>
+                 <ButtonGroup aria-label="Basic example" className="tab">
+                   <Button variant="dark" className={PartTable?"tabactive":""} onClick={chTable}>Participants</Button>
+                   <Button variant="dark" className={PartTable?"":"tabactive"} onClick={chgTable}>Facilities</Button>
+                 </ButtonGroup>
                 </Col>
               </Row>
               {PartTable? (<Row>
