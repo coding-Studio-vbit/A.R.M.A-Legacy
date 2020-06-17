@@ -232,10 +232,31 @@ async function generateTemplateLetter(forum_name, template_name, form_data) {
       });
   });
 }
+async function getPersonalTemplatesList(forum_name)
+{
+	return new Promise((resolve, reject)=>{
+		var client = new Client();
+		client.connect();
+		client.query('SELECT template_name FROM personal_templates where forum_name=$1',[forum_name])
+		.then(data=>{
+			var personalTemplateNames = [];
+			data.rows.forEach(name=>{
+				personalTemplateNames.push(name.template_name);
+			})
+			client.end();
+			return resolve(personalTemplateNames);
+		})
+		.catch(error=>{
+			console.log(error);
+			return reject(error);
+		})
+	})
+}
 
 module.exports = {
   insertNewTemplate,
   fetchForumTemplates,
   fetchTemplatePlaceHolders,
   generateTemplateLetter,
+  getPersonalTemplatesList
 };

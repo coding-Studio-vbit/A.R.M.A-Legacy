@@ -669,6 +669,23 @@ app.post("/generateTemplateLetter", (req, res) => {
     });
 });
 
+app.get("/getPersonalTemplateList", (req, res)=>{
+	users.fetchAccessToken(req)
+	.then(token=>{
+		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+	})
+	.then(username=>{
+		return templateHelper.getPersonalTemplatesList(username);
+	})
+	.then(list=>{
+		return res.json({personalTemplateList: list});
+	})
+	.catch(error=>{
+		console.log(error);
+		return res.status(400).json({err:error});
+	})
+});
+
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 //start the server.
 app.listen(port_number, () => {
