@@ -14,12 +14,11 @@ function Register() {
   });
   const [values, setValue] = useState("");
   const [registered, isRegistered] = useState(true);
-  const [resmes, setResmes] = useState([]);
   const [error, setError] = useState("");
   const [isMessage, setMessage] = useState(false);
   useEffect(() => {
-    if (resmes.length !== 0) {
-      setTimeout(() => setResmes([]), 7000);
+    if (error !== "") {
+      setTimeout(() => setError(""), 7000);
     }
   });
   const handleChange = (event) => {
@@ -35,7 +34,7 @@ function Register() {
   const isEnabled = contact.email === contact.cemail;
   const handleRegister = (e) => {
     e.preventDefault();
-
+    console.log({ values }, contact.email, contact.pnum);
     axios
       .post(`${process.env.REACT_APP_URL}/registerForum`, {
         registrationData: {
@@ -45,15 +44,11 @@ function Register() {
         },
       })
       .then((res) => {
+        console.log(res);
         if (res.data.hasOwnProperty("err")) {
-          let mes = Object.values(res.data.err);
-          let ss = Array.from(mes);
-          setMessage(false);
-
-          setResmes(ss);
+          setError(res.data.err);
         } else if (res.data.hasOwnProperty("message")) {
-          let mes = Object.values(res.data);
-          setResmes(mes);
+          setError(res.data.message);
           setMessage(true);
           setContact((prevState) => ({
             ...prevState,
@@ -62,11 +57,8 @@ function Register() {
             pnum: "",
           }));
         }
-        console.log(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
   return (
     <div className="register-forms">
@@ -160,10 +152,7 @@ function Register() {
         <div>
           <br />
           <button
-<<<<<<< HEAD
-=======
             disabled={registered && isEnabled}
->>>>>>> 737e5b2183de1c89dc933a14f454ffd9a0aa2a11
             type="submit"
             className="buttonpurple"
             onClick={handleRegister}
@@ -172,20 +161,7 @@ function Register() {
           </button>
         </div>
         <br />
-<<<<<<< HEAD
-        {resmes.map((er) => (
-          <h4
-            style={{
-              color: isMessage ? "green" : "#ff1744",
-              textAlign: "center",
-            }}
-          >
-            {er} <br />
-          </h4>
-        ))}
-=======
         <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
->>>>>>> 737e5b2183de1c89dc933a14f454ffd9a0aa2a11
       </form>
     </div>
   );

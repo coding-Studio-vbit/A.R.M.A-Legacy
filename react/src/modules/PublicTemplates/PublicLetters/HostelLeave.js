@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-import Nav from "../../Dashboard/Navi";
+import Nav from "./Navi";
 
 const HLL = () => {
   const [department, setDepartment] = useState("");
