@@ -104,7 +104,7 @@ const Remarks = (props) => {
         config
       )
       .then((res) => {
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -136,7 +136,7 @@ const Remarks = (props) => {
         config
       )
       .then((res) => {
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);

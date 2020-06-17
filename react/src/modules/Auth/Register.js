@@ -160,6 +160,10 @@ function Register() {
         <div>
           <br />
           <button
+<<<<<<< HEAD
+=======
+            disabled={registered && isEnabled}
+>>>>>>> 737e5b2183de1c89dc933a14f454ffd9a0aa2a11
             type="submit"
             className="buttonpurple"
             onClick={handleRegister}
@@ -168,6 +172,7 @@ function Register() {
           </button>
         </div>
         <br />
+<<<<<<< HEAD
         {resmes.map((er) => (
           <h4
             style={{
@@ -178,6 +183,9 @@ function Register() {
             {er} <br />
           </h4>
         ))}
+=======
+        <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+>>>>>>> 737e5b2183de1c89dc933a14f454ffd9a0aa2a11
       </form>
     </div>
   );

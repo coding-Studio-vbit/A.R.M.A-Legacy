@@ -109,7 +109,7 @@ const CreateRequest = () => {
       .then(function (response) {
         console.log("helloo");
         alert("Request made");
-        history.push("/dashboard");
+        history.push("/Dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -230,7 +230,7 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>Description :</h5>
               </div>
-              <div className="col" style={{marginRight: "15px"}}>
+              <div className="col" >
                 <div className="form-group">
                   <textarea
                     className="form-control"
@@ -285,6 +285,7 @@ const CreateRequest = () => {
                           <div class="col-sm-2">
                             <input
                               className="form-control"
+                              style={{marginTop: "5px"}}
                               type="text"
                               id="name"
                               name="name"
@@ -302,6 +303,7 @@ const CreateRequest = () => {
                               id="roll"
                               name="roll"
                               placeholder="Roll.no"
+                              style={{marginTop: "5px"}}
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)

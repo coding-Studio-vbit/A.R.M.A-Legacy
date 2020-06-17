@@ -44,7 +44,7 @@ const DashboardRoutes = () => {
   if (type == "FACULTY")
     return (
       <div>
-        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
         <ProtectedRoute
           path="/Dashboard/TemplateDetails"
           component={TemplateDetails}
@@ -62,7 +62,7 @@ const DashboardRoutes = () => {
 
   return (
     <div>
-      <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+      <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
       <ProtectedRoute
         path="/Dashboard/TemplateDetails"
         component={TemplateDetails}

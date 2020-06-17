@@ -20,7 +20,7 @@ const ProfileModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 220,
+            margin:300,
             position:"absolute",
             backgroundColor: "",
           },
@@ -29,14 +29,16 @@ const ProfileModal = (props) => {
             height: "300px",
             width: "450px",
             position: "absolute",
-            borderBlockColor:"#3E4245",
-            left: "30%",
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-30%',
+            left: "20%",
             top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
-        <form>
+        <form >
           <div className="modal-header">
             <h3 style={{ color: "grey" }}></h3>
             <button className="close-modal-btn" type="submit">
