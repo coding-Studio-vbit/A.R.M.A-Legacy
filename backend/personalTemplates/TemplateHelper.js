@@ -1,7 +1,9 @@
 const fs = require("fs");
+const path = require("path");
 const docxTemplater = require("docxtemplater");
 const mammoth = require("mammoth");
 const { Client } = require("pg");
+const PizZip = require("pizzip");
 
 async function readDocx(filepath) {
   //returns the text content of the word doc.
@@ -24,7 +26,7 @@ async function checkPlaceHolders(filepath) {
   return new Promise((resolve, reject) => {
     readDocx(filepath)
       .then((text) => {
-        let regex = /\{[a-zA-Z]*}/g;
+        let regex = /\{[a-zA-Z_]*}/g;
         let arr = text.match(regex);
         arr.forEach((str) => {
           let allowed = [
@@ -112,48 +114,52 @@ async function insertNewTemplate(forum_name, templateName, filepath) {
       });
   });
 }
-async function fetchPlaceHolders(filepath)
-{
-	//fetches the placeholders of a given template file.
-	return new Promise((resolve, reject)=>{
-		readDocx(filepath)
-		.then(text=>{
-			let regex = /\{[a-zA-Z]*}/g;
-			let arr = text.match(regex);
-			return resolve(arr);
-		})
-		.catch(error=>{
-			return reject(error);
-		})
-	});
+async function fetchPlaceHolders(filepath) {
+  //fetches the placeholders of a given template file.
+  return new Promise((resolve, reject) => {
+    readDocx(filepath)
+      .then((text) => {
+        let regex = /\{[a-zA-Z_]*}/g;
+        let arr = text.match(regex);
+        arr = arr.map((str) => {
+          return str.slice(1, str.length - 1);
+        });
+        return resolve(arr);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
 }
-async function fetchTemplatePlaceHolders(forum_name, template_name)
-{
-	return new Promise((resolve, reject)=>{
-		var client = new Client();
-		client.connect();
-		client.query('SELECT filepath FROM personal_templates WHERE forum_name=$1 AND template_name=$2',[forum_name, template_name])
-		.then(data=>{
+async function fetchTemplatePlaceHolders(forum_name, template_name) {
+  return new Promise((resolve, reject) => {
+    var client = new Client();
+    client.connect();
+    client
+      .query(
+        "SELECT filepath FROM personal_templates WHERE forum_name=$1 AND template_name=$2",
+        [forum_name, template_name]
+      )
+      .then((data) => {
+        if (data.rows.length == 0)
+          return reject("No suck template found for the forum!");
+        filepath = data.rows[0].filepath;
 
-			if(data.rows.length == 0) return reject("No suck template found for the forum!");
-			filepath = data.rows[0].filepath;
-
-			fetchPlaceHolders(filepath)
-			.then(placeholders=>{
-				return resolve(placeholders);
-			})
-			.catch(error=>{
-				return reject(error);
-			})
-		})
-		.catch(error=>{
-			return reject(error);
-		})
-	})
+        fetchPlaceHolders(filepath)
+          .then((placeholders) => {
+            return resolve(placeholders);
+          })
+          .catch((error) => {
+            return reject(error);
+          });
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
 }
-async function fetchForumTemplates(forum_name)
-{
-	//return an array of template names belonging to the forum
+async function fetchForumTemplates(forum_name) {
+  //return an array of template names belonging to the forum
 
   return new Promise((resolve, reject) => {
     var client = new Client();
@@ -176,9 +182,81 @@ async function fetchForumTemplates(forum_name)
       });
   });
 }
+async function generateTemplateLetter(forum_name, template_name, form_data) {
+  return new Promise((resolve, reject) => {
+    //fetch the filepath of the template.
+    var client = new Client();
+    client.connect();
+    client
+      .query(
+        "SELECT filepath from personal_templates where forum_name=$1 AND template_name=$2",
+        [forum_name, template_name]
+      )
+      .then((data) => {
+        if (data.rows.length == 0)
+          return reject("No template found with the given name!");
+
+        var filepath = data.rows[0].filepath;
+        console.log(__dirname);
+        var content = fs.readFileSync(
+          path.resolve(path.join(__dirname, "../"), filepath),
+          "binary"
+        );
+        var zip = new PizZip(content);
+        var docx = new docxTemplater();
+
+        docx.loadZip(zip);
+        docx.setData(form_data);
+        docx.render(); //this will generate the letter.
+        var buffer = docx.getZip().generate({ type: "nodebuffer" });
+        var filename =
+          forum_name + "_" + template_name + "_" + String(Date.now());
+        fs.writeFileSync(
+          path.join(
+            __dirname,
+            "../generateTemplateLetters/" + filename + ".docx"
+          ),
+          buffer
+        );
+        client.end();
+        return resolve(
+          path.join(
+            __dirname,
+            "../generateTemplateLetters/" + filename + ".docx"
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        return reject(error);
+      });
+  });
+}
+async function getPersonalTemplatesList(forum_name)
+{
+	return new Promise((resolve, reject)=>{
+		var client = new Client();
+		client.connect();
+		client.query('SELECT template_name FROM personal_templates where forum_name=$1',[forum_name])
+		.then(data=>{
+			var personalTemplateNames = [];
+			data.rows.forEach(name=>{
+				personalTemplateNames.push(name.template_name);
+			})
+			client.end();
+			return resolve(personalTemplateNames);
+		})
+		.catch(error=>{
+			console.log(error);
+			return reject(error);
+		})
+	})
+}
 
 module.exports = {
-	insertNewTemplate,
-	fetchForumTemplates,
-	fetchTemplatePlaceHolders
+  insertNewTemplate,
+  fetchForumTemplates,
+  fetchTemplatePlaceHolders,
+  generateTemplateLetter,
+  getPersonalTemplatesList
 };
