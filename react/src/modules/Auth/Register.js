@@ -14,11 +14,12 @@ function Register() {
   });
   const [values, setValue] = useState("");
   const [registered, isRegistered] = useState(true);
+  const [resmes, setResmes] = useState([]);
   const [error, setError] = useState("");
   const [isMessage, setMessage] = useState(false);
   useEffect(() => {
-    if (error !== "") {
-      setTimeout(() => setError(""), 7000);
+    if (resmes.length !== 0) {
+      setTimeout(() => setResmes([]), 7000);
     }
   });
   const handleChange = (event) => {
@@ -34,7 +35,7 @@ function Register() {
   const isEnabled = contact.email === contact.cemail;
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log({ values }, contact.email, contact.pnum);
+
     axios
       .post(`${process.env.REACT_APP_URL}/registerForum`, {
         registrationData: {
@@ -44,11 +45,15 @@ function Register() {
         },
       })
       .then((res) => {
-        console.log(res);
         if (res.data.hasOwnProperty("err")) {
-          setError(res.data.err);
+          let mes = Object.values(res.data.err);
+          let ss = Array.from(mes);
+          setMessage(false);
+
+          setResmes(ss);
         } else if (res.data.hasOwnProperty("message")) {
-          setError(res.data.message);
+          let mes = Object.values(res.data);
+          setResmes(mes);
           setMessage(true);
           setContact((prevState) => ({
             ...prevState,
@@ -57,8 +62,11 @@ function Register() {
             pnum: "",
           }));
         }
+        console.log(res);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="register-forms">
@@ -152,7 +160,6 @@ function Register() {
         <div>
           <br />
           <button
-            disabled={registered && isEnabled}
             type="submit"
             className="buttonpurple"
             onClick={handleRegister}
@@ -161,7 +168,16 @@ function Register() {
           </button>
         </div>
         <br />
-        <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+        {resmes.map((er) => (
+          <h4
+            style={{
+              color: isMessage ? "green" : "#ff1744",
+              textAlign: "center",
+            }}
+          >
+            {er} <br />
+          </h4>
+        ))}
       </form>
     </div>
   );

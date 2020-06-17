@@ -36,7 +36,6 @@ var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var eventvenue = require("./eventvenue");
 var conductmeet = require("./conductmeet");
-var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
 
@@ -178,7 +177,6 @@ app.delete("/createrequest", (req, res) => {
     .catch((error) => res.status(400).json({ err: error }));
 });
 
-//<<<<<<<<<<<<<<<< INSECURE >>>>>>>>>>>>>>>>>
 app.put("/createrequest", (req, res) => {
   serverHelper
     .updateRequest(req)
@@ -243,7 +241,7 @@ app.post("/registerForum", (req, res) => {
     .then((response) => {
       return res.status(response.status).json(response.response);
     })
-    .catch((error) => res.status(400).json({ err: error }));
+    .catch((error) => res.status(200).json({ err: error }));
 });
 
 //REGISTER FACULTY REQUEST
@@ -618,6 +616,72 @@ app.post("/uploadTemplate", (req, res) => {
       console.log(error);
       return res.status(400).json({ err: error });
     });
+});
+
+app.post("/getPlaceholders", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      return templateHelper.fetchTemplatePlaceHolders(
+        username,
+        req.body.templateName
+      );
+    })
+    .then((response) => {
+      return res.status(200).json({ placeholders: response });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
+app.post("/generateTemplateLetter", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      if (!req.body.template_name || !req.body.form_data)
+        return res.status(400).json({ err: "Invalid number of fields" });
+      return templateHelper.generateTemplateLetter(
+        username,
+        req.body.template_name,
+        req.body.form_data
+      );
+    })
+    .then((filepath) => {
+      console.log(filepath);
+      res.download(filepath);
+      // fs.unlink(filepath,(error)=>{
+      // 	console.log("Error deleting generated letter: "+filepath, error);
+      // });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
+});
+
+app.get("/getPersonalTemplateList", (req, res)=>{
+	users.fetchAccessToken(req)
+	.then(token=>{
+		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+	})
+	.then(username=>{
+		return templateHelper.getPersonalTemplatesList(username);
+	})
+	.then(list=>{
+		return res.json({personalTemplateList: list});
+	})
+	.catch(error=>{
+		console.log(error);
+		return res.status(400).json({err:error});
+	})
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
