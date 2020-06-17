@@ -39,7 +39,7 @@ const PassModal = (props) => {
         }}
         isOpen={props.Editingon}
       >
-        <form >
+        <form>
           <div className="modal-header">
             <h3 style={{ textDecorationColor: "black" }}></h3>
             <button className="close-modal-btn" type="submit">
@@ -67,7 +67,7 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
-             
+              onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
             ></input>
             <br />
@@ -77,17 +77,18 @@ const PassModal = (props) => {
                 color: "#ff1744",
               }}
               id="passwordHelp"
-              className="form-text"
+              className="form-word"
             >
               Enter the same password as above
             </h5>
-          <div className="modal-footer" style={{height:"100px"}}>
+          <div className="modal-footer" style={{height:"90px"}}>
           <button className="btn-cancel" type="reset">
               Cancel
             </button>
             <button
               type="submit"
               className="submit-button"
+              disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
                 if (user !== null) {

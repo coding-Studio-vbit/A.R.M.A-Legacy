@@ -71,7 +71,7 @@ const FacultyEModal = (props) => {
                 color: "#ff1744",
               }}
               id="emailHelp"
-              className="form-text">
+              className="form-word">
               Enter the same email as above
             </h5>
           </div>
@@ -82,6 +82,7 @@ const FacultyEModal = (props) => {
             <button
               type="submit"
               className="submit-button"
+              disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
                 if (user !== null) {

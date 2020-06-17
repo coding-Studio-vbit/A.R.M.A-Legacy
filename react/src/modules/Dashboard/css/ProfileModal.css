@@ -4,20 +4,25 @@
     transform: translate(-75%, -40%);
     border-radius: 25px !important;
     width: 350px !important;
-    height: 350px;
+    height: 330px !important;
     position: left;
     outline: none;
     margin: 0px;
   }
   .form-input {
-    font-size: 15px;
-    width: 70% !important;
+    font-size: 18px;
+    width: 80% !important;
+  }
+  .form-word{
+    font-size: 16px;
+    text-align: center;
   }
 
   .modal-footer {
     width: 280px;
     padding: 10px;
-    height: 30%;
+    height: 40%;
+    margin-top: 20px;
   }
   .submit-button {
     float: right !important;
