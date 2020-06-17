@@ -40,7 +40,7 @@ const FacultyNModal =(props)=>{
                 <div className="modal-content">
                 <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer" style={{height:"100px"}}>
                 <button className="btn-cancel" type="reset">Cancel</button>
                 <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));
