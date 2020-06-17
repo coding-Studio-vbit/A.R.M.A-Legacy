@@ -36,7 +36,6 @@ var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var eventvenue = require("./eventvenue");
 var conductmeet = require("./conductmeet");
-var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
 
