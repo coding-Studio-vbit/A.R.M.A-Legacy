@@ -24,13 +24,10 @@ const Dform = (props) => {
   const [end_meridian, setEndmeridian] = useState("");
   const [where, setWhere] = useState("");
   useEffect(() => {
-    console.log("fdfs");
-  });
-  useEffect(() => {
+    console.log(props.location);
     let data = {
-      templateName: "PERMIT_EVENT_TEMPLATE",
+      templateName: props.location.subject,
     };
-    console.log("fdfsf");
     let user = JSON.parse(localStorage.getItem("user"));
     let userName = user.userName;
     let accessToken = user.accessToken;
@@ -214,7 +211,7 @@ const Dform = (props) => {
       .post(
         `${process.env.REACT_APP_URL}/generateTemplateLetter`,
         {
-          template_name: "PERMIT_EVENT_TEMPLATE",
+          template_name: props.location.subject,
           form_data: {
             designation,
             department,
