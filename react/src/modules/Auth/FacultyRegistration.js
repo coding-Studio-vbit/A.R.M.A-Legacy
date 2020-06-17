@@ -7,6 +7,7 @@ import "./css/registrationpage.css";
 const FacultyRegister = () => {
   const [dept, setDept] = useState("CSE");
   const [isMessage, setMessage] = useState(false);
+  const [resmes, setResmes] = useState([]);
   const [contact, setContact] = useState({
     rollNo: "",
     name: "",
@@ -16,8 +17,8 @@ const FacultyRegister = () => {
   });
   const [error, setError] = useState("");
   useEffect(() => {
-    if (error !== "") {
-      setTimeout(() => setError(""), 7000);
+    if (resmes.length !== 0) {
+      setTimeout(() => setResmes([]), 7000);
     }
   });
   const handleChange = (event) => {
@@ -48,9 +49,14 @@ const FacultyRegister = () => {
       .then((res) => {
         console.log(res);
         if (res.data.hasOwnProperty("err")) {
-          setError(res.data.err);
+          let mes = Object.values(res.data.err);
+          let ss = Array.from(mes);
+          setMessage(false);
+
+          setResmes(ss);
         } else if (res.data.hasOwnProperty("message")) {
-          setError(res.data.message);
+          let mes = Object.values(res.data);
+          setResmes(mes);
           setMessage(true);
           setContact((prevState) => ({
             ...prevState,
@@ -201,7 +207,16 @@ const FacultyRegister = () => {
           </button>
         </div>
         <br />
-        <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+        {resmes.map((er) => (
+          <h4
+            style={{
+              color: isMessage ? "green" : "#ff1744",
+              textAlign: "center",
+            }}
+          >
+            {er} <br />
+          </h4>
+        ))}
       </form>
     </div>
   );
