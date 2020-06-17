@@ -1,14 +1,15 @@
 {
-  "department": "Department of Electronics and Communication Engineering",
-  "subject": "dsd",
-  "date": "2020-06-25",
+  "department": "Department of Information Technology",
+  "subject": "attendance kavali",
+  "date": "2020-06-17",
   "respects": "Sir",
-  "your_name": "dsd",
-  "year": "First",
-  "section": "D",
-  "roll_no": "dsd",
-  "reason": "dsdsd",
-  "hod_name": "dsd",
-  "faculty_name": "sdd",
-  "faculty": "IT"
+  "your_name": "poojitha",
+  "year": "Second",
+  "section": "C",
+  "roll_no": "18P61A05H9",
+  "reason": "i am not feeling well",
+  "period": "5th",
+  "hod_name": "yasaswiraj",
+  "faculty_name": "poojitha",
+  "faculty": "CSE"
 }

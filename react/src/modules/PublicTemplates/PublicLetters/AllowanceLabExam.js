@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-import Nav from "./Navi";
+import Nav from "../Navi";
 
 
 const ALE = () => {
