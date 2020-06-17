@@ -1,24 +1,14 @@
 {
-  "designation": "Head of Department",
   "department": "Department of Electronics and Communication Engineering",
-  "subject": "xsd",
+  "subject": "dsd",
   "date": "2020-06-25",
   "respects": "Sir",
-  "team_name": "dsd",
-  "event_name": "sdsd",
-  "fromdate": "2020-07-03",
-  "todate": "2020-06-20",
-  "start_hour": "10",
-  "start_min": "45",
-  "start_meridian": "AM",
-  "end_hour": "7",
-  "end_min": "35",
-  "end_meridian": "PM",
-  "letter_body": "sds",
-  "studentdetails": [
-    {
-      "Name": "",
-      "Roll": ""
-    }
-  ]
+  "your_name": "dsd",
+  "year": "First",
+  "section": "D",
+  "roll_no": "dsd",
+  "reason": "dsdsd",
+  "hod_name": "dsd",
+  "faculty_name": "sdd",
+  "faculty": "IT"
 }

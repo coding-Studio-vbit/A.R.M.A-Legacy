@@ -1,5 +1,5 @@
 import React from "react";
-import { ProtectedRoute } from "./ProtectedRoute";
+import {Route,BrowserRouter as Router} from "react-router-dom" 
 
 //Login Components
 import Templates from "../modules/PublicTemplates/PublicTemplateList";
@@ -16,16 +16,16 @@ import PAP from "../modules/PublicTemplates/PublicLetters/PeriodAttendance"
 const LoginRoutes = () => {
   return (
     <div>
-      <ProtectedRoute exact path="/tlist" component={Templates} />
-      <ProtectedRoute path="/tlist/AllowanceLabExam" component={ALE}/>
-      <ProtectedRoute path="/tlist/HalfDayLeave" component={HDL}/>
-      <ProtectedRoute path="/tlist/HostelLeavePermission" component={HLL}/>
-      <ProtectedRoute path="/tlist/LateFeePermission" component={LFP}/>
-      <ProtectedRoute path="/tlist/LateRecordPermission" component={LRS}/>
-      <ProtectedRoute path="/tlist/LateToClassPermission" component={LTC}/>
-      <ProtectedRoute path="/tlist/LeavePermission" component={LP}/>
-      <ProtectedRoute path="/tlist/AcknowledgeAbsencePermission" component={NAC}/>
-      <ProtectedRoute path="/tlist/PeriodAttendancePermission" component={PAP}/>
+      <Route exact path="/tlist" component={Templates} />
+      <Route path="/tlist/AllowanceLabExam" component={ALE}/>
+      <Route path="/tlist/HalfDayLeave" component={HDL}/>
+      <Route path="/tlist/HostelLeavePermission" component={HLL}/>
+      <Route path="/tlist/LateFeePermission" component={LFP}/>
+      <Route path="/tlist/LateRecordPermission" component={LRS}/>
+      <Route path="/tlist/LateToClassPermission" component={LTC}/>
+      <Route path="/tlist/LeavePermission" component={LP}/>
+      <Route path="/tlist/AcknowledgeAbsencePermission" component={NAC}/>
+      <Route path="/tlist/PeriodAttendancePermission" component={PAP}/>
     </div>
   );
 };

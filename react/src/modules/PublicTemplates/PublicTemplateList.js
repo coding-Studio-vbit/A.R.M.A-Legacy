@@ -8,7 +8,7 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import NaviPublic from "./NaviPublic";
+import Nav from "../Dashboard/Navi";
 
 class Templates extends React.Component {
   state = {
@@ -102,7 +102,7 @@ class Templates extends React.Component {
     });
     return (
       <React.Fragment>
-        <NaviPublic />
+        <Nav/>
         <InputGroup className="mx-auto my-5 w-50">
           <FormControl
             placeholder="Search a template "

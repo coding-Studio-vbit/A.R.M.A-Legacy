@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
+import Nav from "../../Dashboard/Navi";
 
 const PAP = () => {
   const [department, setDepartment] = useState("");
@@ -16,7 +17,7 @@ const PAP = () => {
   const [hod_name, setHODname] = useState("");
   const [faculty_name, setFacultyName] = useState("");
   const [faculty, setFaculty] = useState("");
-  
+  const isSubmit = department === "" || date ==="" || subject === ""|| respects ===""||your_name===""||year===""||section===""||roll_no===""||reason===""||period===""||hod_name===""||faculty_name===""||faculty===""? false:true
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
@@ -36,9 +37,9 @@ const PAP = () => {
     );
   };
 
- 
+
   const submit = (e) => {
-    
+
     axios
       .post(
         `${process.env.REACT_APP_URL}/periodabsent`,
@@ -71,6 +72,8 @@ const PAP = () => {
   };
 
   return (
+    <div>
+    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -148,7 +151,7 @@ const PAP = () => {
                       type="text"
                       name="subject"
                       onChange={(e) => setSubject(e.target.value)}
-                      placeholder="Enter subject (ex: Requisition of attendance for Participants)"
+                      placeholder="Enter subject"
                     />
                   </div>
 
@@ -207,21 +210,21 @@ const PAP = () => {
                       <option value="" disabled selected hidden>
                         Select your option
                       </option>
-                      <option value="1">
-                        1
+                      <option value="First">
+                        First
                       </option>
-                      <option value="2">
-                        2
+                      <option value="Second">
+                        Second
                       </option>
-                      <option value="3">
-                        3
+                      <option value="Third">
+                        Third
                       </option>
-                      <option value="4">
-                        4
+                      <option value="Forth">
+                        Forth
                       </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
                   <br />
 
@@ -255,9 +258,9 @@ const PAP = () => {
                       </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
-                  <br />    
+                  <br />
 
                   <div className="form-group">
                     <span className="form-label" htmlFor="roll_no">
@@ -289,7 +292,7 @@ const PAP = () => {
                     />
                   </div>
 
-                  <br />    
+                  <br />
 
                   <div className="form-group">
                     <span className="form-label" htmlFor="subject_name">
@@ -300,7 +303,7 @@ const PAP = () => {
                       className="form-control"
                       type="text"
                       name="subject_name"
-                      placeholder="Enter subject name"
+                      placeholder="Enter period hour"
                       onChange={(e) => setPeriod(e.target.value)}
                     />
                   </div>
@@ -321,7 +324,7 @@ const PAP = () => {
                     />
                   </div>
 
-                  <br />   
+                  <br />
 
                   <div className="form-group">
                     <span className="form-label" htmlFor="Faculty_name">
@@ -355,27 +358,27 @@ const PAP = () => {
                       <option value="" disabled selected hidden>
                         Select your option
                       </option>
-                      <option value="A">
+                      <option value="CSE">
                         CSE
                       </option>
-                      <option value="B">
+                      <option value="IT">
                         IT
                       </option>
-                      <option value="C">
+                      <option value="ECE">
                         ECE
                       </option>
-                      <option value="D">
+                      <option value="EEE">
                         EEE
                       </option>
-                      <option value="D">
+                      <option value="CIVIL">
                         CIVIL
                       </option>
-                      <option value="D">
+                      <option value="MECH">
                         MECH
                       </option>
                     </select>
                     <span className="select-arrow"></span>
-                  </div> 
+                  </div>
 
                   <br />
                   <br />
@@ -384,6 +387,7 @@ const PAP = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
+                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -395,6 +399,7 @@ const PAP = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 
