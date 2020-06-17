@@ -378,24 +378,15 @@ const NAC = () => {
                     >
                       <option value="" disabled selected hidden>
                         Select your option
-                      </option>
-                      <option value="CSE">
-                        CSE
-                      </option>
-                      <option value="IT">
-                        IT
-                      </option>
-                      <option value="ECE">
-                        ECE
-                      </option>
-                      <option value="EEE">
-                        EEE
-                      </option>
-                      <option value="CIVIL">
-                        CIVIL
-                      </option>
-                      <option value="MECH">
-                        MECH
+                        </option>
+                        <option value="Principal">
+                          Principal
+                        </option>
+                        <option value="Class-Incharge">
+                          Class-Incharge
+                        </option>
+                        <option value="Mentor">
+                          Mentor
                         </option>
                     </select>
                     <span className="select-arrow"></span>

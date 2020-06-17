@@ -360,23 +360,14 @@ const ALE = () => {
                       <option value="" disabled selected hidden>
                         Select your option
                       </option>
-                      <option value="CSE">
-                        CSE
+                      <option value="Principal">
+                        Principal
                       </option>
-                      <option value="IT">
-                        IT
+                      <option value="Class-Incharge">
+                        Class-Incharge
                       </option>
-                      <option value="ECE">
-                        ECE
-                      </option>
-                      <option value="EEE">
-                        EEE
-                      </option>
-                      <option value="CIVIL">
-                        CIVIL
-                      </option>
-                      <option value="MECH">
-                        MECH
+                      <option value="Mentor">
+                        Mentor
                       </option>
                     </select>
                     <span className="select-arrow"></span>

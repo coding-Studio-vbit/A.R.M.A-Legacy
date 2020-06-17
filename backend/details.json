@@ -1,15 +1,15 @@
 {
-  "department": "Department of Information Technology",
-  "subject": "attendance kavali",
+  "department": "Department of Computer Science and Engineering",
+  "subject": "permission",
   "date": "2020-06-17",
   "respects": "Sir",
   "your_name": "poojitha",
   "year": "Second",
   "section": "C",
-  "roll_no": "18P61A05H9",
-  "reason": "i am not feeling well",
-  "period": "5th",
-  "hod_name": "yasaswiraj",
-  "faculty_name": "poojitha",
-  "faculty": "CSE"
+  "roll_no": "18p61a05h9",
+  "reason": "not well",
+  "period": "6th",
+  "hod_name": "me",
+  "faculty_name": "me only",
+  "faculty": "Principal"
 }

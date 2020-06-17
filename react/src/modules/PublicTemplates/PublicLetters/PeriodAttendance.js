@@ -295,19 +295,45 @@ const PAP = () => {
                   <br />
 
                   <div className="form-group">
-                    <span className="form-label" htmlFor="subject_name">
+                    <span className="form-label" htmlFor="period">
                       Time Period :{" "}
                     </span>
-                    <input
+                    <select
                       required
                       className="form-control"
-                      type="text"
                       name="subject_name"
-                      placeholder="Enter period hour"
-                      onChange={(e) => setPeriod(e.target.value)}
-                    />
+                      onChange={(e) => {
+                        e.persist();
+                        setPeriod(e.target.value);
+                      }}
+                      >
+                      <option value="" disabled selected hidden>
+                        Select your option
+                        </option>
+                        <option value="1st">
+                          1st
+                        </option>
+                        <option value="2nd">
+                          2nd
+                        </option>
+                        <option value="3rd">
+                          3rd
+                        </option>
+                        <option value="4th">
+                          4th
+                        </option>
+                        <option value="6th">
+                          5th
+                        </option>
+                        <option value="6th">
+                          6th
+                        </option>
+                        <option value="7th">
+                          7th
+                        </option>
+                    </select>
+                    <span className="select-arrow"></span>
                   </div>
-
                   <br />
 
                   <div className="form-group">
@@ -357,25 +383,16 @@ const PAP = () => {
                     >
                       <option value="" disabled selected hidden>
                         Select your option
-                      </option>
-                      <option value="CSE">
-                        CSE
-                      </option>
-                      <option value="IT">
-                        IT
-                      </option>
-                      <option value="ECE">
-                        ECE
-                      </option>
-                      <option value="EEE">
-                        EEE
-                      </option>
-                      <option value="CIVIL">
-                        CIVIL
-                      </option>
-                      <option value="MECH">
-                        MECH
-                      </option>
+                        </option>
+                        <option value="Principal">
+                          Principal
+                        </option>
+                        <option value="Class-Incharge">
+                          Class-Incharge
+                        </option>
+                        <option value="Mentor">
+                          Mentor
+                        </option>
                     </select>
                     <span className="select-arrow"></span>
                   </div>
