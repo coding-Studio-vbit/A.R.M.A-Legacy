@@ -24,7 +24,7 @@ const CreateRequest = () => {
   const [Facilities, setFacilities] = useState([]);
   const [description, setDescription] = useState("");
   const [addfacilities, setCustreq] = useState("");
-  const isSubmit = request===""||Faculty===""||Facilities===""||description===""||addfacilities===""||inputFields[0].name===""||inputFields[0].roll===""||inputFields[0].Dept===""||inputFields[0].Year===""? false:true
+
 
 
   const handleAddFields = () => {
@@ -402,7 +402,7 @@ const CreateRequest = () => {
                   type="submit"
                   class="btn btn-success"
                   onClick={() => submit()}
-                  disabled = {!isSubmit}
+                  disabled = {request===""||Faculty===null||Facilities===null||description===""||inputFields[0].name===""||inputFields[0].roll===""||inputFields[0].Dept===""||inputFields[0].Year===""? false:true}
                 >
                   Create Request
                 </button>
