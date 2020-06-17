@@ -36,7 +36,7 @@ const FacultyLogin = () => {
               accessToken: accessToken,
             })
           );
-          history.push("/dashboard");
+          history.push("/Dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);

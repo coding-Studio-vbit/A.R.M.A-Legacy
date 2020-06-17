@@ -1,38 +1,36 @@
-@media only screen and (max-device-width:800px) {
-  .ReactModal__Content{
-    height:50%;
-    transform : translate(-75%, -40%);
+@media only screen and (max-device-width: 800px) {
+  .ReactModal__Content {
+    height: 50%;
+    transform: translate(-75%, -40%);
     border-radius: 25px !important;
     width: 350px !important;
     height: 350px;
-    position:left;
+    position: left;
     outline: none;
-    margin:0px;
+    margin: 0px;
   }
-  .form-input{
+  .form-input {
     font-size: 15px;
     width: 70% !important;
   }
-  
-  .modal-footer{
+
+  .modal-footer {
     width: 280px;
     padding: 10px;
-    height:30%;
+    height: 30%;
   }
-  .submit-button{
+  .submit-button {
     float: right !important;
     width: 40% !important;
     font-size: 12px !important;
     height: 35px;
   }
-  .btn-cancel{
+  .btn-cancel {
     float: left !important;
-    width:30% !important;
-    font-size: 15px!important;
+    width: 30% !important;
+    font-size: 15px !important;
     height: 35px;
-    
   }
-
 }
 .modal-header {
   width: 100%;
@@ -40,21 +38,22 @@
   font-size: 12px;
   text-align: center;
   padding: 5px;
-  border:none;
+  border: none;
 }
 .modal-content {
-  background-color:#181A1B;
-  color:#181A1B;
+  background-color: #181a1b;
+  color: #181a1b;
   padding-top: 0px;
   text-decoration: white;
-  border:none;
+  border: none;
+  border-radius: 25px;
 }
-.modal-footer{
-  border:none;
+.modal-footer {
+  border: none;
 }
 .submit-button {
   color: #ffffff;
-  background-color:#8957F6;
+  background-color: #8957f6;
   font-weight: 400;
   height: 35px;
   border: none;
@@ -65,7 +64,7 @@
 }
 .btn-cancel {
   color: #ffffff;
-  background-color:#3E4245;
+  background-color: #3e4245;
   font-weight: 400;
   font-family: Palatino Linotype;
   height: 35px;
@@ -77,25 +76,23 @@
 }
 .close-modal-btn {
   border-radius: 0px;
-  border-color:transparent;
+  border-color: transparent;
   color: #ffffff;
-  font-weight:800;
+  font-weight: 800;
   background-color: transparent;
 }
-.form-input:hover
-{
-   border-style:solid;
+.form-input:hover {
+  border-style: solid;
 }
-.form-input:focus
-{
-   border-style:solid;
+.form-input:focus {
+  border-style: solid;
 }
 .form-input {
   font-family: Palatino Linotype;
   border: visible;
   height: 40px;
   border-radius: 16px;
-  border-color:#717170;
+  border-color: #717170;
   -webkit-box-shadow: none;
   box-shadow: none;
   width: 350px;
@@ -103,11 +100,11 @@
   opacity: 100%;
   font-weight: 400;
   font-size: 30;
-  border-style:none;
-  background-color:transparent;
+  border-style: none;
+  background-color: transparent;
 }
 .form-input::-webkit-input-placeholder {
   color: whitesmoke;
-  font-family:Palatino Linotype;
+  font-family: Palatino Linotype;
   font-size: 30;
 }

@@ -5,6 +5,8 @@
 }
 
 .modal-bg{
+  background-color:#181A1B;
+  color:#181A1B;
   padding: 60px !important;
   border-radius: 25px !important;
   border: 1px solid grey;

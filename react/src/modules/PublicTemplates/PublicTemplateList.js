@@ -8,7 +8,7 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import Nav from "../Dashboard/Navi";
+import Nav from "./Navi";
 
 class Templates extends React.Component {
   state = {
