@@ -18,9 +18,7 @@ const Login = () => {
     }
   });
 
-  const directRoute = () => {
-
-  }
+  const directRoute = () => {};
 
   useEffect(() => {
     axios
@@ -34,6 +32,18 @@ const Login = () => {
         console.log(err);
       });
   }, []);
+
+  const ss = (userName, accessToken, callback) => {
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        userName: userName,
+        accessToken: accessToken,
+      })
+    );
+    return callback();
+  };
+
   const handleLogin = (e) => {
     e.preventDefault();
     let un = value;
@@ -52,14 +62,11 @@ const Login = () => {
           console.log("fdf");
           let userName = res.data.message.split(" ")[1];
           let accessToken = res.data.accessToken;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              userName: userName,
-              accessToken: accessToken,
-            })
-          );
-          history.push("/Dashboard");
+          ss(userName, accessToken, () => {
+            history.push("/dashboard");
+          }); //history.push("/dashboard"));
+          // localStorage.setItem("user", JSON.stringify(res.data));
+          // history.push("/dashboard");
         } else {
           let errors = res.data.err;
           setError(errors);
@@ -73,24 +80,32 @@ const Login = () => {
   };
   const userType = "FORUM";
   return (
-  <div className="forms">
-    <form>
-      <h1 style={{ color: "white" }}> Forum login </h1>
-      <br/>
-      <div className="container">
-        <div className="form-group login-row row">
-          <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Forum : </h4></div>
-          <div className="col-md"><select
-            className="login-dropdown round"
-            style={{margin:0}}
-            name="value"
-            onChange={(e) => ForumChangeHandler(e)}
-          >
-            {ForumList.map((club) => (<option> {club.actual_name} </option>))}
-          </select></div>
-        </div>
-        <div className="form-group login-row row">
-          <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
+    <div className="forms">
+      <form>
+        <h1 style={{ color: "white" }}> Forum login </h1>
+        <br />
+        <div className="container">
+          <div className="form-group login-row row">
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Forum : </h4>
+            </div>
+            <div className="col-md">
+              <select
+                className="login-dropdown round"
+                style={{ margin: 0 }}
+                name="value"
+                onChange={(e) => ForumChangeHandler(e)}
+              >
+                {ForumList.map((club) => (
+                  <option> {club.actual_name} </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div className="form-group login-row row">
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Password : </h4>
+            </div>
             <div className="col-md">
               <input
                 type="password"
@@ -100,38 +115,35 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+          </div>
+          <div className="row">
+            <button
+              className="btn btn-link"
+              style={{ color: "#cc00ff" }}
+              onClick={() => setModalShow(true)}
+              type="button"
+            >
+              Forgot Password
+            </button>
+          </div>
         </div>
-        <div className="row">
-          <button
-            className="btn btn-link"
-            style={{ color: "#cc00ff" }}
-            onClick={() => setModalShow(true)}
-            type="button"
-          >
-            Forgot Password
-          </button>
-        </div>
-      </div>
 
-      <br/>
-      <button className="buttonpurple" onClick={handleLogin} type="submit">
-        Login
-      </button>
+        <br />
+        <button className="buttonpurple" onClick={handleLogin} type="submit">
+          Login
+        </button>
 
-      <h4 style={{ color: "#ff1744" }}>{error} </h4>
-      <Link
-        to={"/register"}
-        style={{ color: "#00e676" }}
-      >
-        Go to Forum Registration Page
-      </Link>
-    </form>
-  <ForgotPasswordForum
-    userType={userType}
-    show={modalShow}
-    onHide={() => setModalShow(false)}
-  />
-  </div>
+        <h4 style={{ color: "#ff1744" }}>{error} </h4>
+        <Link to={"/register"} style={{ color: "#00e676" }}>
+          Go to Forum Registration Page
+        </Link>
+      </form>
+      <ForgotPasswordForum
+        userType={userType}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
+    </div>
   );
 };
 

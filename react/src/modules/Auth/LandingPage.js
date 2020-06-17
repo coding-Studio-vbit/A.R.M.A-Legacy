@@ -13,6 +13,7 @@ const LandingPage = () => {
     e.preventDefault();
     history.push("/");
   };
+
   return (
     <div className="all-items">
       <br />

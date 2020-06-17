@@ -44,14 +44,14 @@ const DashboardRoutes = () => {
   if (type == "FACULTY")
     return (
       <div>
-        <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
         <ProtectedRoute
-          path="/Dashboard/TemplateDetails"
+          path="/dashboard/TemplateDetails"
           component={TemplateDetails}
         />
         <ProtectedRoute path="/Remarks" component={Remarks} />
         <ProtectedRoute
-          path="/Dashboard/TemplateList"
+          path="/dashboard/TemplateList"
           component={TemplateList}
         />
 
@@ -62,14 +62,14 @@ const DashboardRoutes = () => {
 
   return (
     <div>
-      <ProtectedRoute exact path="/Dashboard" component={Dashboard} />
+      <ProtectedRoute exact path="/dashboard" component={Dashboard} />
       <ProtectedRoute
-        path="/Dashboard/TemplateDetails"
+        path="/dashboard/TemplateDetails"
         component={TemplateDetails}
       />
       <ProtectedRoute path="/Remarks" component={Remarks} />
-      <ProtectedRoute path="/Dashboard/AddTemplate" component={AddTemplate} />
-      <ProtectedRoute path="/Dashboard/TemplateList" component={TemplateList} />
+      <ProtectedRoute path="/dashboard/AddTemplate" component={AddTemplate} />
+      <ProtectedRoute path="/dashboard/TemplateList" component={TemplateList} />
       <ProtectedRoute path="/ViewStatus" component={ViewStatus} />
       <ProtectedRoute path="/profile" component={ForumProfile} />
     </div>

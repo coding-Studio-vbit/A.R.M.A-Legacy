@@ -161,7 +161,16 @@ function Register() {
           </button>
         </div>
         <br />
-        <h4 style={{ color: isMessage ? "green" : "#ff1744" }}>{error} </h4>
+        {resmes.map((er) => (
+          <h4
+            style={{
+              color: isMessage ? "green" : "#ff1744",
+              textAlign: "center",
+            }}
+          >
+            {er} <br />
+          </h4>
+        ))}
       </form>
     </div>
   );

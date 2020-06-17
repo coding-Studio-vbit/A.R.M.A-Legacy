@@ -69,6 +69,7 @@ const FacultyPsModal = (props) => {
               id="myInput"
               className="form-input"
               style={{width:"350px"}}
+              onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
             ></input>
             <br />
@@ -78,7 +79,7 @@ const FacultyPsModal = (props) => {
                 color: "#ff1744",
               }}
               id="passwordHelp"
-              className="form-text"
+              className="form-word"
             >
               Enter the same password as above
             </h5>
@@ -89,6 +90,7 @@ const FacultyPsModal = (props) => {
             <button
               type="submit"
               className="submit-button"
+              disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
                 if (user !== null) {

@@ -13,8 +13,6 @@ class Dashboard extends React.Component {
       loginValue: "",
     };
   }
-  componentDidMount(){let user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);}
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
     console.log(user);
