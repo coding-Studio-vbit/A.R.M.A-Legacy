@@ -101,8 +101,12 @@ const Dform = (props) => {
             case "end_meridian":
               setbend_meridian(true);
               break;
-            //case 'campaignwhere': ; break;
-            //case '#studentsdetails': ; break;
+            case "campaignwhere":
+              setbwhere(true);
+              break;
+            case "#studentdetails":
+              setbInputFields(true);
+              break;
             //case 'Name': ; break;
             //case 'Roll': ; break;
             //case '/studentdetails': ; break;
