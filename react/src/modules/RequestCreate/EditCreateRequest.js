@@ -28,7 +28,7 @@ const EditCreateRequest = (props) => {
         setReq_data(data.request_data);
         setDescription(data.request_data.description);
         setSubject(data.request_data.subject);
-        setFacilities(data.request_data.Facilities);
+        setFacilities(data.request_data.facilities);
         setInputFields(data.request_data.participants);
         console.log(data);
       })
@@ -132,6 +132,7 @@ const EditCreateRequest = (props) => {
         .then((response) => {
           console.log("Deleted");
           history.push("/dashboard");
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err);

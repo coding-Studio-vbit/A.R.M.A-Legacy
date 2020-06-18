@@ -64,7 +64,7 @@ const AddTemplate = () => {
         <button type="submit" className="buttonpurple" onClick={handleSubmit}>
           Submit
         </button>
-        <h4>{response}</h4>
+        <h4 style={{ color: "white" }}>{response}</h4>
 
         <br />
       </div>
