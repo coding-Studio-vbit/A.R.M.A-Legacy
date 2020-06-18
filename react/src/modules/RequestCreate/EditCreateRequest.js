@@ -302,7 +302,7 @@ const EditCreateRequest = (props) => {
                               type="text"
                               id="Name"
                               name="name"
-                              value={inputField.firstName}
+                              value={inputField.name}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -315,7 +315,7 @@ const EditCreateRequest = (props) => {
                               type="text"
                               id="Roll"
                               name="roll"
-                              value={inputField.firstName}
+                              value={inputField.roll}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
