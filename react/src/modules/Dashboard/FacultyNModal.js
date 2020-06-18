@@ -13,7 +13,7 @@ const FacultyNModal =(props)=>{
       {
         overlay:{
           opacity:"1.0",
-          margin:220,
+          margin:300,
           backgroundColor:""
 
         },
@@ -22,13 +22,17 @@ const FacultyNModal =(props)=>{
           height:"250px",
           width:"400px",
           position:"absolute",
-          left: "30%",
+          right                 : 'auto',
+          bottom                : 'auto',
+          marginRight           : '-30%',
+          
+          left: "20%",
           top: "50%",
         }
       }
     }
     isOpen={props.Editingon}>
-        <form className="form-responsive">
+        <form>
          <div className="modal-header">
                     <h3 style={{color:"grey"}}></h3>
                     <button className="close-modal-btn" type="submit">X</button>
@@ -36,7 +40,7 @@ const FacultyNModal =(props)=>{
                 <div className="modal-content">
                 <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-footer" style={{height:"100px"}}>
                 <button className="btn-cancel" type="reset">Cancel</button>
                 <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));

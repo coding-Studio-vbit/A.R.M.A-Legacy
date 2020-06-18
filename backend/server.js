@@ -9,7 +9,6 @@ const mailSender = require("./node/mail-sender.js");
 const fs = require("fs");
 const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
-const pool = require("./db");
 const multer = require("multer");
 const templateHelper = require("./personalTemplates/TemplateHelper.js");
 
@@ -37,6 +36,16 @@ var participantsattendance = require("./participantsattendance");
 var conductevent = require("./conductevent");
 var eventvenue = require("./eventvenue");
 var conductmeet = require("./conductmeet");
+//student letters
+var halfdayleave = require("./halfdayleave");
+var leaveletter = require("./leaveletter");
+var aknowledgeabsence = require("./aknowledgeabsence");
+var latefee = require("./latefee");
+var periodabsent = require("./periodabsent");
+var laterecordsub = require("./laterecordsub");
+var latetoclass = require("./latetoclass");
+var allowtolabexam = require("./allowtolabexam");
+var hostelleave = require("./hostelleave");
 var { Client } = require("pg");
 var requestQueries = require("./requestsQueries");
 //var conductmeet = require('./Letter/conductmeet');
@@ -171,6 +180,9 @@ app.post("/createrequest", (req, res) => {
 });
 
 app.delete("/createrequest", (req, res) => {
+  console.log(req.body);
+  console.log(req.params);
+  console.log(req.query);
   serverHelper
     .deleteRequest(req)
     .then((response) => {
@@ -259,41 +271,24 @@ app.post("/registerFaculty", (req, res) => {
 //Letter
 
 app.post("/teamattendance", urlencodedParser, function (req, res) {
-  let designation = req.body.designation;
-  let department = req.body.department;
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let fromdate = req.body.fromdate;
-  let todate = req.body.todate;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let letter_body = req.body.letter_body;
-  let studentdetails = req.body.studentdetails;
   let details = {
-    designation: designation,
-    department: department,
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    fromdate: fromdate,
-    todate: todate,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
-    studentdetails: studentdetails,
+    designation: req.body.designation,
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    fromdate: req.body.fromdate,
+    todate: req.body.todate,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_meridian,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
+    studentdetails: req.body.studentdetails,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -302,41 +297,24 @@ app.post("/teamattendance", urlencodedParser, function (req, res) {
 });
 
 app.post("/participantsattendance", urlencodedParser, function (req, res) {
-  let designation = req.body.designation;
-  let department = req.body.department;
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let fromdate = req.body.fromdate;
-  let todate = req.body.todate;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let letter_body = req.body.letter_body;
-  let studentdetails = req.body.studentdetails;
   let details = {
-    designation: designation,
-    department: department,
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    fromdate: fromdate,
-    todate: todate,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
-    studentdetails: studentdetails,
+    designation: req.body.designation,
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    fromdate: req.body.fromdate,
+    todate: req.body.todate,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_min,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
+    studentdetails: req.body.studentdetails,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -345,37 +323,22 @@ app.post("/participantsattendance", urlencodedParser, function (req, res) {
 });
 
 app.post("/conductevent", urlencodedParser, function (req, res) {
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let hall_name = req.body.hall_name;
-  let fromdate = req.body.fromdate;
-  let todate = req.body.todate;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let letter_body = req.body.letter_body;
   let details = {
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    hall_name: hall_name,
-    fromdate: fromdate,
-    todate: todate,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    hall_name: req.body.hall_name,
+    fromdate: req.body.fromdate,
+    todate: req.body.todate,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_meridian,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -384,39 +347,23 @@ app.post("/conductevent", urlencodedParser, function (req, res) {
 });
 
 app.post("/eventvenue", urlencodedParser, function (req, res) {
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let reason = req.body.reason;
-  let hall_name = req.body.hall_name;
-  let fromdate = req.body.fromdate;
-  let todate = req.body.todate;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let letter_body = req.body.letter_body;
   let details = {
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    reason: reason,
-    hall_name: hall_name,
-    fromdate: fromdate,
-    todate: todate,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    reason: req.body.reason,
+    hall_name: req.body.hall_name,
+    fromdate: req.body.fromdate,
+    todate: req.body.todate,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_meridian,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -425,43 +372,25 @@ app.post("/eventvenue", urlencodedParser, function (req, res) {
 });
 
 app.post("/campaigning", urlencodedParser, function (req, res) {
-  let designation = req.body.designation;
-  let department = req.body.department;
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let fromdate = req.body.fromdate;
-  let todate = req.body.todate;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let letter_body = req.body.letter_body;
-  let where = req.body.where;
-  let studentdetails = req.body.studentdetails;
   let details = {
-    designation: designation,
-    department: department,
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    fromdate: fromdate,
-    todate: todate,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
-    where: where,
-    studentdetails: studentdetails,
+    designation: req.body.designation,
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    fromdate: req.body.fromdate,
+    todate: req.body.todate,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_meridian,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
+    where: req.body.where,
+    studentdetails: req.body.studentdetails,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
@@ -471,49 +400,224 @@ app.post("/campaigning", urlencodedParser, function (req, res) {
 
 //NEXT LETTER
 app.post("/conductmeet", urlencodedParser, function (req, res) {
-  let designation = req.body.designation;
-  let department = req.body.department;
-  let subject = req.body.subject;
-  let date = req.body.date;
-  let respects = req.body.respects;
-  let team_name = req.body.team_name;
-  let event_name = req.body.event_name;
-  let fromdate = req.body.fromdate;
-  let hall_name = req.body.hall_name;
-  let start_hour = req.body.start_hour;
-  let start_min = req.body.start_min;
-  let start_meridian = req.body.start_meridian;
-  let end_hour = req.body.end_hour;
-  let end_min = req.body.end_min;
-  let end_meridian = req.body.end_meridian;
-  let time_start = req.body.time_start;
-  let time_end = req.body.time_end;
-  let letter_body = req.body.letter_body;
-  let studentdetails = req.body.studentdetails;
-
   let details = {
-    designation: designation,
-    department: department,
-    subject: subject,
-    date: date,
-    respects: respects,
-    team_name: team_name,
-    event_name: event_name,
-    fromdate: fromdate,
-    hall_name: hall_name,
-    start_hour: start_hour,
-    start_min: start_min,
-    start_meridian: start_meridian,
-    end_hour: end_hour,
-    end_min: end_min,
-    end_meridian: end_meridian,
-    letter_body: letter_body,
-    studentdetails: studentdetails,
+    designation: req.body.designation,
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    team_name: req.body.team_name,
+    event_name: req.body.event_name,
+    fromdate: req.body.fromdate,
+    hall_name: req.body.hall_name,
+    start_hour: req.body.start_hour,
+    start_min: req.body.start_min,
+    start_meridian: req.body.start_meridian,
+    end_hour: req.body.end_hour,
+    end_min: req.body.end_min,
+    end_meridian: req.body.end_meridian,
+    letter_body: req.body.letter_body,
+    studentdetails: req.body.studentdetails,
   };
   let data = JSON.stringify(details, null, 2);
   fs.writeFileSync("./details.json", data);
   conductmeet.generateLetterIndividual();
   res.download("./LetterGenerated/conductmeet.docx"); //callback I*
+});
+//STUDENT LETTERS
+app.post("/halfdayleave", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  halfdayleave.generateLetterIndividual();
+  res.download("./LetterGenerated/halfdayleave.docx"); //callback I*
+});
+
+app.post("/leaveletter", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    start_date: req.body.start_date,
+    end_date: req.body.end_date,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  leaveletter.generateLetterIndividual();
+  res.download("./LetterGenerated/leaveletter.docx"); //callback I*
+});
+
+app.post("/aknowledgeabsence", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    start_date: req.body.start_date,
+    end_date: req.body.end_date,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  aknowledgeabsence.generateLetterIndividual();
+  res.download("./LetterGenerated/aknowledgeabsence.docx"); //callback I*
+});
+
+app.post("/latefee", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  latefee.generateLetterIndividual();
+  res.download("./LetterGenerated/latefee.docx"); //callback I*
+});
+
+app.post("/periodabsent", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    period: req.body.period,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  periodabsent.generateLetterIndividual();
+  res.download("./LetterGenerated/periodabsent.docx"); //callback I*
+});
+
+app.post("/laterecordsub", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  laterecordsub.generateLetterIndividual();
+  res.download("./LetterGenerated/laterecordsub.docx"); //callback I*
+});
+
+app.post("/latetoclass", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  latetoclass.generateLetterIndividual();
+  res.download("./LetterGenerated/latetoclass.docx"); //callback I*
+});
+
+app.post("/allowtolabexam", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    exam: req.body.exam,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  allowtolabexam.generateLetterIndividual();
+  res.download("./LetterGenerated/allowtolabexam.docx"); //callback I*
+});
+
+app.post("/hostelleave", urlencodedParser, function (req, res) {
+  let details = {
+    department: req.body.department,
+    subject: req.body.subject,
+    date: req.body.date,
+    respects: req.body.respects,
+    your_name: req.body.your_name,
+    year: req.body.year,
+    section: req.body.section,
+    roll_no: req.body.roll_no,
+    reason: req.body.reason,
+    hod_name: req.body.hod_name,
+    faculty_name: req.body.faculty_name,
+    faculty: req.body.faculty,
+  };
+  let data = JSON.stringify(details, null, 2);
+  fs.writeFileSync("./details.json", data);
+  hostelleave.generateLetterIndividual();
+  res.download("./LetterGenerated/hostelleave.docx"); //callback I*
 });
 
 //Get user type using Access Token.
@@ -669,21 +773,22 @@ app.post("/generateTemplateLetter", (req, res) => {
     });
 });
 
-app.get("/getPersonalTemplateList", (req, res)=>{
-	users.fetchAccessToken(req)
-	.then(token=>{
-		return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
-	})
-	.then(username=>{
-		return templateHelper.getPersonalTemplatesList(username);
-	})
-	.then(list=>{
-		return res.json({personalTemplateList: list});
-	})
-	.catch(error=>{
-		console.log(error);
-		return res.status(400).json({err:error});
-	})
+app.get("/getPersonalTemplateList", (req, res) => {
+  users
+    .fetchAccessToken(req)
+    .then((token) => {
+      return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
+    })
+    .then((username) => {
+      return templateHelper.getPersonalTemplatesList(username);
+    })
+    .then((list) => {
+      return res.json({ personalTemplateList: list });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.status(400).json({ err: error });
+    });
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//

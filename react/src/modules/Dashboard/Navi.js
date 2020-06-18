@@ -22,46 +22,13 @@ const Navi = () => {
         .then((response) => {
           console.log(response);
           localStorage.clear();
-          history.push("/");
+          history.push("/login");
         })
         .catch((err) => {
           console.log(err);
         });
     }
   };
-  if (user !== null)
-    return (
-      <Navbar
-        style={{ backgroundColor: "#222222 !important", borderRadius: "5px" }}
-        className="navigation"
-        id="page-top"
-        collapseOnSelect
-        expand="lg"
-        bg="dark"
-        variant="dark"
-      >
-        <Navbar.Brand href="#home">ARMA</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
-            <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
-            <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav>
-              <Nav.Link href="/Profile">
-                <i class="fas fa-user"></i> Profile
-              </Nav.Link>
-            </Nav>
-
-            <Nav.Link onClick={handleLogout}>
-              <i class="fas fa-sign-out-alt"></i>Log out
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    );
   return (
     <Navbar
       style={{ backgroundColor: "#222222 !important", borderRadius: "5px" }}
@@ -72,13 +39,28 @@ const Navi = () => {
       bg="dark"
       variant="dark"
     >
-      <Navbar.Brand style={{color:"#C60CD5",textShadow: "0.5px 0.5px 2px #C60CD5"}} href="#home">ARMA</Navbar.Brand>
+      <Navbar.Brand
+        style={{ color: "#C60CD5", textShadow: "0.5px 0.5px 2px #C60CD5" }}
+        href="/"
+      >
+        ARMA
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto"></Nav>
+        <Nav className="mr-auto">
+          <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
+          <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
+          <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
+        </Nav>
         <Nav>
-          <Nav.Link href="/">
-            <i class="fas fa-home"></i>Home
+          <Nav>
+            <Nav.Link href="/Profile">
+              <i class="fas fa-user"></i> Profile
+            </Nav.Link>
+          </Nav>
+
+          <Nav.Link onClick={handleLogout}>
+            <i class="fas fa-sign-out-alt"></i>Log out
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

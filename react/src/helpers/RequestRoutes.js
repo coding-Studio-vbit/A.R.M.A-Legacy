@@ -10,6 +10,7 @@ import Patten from "../modules/LetterGeneration/AttendanceParticipants";
 import Emeet from "../modules/LetterGeneration/conductmeet";
 import CreateRequest from "../modules/RequestCreate/CreateRequest";
 import EditCreateRequest from "../modules/RequestCreate/EditCreateRequest";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 import Dform from "../modules/RequestCreate/Dform";
 // //Route Component
@@ -18,7 +19,10 @@ import Dform from "../modules/RequestCreate/Dform";
 const RequestRoutes = () => {
   return (
     <div>
-      <Route path="/Dashboard/CreateRequest" component={CreateRequest} />
+      <ProtectedRoute
+        path="/Dashboard/CreateRequest"
+        component={CreateRequest}
+      />
       <Route
         path="/Dashboard/EditCreateRequest"
         component={EditCreateRequest}
