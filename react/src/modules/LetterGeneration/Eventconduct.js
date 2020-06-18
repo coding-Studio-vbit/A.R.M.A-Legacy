@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import download from "js-file-download";
+import Nav from "../Dashboard/Navi"
 
 const Econ = () => {
   const [team_name, setTeamname] = useState("");
@@ -18,6 +19,7 @@ const Econ = () => {
   const [end_hour, setEndhour] = useState("");
   const [end_min, setEndmin] = useState("");
   const [end_meridian, setEndmeridian] = useState("");
+  const isSubmit = date ==="" || subject === ""|| hall_name===""|| respects ===""||team_name===""||event_name===""||letter_body===""||fromdate===""||start_hour===""||start_min===""||start_meridian===""||todate===""||end_hour===""||end_min===""||end_meridian===""? false:true
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,6 +79,8 @@ const Econ = () => {
   };
 
   return (
+    <div>
+    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -417,6 +421,7 @@ const Econ = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
+                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -428,6 +433,7 @@ const Econ = () => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 
