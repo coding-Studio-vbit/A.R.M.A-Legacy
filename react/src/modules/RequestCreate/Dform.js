@@ -23,9 +23,7 @@ const Dform = (props) => {
   const [end_min, setEndmin] = useState("");
   const [end_meridian, setEndmeridian] = useState("");
   const [where, setWhere] = useState("");
-  useEffect(() => {
-    console.log("fdfs");
-  });
+
   useEffect(() => {
     let data = {
       templateName: "PERMIT_EVENT_TEMPLATE",
@@ -103,8 +101,12 @@ const Dform = (props) => {
             case "end_meridian":
               setbend_meridian(true);
               break;
-            //case 'campaignwhere': ; break;
-            //case '#studentsdetails': ; break;
+            case "campaignwhere":
+              setbwhere(true);
+              break;
+            case "#studentsdetails":
+              setbInputFields(true);
+              break;
             //case 'Name': ; break;
             //case 'Roll': ; break;
             //case '/studentdetails': ; break;
