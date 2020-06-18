@@ -13,9 +13,9 @@ class Dashboard extends React.Component {
       loginValue: "",
     };
   }
-
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
     if (user !== null) {
       let userName = user.userName;
       let accessToken = user.accessToken;

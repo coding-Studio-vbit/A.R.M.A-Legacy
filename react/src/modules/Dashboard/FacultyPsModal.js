@@ -21,7 +21,7 @@ const FacultyPsModal = (props) => {
         style={{
           overlay: {
             opacity: "1.0",
-            margin: 200,
+            margin: 300,
             backgroundColor: "",
           },
           content: {
@@ -29,13 +29,17 @@ const FacultyPsModal = (props) => {
             height: "300px",
             width: "450px",
             position: "absolute",
-            left: "30%",
+            right                 : 'auto',
+            bottom                : 'auto',
+            marginRight           : '-30%',
+            
+            left: "20%",
             top: "50%",
           },
         }}
         isOpen={props.Editingon}
       >
-        <form>
+        <form >
           <div className="modal-header">
             <h3 style={{ textDecorationColor: "black" }}></h3>
             <button className="close-modal-btn" type="submit">
@@ -65,6 +69,7 @@ const FacultyPsModal = (props) => {
               id="myInput"
               className="form-input"
               style={{width:"350px"}}
+              onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
             ></input>
             <br />
@@ -74,7 +79,7 @@ const FacultyPsModal = (props) => {
                 color: "#ff1744",
               }}
               id="passwordHelp"
-              className="form-text"
+              className="form-word"
             >
               Enter the same password as above
             </h5>
@@ -85,6 +90,7 @@ const FacultyPsModal = (props) => {
             <button
               type="submit"
               className="submit-button"
+              disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
                 if (user !== null) {
