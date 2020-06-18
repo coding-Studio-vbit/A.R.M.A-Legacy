@@ -71,10 +71,12 @@ class Table extends React.Component {
     const items = this.state.persons.map((item) => {
       return (
         <tr className="tableTR">
-          <td className="tableTD"  style={{ color: "#b007c4" }}>{i++}</td>
-          <td className="tableTD" >{item.subject}</td>
-          <td className="tableTD" >{item.status}</td>
-          <td className="tableTD" >
+          <td className="tableTD" style={{ color: "#b007c4" }}>
+            {i++}
+          </td>
+          <td className="tableTD">{item.subject}</td>
+          <td className="tableTD">{item.status}</td>
+          <td className="tableTD">
             <a
               href="/ViewStatus"
               onClick={() => {
@@ -84,10 +86,17 @@ class Table extends React.Component {
               Click me!
             </a>
           </td>
-          <td className="tableTD"  style={{ cursor: "pointer", color: "grey" }}>
-            <i class="far fa-edit"></i>
+          <td className="tableTD" style={{ cursor: "pointer", color: "grey" }}>
+            <Link
+              to={{
+                pathname: "/Dashboard/EditCreateRequest",
+                req_id: item.request_id,
+              }}
+            >
+              <i class="far fa-edit"></i>
+            </Link>
           </td>
-          <td className="tableTD"  style={{ cursor: "pointer", color: "grey" }}>
+          <td className="tableTD" style={{ cursor: "pointer", color: "grey" }}>
             <i
               class="far fa-trash-alt"
               onClick={() => {
@@ -106,12 +115,18 @@ class Table extends React.Component {
             <table class="table">
               <thead className="tablehead">
                 <tr className="tableTR">
-                  <th className="tableTH" scope="col">#</th>
-                  <th className="tableTH" scope="col">Subject</th>
+                  <th className="tableTH" scope="col">
+                    #
+                  </th>
+                  <th className="tableTH" scope="col">
+                    Subject
+                  </th>
                   <th className="tableTH" scope="col" style={{ width: "10%" }}>
                     Status
                   </th>
-                  <th className="tableTH" scope="col">Remarks</th>
+                  <th className="tableTH" scope="col">
+                    Remarks
+                  </th>
                   <th className="tableTH" scope="col" style={{ width: "5%" }}>
                     Edit
                   </th>
