@@ -26,7 +26,11 @@ const LandingPage = () => {
 
       <div style={{ height: "100px" }}></div>
       <div className="justi">
-        <button className="buttonpurple" onClick={handleButtonClick}>
+        <button
+          className="buttonpurple"
+          type="submit"
+          onClick={handleButtonClick}
+        >
           Enter the portal
         </button>
       </div>
