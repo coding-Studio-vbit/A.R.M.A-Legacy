@@ -19,10 +19,7 @@ import Dform from "../modules/RequestCreate/Dform";
 const RequestRoutes = () => {
   return (
     <div>
-      <ProtectedRoute
-        path="/Dashboard/CreateRequest"
-        component={CreateRequest}
-      />
+      <ProtectedRoute path="/Dashboard/CreateRequest" component={CreateRequest} />
       <Route
         path="/Dashboard/EditCreateRequest"
         component={EditCreateRequest}

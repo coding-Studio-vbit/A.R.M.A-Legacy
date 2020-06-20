@@ -73,12 +73,7 @@ async function hashPassword(password) {
 
 async function checkForumPassword(username, password) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     username = username.toUpperCase();
@@ -109,12 +104,7 @@ async function checkForumPassword(username, password) {
 
 async function checkFacultyPassword(faculty_roll, password) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     if (!faculty_roll || !password) {
@@ -160,16 +150,11 @@ async function generateTempPassword()
 async function forgotPassword(userType, username, reg_email)
 {
 	return new Promise((resolve, reject)=>{
-
+		
 			if(userType == "FACULTY")
 			{
 				//query the username in the faculty table
-				const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+				var client = new Client();
 				client.connect();
 				client.query("SELECT email FROM faculty WHERE faculty_roll=$1",[username])
 				.then(data=>{
@@ -221,12 +206,7 @@ async function forgotPassword(userType, username, reg_email)
 			else if(userType == "FORUM")
 			{
 				//query the username in the forums table
-				const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+				var client = new Client();
 				client.connect();
 				client.query("SELECT email FROM forums WHERE forum_name=$1",[username])
 				.then(data=>{
@@ -283,12 +263,7 @@ async function forgotPassword(userType, username, reg_email)
 
 async function checkRegistrationStatus(forum_name) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     forum_name = forum_name.toUpperCase();
     client
@@ -309,12 +284,7 @@ async function checkRegistrationStatus(forum_name) {
 }
 async function checkFacultyRegistrationStatus(faculty_roll) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     faculty_roll = faculty_roll.toUpperCase();
@@ -340,12 +310,7 @@ async function registerForum(forum_name, password, email, phone) {
   //returns status of registration (true or false)
 
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     checkRegistrationStatus(forum_name)
       .then((res) => {
@@ -393,12 +358,7 @@ async function registerFaculty(
   //returns status of registration (true or false)
 
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     faculty_roll = faculty_roll.toUpperCase();
@@ -444,12 +404,7 @@ async function newFacultyRegistrationRequest(
   phone
 ) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     client
       .query(
@@ -466,12 +421,7 @@ async function newFacultyRegistrationRequest(
 
 async function newForumRegistrationRequest(forum_name, phone, email) {
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     client
       .query(
@@ -494,12 +444,7 @@ async function changeForumUsername(forum_name, newUsername) {
   //changes the forum name.
 
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     forum_name = forum_name.toUpperCase();
     client
@@ -518,12 +463,7 @@ async function changeFacultyUsername(faculty_roll, newUsername) {
   //changes the faculty name
 
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     faculty_roll = faculty_roll.toUpperCase();
@@ -543,12 +483,7 @@ async function changeFacultyUsername(faculty_roll, newUsername) {
 async function changeForumPassword(forum_name, oldPassword, newPassword) {
   return new Promise((resolve, reject) => {
     //changes the forum password
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     forum_name = forum_name.toUpperCase();
     //first confirm old password
@@ -586,12 +521,7 @@ async function changeForumPassword(forum_name, oldPassword, newPassword) {
 async function changeFacultyPassword(faculty_roll, oldPassword, newPassword) {
   return new Promise((resolve, reject) => {
     //changes the faculty password
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
 
     faculty_roll = faculty_roll.toUpperCase();
@@ -632,12 +562,7 @@ async function changeFacultyPassword(faculty_roll, oldPassword, newPassword) {
 async function changeForumEmail(forum_name, newEmail) {
   //changes the forum's registered email
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     forum_name = forum_name.toUpperCase();
     client
@@ -655,12 +580,7 @@ async function changeForumEmail(forum_name, newEmail) {
 async function changeFacultyEmail(faculty_roll, newEmail) {
   //changes the faculty's registered email
   return new Promise((resolve, reject) => {
-    const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+    var client = new Client();
     client.connect();
     faculty_roll = faculty_roll.toUpperCase();
     client

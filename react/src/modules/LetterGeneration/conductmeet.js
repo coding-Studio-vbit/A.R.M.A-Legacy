@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-import Nav from "../Dashboard/Navi"
+
 const Emeet = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
   const [team_name, setTeamname] = useState("");
@@ -32,8 +32,6 @@ const Emeet = () => {
     values.splice(index, 1);
     setInputFields(values);
   };
-
-  const isSubmit = designation === "" || department === "" || date ==="" || subject === ""|| respects ===""||team_name===""||event_name===""||letter_body===""||fromdate===""||start_hour===""||start_min===""||start_meridian===""||end_hour===""||end_min===""||end_meridian===""||hall_name===""||inputFields[0].Name===""||inputFields[0].Roll===""? false:true
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
@@ -109,8 +107,6 @@ const Emeet = () => {
   };
 
   return (
-    <div>
-    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -559,7 +555,6 @@ const Emeet = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
-                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -571,7 +566,6 @@ const Emeet = () => {
         </div>
       </div>
     </form>
-    </div>
   );
 };
 
