@@ -5,7 +5,7 @@ import {Row, Col } from "react-bootstrap";
 import FacultyNModal from './FacultyNModal';
 import FacultyEModal from './FacultyEModal';
 import FacultyPsModal from './FacultyPsModal';
-import "./css/ForumProfile.css";
+import "../../css/styles.css";
 import Nav from "./Navi";
 
 class FacultyProfile extends React.Component{

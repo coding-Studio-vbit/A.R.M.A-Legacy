@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const FacultyPsModal = (props) => {
   const [NewPassword, setNewPassword] = useState("");
   const [OldPassword, setOldPassword] = useState("");
@@ -49,7 +49,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"350px"}}
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
@@ -58,7 +58,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"350px"}}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
@@ -67,7 +67,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"350px"}}
               onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
@@ -89,7 +89,7 @@ const FacultyPsModal = (props) => {
             </button>
             <button
               type="submit"
-              className="submit-button"
+              className="save-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));

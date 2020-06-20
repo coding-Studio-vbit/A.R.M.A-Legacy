@@ -8,13 +8,14 @@ import { useHistory } from "react-router-dom";
 // const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
 const CreateRequest = () => {
+
   //faculty endpoint is /getFaculty
   //facility endpoint is /getFacilities
   //getFaculty respose is all_faculty which is an array
   //getFacility respose is all_facility which is an array
 
   const [inputFields, setInputFields] = useState([
-    { name: "", roll: "", dept: "", year: "", check: false },
+    { name: "", roll: "", Dept: "", Year: "", check: false },
   ]);
 
   const history = useHistory();
@@ -26,7 +27,7 @@ const CreateRequest = () => {
 
   const handleAddFields = () => {
     const values = [...inputFields];
-    values.push({ name: "", roll: "", dept: "", year: "", check: false });
+    values.push({ name: "", roll: "", Dept: "", Year: "", check: false });
     setInputFields(values);
   };
 
@@ -42,10 +43,10 @@ const CreateRequest = () => {
       values[index].name = event.target.value;
     } else if (event.target.name === "roll") {
       values[index].roll = event.target.value;
-    } else if (event.target.name === "department") {
-      values[index].dept = event.target.value;
-    } else if (event.target.name === "year") {
-      values[index].year = event.target.value;
+    } else if (event.target.name === "Dept") {
+      values[index].Dept = event.target.value;
+    } else if (event.target.name === "Year") {
+      values[index].Year = event.target.value;
     }
 
     setInputFields(values);
@@ -135,37 +136,30 @@ const CreateRequest = () => {
       .get(`${process.env.REACT_APP_URL}/getFaculty`, config)
       .then((res) => {
         var data = res.data;
-        var all_faculty = data.all_faculty;
-        all_faculty.forEach((fac) => {
-          Facultyoptions.push({
-            value: fac,
-            label: fac,
-          });
-        });
+        var all_faculty = data.all_faculty
+        all_faculty.forEach(fac => {Facultyoptions.push({
+          value: fac, label: fac
+        })})
         console.log(data);
       })
       .catch((err) => {
         console.log(err);
       });
     axios
-      .get(`${process.env.REACT_APP_URL}/getFacilities`, config)
-      .then((res) => {
-        var data = res.data;
-        var all_facilities = data.all_facilities;
-        all_facilities.forEach((fci) => {
-          Facilitiesoptions.push({
-            value: fci,
-            label: fci,
-            facility: fci,
-            check: true,
-          });
-        });
-        console.log(data);
-      })
+    .get(`${process.env.REACT_APP_URL}/getFacilities`, config)
+    .then((res) => {
+      var data = res.data;
+      var all_facilities = data.all_facilities
+      all_facilities.forEach(fci => {Facilitiesoptions.push({
+        value: fci, label: fci, facility: fci, check: true
+      })})
+      console.log(data);
+     })
       .catch((err) => {
         console.log(err);
       });
   });
+
 
   return (
     <React.Fragment>
@@ -235,7 +229,7 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>Description :</h5>
               </div>
-              <div className="col">
+              <div className="col" >
                 <div className="form-group">
                   <textarea
                     className="form-control"
@@ -257,37 +251,22 @@ const CreateRequest = () => {
               <div className="col">
                 <h5>People Involved :</h5>
               </div>
-              <div className="col" style={{ marginLeft: "150px" }}>
+              <div className="col" style={{marginLeft: "150px"}}>
                 <div className="form-group">
                   <div className="row" style={{ color: "grey" }}>
-                    <div
-                      class="col-sm-2 align-self-center"
-                      style={{ textAlign: "center" }}
-                    >
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Name</h6>
                     </div>
-                    <div
-                      class="col-sm-2 align-self-center"
-                      style={{ textAlign: "center" }}
-                    >
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Roll.No</h6>
                     </div>
-                    <div
-                      class="col-sm-2 align-self-center"
-                      style={{ textAlign: "center" }}
-                    >
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Dept</h6>
                     </div>
-                    <div
-                      class="col-sm-2 align-self-center"
-                      style={{ textAlign: "center" }}
-                    >
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <h6>Year</h6>
                     </div>
-                    <div
-                      class="col-sm-2 align-self-center"
-                      style={{ textAlign: "center" }}
-                    >
+                    <div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                       <button
                         type="button"
                         class="btn btn-info"
@@ -305,7 +284,7 @@ const CreateRequest = () => {
                           <div class="col-sm-2">
                             <input
                               className="form-control"
-                              style={{ marginTop: "5px" }}
+                              style={{marginTop: "5px"}}
                               type="text"
                               id="name"
                               name="name"
@@ -323,7 +302,7 @@ const CreateRequest = () => {
                               id="roll"
                               name="roll"
                               placeholder="Roll.no"
-                              style={{ marginTop: "5px" }}
+                              style={{marginTop: "5px"}}
                               value={inputField.firstName}
                               onChange={(event) =>
                                 handleInputChange(index, event)
@@ -334,7 +313,7 @@ const CreateRequest = () => {
                             <select
                               required
                               className="form-control"
-                              style={{ marginTop: "5px" }}
+                              style={{marginTop: "5px"}}
                               name="department"
                               value={inputField.firstName}
                               onChange={(event) =>
@@ -357,9 +336,9 @@ const CreateRequest = () => {
                             <select
                               required
                               className="form-control"
-                              name="year"
+                              name="department"
                               value={inputField.firstName}
-                              style={{ marginTop: "5px" }}
+                              style={{marginTop: "5px"}}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -374,13 +353,10 @@ const CreateRequest = () => {
                               <option value="4">4</option>
                             </select>
                           </div>
-                          <div
-                            div
-                            class="col-sm-2 align-self-center"
-                            style={{ textAlign: "center" }}
-                          >
+                          <div div class="col-sm-2 align-self-center" style={{textAlign: "center"}}>
                             <button
                               type="button"
+
                               class="btn btn-danger btn-circle btn-sm"
                               onClick={() => handleRemoveFields(index)}
                             >
@@ -424,19 +400,9 @@ const CreateRequest = () => {
                 <button
                   type="submit"
                   class="btn btn-success"
-                  onClick={() => submit()}
-                  disabled={
-                    request === "" ||
-                    Faculty === null ||
-                    Facilities === null ||
-                    description === "" ||
-                    inputFields[0].name === "" ||
-                    inputFields[0].roll === "" ||
-                    inputFields[0].dept === "" ||
-                    inputFields[0].year === ""
-                      ? true
-                      : false
-                  }
+                  onClick={() => {
+                    submit();
+                  }}
                 >
                   Create Request
                 </button>

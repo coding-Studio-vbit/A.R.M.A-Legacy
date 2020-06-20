@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const PassModal = (props) => {
   const [NewPassword, setNewPassword] = useState("");
   const [OldPassword, setOldPassword] = useState("");
@@ -49,7 +49,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
             ></input>
@@ -57,7 +57,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
              
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
@@ -66,7 +66,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
             ></input>
@@ -87,7 +87,7 @@ const PassModal = (props) => {
             </button>
             <button
               type="submit"
-              className="submit-button"
+              className="save-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
