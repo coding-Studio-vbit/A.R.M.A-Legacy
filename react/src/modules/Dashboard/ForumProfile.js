@@ -1,9 +1,9 @@
 import React from "react";
 import axios from "axios";
 import cslogo from "./images/cslogo.png";
-import "./css/ForumProfile.css"
-import {Row, Col } from "react-bootstrap";
-import NameModal from './NameModal';
+import "../../css/styles.css";
+import { Row, Col } from "react-bootstrap";
+import NameModal from "./NameModal";
 import ProfileModal from "./ProfileModal";
 import PassModal from "./PassModal";
 import Nav from "./Navi";
@@ -15,10 +15,9 @@ class ForumProfile extends React.Component {
     profilephone: "",
 
     persons: [],
-    Nameon:undefined,
+    Nameon: undefined,
     Editingon: undefined,
     Passwordon: undefined,
-
   };
   newElement = () => {
     this.setState(() => ({
@@ -59,78 +58,112 @@ class ForumProfile extends React.Component {
   }
   render() {
     return (
-<div><Nav/>
-      <div className="container-fluid">
-      <div className="containerz" >
-        <Row>
-        <h1 className="header-responsive"><a><span>ACCOUNT</span></a></h1>
+      <div>
+        <Nav />
+        <div className="container-fluid">
+          <div className="containerz">
+            <Row>
+              <h1 className="header-responsive">
+                <a>
+                  <span>ACCOUNT</span>
+                </a>
+              </h1>
 
-        <br />
-        </Row>
-        <Row>
-        <div class="profile-container">
-        <div className="profile-pic">
-          <img
-            src={cslogo}
-            alt="Logo"
-            style={
-              {
-                width: "127px",
-                height: "124px" ,
-                borderRadius:"50%",
-                overflow: "hidden",
-
-              }
-            }
-            roundedCircle
-          />
-        </div>
-          <div class="table-responsive">
-            <table class="table profile-table" >
-              <tr style={{borderRadius:"10px",padding:"2px"}}>
-                <div className="dataSnippet" >
-                  <div className="profile-text" colSpan="1">{this.state.profilename}</div>
-                  <div className="profile-text" style={{float:"right"}} >
-                  <i class="far fa-edit" onClick={this.newElement} style={{ cursor: "pointer"}}></i>
-                  </div>
+              <br />
+            </Row>
+            <Row>
+              <div class="profile-container">
+                <div className="profile-pic">
+                  <img
+                    src={cslogo}
+                    alt="Logo"
+                    style={{
+                      width: "127px",
+                      height: "124px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                    }}
+                    roundedCircle
+                  />
                 </div>
-              </tr>
-              <tr>
-                <div className="dataSnippet">
-                  <div className="profile-text" colSpan="1">{this.state.profileemail}</div>
-                  <div className="profile-text" style={{float:"right"}}>
-                  <i class="far fa-edit" onClick={this.newElement1} style={{ cursor: "pointer"}}></i>
-                  </div>
+                <div class="table-responsive">
+                  <table class="table profile-table">
+                    <tr style={{ borderRadius: "10px", padding: "2px" }}>
+                      <div className="dataSnippet">
+                        <div className="profile-text" colSpan="1">
+                          {this.state.profilename}
+                        </div>
+                        <div
+                          className="profile-text"
+                          style={{ float: "right" }}
+                        >
+                          <i
+                            class="far fa-edit"
+                            onClick={this.newElement}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </div>
+                      </div>
+                    </tr>
+                    <tr>
+                      <div className="dataSnippet">
+                        <div className="profile-text" colSpan="1">
+                          {this.state.profileemail}
+                        </div>
+                        <div
+                          className="profile-text"
+                          style={{ float: "right" }}
+                        >
+                          <i
+                            class="far fa-edit"
+                            onClick={this.newElement1}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </div>
+                      </div>
+                    </tr>
+                    <tr>
+                      <div className="dataSnippet">
+                        <div className="profile-text" colSpan="1">
+                          {this.state.profilephone}
+                        </div>
+                        <div
+                          className="profile-text"
+                          style={{ float: "right" }}
+                        >
+                          <i class="far fa-edit" style={{ color: "red" }}></i>
+                        </div>
+                      </div>
+                    </tr>
+                    <tr>
+                      <div className="dataSnippet">
+                        <div className="profile-text" colSpan="1">
+                          xxxxxxxx
+                        </div>
+                        <div
+                          className="profile-text"
+                          style={{ float: "right" }}
+                        >
+                          <i
+                            class="far fa-edit"
+                            onClick={this.newElement2}
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        </div>
+                      </div>
+                    </tr>
+                  </table>
                 </div>
-              </tr>
-              <tr>
-              <div className="dataSnippet">
-                <div className="profile-text" colSpan="1">{this.state.profilephone}</div>
-                <div className="profile-text" style={{float:"right"}}>
-                <i class="far fa-edit"  style={{color:"red"}}></i>
-                </div>
+                {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
+                <Col>
+                  <NameModal Editingon={this.state.Nameon} />
+                  <ProfileModal Editingon={this.state.Editingon} />
+                  <PassModal Editingon={this.state.Passwordon} />
+                </Col>
               </div>
-              </tr>
-              <tr>
-              <div className="dataSnippet">
-                <div className="profile-text" colSpan="1">xxxxxxxx</div>
-                <div className="profile-text" style={{float:"right"}}>
-                <i class="far fa-edit" onClick={this.newElement2} style={{ cursor: "pointer"}}></i>
-                </div>
-              </div>
-              </tr>
-            </table>
+            </Row>
           </div>
-          {/* <span onChange = "newElement()" className="btn btn-primary float-right">EDIT</span> */}
-        <Col>
-          <NameModal Editingon={this.state.Nameon} />
-          <ProfileModal Editingon={this.state.Editingon} />
-          <PassModal Editingon={this.state.Passwordon} />
-          </Col> 
         </div>
-        </Row>
-      </div>
-      </div>
       </div>
     );
   }

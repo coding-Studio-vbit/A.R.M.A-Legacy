@@ -1,57 +1,52 @@
-input {
-  margin: 5px;
-  border-width: 0;
+input{
+    margin: 5px;
+    border-width: 0;
 }
-.color {
-  color: purple;
-  font-weight: bolder;
+.color{
+    color:purple;
+    font-weight: bolder;
 }
-.remarkbox {
+.remarkbox{
   margin-top: 10%;
 }
-.buttonremark {
+.buttonremark{
   margin-top: 10%;
 }
-.Con {
-  padding: 5px;
+.Con{
+  padding:5px;
 }
-h3,
-h5 {
+h3,h5{
   padding-left: 10px;
   text-align: left;
   color: grey;
 }
-label {
+label{
   margin-top: 5px;
   font-size: 20px;
-
+  
   color: darkorchid;
   font-weight: bolder;
 }
-span {
-  color: darkorchid;
+span{color: darkorchid;
 
-  font-weight: bold;
-}
-h1 {
-  color: darkorchid;
-}
-textarea {
+font-weight: bold;}
+h1{color:darkorchid}
+textarea{
   margin: 10px;
   background-color: grey;
   border: 0;
   border-radius: 15px;
   max-width: 100%;
 }
-::placeholder {
+::placeholder{
   color: antiquewhite;
 }
-.prevbtn {
+.prevbtn{
   background: #555777;
   border-radius: 50%;
   float: left;
 }
-.nxtbtn {
+.nxtbtn{ 
   background: #555777;
   border-radius: 50%;
   float: right;
@@ -73,28 +68,29 @@ textarea {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-.Buttons {
-  margin: 15px;
+.Buttons{
+  margin:15px;
   margin-bottom: 5px;
   position: relative;
 }
-h4 {
+h4{
   text-align: center;
-  color: darkorchid !important;
+  color:darkorchid;
 }
-.Table {
-  margin-top: 5px;
-
+.Table{
+  margin-top:5px;
+  
   overflow-y: auto;
-  overflow-x: hidden;
+ overflow-x: hidden;
   width: 100%;
   height: 393px;
+  
 }
-.Buttoncell {
-  margin: 5px;
+.Buttoncell{
+  margin:5px;
 }
-.Rebtn {
-  margin-bottom: 5px;
+.Rebtn{
+  margin-bottom:5px;
 }
 ::-webkit-scrollbar {
   width: 3px;

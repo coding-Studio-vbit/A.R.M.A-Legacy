@@ -11,12 +11,7 @@ rec_arr is an array of roll numbers of the requested faculty
 function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 
   //returns status of registration (true or false)
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false
-    }
-  });
+  var client = new Client();
   client.connect();
   forum_name = forum_name.toUpperCase();
 
@@ -86,12 +81,7 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
 // });
 function changeRequest(forum_name,request_data,status,remarks,request_id, callback) {
   //returns status of registration (true or false)
-  const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+  var client = new Client();
   client.connect();
   forum_name = forum_name.toUpperCase();
 
@@ -135,12 +125,7 @@ function changeRequest(forum_name,request_data,status,remarks,request_id, callba
 }
 function deleteRequest(request_id, forum_name, callback) {
   //returns status of registration (true or false)
-  const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+  var client = new Client();
   client.connect();
   client.query(
     "DELETE FROM requests WHERE request_id = $1 AND forum_name=$2;",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const FacultyEModal = (props) => {
   const [Email, setEmail] = useState("");
   const [Cemail, setCemail] = useState("");
@@ -50,7 +50,7 @@ const FacultyEModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
@@ -59,7 +59,7 @@ const FacultyEModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
@@ -81,7 +81,7 @@ const FacultyEModal = (props) => {
             </button>
             <button
               type="submit"
-              className="submit-button"
+              className="save-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));

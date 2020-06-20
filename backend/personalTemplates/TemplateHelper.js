@@ -26,7 +26,7 @@ async function checkPlaceHolders(filepath) {
   return new Promise((resolve, reject) => {
     readDocx(filepath)
       .then((text) => {
-        let regex = /\{[a-zA-Z_\#\/]*}/g;
+        let regex = /\{[a-zA-Z_]*}/g;
         let arr = text.match(regex);
         arr.forEach((str) => {
           let allowed = [
@@ -119,7 +119,7 @@ async function fetchPlaceHolders(filepath) {
   return new Promise((resolve, reject) => {
     readDocx(filepath)
       .then((text) => {
-        let regex = /\{[a-zA-Z_\#\/]*}/g;
+        let regex = /\{[a-zA-Z_]*}/g;
         let arr = text.match(regex);
         arr = arr.map((str) => {
           return str.slice(1, str.length - 1);
@@ -142,7 +142,7 @@ async function fetchTemplatePlaceHolders(forum_name, template_name) {
       )
       .then((data) => {
         if (data.rows.length == 0)
-          return reject("No such template found for the forum!");
+          return reject("No suck template found for the forum!");
         filepath = data.rows[0].filepath;
 
         fetchPlaceHolders(filepath)
@@ -187,7 +187,6 @@ async function generateTemplateLetter(forum_name, template_name, form_data) {
     //fetch the filepath of the template.
     var client = new Client();
     client.connect();
-    console.log(template_name);
     client
       .query(
         "SELECT filepath from personal_templates where forum_name=$1 AND template_name=$2",
@@ -233,28 +232,25 @@ async function generateTemplateLetter(forum_name, template_name, form_data) {
       });
   });
 }
-async function getPersonalTemplatesList(forum_name) {
-  return new Promise((resolve, reject) => {
-    var client = new Client();
-    client.connect();
-    client
-      .query(
-        "SELECT template_name FROM personal_templates where forum_name=$1",
-        [forum_name]
-      )
-      .then((data) => {
-        var personalTemplateNames = [];
-        data.rows.forEach((name) => {
-          personalTemplateNames.push(name.template_name);
-        });
-        client.end();
-        return resolve(personalTemplateNames);
-      })
-      .catch((error) => {
-        console.log(error);
-        return reject(error);
-      });
-  });
+async function getPersonalTemplatesList(forum_name)
+{
+	return new Promise((resolve, reject)=>{
+		var client = new Client();
+		client.connect();
+		client.query('SELECT template_name FROM personal_templates where forum_name=$1',[forum_name])
+		.then(data=>{
+			var personalTemplateNames = [];
+			data.rows.forEach(name=>{
+				personalTemplateNames.push(name.template_name);
+			})
+			client.end();
+			return resolve(personalTemplateNames);
+		})
+		.catch(error=>{
+			console.log(error);
+			return reject(error);
+		})
+	})
 }
 
 module.exports = {
@@ -262,5 +258,5 @@ module.exports = {
   fetchForumTemplates,
   fetchTemplatePlaceHolders,
   generateTemplateLetter,
-  getPersonalTemplatesList,
+  getPersonalTemplatesList
 };

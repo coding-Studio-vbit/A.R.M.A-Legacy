@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-import Nav from "../Dashboard/Navi"
+
 const Patten = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
   const [team_name, setTeamname] = useState("");
@@ -26,7 +26,7 @@ const Patten = () => {
     values.push({ Name: "", Roll: "" });
     setInputFields(values);
   };
-  const isSubmit = designation === "" || department === "" || date ==="" || subject === ""|| respects ===""||team_name===""||event_name===""||letter_body===""||fromdate===""||start_hour===""||start_min===""||start_meridian===""||todate===""||end_hour===""||end_min===""||end_meridian===""||inputFields[0].Name===""||inputFields[0].Roll===""? false:true
+
   const handleRemoveFields = (index) => {
     const values = [...inputFields];
     values.splice(index, 1);
@@ -107,8 +107,6 @@ const Patten = () => {
   };
 
   return (
-    <div>
-    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -556,7 +554,6 @@ const Patten = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
-                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -568,7 +565,6 @@ const Patten = () => {
         </div>
       </div>
     </form>
-    </div>
   );
 };
 

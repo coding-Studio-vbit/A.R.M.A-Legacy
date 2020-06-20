@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import axios from "axios";
 import download from "js-file-download";
-import Nav from "../Dashboard/Navi"
 
 const Camp = () => {
   const [inputFields, setInputFields] = useState([{ Name: "", Roll: "" }]);
@@ -34,8 +33,6 @@ const Camp = () => {
     values.splice(index, 1);
     setInputFields(values);
   };
-  const isSubmit = designation === "" || department === "" || date ==="" || subject === ""|| respects ===""||team_name===""||event_name===""||letter_body===""||fromdate===""||start_hour===""||start_min===""||start_meridian===""||todate===""||end_hour===""||end_min===""||end_meridian===""||where===""||inputFields[0].Name===""||inputFields[0].Roll===""? false:true
-
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
@@ -113,8 +110,6 @@ const Camp = () => {
   };
 
   return (
-    <div>
-    <Nav/>
     <form onSubmit={handleSubmit}>
       <div id="booking" className="section">
         <div className="section-center">
@@ -136,16 +131,11 @@ const Camp = () => {
                       name="designation"
                       onChange={(e) => setDesignation(e.target.value)}
                     >
-                    <option value="" disabled selected hidden>
-                      Select your option
-                    </option>
-                    <option value="Head of Department">
-                      Head of Department
-                    </option>
-                    <option value="Director">Director</option>
-                  </select>
-                  <span className="select-arrow"></span>
-                </div>
+                      <option>Head of Department</option>
+                      <option>Director</option>
+                    </select>
+                    <span className="select-arrow"></span>
+                  </div>
                   <br />
                   <div className="form-group">
                     <span className="form-label" for="department">
@@ -156,28 +146,19 @@ const Camp = () => {
                       name="department"
                       onChange={(e) => setDepartment(e.target.value)}
                     >
-                    <option value="" disabled selected hidden>
-                      Select your option
-                    </option>
-                    <option value="Department of Computer Science and Engineering">
-                      Department of Computer Science and Engineering
-                    </option>
-                    <option value="Department of Information Technology">
-                      Department of Information Technology
-                    </option>
-                    <option value="Department of Electrical and Electronics Engineering">
-                      Department of Electrical and Electronics Engineering
-                    </option>
-                    <option value="Department of Electronics and Communication Engineering">
-                      Department of Electronics and Communication Engineering
-                    </option>
-                    <option value="Department of Civil Engineering">
-                      Department of Civil Engineering
-                    </option>
-                    <option value="Department of Mechanical Engineering">
-                      Department of Mechanical Engineering
-                    </option>
-                  </select>
+                      <option>
+                        Department of Computer Science and Engineering
+                      </option>
+                      <option>Department of Information Technology</option>
+                      <option>
+                        Department of Electrical and Electronics Engineering
+                      </option>
+                      <option>
+                        Department of Electronics and Communication Engineering
+                      </option>
+                      <option>Department of Civil Engineering</option>
+                      <option>Department of Mechanical Engineering</option>
+                    </select>
                     <span className="select-arrow"></span>
                   </div>
                   <br />
@@ -216,15 +197,12 @@ const Camp = () => {
                       name="respects"
                       onChange={(e) => setRespects(e.target.value)}
                     >
-                    <option value="" disabled selected hidden>
-                      Select your option
-                    </option>
-                    <option value="Sir">Sir</option>
-                    <option value="Ma'am">Ma'am</option>
-                  </select>
-                  <span className="select-arrow"></span>
-                </div>
-                <br />
+                      <option>Sir</option>
+                      <option>Ma'am</option>
+                    </select>
+                    <span className="select-arrow"></span>
+                  </div>
+                  <br />
                   <div className="form-group">
                     <span className="form-label" for="team_name">
                       Forrum/Team name :{" "}
@@ -259,14 +237,12 @@ const Camp = () => {
                       name="where"
                       onChange={(e) => setWhere(e.target.value)}
                     >
-                    <option value="" disabled selected hidden>
-                      Select your option
-                    </option>
-                    <option value="Inside">Inside</option>
-                    <option value="Outside">Outside</option>
-                  </select>
-                  <span className="select-arrow"></span>
-                </div>
+                      <option>Inside</option>
+                      <option>Outside</option>
+                    </select>
+                    <span className="select-arrow"></span>
+                  </div>
+                  <br />
                   <span className="form-label">Select Date and Time :</span>
                   <br />
                   <div className="row">
@@ -357,12 +333,9 @@ const Camp = () => {
                                 setStartmeridian(e.target.value);
                               }}
                             >
-                            <option value="" disabled selected hidden>
-                              ...
-                            </option>
-                            <option value="AM">AM</option>
-                            <option value="PM">PM</option>
-                          </select>
+                              <option>AM</option>
+                              <option>PM</option>
+                            </select>
                             <span className="select-arrow"></span>
                           </div>
                         </div>
@@ -457,12 +430,9 @@ const Camp = () => {
                                 setEndmeridian(e.target.value);
                               }}
                             >
-                            <option value="" disabled selected hidden>
-                              ...
-                            </option>
-                            <option value="AM">AM</option>
-                            <option value="PM">PM</option>
-                          </select>
+                              <option>AM</option>
+                              <option>PM</option>
+                            </select>
                             <span className="select-arrow"></span>
                           </div>
                         </div>
@@ -542,7 +512,6 @@ const Camp = () => {
                       className="submit-btn"
                       type="submit"
                       onClick={() => submit()}
-                      disabled = {!isSubmit}
                     >
                       Generate Letter
                     </button>
@@ -554,7 +523,6 @@ const Camp = () => {
         </div>
       </div>
     </form>
-    </div>
   );
 };
 
