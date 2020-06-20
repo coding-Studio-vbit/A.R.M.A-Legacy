@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Link, Redirect } from "react-router-dom";
-import "./css/Form.css";
-import "./css/login.css";
+import "../../css/styles.css";
 import ForgotPassword from "./ForgotPassword";
 import ForgotPasswordForum from "./ForgotPasswordForum";
 const Login = () => {
@@ -80,7 +79,7 @@ const Login = () => {
   };
   const userType = "FORUM";
   return (
-    <div className="forms">
+    <div className="authforms">
       <form>
         <h1 style={{ color: "white" }}> Forum login </h1>
         <br />
