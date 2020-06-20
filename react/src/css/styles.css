@@ -92,7 +92,6 @@ body {
       background-color: #222222;
       margin-top: auto;
       margin-bottom: auto;
-      opacity: 90%;
       color: white;
       text-align: center;
           margin: auto;
@@ -271,7 +270,6 @@ body {
     box-shadow: none;
     width: 350px;
     color: grey;
-    opacity: 100%;
     font-weight: 400;
     font-size: 30;
     border-style: none;
@@ -330,7 +328,6 @@ body {
   border-radius: 30px;
   margin-top: 50px;
   background-color: #222222;
-  opacity: 90%;
   color: white;
 }
 
@@ -918,4 +915,4 @@ body {
     margin-top: 25px;
     margin-left: 20px;
     color: white;
-  }  
+  }
