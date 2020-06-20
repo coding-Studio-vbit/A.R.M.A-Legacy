@@ -10,7 +10,12 @@ function getForumTable(req){
       })
       .then((forum_name) => {
         forum_name = forum_name.toUpperCase();
-        var client = new Client();
+        const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      });
         client.connect();
         client
           .query(
