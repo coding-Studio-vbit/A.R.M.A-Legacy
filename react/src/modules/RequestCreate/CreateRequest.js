@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
-import "./css/Request.css";
+import "../../css/styles.css";
 import "react-bootstrap";
 import MultiSelect from "react-multi-select-component";
 import { useHistory } from "react-router-dom";
@@ -171,14 +171,15 @@ const CreateRequest = () => {
     <React.Fragment>
       <Nav />
       <form onSubmit={handleSubmit}>
-        <div className="boxbg">
+      <div className="req">
+        <div className="reqboxbg">
           <div className="container-fluid">
             <div className="row">
               <div className="col self-align-start">
                 <h3> Create New Request </h3>
               </div>
             </div>
-            <hr className="line" />
+            <hr className="reqline" />
             <br />
             <div className="row">
               <div className="col self-align-start">
@@ -211,7 +212,7 @@ const CreateRequest = () => {
               </div>
             </div>
             <br />
-            <hr className="linew" />
+            <hr className="reqlinew" />
             <br />
             <div className="row">
               <div className="col">
@@ -223,7 +224,7 @@ const CreateRequest = () => {
                   value={Faculty}
                   onChange={setFaculty}
                   labelledBy={"Select Your Option"}
-                  className="Multiselect"
+                  className="reqMultiselect"
                 />
               </div>
             </div>
@@ -442,6 +443,7 @@ const CreateRequest = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </form>
     </React.Fragment>
