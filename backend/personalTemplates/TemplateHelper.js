@@ -26,7 +26,7 @@ async function checkPlaceHolders(filepath) {
   return new Promise((resolve, reject) => {
     readDocx(filepath)
       .then((text) => {
-        let regex = /\{[a-zA-Z_]*}/g;
+        let regex = /\{[a-zA-Z_\#\/]*}/g;
         let arr = text.match(regex);
         arr.forEach((str) => {
           let allowed = [
@@ -119,7 +119,7 @@ async function fetchPlaceHolders(filepath) {
   return new Promise((resolve, reject) => {
     readDocx(filepath)
       .then((text) => {
-        let regex = /\{[a-zA-Z_]*}/g;
+        let regex = /\{[a-zA-Z_\#\/]*}/g;
         let arr = text.match(regex);
         arr = arr.map((str) => {
           return str.slice(1, str.length - 1);
