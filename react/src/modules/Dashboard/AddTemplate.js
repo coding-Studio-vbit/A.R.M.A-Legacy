@@ -39,6 +39,7 @@ const AddTemplate = () => {
   const handleChange = (e) => {
     uploadFile(e.target.files[0]);
     setfilename(true);
+    setfilename(true);
   };
 
   return (
@@ -60,11 +61,15 @@ const AddTemplate = () => {
             upload
           </label>
         </div>
+
+        {filename && (
+          <h4 style={{ color: "white", textAlign: "center" }}>File Uploaded</h4>
+        )}
         <br />
         <button type="submit" className="buttonpurple" onClick={handleSubmit}>
           Submit
         </button>
-        <h4>{response}</h4>
+        <h4 style={{ color: "white" }}>{response}</h4>
 
         <br />
       </div>

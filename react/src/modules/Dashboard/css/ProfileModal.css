@@ -13,7 +13,7 @@
     font-size: 18px;
     width: 80% !important;
   }
-  .form-word{
+  .form-word {
     font-size: 16px;
     text-align: center;
   }
@@ -47,7 +47,7 @@
 }
 .modal-content {
   background-color: #181a1b;
-  color: #181a1b;
+  color: white;
   padding-top: 0px;
   text-decoration: white;
   border: none;
@@ -101,7 +101,7 @@
   -webkit-box-shadow: none;
   box-shadow: none;
   width: 350px;
-  color: grey;
+  color: white;
   opacity: 100%;
   font-weight: 400;
   font-size: 30;

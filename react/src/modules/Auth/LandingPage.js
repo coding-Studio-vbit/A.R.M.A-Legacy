@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./images/logo.png";
-import "./css/Form.css";
+import "../../css/styles.css";
 import { useHistory } from "react-router-dom";
 
 const LandingPage = () => {
@@ -26,7 +26,11 @@ const LandingPage = () => {
 
       <div style={{ height: "100px" }}></div>
       <div className="justi">
-        <button className="buttonpurple" onClick={handleButtonClick}>
+        <button
+          className="buttonpurple"
+          type="submit"
+          onClick={handleButtonClick}
+        >
           Enter the portal
         </button>
       </div>
