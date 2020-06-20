@@ -2,6 +2,7 @@ import React from "react";
 import "./css/table.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import ConfirmDelete from "./ConfirmDelete";
 
 class Table extends React.Component {
   /*approval = (id) =>{
@@ -16,32 +17,8 @@ class Table extends React.Component {
   }*/
   state = {
     persons: [],
-  };
-
-  delete = (id) => {
-    console.log(id);
-    let user = JSON.parse(localStorage.getItem("user"));
-    if (user !== null) {
-      let userName = user.userName;
-      let accessToken = user.accessToken;
-      let config = {
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-        data: {
-          request_id: id,
-        },
-      };
-      console.log(config);
-      axios
-        .delete(`${process.env.REACT_APP_URL}/createrequest`, config)
-        .then((response) => {
-          console.log("Deleted");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    modalShow: false,
+    id: "",
   };
 
   componentWillMount() {
@@ -67,6 +44,7 @@ class Table extends React.Component {
   }
 
   render() {
+    console.log(this.state.id);
     var i = 1;
     const items = this.state.persons.map((item) => {
       return (
@@ -97,13 +75,14 @@ class Table extends React.Component {
             </Link>
           </td>
           <td className="tableTD" style={{ cursor: "pointer", color: "grey" }}>
-            <i
-              class="far fa-trash-alt"
-              onClick={() => {
-                this.delete(item.request_id);
-                this.forceUpdate();
-              }}
-            ></i>
+            <Link>
+              <i
+                class="far fa-trash-alt"
+                onClick={() =>
+                  this.setState({ modalShow: true, id: item.request_id })
+                }
+              ></i>
+            </Link>
           </td>
         </tr>
       );
@@ -142,6 +121,11 @@ class Table extends React.Component {
             </table>
           </div>
         </div>
+        <ConfirmDelete
+          id={this.state.id}
+          show={this.state.modalShow}
+          onHide={() => this.setState({ modalShow: false })}
+        />
       </div>
     );
   }

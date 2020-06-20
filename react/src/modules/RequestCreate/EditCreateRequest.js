@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
-import "./css/Request.css";
+import "../../css/styles.css";
 import "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import MultiSelect from "react-multi-select-component";
@@ -28,7 +28,7 @@ const EditCreateRequest = (props) => {
         setReq_data(data.request_data);
         setDescription(data.request_data.description);
         setSubject(data.request_data.subject);
-        setFacilities(data.request_data.Facilities);
+        setFacilities(data.request_data.facilities);
         setInputFields(data.request_data.participants);
         console.log(data);
       })
@@ -132,6 +132,7 @@ const EditCreateRequest = (props) => {
         .then((response) => {
           console.log("Deleted");
           history.push("/dashboard");
+          window.location.reload();
         })
         .catch((err) => {
           console.log(err);
@@ -196,14 +197,14 @@ const EditCreateRequest = (props) => {
     <React.Fragment>
       <Nav />
       <form onSubmit={handleSubmit}>
-        <div className="boxbg">
+        <div className="reqboxbg">
           <div className="container-fluid">
             <div className="row">
               <div className="col self-align-start">
                 <h3> Edit Request </h3>
               </div>
             </div>
-            <hr className="line" />
+            <hr className="reqline" />
             <br />
             <div className="row">
               <div className="col self-align-start">
@@ -236,7 +237,7 @@ const EditCreateRequest = (props) => {
               </div>
             </div>
             <br />
-            <hr className="linew" />
+            <hr className="reqlinew" />
             <br />
             <div className="row">
               <div className="col">
@@ -301,7 +302,7 @@ const EditCreateRequest = (props) => {
                               type="text"
                               id="Name"
                               name="name"
-                              value={inputField.firstName}
+                              value={inputField.name}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -314,7 +315,7 @@ const EditCreateRequest = (props) => {
                               type="text"
                               id="Roll"
                               name="roll"
-                              value={inputField.firstName}
+                              value={inputField.roll}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -400,7 +401,7 @@ const EditCreateRequest = (props) => {
                   value={Facilities}
                   onChange={setFacilities}
                   labelledBy={"Select Your Option"}
-                  className="Multiselect"
+                  className="reqMultiselect"
                 />
               </div>
             </div>
