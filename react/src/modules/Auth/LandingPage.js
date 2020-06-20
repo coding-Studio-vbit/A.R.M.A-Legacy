@@ -15,7 +15,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="all-items">
+    <div className="all-items text-center">
       <br />
       <img src={logo} className="landingPageImage" />
       <br />
