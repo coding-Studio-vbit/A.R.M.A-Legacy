@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "./images/logo.png";
 import axios from "axios";
-import "./css/Form.css";
-import "./css/registrationpage.css";
+import "../../css/styles.css";
 
 const FacultyRegister = () => {
   const [dept, setDept] = useState("CSE");

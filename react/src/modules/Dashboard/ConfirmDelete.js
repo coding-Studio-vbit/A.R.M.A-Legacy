@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-import "../Auth/css/Form.css";
-import "../Auth/css/Modal.css";
+import "../../css/styles.css";
 
 const ConfirmDelete = (props) => {
   const Delete = () => {

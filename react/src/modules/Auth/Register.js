@@ -3,8 +3,7 @@ import logo from "./images/logo.png";
 import axios from "axios";
 import RegistrationCheck from "./RegistrationCheck";
 import Links from "./Links";
-import "./css/Form.css";
-import "./css/registrationpage.css";
+import "../../css/styles.css";
 
 function Register() {
   const [contact, setContact] = useState({
