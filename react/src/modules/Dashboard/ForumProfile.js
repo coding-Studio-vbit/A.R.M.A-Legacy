@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import cslogo from "./images/cslogo.png";
-import "./css/ForumProfile.css";
+import "../../css/styles.css";
 import { Row, Col } from "react-bootstrap";
 import NameModal from "./NameModal";
 import ProfileModal from "./ProfileModal";
@@ -61,7 +61,7 @@ class ForumProfile extends React.Component {
       <div>
         <Nav />
         <div className="container-fluid">
-          <div className="profile-containerz">
+          <div className="containerz">
             <Row>
               <h1 className="header-responsive">
                 <a>
@@ -87,7 +87,7 @@ class ForumProfile extends React.Component {
                   />
                 </div>
                 <div class="table-responsive">
-                  <table class="table-profile-table">
+                  <table class="table profile-table">
                     <tr style={{ borderRadius: "10px", padding: "2px" }}>
                       <div className="dataSnippet">
                         <div className="profile-text" colSpan="1">

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
-import "./css/Remarks.css";
+import "../../css/styles.css";
 const Remarks = (props) => {
   const history = useHistory();
   const [From, setFrom] = useState("Coding Studio");

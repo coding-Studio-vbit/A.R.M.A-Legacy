@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../css/table.css';
+import "../../css/styles.css";
 
 export default class Submission extends Component {
     state={
