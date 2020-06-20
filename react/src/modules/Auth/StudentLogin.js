@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import "./css/Form.css";
+import "../../css/styles.css";
 const StudentLogin = () => {
   const history = useHistory();
   const handleSubmit = (e) => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
-import "./css/Form.css";
-import "./css/login.css";
+
+import "../../css/styles.css";
 import ForgotPassword from "./ForgotPassword";
 const FacultyLogin = () => {
   const history = useHistory();
@@ -47,32 +47,38 @@ const FacultyLogin = () => {
   const usertype = "FACULTY";
   const isEnabled = password.length > 0 && rollNo.length >= 10;
   return (
-    <div className="forms">
+    <div className="authforms">
       <form>
         <h1 style={{ color: "white" }}> Faculty login </h1>
-        <br/>
+        <br />
         <div className="container">
           <div className="form-group login-row row">
-            <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Roll number : </h4></div>
-            <div className="col-md"><input
-              type="text"
-              className="inputboxes"
-              id="exampleInputPassword1"
-              placeholder="RollNo"
-              onChange={(e) => setRollNo(e.target.value)}
-            /></div>
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Roll number : </h4>
+            </div>
+            <div className="col-md">
+              <input
+                type="text"
+                className="inputboxes"
+                id="exampleInputPassword1"
+                placeholder="RollNo"
+                onChange={(e) => setRollNo(e.target.value)}
+              />
+            </div>
           </div>
           <div className="form-group login-row row">
-            <div className="col-md login-text"><h4 style={{paddingTop:"3%" }}>Password : </h4></div>
-              <div className="col-md">
-                <input
-                  type="password"
-                  className="inputboxes"
-                  id="exampleInputPassword1"
-                  placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+            <div className="col-md login-text">
+              <h4 style={{ paddingTop: "3%" }}>Password : </h4>
+            </div>
+            <div className="col-md">
+              <input
+                type="password"
+                className="inputboxes"
+                id="exampleInputPassword1"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
           </div>
           <div className="row">
             <button
@@ -86,16 +92,13 @@ const FacultyLogin = () => {
           </div>
         </div>
 
-        <br/>
+        <br />
         <button className="buttonpurple" onClick={handleLogin} type="submit">
           Login
         </button>
 
         <h4 style={{ color: "#ff1744" }}>{error} </h4>
-        <Link
-          to={"/facultyregister"}
-          style={{color: "#00e676"}}
-        >
+        <Link to={"/facultyregister"} style={{ color: "#00e676" }}>
           Go to Faculty Registration Page
         </Link>
       </form>
