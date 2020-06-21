@@ -32,7 +32,7 @@ const FacultyPsModal = (props) => {
             right                 : 'auto',
             bottom                : 'auto',
             marginRight           : '-30%',
-            
+
             left: "20%",
             top: "50%",
           },
@@ -49,7 +49,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"350px"}}
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
@@ -58,7 +58,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"350px"}}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
@@ -67,7 +67,7 @@ const FacultyPsModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"350px"}}
               onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
@@ -89,7 +89,7 @@ const FacultyPsModal = (props) => {
             </button>
             <button
               type="submit"
-              className="save-button"
+              className="submit-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));

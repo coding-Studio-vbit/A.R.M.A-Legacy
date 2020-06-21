@@ -49,7 +49,7 @@ const ProfileModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
@@ -58,7 +58,7 @@ const ProfileModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
@@ -80,7 +80,7 @@ const ProfileModal = (props) => {
             </button>
             <button
               type="submit"
-              className="save-button"
+              className="submit-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));

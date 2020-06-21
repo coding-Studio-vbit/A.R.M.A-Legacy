@@ -49,7 +49,7 @@ componentWillMount() {
       'Authorization': 'Bearer ' + accessToken
       }
     }
-      axios.get(`http://localhost:8080/getFacultyDetails`,config)
+      axios.get(`${process.env.REACT_APP_URL}/getFacultyDetails`,config)
       .then(res => {
         const persons = res.data;
         console.log(res.data);

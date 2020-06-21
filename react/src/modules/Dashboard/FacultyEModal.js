@@ -32,7 +32,7 @@ const FacultyEModal = (props) => {
             right                 : 'auto',
             bottom                : 'auto',
             marginRight           : '-30%',
-            
+
             left: "20%",
             top: "50%",
           },
@@ -50,7 +50,7 @@ const FacultyEModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
@@ -59,7 +59,7 @@ const FacultyEModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-inputs"
+              className="form-input"
               style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
@@ -81,7 +81,7 @@ const FacultyEModal = (props) => {
             </button>
             <button
               type="submit"
-              className="save-button"
+              className="submit-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
