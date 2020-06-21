@@ -7,7 +7,7 @@ const NameModal =(props)=>{
         Name,setName
     ]=useState("");
     return (
-        <div> 
+        <div>
     <Modal
     style={
       {
@@ -25,7 +25,7 @@ const NameModal =(props)=>{
           right                 : 'auto',
           bottom                : 'auto',
           marginRight           : '-30%',
-          
+
           left: "20%",
           top: "50%",
         }
@@ -38,11 +38,11 @@ const NameModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-inputs" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
+                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer" >
                 <button className="btn-cancel" type="reset">Cancel</button>
-                <button  type="submit" className="save-button" onClick={() =>{
+                <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));
                     if(user!==null){
                       let userName = user.userName;
@@ -54,7 +54,7 @@ const NameModal =(props)=>{
                       }
                     }
                       console.log(config);
-                      axios.post("http://localhost:8080/changeForumUsername",{newUsername:Name},config).then((response) => {
+                      axios.post(`${process.env.REACT_APP_URL}/changeForumUsername`,{newUsername:Name},config).then((response) => {
                         var res=response.data;
                         this.setState({loginValue:response.data.userType});
                         console.log(res.userType);
@@ -64,14 +64,14 @@ const NameModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>Save Changes</button>
-                 
+
                 </div>
                 </form>
     </Modal>
     </div>
     )
-        
+
 }
 export default NameModal;
