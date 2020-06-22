@@ -11,6 +11,7 @@ const port_number = process.env.PORT || 8080; //PORT SPECIFIED IN THE .env file
 const app = express();
 const multer = require("multer");
 const templateHelper = require("./personalTemplates/TemplateHelper.js");
+const admin = require('./Admin.js');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -683,6 +684,54 @@ app.get("/getPersonalTemplateList", (req, res)=>{
 		return res.status(400).json({err:error});
 	})
 });
+app.get('/getNewForumRegistrations', (req, res)=>{
+	admin.authenticateAdmin(req)
+	.then(state=>{
+		return admin.getNewForumRegistrations();
+	})
+	.then(response=>{
+		return res.status(200).json({data:response});
+	})
+	.catch(error=>{
+		return res.status(400).json({err:error});
+	})
+});
+app.get('/getNewFacultyRegistrations', (req, res)=>{
+	admin.authenticateAdmin(req)
+	.then(state=>{
+		return admin.getNewFacultyRegistrations();
+	})
+	.then(response=>{
+		return res.status(200).json({data:response});
+	})
+	.catch(error=>{
+		return res.status(400).json({err:error});
+	})
+});
+app.post('/adminRegisterNewForum', (req, res)=>{
+	admin.authenticateAdmin(req)
+	.then(state=>{
+		return admin.registerNewForum(req); 	
+	})
+	.then(response=>{
+		return res.status(200).json({message: response});
+	})
+	.catch(error=>{
+		return res.status(400).json({err:error});
+	})
+})
+app.post('/adminRegisterNewFaculty', (req, res)=>{
+	admin.authenticateAdmin(req)
+	.then(state=>{
+		return admin.registerNewFaculty(req); 	
+	})
+	.then(response=>{
+		return res.status(200).json({message: response});
+	})
+	.catch(error=>{
+		return res.status(400).json({err:error});
+	})
+})
 
 //-----------------------------------------------------------------------------------------------------------------------------------------//
 //start the server.
