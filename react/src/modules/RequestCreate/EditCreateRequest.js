@@ -1,24 +1,55 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import Nav from "../Dashboard/Navi";
 import axios from "axios";
 import "../../css/styles.css";
 import "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import MultiSelect from "react-multi-select-component";
 
-const EditCreateRequest = () => {
+const EditCreateRequest = (props) => {
+  const [Req_data, setReq_data] = useState({});
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    // console.log(props.location.Rprops.id)
+    let config = {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+      params: {
+        request_id: props.location.req_id,
+      },
+    };
+    axios
+      .get(`${process.env.REACT_APP_URL}/getrequest`, config)
+      .then((res) => {
+        var data = res.data[0];
+        setReq_data(data.request_data);
+        setDescription(data.request_data.description);
+        setSubject(data.request_data.subject);
+        setFacilities(data.request_data.facilities);
+        setInputFields(data.request_data.participants);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [inputFields, setInputFields] = useState([
-    { Name: "", Roll: "", Dept: "", Year: "" },
+    { name: "", roll: "", dept: "", year: "", check: false },
   ]);
 
-  const [request, setRequest] = useState("");
+  const [subject, setSubject] = useState("");
   const [Faculty, setFaculty] = useState([]);
-  const [Facelities, setFacilities] = useState([]);
+  const [Facilities, setFacilities] = useState([]);
   const [description, setDescription] = useState("");
-  const [addfacelities, setCustreq] = useState("");
+  console.log(description);
 
   const handleAddFields = () => {
     const values = [...inputFields];
-    values.push({ Name: "", Roll: "", Dept: "", Year: "" });
+    values.push({ name: "", roll: "", dept: "", year: "", check: false });
     setInputFields(values);
   };
 
@@ -30,14 +61,14 @@ const EditCreateRequest = () => {
 
   const handleInputChange = (index, event) => {
     const values = [...inputFields];
-    if (event.target.name === "Name") {
-      values[index].Name = event.target.value;
-    } else if (event.target.name === "Roll") {
-      values[index].Roll = event.target.value;
-    } else if (event.target.name === "Dept") {
-      values[index].Dept = event.target.value;
-    } else if (event.target.name === "Year") {
-      values[index].Year = event.target.value;
+    if (event.target.name === "name") {
+      values[index].name = event.target.value;
+    } else if (event.target.name === "roll") {
+      values[index].roll = event.target.value;
+    } else if (event.target.name === "department") {
+      values[index].dept = event.target.value;
+    } else if (event.target.name === "year") {
+      values[index].year = event.target.value;
     }
 
     setInputFields(values);
@@ -45,88 +76,122 @@ const EditCreateRequest = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(request, Faculty, description, Facelities, addfacelities);
   };
 
   var requestdetails = inputFields;
 
-  const submit = (e) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_URL}/createrequest`,
-        {
-          request,
-          Faculty,
-          description,
-          Facelities,
-          addfacelities,
-          requestdetails,
-        },
-        { responseType: "arraybuffer" }
-      )
-      .then((result) => {
-        console.log(result);
-      });
-  };
+  const submit = (e) => {};
 
   //Add Update
-
+  const history = useHistory();
   const update = (e) => {
+    Req_data.description = description;
+    Req_data.subject = subject;
+    Req_data.participants = inputFields;
+    Req_data.facilities = Facilities;
+    let user = JSON.parse(localStorage.getItem("user"));
+    let accessToken = user.accessToken;
+    let config = {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+    };
     axios
       .put(
         `${process.env.REACT_APP_URL}/createrequest`,
         {
-          request,
-          Faculty,
-          description,
-          Facelities,
-          addfacelities,
-          requestdetails,
+          request_id: props.location.req_id,
+          request_data: Req_data,
         },
-        { responseType: "arraybuffer" }
+        config
       )
       .then((result) => {
         console.log(result);
+        history.push("/dashboard");
       });
   };
 
   //Add Delete
 
-  const remove = (e) => {
-    axios
-      .delete(
-        `${process.env.REACT_APP_URL}/createrequest`,
-        {
-          request,
-          Faculty,
-          description,
-          Facelities,
-          addfacelities,
-          requestdetails,
+  const remove = () => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user !== null) {
+      let userName = user.userName;
+      let accessToken = user.accessToken;
+      let config = {
+        headers: {
+          Authorization: "Bearer " + accessToken,
         },
-        { responseType: "arraybuffer" }
-      )
-      .then((result) => {
-        console.log(result);
-      });
+        data: {
+          request_id: props.location.req_id,
+        },
+      };
+      console.log(config);
+      axios
+        .delete(`${process.env.REACT_APP_URL}/createrequest`, config)
+        .then((response) => {
+          console.log("Deleted");
+          history.push("/dashboard");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
-  const Facultyoptions = [
-    { label: "Principal", value: "Principal" },
-    { label: "Vice Principal", value: "Vice Principal" },
-    { label: "CSE - HOD", value: "CSE - HOD" },
-    { label: "IT - HOD", value: "IT - HOD" },
-    { label: "ECE - HOD", value: "ECE - HOD" },
-    { label: "EEE - HOD", value: "EEE - HOD" },
-    { label: "CIVIL - HOD", value: "CIVIL - HOD" },
-    { label: "MECH - HOD", value: "MECH - HOD" },
-  ];
+  const Facultyoptions = [];
 
-  const Facilitiesoptions = [
-    { label: "SAC Room", value: "SAC Room" },
-    { label: "Chethana", value: "Chethana" },
-    { label: "Internet", value: "Internet" },
-  ];
+  const Facilitiesoptions = [];
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let userName = user.userName;
+    let accessToken = user.accessToken;
+    // console.log(props.location.Rprops.id)
+    let config = {
+      headers: {
+        Authorization: "Bearer " + accessToken,
+      },
+      params: {
+        request_id: JSON.parse(localStorage.getItem("req_id")),
+      },
+    };
+    console.log(config);
+    axios
+      .get(`${process.env.REACT_APP_URL}/getFaculty`, config)
+      .then((res) => {
+        var data = res.data;
+        var all_faculty = data.all_faculty;
+        all_faculty.forEach((fac) => {
+          Facultyoptions.push({
+            value: fac,
+            label: fac,
+          });
+        });
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`${process.env.REACT_APP_URL}/getFacilities`, config)
+      .then((res) => {
+        var data = res.data;
+        var all_facilities = data.all_facilities;
+        all_facilities.forEach((fci) => {
+          Facilitiesoptions.push({
+            value: fci,
+            label: fci,
+            facility: fci,
+            check: true,
+          });
+        });
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
   return (
     <React.Fragment>
@@ -152,11 +217,11 @@ const EditCreateRequest = () => {
                   name="department"
                   onChange={(e) => {
                     e.persist();
-                    setRequest(e.target.value);
+                    setSubject(e.target.value);
                   }}
                 >
-                  <option value="" disabled selected hidden>
-                    Select your option
+                  <option value={subject} disabled selected hidden>
+                    {subject}
                   </option>
                   <option value="Attendance for Participants">
                     Attendance for Participants
@@ -176,23 +241,6 @@ const EditCreateRequest = () => {
             <br />
             <div className="row">
               <div className="col">
-                <h5>Select Faculty :</h5>
-              </div>
-              <div className="col">
-                <MultiSelect
-                  options={Facultyoptions}
-                  value={Faculty}
-                  onChange={setFaculty}
-                  labelledBy={"Select Your Option"}
-                  className="Multiselect"
-                />
-              </div>
-            </div>
-            <br />
-            <hr className="linew" />
-            <br />
-            <div className="row">
-              <div className="col">
                 <h5>Description :</h5>
               </div>
               <div className="col">
@@ -201,12 +249,13 @@ const EditCreateRequest = () => {
                     className="form-control"
                     id="exampleFormControlTextarea1"
                     placeholder="Enter Details about your event"
+                    value={description}
                     rows="3"
                     onChange={(e) => {
                       e.persist();
                       setDescription(e.target.value);
                     }}
-                  />
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -252,12 +301,12 @@ const EditCreateRequest = () => {
                               className="form-control"
                               type="text"
                               id="Name"
-                              name="Name"
-                              value={inputField.firstName}
+                              name="name"
+                              value={inputField.name}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
-                              placeholder={`Name`}
+                              placeholder={inputField.name}
                             />
                           </div>
                           <div class="col-sm-2">
@@ -265,12 +314,12 @@ const EditCreateRequest = () => {
                               className="form-control"
                               type="text"
                               id="Roll"
-                              name="Roll"
-                              value={inputField.firstName}
+                              name="roll"
+                              value={inputField.roll}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
-                              placeholder={`Roll No`}
+                              placeholder={inputField.roll}
                             />
                           </div>
                           <div class="col-sm-2">
@@ -282,10 +331,14 @@ const EditCreateRequest = () => {
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
-                              placeholder={`Dept`}
                             >
-                              <option value="" disabled selected hidden>
-                                Dept
+                              <option
+                                value={inputField.dept}
+                                disabled
+                                selected
+                                hidden
+                              >
+                                {inputField.dept}
                               </option>
                               <option value="CSE">CSE</option>
                               <option value="IT">IT</option>
@@ -299,15 +352,19 @@ const EditCreateRequest = () => {
                             <select
                               required
                               className="form-control"
-                              name="department"
-                              value={inputField.firstName}
+                              name="year"
+                              value={inputField.year}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
-                              placeholder={`Year`}
                             >
-                              <option value="" disabled selected hidden>
-                                Year
+                              <option
+                                value={inputFields.year}
+                                disabled
+                                selected
+                                hidden
+                              >
+                                {inputFields.year}
                               </option>
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -341,23 +398,11 @@ const EditCreateRequest = () => {
               <div className="col">
                 <MultiSelect
                   options={Facilitiesoptions}
-                  value={Facelities}
+                  value={Facilities}
                   onChange={setFacilities}
                   labelledBy={"Select Your Option"}
                   className="reqMultiselect"
                 />
-                <div className="form-group">
-                  <textarea
-                    className="form-control"
-                    id="exampleFormControlTextarea1"
-                    placeholder="Facelities not mentioned? Type in here!"
-                    rows="3"
-                    onChange={(e) => {
-                      e.persist();
-                      setCustreq(e.target.value);
-                    }}
-                  />
-                </div>
               </div>
             </div>
             <br />
@@ -374,20 +419,7 @@ const EditCreateRequest = () => {
                 </button>
               </div>
               <div className="col align-self-center">
-                <button
-                  type="submit"
-                  class="btn btn-success"
-                  onClick={() => submit()}
-                >
-                  Create New Request
-                </button>
-              </div>
-              <div className="col align-self-center">
-                <button
-                  type="submit"
-                  class="btn btn-danger"
-                  onClick={() => remove()}
-                >
+                <button type="submit" class="btn btn-danger" onClick={remove}>
                   Delete Request
                 </button>
               </div>

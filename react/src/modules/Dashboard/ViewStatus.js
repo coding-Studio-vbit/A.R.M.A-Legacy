@@ -6,7 +6,7 @@ import { Container, Row, Col, InputGroup ,FormControl } from "react-bootstrap";
 import Nav from "./Navi";
 import axios from "axios";
 
-import "./css/ViewStatus.css"
+import "../../css/styles.css";
 const ViewStatus = (props) => {
   const status = "Accepted";
   const [From, setFrom] = useState("Coding Studio");

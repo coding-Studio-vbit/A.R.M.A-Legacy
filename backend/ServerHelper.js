@@ -54,7 +54,12 @@ async function getFaculty(req) {
         return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
       })
       .then((username) => {
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
         client
           .query("SELECT faculty_name FROM faculty;")
@@ -92,7 +97,12 @@ async function getFacilities(req) {
         return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
       })
       .then((username) => {
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
         client
           .query("SELECT facility_name FROM facilities;")
@@ -156,7 +166,12 @@ async function forgotPassword(req) {
 async function getRegisteredForums(req) {
   return new Promise((resolve, reject) => {
     var res = {};
-    var client = new Client();
+    const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
     client.connect();
     client
       .query("SELECT actual_name,forum_name FROM forums;")
@@ -187,7 +202,12 @@ async function getForumDetails(req) {
         users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN)
       )
       .then((username) => {
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
         client
           .query(
@@ -387,7 +407,12 @@ async function facultyDashboard(req) {
       })
       .then((faculty_roll) => {
         faculty_roll = faculty_roll.toUpperCase();
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
         client
           .query(
@@ -443,7 +468,12 @@ async function makeNewRequest(req) {
           throw "Invalid recipients!";
 
         for (let i = 0; i < req.body.recipients.length; i++) {
-          var client = new Client();
+          const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
           client.connect();
           client
             .query("select faculty_roll from faculty where faculty_name=$1", [
@@ -581,7 +611,12 @@ async function updateRequest(req) {
           //user is faculty
           //update status and remarks
           //check if request_id is their own.
-          var client = new Client();
+          const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
           client.connect();
           client
             .query(
@@ -654,7 +689,12 @@ async function approveRequest(req) {
             data[username].userType == "FACULTY"
           ) {
             //only faculty can approve or reject.
-            var client = new Client();
+            const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
             client.connect();
             client
               .query(
@@ -706,7 +746,12 @@ async function forumsDashboard(req) {
       })
       .then((forum_name) => {
         forum_name = forum_name.toUpperCase();
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
         client
           .query(
@@ -752,7 +797,12 @@ async function fetchRequest(req) {
           );
         })
         .then((username) => {
-          var client = new Client();
+          const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
           client.connect();
           client
             .query("select * from requests where request_id=$1", [
@@ -895,7 +945,7 @@ async function registerForum(req) {
                 //nothing. We get the mail.
               })
               .catch((error) => {
-                res.status(500);
+                res.status=500;
                 res.reponse = {
                   err: { errmessage: "Server couldnt register request!" },
                 };
@@ -1291,7 +1341,12 @@ async function getFacultyDetails(req) {
         return users.authenticateToken(token, process.env.SECRET_ACCESS_TOKEN);
       })
       .then((username) => {
-        var client = new Client();
+        const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
         client.connect();
 
         client
