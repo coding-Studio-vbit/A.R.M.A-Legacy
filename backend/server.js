@@ -791,7 +791,7 @@ app.get("/getPersonalTemplateList", (req, res) => {
       return res.status(400).json({ err: error });
     });
 });
-app.get('/getNewForumRegistrations', (req, res)=>{
+app.post('/getNewForumRegistrations', (req, res)=>{
 	admin.authenticateAdmin(req)
 	.then(state=>{
 		return admin.getNewForumRegistrations();
@@ -803,7 +803,7 @@ app.get('/getNewForumRegistrations', (req, res)=>{
 		return res.status(400).json({err:error});
 	})
 });
-app.get('/getNewFacultyRegistrations', (req, res)=>{
+app.post('/getNewFacultyRegistrations', (req, res)=>{
 	admin.authenticateAdmin(req)
 	.then(state=>{
 		return admin.getNewFacultyRegistrations();

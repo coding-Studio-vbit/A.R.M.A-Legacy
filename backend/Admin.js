@@ -2,24 +2,25 @@ const bcrypt = require("bcryptjs");
 const {Client} = require("pg");
 const users = require('./node/users.js');
 
-async function authenticateAdminLogin(req)
+async function authenticateAdmin(req)
 {
-
+	
 	return new Promise((resolve, reject)=>{
 		const nice_hash = '$2a$10$aSjlqlMjUFeghTSpgaJ4dOZ1zgfs.dOCs2YWCQQDO31F1k3nsSHd6';// what does sir call shanks?
 		if(!req.body.admin_password)
 		{
-			return resolve( {err: "Inapproprate fields specified!"});
+			return reject( {err: "Inapproprate fields specified!"});
 		}
-		bcrypt.compare(req.admin_password, nice_hash, (err, stat)=>{
+		bcrypt.compare(req.body.admin_password, nice_hash, (err, stat)=>{
 			if(err)
 			{
 				return reject({err :"Stupid error occured!"});
 			}
-			if(!stat)
+			else if(!stat)
 			{
 				return reject({err :"Invalid password!"});
 			}
+			else
 			return resolve(true);
 		})	
 	})
@@ -34,7 +35,7 @@ async function getNewForumRegistrations()
 			  }
 		});
 		client.connect();
-		client.query('SELECT * from forum_registration_requests;')
+		client.query('SELECT * from forum_registration_request;')
 		.then(data=>{
 			client.end();
 			return resolve(data.rows);
@@ -77,7 +78,7 @@ async function getNewFacultyRegistrations()
 			  }
 		});
 		client.connect();
-		client.query('SELECT * from faculty_registration_requests;')
+		client.query('SELECT * from faculty_registration_request;')
 		.then(data=>{
 			client.end();
 			return resolve(data.rows);
@@ -115,3 +116,11 @@ async function registerNewFaculty(req)
 		})
 	})
 }
+
+module.exports = {
+	registerNewForum,
+	registerNewFaculty,
+	getNewForumRegistrations,
+	getNewFacultyRegistrations,
+	authenticateAdmin
+};
