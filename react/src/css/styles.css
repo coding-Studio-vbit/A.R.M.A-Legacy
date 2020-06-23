@@ -52,8 +52,152 @@ body {
     height: 40px;
     text-align: center;
   }
+  tr {
+    border-radius: 0px 0px 5px 5px;
+    padding: 15px 20px 0px 10px;
+    width: 400px;
+    padding-block-start: 5px;
+    color: white;
+    padding-bottom: 0px;
+  }
+  body {
+    background-color: #1a1a1a !important;
+  }
+  th {
+    color: #b007c4;
+    border: 0 !important;
+  }
+  thead {
+    border: 0;
+  }
+  .profile-table {
+    border: 0;
+    font-family: heebo;
+    font-size: 18px;
+    border-spacing: 0 0.5em;
+    border-collapse: separate;
+    box-sizing: border-box;
+  }
+  .profile-container {
+    border: 1.5px solid grey;
+    margin-top: 70px !important;
+    margin-bottom: 70px !important;
+    padding-top: 130px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #222222;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+    text-align: center;
+    margin: auto;
+    width: 600px;
+    box-shadow: 0px 0px 5px grey;
+  }
+  .containerz {
+    text-align: center;
+  }
+  .profile-pic {
+    left: calc(50% - 40px);
+    bottom: calc(700px / 2);
+    top: calc(480px / 2);
+    position: static;
+    margin-top: -190px;
+  }
+  .header-responsive a {
+    border: 0;
+    text-align: center;
+    color: white;
+    gap: 20px;
+    height: 50px;
+  }
   .header-responsive {
-    display: none;
+    margin: 40px 0 !important;
+  }
+  .header-responsive a:before {
+    content: "\2022";
+    font-size: 20px;
+    color: white;
+  }
+  .header-responsive a:after {
+    content: "\2022";
+    font-size: 20px;
+    color: white;
+    object-position: center;
+  }
+  .header-responsive {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #f9f2f2;
+    line-height: 0.2em;
+    margin: 80px auto;
+    color: white;
+  }
+  .header-responsive span {
+    padding: 0 30px;
+    background: #1a1a1a;
+    font-size: 25px;
+    color: white;
+    font-family: heebo;
+  }
+  .dataSnippet {
+    text-align: center;
+    margin-bottom: 5px;
+    border-radius: 50px !important;
+    border: 0.5px solid grey;
+    width: 65%;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+  }
+  .profile-text {
+    margin: auto;
+    float: left;
+  }
+
+  /*ProfileModal.css*/
+  @media only screen and (max-device-width: 800px) {
+    .ReactModal__Content {
+      height: 50%;
+      transform: translate(-75%, -40%);
+      border-radius: 25px !important;
+      width: 350px !important;
+      height: 330px !important;
+      position: left;
+      outline: none;
+      margin: 0px;
+    }
+    .form-inputs {
+      font-size: 18px;
+      width: 80% !important;
+    }
+    .form-word {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .modal-footer {
+      width: 280px;
+      padding: 10px;
+      height: 40%;
+      margin-top: 20px;
+    }
+    .save-button {
+      float: right !important;
+      width: 40% !important;
+      font-size: 12px !important;
+      height: 35px;
+    }
+    .btn-cancel {
+      float: left !important;
+      width: 30% !important;
+      font-size: 15px !important;
+      height: 35px;
+    }
   }
 }
 tr {
@@ -293,8 +437,20 @@ thead {
     text-align: center;
     border: 0;
   }
-  .tableTD {
-    font-size: 10px;
+  .form-inputs {
+    font-family: Palatino Linotype;
+    border: visible;
+    height: 40px;
+    border-radius: 16px;
+    border-color: #717170;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 350px;
+    color: grey;
+    font-weight: 400;
+    font-size: 30;
+    border-style: none;
+    background-color: transparent;
   }
   .tableTH {
     font-size: 12px;
@@ -327,7 +483,6 @@ body {
   border-radius: 30px;
   margin-top: 50px;
   background-color: #222222;
-  opacity: 90%;
   color: white;
 }
 

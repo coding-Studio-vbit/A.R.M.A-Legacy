@@ -7,7 +7,7 @@ const FacultyNModal =(props)=>{
         Name,setName
     ]=useState("");
     return (
-        <div class="modal"> 
+        <div class="modal">
     <Modal
     style={
       {
@@ -25,7 +25,7 @@ const FacultyNModal =(props)=>{
           right                 : 'auto',
           bottom                : 'auto',
           marginRight           : '-30%',
-          
+
           left: "20%",
           top: "50%",
         }
@@ -38,11 +38,11 @@ const FacultyNModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-inputs" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
+                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer" style={{height:"100px"}}>
                 <button className="btn-cancel" type="reset">Cancel</button>
-                <button  type="submit" className="save-button" onClick={() =>{
+                <button  type="submit" className="submit-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));
                     if(user!==null){
                       let userName = user.userName;
@@ -66,14 +66,14 @@ const FacultyNModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>Save Changes</button>
-                 
+
                 </div>
                 </form>
     </Modal>
     </div>
     )
-        
+
 }
 export default FacultyNModal;
