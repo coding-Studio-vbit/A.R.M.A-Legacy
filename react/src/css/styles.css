@@ -916,3 +916,210 @@ body {
     margin-left: 20px;
     color: white;
   }
+  .booking-form {
+  	max-width: 642px;
+  	width: 100%;
+      margin: auto;
+
+  }
+
+  .booking-form>form {
+  	background-color: #101113;
+  	padding: 30px 20px;
+      border-radius: 3px;
+      margin: auto;
+  }
+
+  .booking-form .form-group {
+  	position: relative;
+  	margin-bottom: 15px;
+  }
+
+  .booking-form .form-control {
+  	background-color: #f5f5f5;
+  	border: none;
+  	height: 45px;
+  	border-radius: 3px;
+  	-webkit-box-shadow: none;
+  	box-shadow: none;
+  	font-weight: 400;
+  	color: #101113;
+  }
+
+  .booking-form .form-control::-webkit-input-placeholder {
+  	color: rgba(16, 17, 19, 0.3);
+  }
+
+  .booking-form .form-control:-ms-input-placeholder {
+  	color: rgba(16, 17, 19, 0.3);
+  }
+
+  .booking-form .form-control::placeholder {
+  	color: rgba(16, 17, 19, 0.3);
+  }
+
+  .booking-form input[type="date"].form-control:invalid {
+  	color: rgba(16, 17, 19, 0.3);
+  }
+
+  .booking-form select.form-control {
+  	-webkit-appearance: none;
+  	-moz-appearance: none;
+  	appearance: none;
+  	}
+
+  .booking-form select.form-control+.select-arrow {
+  	position: absolute;
+  	right: 0px;
+  	bottom: 6px;
+  	width: 32px;
+  	line-height: 32px;
+  	height: 32px;
+  	text-align: center;
+  	pointer-events: none;
+  	color: #101113;
+  	font-size: 14px;
+  }
+
+  .booking-form select.form-control+.select-arrow:after {
+  	content: '\279C';
+  	display: block;
+  	-webkit-transform: rotate(90deg);
+  	transform: rotate(90deg);
+  }
+
+  .booking-form .form-label {
+  	text-align: start;
+  	color: #fff;
+  	font-size: 12px;
+  	font-weight: 400;
+  	margin-bottom: 5px;
+  	display: block;
+  	text-transform: uppercase;
+  }
+
+  .booking-form .submit-btn {
+  	color: #ffffff;
+  	background-color: #73007e;
+  	font-weight: 700;
+  	height: 50px;
+  	border: none;
+  	width: 100%;
+  	display: block;
+  	border-radius: 3px;
+  	text-transform: uppercase;
+  }
+  @media only screen and (max-device-width: 800px) {
+    .ReactModal__Content {
+      height: 50%;
+      transform: translate(-75%, -40%);
+      border-radius: 25px !important;
+      width: 350px !important;
+      height: 330px !important;
+      position: left;
+      outline: none;
+      margin: 0px;
+    }
+    .form-input {
+      font-size: 18px;
+      width: 80% !important;
+    }
+    .form-word {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .modal-footer {
+      width: 280px;
+      padding: 10px;
+      height: 40%;
+      margin-top: 20px;
+    }
+    .submit-button {
+      float: right !important;
+      width: 40% !important;
+      font-size: 12px !important;
+      height: 35px;
+    }
+    .btn-cancel {
+      float: left !important;
+      width: 30% !important;
+      font-size: 15px !important;
+      height: 35px;
+    }
+  }
+  .modal-header {
+    width: 100%;
+    border-bottom: 1px solid none;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+    border: none;
+  }
+  .modal-content {
+    background-color: #181a1b;
+    color: white;
+    padding-top: 0px;
+    text-decoration: white;
+    border: none;
+    border-radius: 25px;
+  }
+  .modal-footer {
+    border: none;
+  }
+  .submit-button {
+    color: #ffffff;
+    background-color: #8957f6;
+    font-weight: 400;
+    height: 35px;
+    border: none;
+    width: 188px;
+    display: block;
+    border-radius: 16px;
+    text-transform: uppercase;
+  }
+  .btn-cancel {
+    color: #ffffff;
+    background-color: #3e4245;
+    font-weight: 400;
+    font-family: Palatino Linotype;
+    height: 35px;
+    border: none;
+    width: 120px;
+    display: block;
+    border-radius: 16px;
+    text-transform: uppercase;
+  }
+  .close-modal-btn {
+    border-radius: 0px;
+    border-color: transparent;
+    color: #ffffff;
+    font-weight: 800;
+    background-color: transparent;
+  }
+  .form-input:hover {
+    border-style: solid;
+  }
+  .form-input:focus {
+    border-style: solid;
+  }
+  .form-input {
+    font-family: Palatino Linotype;
+    border: visible;
+    height: 40px;
+    border-radius: 16px;
+    border-color: #717170;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 350px;
+    color: white;
+    font-weight: 400;
+    font-size: 30;
+    border-style: none;
+    background-color: transparent;
+  }
+  .form-input::-webkit-input-placeholder {
+    color: whitesmoke;
+    font-family: Palatino Linotype;
+    font-size: 30;
+  }
