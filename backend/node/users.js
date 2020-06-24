@@ -53,7 +53,7 @@ async function authenticateToken(token, secret) {
       var data = fs.readFileSync("validkeys.json");
       data = data.toString();
       data = JSON.parse(data);
-      if (!data.hasOwnProperty(username)) return reject("UNIDENTIFIED USER");
+      if (!data.hasOwnProperty(username) || data[username].accessToken!=token) return reject("UNIDENTIFIED USER OR INCORRECT TOKEN");
       //here all the checks pass and the token is valid.
       return resolve(username);
     });
