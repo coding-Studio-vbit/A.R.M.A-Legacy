@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import logo from "./images/logo.png";
 import axios from "axios";
-import RegistrationCheck from "./RegistrationCheck";
-import Links from "./Links";
+import { Link } from "react-router-dom";
 import "../../css/styles.css";
 
 function Register() {
@@ -178,6 +177,11 @@ function Register() {
           </h4>
         ))}
       </form>
+      <div style={{ textAlign: "center" }}>
+        <Link to={"/login"} style={{ color: "#00e676" }}>
+          Go to Login Page
+        </Link>
+      </div>
     </div>
   );
 }
