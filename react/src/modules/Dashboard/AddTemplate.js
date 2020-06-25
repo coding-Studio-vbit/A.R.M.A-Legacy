@@ -21,7 +21,7 @@ const AddTemplate = () => {
     const formData = new FormData();
     formData.append("file", file);
     console.log(formData);
-
+    setResponse("Uploading Template in process.....");
     axios
       .post(`${process.env.REACT_APP_URL}/uploadTemplate`, formData, {
         headers: {
@@ -78,7 +78,9 @@ const AddTemplate = () => {
           </h4>
         )}
         {filename && (
-          <h4 style={{ color: "white", textAlign: "center" }}>File Uploaded</h4>
+          <h4 style={{ color: "white", textAlign: "center" }}>
+            File Uploaded Submit it
+          </h4>
         )}
         <br />
         <button
