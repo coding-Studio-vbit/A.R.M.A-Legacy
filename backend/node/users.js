@@ -28,7 +28,14 @@ async function fetchAccessToken(request) {
 async function generateAccessToken(data, secret, expirationTimeSeconds) {
   return new Promise((resolve, reject) => {
     if (expirationTimeSeconds == undefined)
+	{
+		var randomChars = "";
+		for(let a=0;a<5;a++){
+			randomChars = randomChars + (Math.ceil(Math.random()*1000)%10);
+		}
+	  data = randomChars + data;
       return resolve(jwt.sign(data, secret)); //return token without expiration
+	}
     return resolve(
       jwt.sign(data, secret, { expiresIn: expirationTimeSeconds })
     ); //token with expiration.
@@ -48,12 +55,12 @@ async function authenticateToken(token, secret) {
     jwt.verify(token, secret, (err, username) => {
       //if err then send status code FORBIDDEN
       if (err) return reject("access token incorrect!");
-
+	  username = username.slice(5);
       //check if the token is still in the validkeys.json file.
       var data = fs.readFileSync("validkeys.json");
       data = data.toString();
       data = JSON.parse(data);
-      if (!data.hasOwnProperty(username)) return reject("UNIDENTIFIED USER");
+      if (!data.hasOwnProperty(username) || data[username].accessToken!=token) return reject("UNIDENTIFIED USER OR INCORRECT TOKEN");
       //here all the checks pass and the token is valid.
       return resolve(username);
     });

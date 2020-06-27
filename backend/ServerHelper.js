@@ -55,11 +55,11 @@ async function getFaculty(req) {
       })
       .then((username) => {
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
         client
           .query("SELECT faculty_name FROM faculty;")
@@ -98,11 +98,11 @@ async function getFacilities(req) {
       })
       .then((username) => {
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
         client
           .query("SELECT facility_name FROM facilities;")
@@ -167,11 +167,11 @@ async function getRegisteredForums(req) {
   return new Promise((resolve, reject) => {
     var res = {};
     const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    });
     client.connect();
     client
       .query("SELECT actual_name,forum_name FROM forums;")
@@ -203,11 +203,11 @@ async function getForumDetails(req) {
       )
       .then((username) => {
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
         client
           .query(
@@ -408,11 +408,11 @@ async function facultyDashboard(req) {
       .then((faculty_roll) => {
         faculty_roll = faculty_roll.toUpperCase();
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
         client
           .query(
@@ -469,11 +469,11 @@ async function makeNewRequest(req) {
 
         for (let i = 0; i < req.body.recipients.length; i++) {
           const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          });
           client.connect();
           client
             .query("select faculty_roll from faculty where faculty_name=$1", [
@@ -612,11 +612,11 @@ async function updateRequest(req) {
           //update status and remarks
           //check if request_id is their own.
           const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          });
           client.connect();
           client
             .query(
@@ -690,11 +690,11 @@ async function approveRequest(req) {
           ) {
             //only faculty can approve or reject.
             const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+              connectionString: process.env.DATABASE_URL,
+              ssl: {
+                rejectUnauthorized: false,
+              },
+            });
             client.connect();
             client
               .query(
@@ -747,11 +747,11 @@ async function forumsDashboard(req) {
       .then((forum_name) => {
         forum_name = forum_name.toUpperCase();
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
         client
           .query(
@@ -798,11 +798,11 @@ async function fetchRequest(req) {
         })
         .then((username) => {
           const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+            connectionString: process.env.DATABASE_URL,
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          });
           client.connect();
           client
             .query("select * from requests where request_id=$1", [
@@ -945,7 +945,7 @@ async function registerForum(req) {
                 //nothing. We get the mail.
               })
               .catch((error) => {
-                res.status=500;
+                res.status = 500;
                 res.reponse = {
                   err: { errmessage: "Server couldnt register request!" },
                 };
@@ -1342,11 +1342,11 @@ async function getFacultyDetails(req) {
       })
       .then((username) => {
         const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
+          connectionString: process.env.DATABASE_URL,
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        });
         client.connect();
 
         client
