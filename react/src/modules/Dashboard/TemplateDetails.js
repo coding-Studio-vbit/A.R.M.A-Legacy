@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react'
-import "./css/Letter.css"
+import "../../css/styles.css";
 import "react-bootstrap"
 
 const TemplateDetails = () => {

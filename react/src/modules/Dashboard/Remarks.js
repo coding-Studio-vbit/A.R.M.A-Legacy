@@ -127,11 +127,14 @@ const Remarks = (props) => {
 
     //send data to server
     axios
-      .post(
-        `${process.env.REACT_APP_URL}/approverequest`,
+      .put(
+        `${process.env.REACT_APP_URL}/createrequest`,
         {
+          forum_name: From,
           request_id: JSON.parse(localStorage.getItem("req_id")),
-          status: temp,
+          request_data: Req_data,
+          remarks: Text,
+          status: "APPROVED",
         },
         config
       )

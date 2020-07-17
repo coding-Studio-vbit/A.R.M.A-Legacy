@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Link, Redirect } from "react-router-dom";
-import "./css/Form.css";
-import "./css/login.css";
+import "../../css/styles.css";
 import ForgotPassword from "./ForgotPassword";
 import ForgotPasswordForum from "./ForgotPasswordForum";
 const Login = () => {
   const [ForumList, updateForumList] = useState([]);
+  const [ForumObj, updateForumObj] = useState({});
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [value, setValue] = useState("");
@@ -25,7 +25,13 @@ const Login = () => {
       .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
       .then((res) => {
         let ResForums = res.data;
+        let obj={};
         updateForumList(ResForums);
+        ResForums.forEach((item, i) => {
+          obj[item.actual_name]=item.forum_name;
+        });
+
+        updateForumObj(obj);
         setValue(ResForums[0].actual_name);
       })
       .catch((err) => {
@@ -46,7 +52,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    let un = value;
+    let un = ForumObj[value];
     let pw = password;
     // console.log(un, pw);
     axios
@@ -76,11 +82,12 @@ const Login = () => {
   };
   const ForumChangeHandler = (e) => {
     let theForum = e.target.value.toUpperCase();
-    setValue(theForum);
+    setValue(ForumObj[theForum]);
+    console.log(value)
   };
   const userType = "FORUM";
   return (
-    <div className="forms">
+    <div className="authforms">
       <form>
         <h1 style={{ color: "white" }}> Forum login </h1>
         <br />

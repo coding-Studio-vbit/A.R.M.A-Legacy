@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "./images/logo.png";
-import "./css/Form.css";
+import "../../css/styles.css";
 import { useHistory } from "react-router-dom";
 
 const LandingPage = () => {
@@ -15,7 +15,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="all-items">
+    <div className="all-items text-center">
       <br />
       <img src={logo} className="landingPageImage" />
       <br />

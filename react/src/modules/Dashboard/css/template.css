@@ -1,5 +1,6 @@
-.body {
+body {
   background-color: #1a1a1a;
+  overflow-x: hidden;
 }
 .box {
   background-color: none;
@@ -17,7 +18,7 @@
   border-radius: 15%;
   right: 0;
   top: 0;
-  width: 300px;
+  width: 70%;
 }
 
 .h2 {
@@ -32,7 +33,6 @@
   font-family: "heebo", sans-serif;
 }
 .p {
-  padding-left: 25px;
   color: #8f969c;
   font-size: 20px;
   margin-top: 180px;
@@ -43,7 +43,7 @@
 
 .cS-container {
   height: 140px;
-  width: 300px;
+  width: 100%;
   margin-top: 0%;
 }
 .cS {
@@ -100,6 +100,10 @@
   font-family: "heebo", sans-serif;
 }
 @media only screen and (max-width: 600px) {
+  body {
+    background-color: #1a1a1a;
+    overflow-x: hidden;
+  }
   .searchTemplate {
     width: 100% !important;
     margin-bottom: 50px !important;

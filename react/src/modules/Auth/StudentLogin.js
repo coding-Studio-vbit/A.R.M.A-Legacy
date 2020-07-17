@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import "./css/Form.css";
+import "../../css/styles.css";
 const StudentLogin = () => {
   const history = useHistory();
   const handleSubmit = (e) => {
@@ -11,7 +11,7 @@ const StudentLogin = () => {
     <div className="all-items">
       <div className="sforms">
         <form>
-          <h1 style={{ color: "white" }}> Student Portal</h1>
+          <h1 style={{ color: "white", textAlign:"center" }}> Student Portal</h1>
 
           <br />
 

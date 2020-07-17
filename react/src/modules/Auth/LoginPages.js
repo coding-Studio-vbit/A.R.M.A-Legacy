@@ -6,7 +6,7 @@ import StudentLogin from "./StudentLogin";
 
 const LoginPages = () => {
   return (
-    <div className="all-items" style={{ padding: "15px" }}>
+    <div className="all-items text-center" style={{ padding: "15px" }}>
       <img src={logo} alt="logo" style={{ width: "180px", height: "180px" }} />
       <br />
       <br />
