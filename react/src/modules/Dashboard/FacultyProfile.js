@@ -5,7 +5,7 @@ import {Row, Col } from "react-bootstrap";
 import FacultyNModal from './FacultyNModal';
 import FacultyEModal from './FacultyEModal';
 import FacultyPsModal from './FacultyPsModal';
-import "./css/ForumProfile.css";
+import "../../css/styles.css";
 import Nav from "./Navi";
 
 class FacultyProfile extends React.Component{
@@ -49,7 +49,7 @@ componentWillMount() {
       'Authorization': 'Bearer ' + accessToken
       }
     }
-      axios.get(`http://localhost:8080/getFacultyDetails`,config)
+      axios.get(`${process.env.REACT_APP_URL}/getFacultyDetails`,config)
       .then(res => {
         const persons = res.data;
         console.log(res.data);

@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const FacultyPsModal = (props) => {
   const [NewPassword, setNewPassword] = useState("");
   const [OldPassword, setOldPassword] = useState("");
@@ -32,7 +32,7 @@ const FacultyPsModal = (props) => {
             right                 : 'auto',
             bottom                : 'auto',
             marginRight           : '-30%',
-            
+
             left: "20%",
             top: "50%",
           },

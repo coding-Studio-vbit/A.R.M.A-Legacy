@@ -1,13 +1,13 @@
 import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const FacultyNModal =(props)=>{
     const [
         Name,setName
     ]=useState("");
     return (
-        <div class="modal"> 
+        <div class="modal">
     <Modal
     style={
       {
@@ -25,7 +25,7 @@ const FacultyNModal =(props)=>{
           right                 : 'auto',
           bottom                : 'auto',
           marginRight           : '-30%',
-          
+
           left: "20%",
           top: "50%",
         }
@@ -66,14 +66,14 @@ const FacultyNModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>Save Changes</button>
-                 
+
                 </div>
                 </form>
     </Modal>
     </div>
     )
-        
+
 }
 export default FacultyNModal;

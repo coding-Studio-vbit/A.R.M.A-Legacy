@@ -1,13 +1,13 @@
 import React, { useState} from 'react';
 import Modal from 'react-modal';
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const NameModal =(props)=>{
     const [
         Name,setName
     ]=useState("");
     return (
-        <div> 
+        <div>
     <Modal
     style={
       {
@@ -25,7 +25,7 @@ const NameModal =(props)=>{
           right                 : 'auto',
           bottom                : 'auto',
           marginRight           : '-30%',
-          
+
           left: "20%",
           top: "50%",
         }
@@ -54,7 +54,7 @@ const NameModal =(props)=>{
                       }
                     }
                       console.log(config);
-                      axios.post("http://localhost:8080/changeForumUsername",{newUsername:Name},config).then((response) => {
+                      axios.post(`${process.env.REACT_APP_URL}/changeForumUsername`,{newUsername:Name},config).then((response) => {
                         var res=response.data;
                         this.setState({loginValue:response.data.userType});
                         console.log(res.userType);
@@ -64,14 +64,14 @@ const NameModal =(props)=>{
                         console.log(err);
                       })
                     }
-                
+
                 }}>Save Changes</button>
-                 
+
                 </div>
                 </form>
     </Modal>
     </div>
     )
-        
+
 }
 export default NameModal;

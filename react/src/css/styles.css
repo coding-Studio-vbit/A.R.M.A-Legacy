@@ -1,4 +1,683 @@
 /* Use only this file for any css of any components. */
+/*-------- Dashboard module CSS--------- */
+
+/*Nav.css*/
+.navigation {
+  background-color: #222222 !important;
+}
+.fas {
+  margin-right: 5px;
+}
+
+/*LoadingScreen.css*/
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #0d161f;
+}
+
+#circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+}
+
+.loader {
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  border: 8px solid #162534;
+  border-top: 8px solid #09f;
+  border-radius: 50%;
+  animation: rotate 5s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*Profile.css*/
+@media only screen and (max-device-width: 800px) {
+  .dataSnippet {
+    width: 270px;
+    font-size: 11px;
+    height: 40px;
+    text-align: center;
+  }
+  tr {
+    border-radius: 0px 0px 5px 5px;
+    padding: 15px 20px 0px 10px;
+    width: 400px;
+    padding-block-start: 5px;
+    color: white;
+    padding-bottom: 0px;
+  }
+  body {
+    background-color: #1a1a1a !important;
+  }
+  th {
+    color: #b007c4;
+    border: 0 !important;
+  }
+  thead {
+    border: 0;
+  }
+  .profile-table {
+    border: 0;
+    font-family: heebo;
+    font-size: 18px;
+    border-spacing: 0 0.5em;
+    border-collapse: separate;
+    box-sizing: border-box;
+  }
+  .profile-container {
+    border: 1.5px solid grey;
+    margin-top: 70px !important;
+    margin-bottom: 70px !important;
+    padding-top: 130px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: #222222;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+    text-align: center;
+    margin: auto;
+    width: 600px;
+    box-shadow: 0px 0px 5px grey;
+  }
+  .containerz {
+    text-align: center;
+  }
+  .profile-pic {
+    left: calc(50% - 40px);
+    bottom: calc(700px / 2);
+    top: calc(480px / 2);
+    position: static;
+    margin-top: -190px;
+  }
+  .header-responsive a {
+    border: 0;
+    text-align: center;
+    color: white;
+    gap: 20px;
+    height: 50px;
+  }
+  .header-responsive {
+    margin: 40px 0 !important;
+  }
+  .header-responsive a:before {
+    content: "\2022";
+    font-size: 20px;
+    color: white;
+  }
+  .header-responsive a:after {
+    content: "\2022";
+    font-size: 20px;
+    color: white;
+    object-position: center;
+  }
+  .header-responsive {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #f9f2f2;
+    line-height: 0.2em;
+    margin: 80px auto;
+    color: white;
+  }
+  .header-responsive span {
+    padding: 0 30px;
+    background: #1a1a1a;
+    font-size: 25px;
+    color: white;
+    font-family: heebo;
+  }
+  .dataSnippet {
+    text-align: center;
+    margin-bottom: 5px;
+    border-radius: 50px !important;
+    border: 0.5px solid grey;
+    width: 65%;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+  }
+  .profile-text {
+    margin: auto;
+    float: left;
+  }
+
+  /*ProfileModal.css*/
+  @media only screen and (max-device-width: 800px) {
+    .ReactModal__Content {
+      height: 50%;
+      transform: translate(-75%, -40%);
+      border-radius: 25px !important;
+      width: 350px !important;
+      height: 330px !important;
+      position: left;
+      outline: none;
+      margin: 0px;
+    }
+    .form-inputs {
+      font-size: 18px;
+      width: 80% !important;
+    }
+    .form-word {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .modal-footer {
+      width: 280px;
+      padding: 10px;
+      height: 40%;
+      margin-top: 20px;
+    }
+    .save-button {
+      float: right !important;
+      width: 40% !important;
+      font-size: 12px !important;
+      height: 35px;
+    }
+    .btn-cancel {
+      float: left !important;
+      width: 30% !important;
+      font-size: 15px !important;
+      height: 35px;
+    }
+  }
+}
+tr {
+  border-radius: 0px 0px 5px 5px;
+  padding: 15px 20px 0px 10px;
+  width: 400px;
+  padding-block-start: 5px;
+  color: white;
+  padding-bottom: 0px;
+}
+body {
+  background-color: #1a1a1a !important;
+}
+th {
+  color: #b007c4;
+  border: 0 !important;
+}
+thead {
+  border: 0;
+}
+.profile-table {
+  border: 0;
+  font-family: heebo;
+  font-size: 18px;
+  border-spacing: 0 0.5em;
+  border-collapse: separate;
+  box-sizing: border-box;
+}
+.profile-container {
+  border: 1.5px solid grey;
+  margin-top: 70px !important;
+  margin-bottom: 70px !important;
+  padding-top: 130px;
+  text-align: center;
+  border-radius: 15px;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: 90%;
+  color: white;
+  text-align: center;
+  margin: auto;
+  width: 600px;
+  box-shadow: 0px 0px 5px grey;
+}
+.containerz {
+  text-align: center;
+}
+.profile-pic {
+  left: calc(50% - 40px);
+  bottom: calc(700px / 2);
+  top: calc(480px / 2);
+  position: static;
+  margin-top: -190px;
+}
+.header-responsive a {
+  border: 0;
+  text-align: center;
+  color: white;
+  gap: 20px;
+  height: 50px;
+}
+.header-responsive {
+  margin: 40px 0 !important;
+}
+.header-responsive a:before {
+  content: "\2022";
+  font-size: 20px;
+  color: white;
+}
+.header-responsive a:after {
+  content: "\2022";
+  font-size: 20px;
+  color: white;
+  object-position: center;
+}
+.header-responsive {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #f9f2f2;
+  line-height: 0.2em;
+  margin: 80px auto;
+  color: white;
+}
+.header-responsive span {
+  padding: 0 30px;
+  background: #1a1a1a;
+  font-size: 25px;
+  color: white;
+  font-family: heebo;
+}
+.dataSnippet {
+  text-align: center;
+  margin-bottom: 5px;
+  border-radius: 50px !important;
+  border: 0.5px solid grey;
+  width: 65%;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+}
+.profile-text {
+  margin: auto;
+  float: left;
+}
+
+/*ProfileModal.css*/
+@media only screen and (max-device-width: 800px) {
+  .ReactModal__Content {
+    height: 50%;
+    transform: translate(-75%, -40%);
+    border-radius: 25px !important;
+    width: 350px !important;
+    height: 330px !important;
+    position: left;
+    outline: none;
+    margin: 0px;
+  }
+  .form-inputs {
+    font-size: 18px;
+    width: 80% !important;
+  }
+  .form-word {
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .modal-footer {
+    width: 280px;
+    padding: 10px;
+    height: 40%;
+    margin-top: 20px;
+  }
+  .save-button {
+    float: right !important;
+    width: 40% !important;
+    font-size: 12px !important;
+    height: 35px;
+  }
+  .btn-cancel {
+    float: left !important;
+    width: 30% !important;
+    font-size: 15px !important;
+    height: 35px;
+  }
+}
+.modal-header {
+  width: 100%;
+  border-bottom: 1px solid none;
+  font-size: 12px;
+  text-align: center;
+  padding: 5px;
+  border: none;
+}
+.modal-content {
+  background-color: #181a1b;
+  color: #181a1b;
+  padding-top: 0px;
+  text-decoration: white;
+  border: none;
+  border-radius: 25px;
+}
+.modal-footer {
+  border: none;
+}
+.save-button {
+  color: #ffffff;
+  background-color: #8957f6;
+  font-weight: 400;
+  height: 35px;
+  border: none;
+  width: 170px;
+  display: block;
+  border-radius: 16px;
+  text-transform: uppercase;
+}
+.btn-cancel {
+  color: #ffffff;
+  background-color: #3e4245;
+  font-weight: 400;
+  font-family: Palatino Linotype;
+  height: 35px;
+  border: none;
+  width: 120px;
+  display: block;
+  border-radius: 16px;
+  text-transform: uppercase;
+}
+.close-modal-btn {
+  border-radius: 0px;
+  border-color: transparent;
+  color: #ffffff;
+  font-weight: 800;
+  background-color: transparent;
+}
+.form-inputs:hover {
+  border-style: solid;
+}
+.form-inputs:focus {
+  border-style: solid;
+}
+.form-inputs {
+  font-family: Palatino Linotype;
+  border: visible;
+  height: 40px;
+  border-radius: 16px;
+  border-color: #717170;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  width: 350px;
+  color: grey;
+  opacity: 100%;
+  font-weight: 400;
+  font-size: 30;
+  border-style: none;
+  background-color: transparent;
+}
+.form-inputs::-webkit-input-placeholder {
+  color: whitesmoke;
+  font-family: Palatino Linotype;
+  font-size: 30;
+}
+
+/*Table.css*/
+@media only screen and (max-width: 800px) {
+  .table-container {
+    text-align: center;
+    margin: auto;
+  }
+  .containerz {
+    padding: 10px;
+  }
+  .table-responsive {
+    text-align: center;
+    border: 0;
+  }
+  .form-inputs {
+    font-family: Palatino Linotype;
+    border: visible;
+    height: 40px;
+    border-radius: 16px;
+    border-color: #717170;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    width: 350px;
+    color: grey;
+    font-weight: 400;
+    font-size: 30;
+    border-style: none;
+    background-color: transparent;
+  }
+  .tableTH {
+    font-size: 12px;
+  }
+}
+.tableTR {
+  color: white;
+  padding-bottom: 0px;
+}
+.tableTH {
+  color: #b007c4;
+  border: 0 !important;
+}
+.tablehead {
+  border: 0;
+}
+body {
+  background-color: #1a1a1a !important;
+}
+
+.table {
+  border: 0;
+}
+.table-responsive {
+  padding: 5px;
+  border: 0;
+}
+.table-container {
+  text-align: center;
+  border-radius: 30px;
+  margin-top: 50px;
+  background-color: #222222;
+  color: white;
+}
+
+/*Remarks.css*/
+.in {
+  border-width: 0;
+}
+.color {
+  color: purple;
+  font-weight: bolder;
+}
+.remarkbox {
+  margin-top: 10%;
+}
+.buttonremark {
+  margin-top: 10%;
+}
+.Con {
+  padding: 5px;
+}
+.content {
+  padding-left: 10px;
+  text-align: left;
+  color: grey;
+}
+.Con label {
+  margin-top: 5px;
+  font-size: 20px;
+
+  color: darkorchid;
+  font-weight: bolder;
+}
+.content span {
+  color: darkorchid;
+
+  font-weight: bold;
+}
+.title {
+  color: darkorchid;
+}
+textarea {
+  font-weight: bold;
+  background-color: grey;
+  border: 0;
+  border-radius: 15px;
+  max-width: 100%;
+}
+::placeholder {
+  color: antiquewhite;
+}
+.prevbtn {
+  background: #555777;
+  border-radius: 50%;
+  float: left;
+}
+.nxtbtn {
+  background: #555777;
+  border-radius: 50%;
+  float: right;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+.Buttons {
+  margin: 15px;
+  margin-bottom: 5px;
+  position: relative;
+}
+.tabactive {
+  color: darkorchid;
+  font-weight: bold;
+}
+.tab .btn:hover {
+  color: darkviolet;
+}
+.tab .btn:active {
+  color: darkviolet;
+}
+.tab .btn:focus {
+  color: darkviolet;
+}
+.Table {
+  margin-top: 5px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  height: 393px;
+}
+.Con textarea {
+  max-width: 100%;
+}
+.Buttoncell {
+  margin: 5px;
+}
+.Rebtn {
+  margin-bottom: 5px;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 18px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.TB {
+  margin-left: 10px;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 10px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: blueviolet;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px blueviolet;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round1 {
+  border-radius: 34px;
+}
+
+.slider.round1:before {
+  border-radius: 50%;
+}
+
 /*------------Auth module CSS------------- */
 
 /*form.css*/
@@ -170,6 +849,7 @@
   }
 }
 
+
 .login-row {
   color: #b007c4;
   text-align: left;
@@ -234,36 +914,36 @@
 
 /*----------------Request Create Module CSS------------*/
 label {
-  color:black;
+  color: black;
   font-size: medium;
 }
 
-  .reqboxbg {
-      border-radius: 25px;
-      background: rgb(33, 33, 33);
-      padding: 20px;
-      color:#8957F6;
-      width: inherit;
-      height: inherit;
-      display: flex;
-      margin-top: 50px;
-      margin-left: 2%;
-      margin-right: 2%;
-      margin-bottom: 50px;
-    }
+.reqboxbg {
+  border-radius: 25px;
+  background: rgb(33, 33, 33);
+  padding: 20px;
+  color: #8957f6;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  margin-top: 50px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 50px;
+}
 
-    .reqline {
-      background-color: rgb(109, 0, 143);
-    }
+.reqline {
+  background-color: rgb(109, 0, 143);
+}
 
-    .reqlinew {
-      background-color: gray;
-    }
+.reqlinew {
+  background-color: gray;
+}
 
-    .reqMultiselect {
-      text-align: start;
-      color:black;
-    }
+.reqMultiselect {
+  text-align: start;
+  color: black;
+}
 
 .btn-circle.btn-sm {
   width: 40px;
@@ -273,4 +953,128 @@ label {
   font-size: 10px;
   text-align: center;
 }
-/*----------------Request Create Module------------*/
+
+/*----------------Add Template Module------------*/
+.flexi {
+  display: flex;
+  justify-content: space-between; /* Can be changed in the live sample */
+}
+
+.inputboxfess {
+  border: #707070;
+  background-color: #22252c;
+  color-adjust: economy;
+  border-radius: 10px;
+  width: 400px;
+  font-style: heebo;
+  padding: 10px 5px;
+  /* margin: 0 auto 10px auto; */
+
+  text-align: center;
+  font-size: 18px;
+  color: grey;
+  font-weight: 300;
+}
+
+.justif {
+  display: flex;
+  flex-direction: "row";
+  justify-content: space-evenly;
+}
+
+.atmbuttonpurple {
+  border: black;
+  background-color: #5e18d9;
+  width: 200px;
+  border-radius: 5px;
+  font-style: heebo;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  font-weight: 300;
+}
+
+.atmtitle {
+  font-size: 29.8px;
+  margin-top: 100px;
+  color: #ff00ff;
+}
+.atmsubtitle1 {
+  font-size: 23px;
+  margin-top: 100px;
+  margin-left: 20px;
+  color: white;
+}
+.atmtext1 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.atmtext2 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.atmall-items {
+  text-align: center;
+}
+p {
+  font-size: 20px;
+}
+.atmsubtitle2 {
+  font-size: 23px;
+  margin-top: 38px;
+  margin-left: 20px;
+  color: white;
+}
+.atmimgud {
+  margin-top: 25px;
+  margin-left: 20px;
+}
+.atmtext3 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.atmsubtitle3 {
+  font-size: 23px;
+  margin-top: 38px;
+  margin-left: 20px;
+  color: white;
+}
+.atmtext4 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.atmtext5 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.atmtext6 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}
+.atmtext7 {
+  font-size: 15px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: white;
+}
+.atmtext8 {
+  font-size: 17px;
+  margin-top: 25px;
+  margin-left: 20px;
+  color: red;
+}

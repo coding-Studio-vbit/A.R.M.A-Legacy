@@ -1,5 +1,5 @@
 import React from "react";
-import "./css/table.css";
+import "../../css/styles.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "./ConfirmDelete";

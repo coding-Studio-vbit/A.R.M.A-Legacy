@@ -11,7 +11,7 @@ const StudentLogin = () => {
     <div className="all-items">
       <div className="sforms">
         <form>
-          <h1 style={{ color: "white" }}> Student Portal</h1>
+          <h1 style={{ color: "white", textAlign:"center" }}> Student Portal</h1>
 
           <br />
 

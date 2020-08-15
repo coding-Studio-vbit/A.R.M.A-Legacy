@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import cslogo from "./images/cslogo.png";
-import "./css/ForumProfile.css"
+import "../../css/styles.css";
 import {Row, Col } from "react-bootstrap";
 import NameModal from './NameModal';
 import ProfileModal from "./ProfileModal";
@@ -126,7 +126,7 @@ class ForumProfile extends React.Component {
           <NameModal Editingon={this.state.Nameon} />
           <ProfileModal Editingon={this.state.Editingon} />
           <PassModal Editingon={this.state.Passwordon} />
-          </Col> 
+          </Col>
         </div>
         </Row>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const ProfileModal = (props) => {
   const [Email, setEmail] = useState("");
   const [Cemail, setCemail] = useState("");

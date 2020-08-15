@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const FacultyEModal = (props) => {
   const [Email, setEmail] = useState("");
   const [Cemail, setCemail] = useState("");
@@ -32,7 +32,7 @@ const FacultyEModal = (props) => {
             right                 : 'auto',
             bottom                : 'auto',
             marginRight           : '-30%',
-            
+
             left: "20%",
             top: "50%",
           },

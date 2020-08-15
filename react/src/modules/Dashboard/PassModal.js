@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import "./css/ProfileModal.css";
+import "../../css/styles.css";
 const PassModal = (props) => {
   const [NewPassword, setNewPassword] = useState("");
   const [OldPassword, setOldPassword] = useState("");
@@ -31,9 +31,9 @@ const PassModal = (props) => {
             marginRight : '-30%',
             height: "300px",
             width: "450px",
-            
+
             left: "20%",
-            
+
             top: "50%",
           },
         }}
@@ -58,7 +58,7 @@ const PassModal = (props) => {
               type="password"
               id="myInput"
               className="form-input"
-             
+
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
             ></input>

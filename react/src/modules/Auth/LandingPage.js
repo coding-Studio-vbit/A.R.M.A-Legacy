@@ -15,7 +15,7 @@ const LandingPage = () => {
   };
 
   return (
-    <div className="all-items">
+    <div className="all-items text-center">
       <br />
       <img src={logo} className="landingPageImage" />
       <br />
@@ -26,11 +26,7 @@ const LandingPage = () => {
 
       <div style={{ height: "100px" }}></div>
       <div className="justi">
-        <button
-          className="buttonpurple"
-          type="submit"
-          onClick={handleButtonClick}
-        >
+        <button className="buttonpurple" onClick={handleButtonClick}>
           Enter the portal
         </button>
       </div>
