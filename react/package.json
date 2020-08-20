@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "app": "^0.1.0",
     "axios": "^0.19.2",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.4.1",
     "create": "0.0.2",
     "create-react-app": "^3.4.1",
