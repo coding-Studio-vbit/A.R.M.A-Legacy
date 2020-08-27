@@ -49,7 +49,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               onChange={(e) => setOldPassword(e.target.value)}
               placeholder="Enter old Password"
             ></input>
@@ -57,7 +57,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
 
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="Enter new Password"
@@ -66,7 +66,7 @@ const PassModal = (props) => {
             <input
               type="password"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               onChange={(e) => setCPassword(e.target.value)}
               placeholder="Confirm new Password"
             ></input>
@@ -83,11 +83,11 @@ const PassModal = (props) => {
             </h5>
           <div className="modal-footer" style={{height:"90px"}}>
           <button className="btn-cancel" type="reset">
-              Cancel
+              Clear
             </button>
             <button
               type="submit"
-              className="submit-button"
+              className="save-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
