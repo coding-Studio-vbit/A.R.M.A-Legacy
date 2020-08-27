@@ -49,7 +49,7 @@ const ProfileModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"300px"}}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter new email"
@@ -58,7 +58,7 @@ const ProfileModal = (props) => {
             <input
               type="email"
               id="myInput"
-              className="form-input"
+              className="form-inputs"
               style={{width:"300px"}}
               onChange={(e) => setCemail(e.target.value)}
               placeholder="Confirm new email"
@@ -76,11 +76,11 @@ const ProfileModal = (props) => {
           </div>
           <div className="modal-footer">
           <button className="btn-cancel" type="reset">
-              Cancel
+              Clear
             </button>
             <button
               type="submit"
-              className="submit-button"
+              className="save-button"
               disabled = {!isEnabled}
               onClick={() => {
                 let user = JSON.parse(localStorage.getItem("user"));
