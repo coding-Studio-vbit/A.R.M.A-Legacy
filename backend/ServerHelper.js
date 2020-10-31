@@ -15,9 +15,9 @@ const fs = require("fs");
 	getRegisteredForums
 	getFaculty
 	getFacilities
-	login
-	loginFaculty
-	logout
+	login*
+	loginFaculty*
+	logout*
 	forgotPassword
 	facultydashboard
 	createrequestPOST
