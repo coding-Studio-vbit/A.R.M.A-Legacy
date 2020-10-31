@@ -43,7 +43,8 @@ Creating the recipients table:
 
 CREATE TABLE recipients(
 	request_id int REFERENCES requests(request_id) ON DELETE CASCADE,
-	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE
+	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE,
+	approved boolean
 );
 
 Creating the personal templates table:
