@@ -45,7 +45,7 @@ function addRequest(forum_name,unique_id,request_data,rec_arr, callback) {
               {
                 let temp=req_id;
                 client.query(
-                  "insert into recipients(request_id,faculty_roll,accepted) values($1,$2,$3);",
+                  "insert into recipients(request_id,faculty_roll,approved) values($1,$2,$3);",
                   [req_id,rec_arr[i], "FALSE"],
                   (err, res) => {
                     if (err) {

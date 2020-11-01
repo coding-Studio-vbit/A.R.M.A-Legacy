@@ -681,13 +681,14 @@ async function updateApproval(requestID)
 	  	.then((data)=>{
 	  		if(data.rowCount != 0)
 			{
-				var needApprovals = rowCount;
+				var needApprovals = data.rowCount;
 				var finalApproval = true;
-				for(let a = 0; a<rowCount;a++)
+				for(let a = 0; a<data.rowCount;a++)
 				{
-					if(data.rows[a].approved != "TRUE") {finalApproval = false; break;}
+					console.log(data.rows);
+					if(data.rows[a].approved != true) {finalApproval = false; break;}
 				}
-				return client.query("UPDATE requests SET status=$1 where request_id=$2", finalApproval, requestID);
+				return client.query("UPDATE requests SET status=$1 where request_id=$2", [(finalApproval?"ACCEPT3D":"PENDING"), requestID]);
 			}
 			else return reject("No recipients found for given request"+requestID);
 		})
@@ -736,7 +737,8 @@ async function approveRequest(req) {
                 "update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)",
                 [req.body.status, req.body.request_id, username]
               )*/
-			  client.query("UPDATE recipients SET approved=TRUE where request_id=$1",[req.body.request_id])
+			  console.log("Request ID updated is: " + req.body.request_id);
+			  client.query("UPDATE recipients SET approved=true where request_id=$1 AND faculty_roll=$2",[req.body.request_id, username])
               .then((data) => {
                 if (data.rowCount === 0) {
                   res.status = 400;
