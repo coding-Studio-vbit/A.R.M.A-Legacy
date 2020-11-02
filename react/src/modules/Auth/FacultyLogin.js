@@ -34,6 +34,7 @@ const FacultyLogin = () => {
             JSON.stringify({
               userName: userName,
               accessToken: accessToken,
+              userType: usertype,
             })
           );
           history.push("/Dashboard");
