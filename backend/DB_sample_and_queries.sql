@@ -34,7 +34,7 @@ CREATE TABLE requests(
 	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
 	unique_id varchar(10) UNIQUE,
 	request_data jsonb,
-	status varchar(10),
+	status varchar(20),
   	remarks varchar(1024)
 );
 
