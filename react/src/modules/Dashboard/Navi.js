@@ -29,6 +29,15 @@ const Navi = () => {
         });
     }
   };
+  const type = () => {
+    if (JSON.parse(localStorage.getItem("user")).userType === "FORUM")
+      return (
+        <>
+          <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
+          <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
+        </>
+      );
+  };
   return (
     <Navbar
       style={{ backgroundColor: "#222222 !important", borderRadius: "5px" }}
@@ -49,8 +58,7 @@ const Navi = () => {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
-          <Nav.Link href="/Dashboard/TemplateList">Templates</Nav.Link>
-          <Nav.Link href="/Dashboard/CreateRequest">Create Request</Nav.Link>
+          {type()}
         </Nav>
         <Nav>
           <Nav>
