@@ -38,11 +38,11 @@ const NameModal =(props)=>{
                     <button className="close-modal-btn" type="submit">X</button>
                 </div>
                 <div className="modal-content">
-                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-input" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
+                <input type="text" id="myInput" style={{opacity:"1.0",width:"300px"}} className="form-inputs" onChange ={(e) =>setName(e.target.value)}placeholder="Enter new Name"></input><br/>
                 </div>
                 <div className="modal-footer" >
-                <button className="btn-cancel" type="reset">Cancel</button>
-                <button  type="submit" className="submit-button" onClick={() =>{
+                <button className="btn-cancel" type="reset">Clear</button>
+                <button  type="submit" className="save-button" onClick={() =>{
                     let user = JSON.parse(localStorage.getItem("user"));
                     if(user!==null){
                       let userName = user.userName;
