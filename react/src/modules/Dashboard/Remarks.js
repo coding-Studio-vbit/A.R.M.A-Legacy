@@ -124,7 +124,6 @@ const Remarks = (props) => {
         Authorization: "Bearer " + accessToken,
       },
     };
-
     //send data to server
     axios
       .post(
@@ -134,7 +133,7 @@ const Remarks = (props) => {
           request_id: JSON.parse(localStorage.getItem("req_id")),
           request_data: Req_data,
           remarks: Text,
-          status: "APPROVED",
+          status: temp,
         },
         config
       )
