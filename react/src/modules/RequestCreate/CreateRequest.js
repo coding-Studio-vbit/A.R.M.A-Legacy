@@ -13,7 +13,7 @@ const getRollNumberParts = (rollNumber) => {
 
         let year = Number(rollNumber.slice(0, 2));
         if(!year){console.log("Year incorrect!");return undefined};
-        year = (new Date().getFullYear()) - (2000 + year) + 1;
+        year = (new Date().getFullYear()) - (2000 + year);
         var branch = rollNumber.slice(6,8);
 		branch = Number(branch);
 		if(!branch) return undefined;
