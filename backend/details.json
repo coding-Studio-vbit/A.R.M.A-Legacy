@@ -1,16 +1,25 @@
 {
-  "department": "Department of Computer Science and Engineering",
-  "subject": "Permission for attending a wedding",
-  "date": "2020-06-18",
-  "respects": "Sir",
-  "your_name": "M Yasaswi Raj",
-  "year": "Second",
-  "section": "C",
-  "roll_no": "18P61A05C2",
-  "reason": "attenDinG a WeDdIng",
-  "start_date": "2020-06-19",
-  "end_date": "2020-06-20",
-  "hod_name": "Sridhar",
-  "faculty_name": "kiran",
-  "faculty": "Principal"
+  "designation": "Director",
+  "department": "Department of Electrical and Electronics Engineering",
+  "subject": "asfsdfasdfasdf",
+  "date": "2021-01-20",
+  "respects": "Ma'am",
+  "team_name": "asdfasdfasdf",
+  "event_name": "sadfasdfasdfasd",
+  "fromdate": "2021-01-14",
+  "todate": "2021-01-23",
+  "start_hour": "4",
+  "start_min": "20",
+  "start_meridian": "AM",
+  "end_hour": "8",
+  "end_min": "50",
+  "end_meridian": "PM",
+  "letter_body": "sadfasdfasdfasdfasdf",
+  "where": "Inside",
+  "studentdetails": [
+    {
+      "Name": "asdfasdfasdaf",
+      "Roll": "18p61a05j1"
+    }
+  ]
 }
