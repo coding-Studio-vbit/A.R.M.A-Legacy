@@ -34,7 +34,7 @@ CREATE TABLE requests(
 	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
 	unique_id varchar(10) UNIQUE,
 	request_data jsonb,
-	status varchar(10),
+	status varchar(20),
   	remarks varchar(1024)
 );
 
@@ -43,7 +43,8 @@ Creating the recipients table:
 
 CREATE TABLE recipients(
 	request_id int REFERENCES requests(request_id) ON DELETE CASCADE,
-	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE
+	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE,
+	approved boolean
 );
 
 Creating the personal templates table:

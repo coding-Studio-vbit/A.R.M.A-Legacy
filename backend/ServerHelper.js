@@ -15,9 +15,9 @@ const fs = require("fs");
 	getRegisteredForums
 	getFaculty
 	getFacilities
-	login
-	loginFaculty
-	logout
+	login*
+	loginFaculty*
+	logout*
 	forgotPassword
 	facultydashboard
 	createrequestPOST
@@ -663,6 +663,42 @@ async function updateRequest(req) {
       });
   });
 }
+
+// This function updates the approval status in the REQUESTS table based 
+// on the approvals given for a request in the RECIPIENTS table.
+async function updateApproval(requestID)
+{
+	return new Promise((resolve, reject)=>{
+		
+      const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      });
+      client.connect();
+	  client.query("SELECT approved from RECIPIENTS where request_id=$1",[requestID])
+	  	.then((data)=>{
+	  		if(data.rowCount != 0)
+			{
+				var needApprovals = data.rowCount;
+				var finalApproval = true;
+				for(let a = 0; a<data.rowCount;a++)
+				{
+					console.log(data.rows);
+					if(data.rows[a].approved != true) {finalApproval = false; break;}
+				}
+				return client.query("UPDATE requests SET status=$1 where request_id=$2", [(finalApproval?"ACCEPTED":"PENDING"), requestID]);
+			}
+			else return reject("No recipients found for given request"+requestID);
+		})
+		.then((data)=>{
+			if(data.rowCount == 0) return reject("Error updating Approval status in the requests table");
+			return resolve();
+		})
+		.catch((error)=>{return reject(error)});
+	});
+}
 async function approveRequest(req) {
   return new Promise((resolve, reject) => {
     var res = {};
@@ -696,25 +732,33 @@ async function approveRequest(req) {
               },
             });
             client.connect();
-            client
+			console.log(req.body); // REMOVE THIS
+            /*client
               .query(
                 "update requests set status = $1 where request_id=$2 AND request_id IN (select request_id from recipients where faculty_roll=$3)",
                 [req.body.status, req.body.request_id, username]
-              )
+              )*/
+			  console.log("Request ID updated is: " + req.body.request_id);
+			  client.query("UPDATE recipients SET approved=$1 where request_id=$2 AND faculty_roll=$3",[(req.body.status=="APPROVED"?true:false), req.body.request_id, username])
               .then((data) => {
                 if (data.rowCount === 0) {
                   res.status = 400;
                   res.response = {
                     err: "No such rows found",
                   };
-                  return resolve(res);
+				  // Now we need to check if all the faculty for the request have approved it or not. If yes, then we update the status in 
+				  // the requests table
+				  return resolve(res);
                 } else {
-                  client.end();
-                  res.status = 200;
-                  res.response = { message: "approved", msg: data };
-                  return resolve(res);
+				  return updateApproval(req.body.request_id);
                 }
               })
+			  .then((stat)=>{
+                  client.end();
+                  res.status = 200;
+                  res.response = { message: "updated status", msg: data };
+                  return resolve(res);
+				})
               .catch((error) => {
                 res.status = 500;
                 res.response = { err: "Internal Database Error" };
