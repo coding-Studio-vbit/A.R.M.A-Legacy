@@ -105,7 +105,7 @@ $ npm start
 ```
 #### 6. Add a .env file in frontend folder
 ```
-REACT_APP_URL=http://134.209.148.81:7321
+REACT_APP_URL=[backend-server-url]
 ```
 ##### Running on port: http://localhost:8080
 
