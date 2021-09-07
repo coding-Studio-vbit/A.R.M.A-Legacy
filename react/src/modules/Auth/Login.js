@@ -25,10 +25,10 @@ const Login = () => {
       .get(`${process.env.REACT_APP_URL}/getRegisteredForums`)
       .then((res) => {
         let ResForums = res.data;
-        let obj={};
+        let obj = {};
         updateForumList(ResForums);
         ResForums.forEach((item, i) => {
-          obj[item.actual_name]=item.forum_name;
+          obj[item.actual_name] = item.forum_name;
         });
 
         updateForumObj(obj);
@@ -45,6 +45,7 @@ const Login = () => {
       JSON.stringify({
         userName: userName,
         accessToken: accessToken,
+        userType: userType,
       })
     );
     return callback();
@@ -83,7 +84,7 @@ const Login = () => {
   const ForumChangeHandler = (e) => {
     let theForum = e.target.value.toUpperCase();
     setValue(ForumObj[theForum]);
-    console.log(value)
+    console.log(value);
   };
   const userType = "FORUM";
   return (

@@ -7,6 +7,32 @@ import MultiSelect from "react-multi-select-component";
 import { useHistory } from "react-router-dom";
 // const accessToken = JSON.parse(localStorage.getItem('user')).accessToken
 
+const getRollNumberParts = (rollNumber) => {
+	rollNumber = String(rollNumber);
+    if(rollNumber.length != 10){return undefined;}
+
+        let year = Number(rollNumber.slice(0, 2));
+        if(!year){console.log("Year incorrect!");return undefined};
+        year = (new Date().getFullYear()) - (2000 + year);
+        var branch = rollNumber.slice(6,8);
+		branch = Number(branch);
+		if(!branch) return undefined;
+        switch(branch)
+        {
+            case 1: branch = "CIVIL";    break;
+            case 2: branch = "EEE";        break;
+            case 3: branch = "MECH";        break;
+            case 4: branch = "ECE";        break;
+            case 5: branch = "CSE";        break;
+            case 12: branch = "IT";        break;
+        }
+        if(branch == undefined) return undefined;
+        
+        return {Year: year, Branch: branch};
+    }
+
+
+
 const CreateRequest = () => {
   //faculty endpoint is /getFaculty
   //facility endpoint is /getFacilities
@@ -37,11 +63,22 @@ const CreateRequest = () => {
   };
 
   const handleInputChange = (index, event) => {
-    const values = [...inputFields];
+    let values = [...inputFields];
     if (event.target.name === "name") {
       values[index].name = event.target.value;
     } else if (event.target.name === "roll") {
       values[index].roll = event.target.value;
+	  //Change department and year
+		var parts = getRollNumberParts(event.target.value);
+		console.log(parts);
+		if(parts != undefined){
+			values[index].dept = String(parts.Branch);
+			values[index].year = String(parts.Year);
+		}
+		else{
+			values[index].dept = "";
+			values[index].year = "";
+		}
     } else if (event.target.name === "department") {
       values[index].dept = event.target.value;
     } else if (event.target.name === "year") {
@@ -130,7 +167,7 @@ const CreateRequest = () => {
         request_id: JSON.parse(localStorage.getItem("req_id")),
       },
     };
-    console.log(config);
+    //console.log(config);
     axios
       .get(`${process.env.REACT_APP_URL}/getFaculty`, config)
       .then((res) => {
@@ -142,7 +179,7 @@ const CreateRequest = () => {
             label: fac,
           });
         });
-        console.log(data);
+        //console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -160,7 +197,7 @@ const CreateRequest = () => {
             check: true,
           });
         });
-        console.log(data);
+        //console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -336,7 +373,7 @@ const CreateRequest = () => {
                               className="form-control"
                               style={{ marginTop: "5px" }}
                               name="department"
-                              value={inputField.firstName}
+							  value={inputFields[index].dept}
                               onChange={(event) =>
                                 handleInputChange(index, event)
                               }
@@ -358,7 +395,7 @@ const CreateRequest = () => {
                               required
                               className="form-control"
                               name="year"
-                              value={inputField.firstName}
+                              value={inputFields[index].year}
                               style={{ marginTop: "5px" }}
                               onChange={(event) =>
                                 handleInputChange(index, event)
