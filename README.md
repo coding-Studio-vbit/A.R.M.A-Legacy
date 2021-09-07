@@ -4,7 +4,7 @@
 A.R.M.A automates all permission procedures, such as letter automation, permission requests, hierarchical event management in VBIT, eliminating  time consuming tasks.
 
 ## Getting Started
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 1. Download the Node.js source code or a pre-built installer for your platform at https://nodejs.org/en/download/
