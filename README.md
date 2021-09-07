@@ -90,7 +90,11 @@ $ nodemon server.js
 ```
 #### 4. Add a .env file in backend folder
 ```
-[add .env file]
+SECRET_ACCESS_TOKEN=[your-secret-access-token]
+PASSWORD=[your-psql-password]
+USERMAIL=[your-nodemailer-email]
+DATABASE_URL: '[your-database-url]'
+PORT=7321
 ```
 
 #### 5. Run Frontend
@@ -99,13 +103,18 @@ $ cd frontend
 $ npm install
 $ npm start
 ```
+#### 6. Add a .env file in frontend folder
+```
+REACT_APP_URL=http://134.209.148.81:7321
+```
+##### Running on port: http://localhost:8080
 
 ## Contributing 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+Any contributions you make are greatly appreciated.
 
 1. Fork the Project
-2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
-3. Commit your Changes (git commit -m 'Add some AmazingFeature')
-4. Push to the Branch (git push origin feature/AmazingFeature)
+2. Create your Feature Branch (git checkout -b feature/NewFeature)
+3. Commit your Changes (git commit -m 'Add some NewFeature')
+4. Push to the Branch (git push origin feature/NewFeature)
 5. Open a Pull Request
 
