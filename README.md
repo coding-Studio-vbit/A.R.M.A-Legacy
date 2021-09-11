@@ -99,7 +99,7 @@ PORT=7321
 
 #### 5. Run Frontend
 ```
-$ cd frontend
+$ cd react
 $ npm install
 $ npm start
 ```
