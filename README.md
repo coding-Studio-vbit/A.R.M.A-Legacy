@@ -8,7 +8,8 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 1. Download the Node.js source code or a pre-built installer for your platform at https://nodejs.org/en/download/
-2. Download and Install PostgreSQL at https://www.postgresql.org/download/
+2. [Download](https://www.postgresql.org/download/) and Install PostgreSQL.
+3. [Installation instructions](https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart) for Ubuntu 20.04. 
 
 
 ### Run Locally
