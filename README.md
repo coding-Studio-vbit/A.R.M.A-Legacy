@@ -52,6 +52,17 @@ CREATE TABLE faculty(
 ```
 * Creating the requests table:
 ```
+CREATE TABLE requests(
+	request_id SERIAL PRIMARY KEY,
+	forum_name varchar(128) REFERENCES forums(forum_name) ON DELETE CASCADE,
+	unique_id varchar(10) UNIQUE,
+	request_data jsonb,
+	status varchar(20),
+  	remarks varchar(1024)
+);
+```
+* Creating the recepients table:
+```
 CREATE TABLE recipients(
 	request_id int REFERENCES requests(request_id) ON DELETE CASCADE,
 	faculty_roll varchar(11) REFERENCES faculty(faculty_roll) ON DELETE CASCADE,
