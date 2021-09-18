@@ -3,11 +3,11 @@ To get a local copy up and running follow these simple steps.
  
 ## Run Frontend
 ```
-$ cd frontend
+$ cd react
 $ npm install
 $ npm start
 ```
-## Add a .env file in frontend folder
+## Add a .env file in react folder
 ```
 REACT_APP_URL=[backend-server-url]
 ```
