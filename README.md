@@ -92,7 +92,7 @@ $ nodemon server.js
 #### 4. Add a .env file in backend folder
 ```
 SECRET_ACCESS_TOKEN=[your-secret-access-token]
-PASSWORD=[your-psql-password]
+PASSWORD=[your-nodemailer-email-password]
 USERMAIL=[your-nodemailer-email]
 DATABASE_URL: '[your-database-url]'
 PORT=7321
