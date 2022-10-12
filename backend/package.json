@@ -12,7 +12,7 @@
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "docxtemplater": "^3.17.6",
+    "docxtemplater": "^3.31.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "i": "^0.3.6",
